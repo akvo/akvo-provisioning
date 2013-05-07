@@ -1,6 +1,10 @@
 from fabric.api import local, run, env, cd, prefix, sudo, settings, put
 
 
+def echo_test():
+    sudo('echo test')
+
+
 def create_puppet_user():
     """
     Creates the puppet user, group and home directory.
@@ -16,7 +20,9 @@ def create_puppet_user():
     #
     # Note that it won't recover if the user exists but the group does not
     # or vice-versa.
-    sudo('id -u puppet 2>&1 >/dev/null || adduser puppet --home=/puppet/')
+    user_exists = 'id -u puppet >/dev/null 2>&1'
+    create_user = 'useradd --user-group --create-home --shell=/bin/bash --home=/puppet/ puppet'
+    sudo('%s || %s' % (user_exists, create_user))
 
 
 def setup_keys():
