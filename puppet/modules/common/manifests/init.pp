@@ -7,7 +7,7 @@ class common {
     # The following packages are simply installed and the default configuration
     # is enough:
 
-    $useful_packages = {
+    $useful_packages = [
         'vim',
         'screen',
         'rsync',
@@ -17,7 +17,7 @@ class common {
         'dnsutils',
         'telnet',
         'wget',
-    }
+    ]
 
     package { $useful_packages:
         ensure => 'latest',
@@ -28,8 +28,8 @@ class common {
     # configure them:
 
     include sudo
+    include puppetcontrol
 
-    # include puppetcontrol
     # include sshd
     # include users
     # include munin::node

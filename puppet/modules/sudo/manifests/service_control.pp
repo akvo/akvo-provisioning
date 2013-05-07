@@ -7,7 +7,7 @@ define sudo::service_control ( $user, $service_name_arg = undef ) {
 
     $service_name = firstof($service_name_arg, $name)
 
-    file { "/etc/sudoers.d/${service_name}_control_${user}":
+    file { "/etc/sudoers.d/${user}__${service_name}_control":
         ensure  => present,
         mode    => '0440',
         owner   => 'root',
