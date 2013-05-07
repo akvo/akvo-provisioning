@@ -1,9 +1,5 @@
 from fabric.api import local, run, env, cd, prefix, sudo, settings, put
 
-env.user = 'root'
-
-
-
 
 def create_puppet_user():
     """
@@ -20,7 +16,7 @@ def create_puppet_user():
     #
     # Note that it won't recover if the user exists but the group does not
     # or vice-versa.
-    run('id -u puppet 2>&1 >/dev/null || adduser puppet --home=/puppet/')
+    sudo('id -u puppet 2>&1 >/dev/null || adduser puppet --home=/puppet/')
 
 
 def setup_keys():
@@ -29,14 +25,14 @@ def setup_keys():
     repository on GitHub as well as allows login from the management machines to
     execute puppet updates
     """
-    run('mkdir -p /puppet/.ssh')
-    run('chown -R puppet.puppet /puppet')
+    sudo('mkdir -p /puppet/.ssh')
+    sudo('chown -R puppet.puppet /puppet')
 
     put('puppet.id_rsa.pub', '/puppet/.ssh/id_rsa.pub')
-    run('chown 644 /puppet/.ssh/id_rsa.pub')
+    sudo('chown 644 /puppet/.ssh/id_rsa.pub')
 
     put('puppet.id_rsa', '/puppet/.ssh/id_rsa')
-    run('chown 600 /puppet/.ssh/id_rsa')
+    sudo('chown 600 /puppet/.ssh/id_rsa')
 
 
 
@@ -46,10 +42,10 @@ def add_puppet_repo():
     is puppet 2.7.x, but we want to use puppet 3+
     """
     env.key_filename = ['~/.ssh/servers']
-    run('echo -e "deb http://apt.puppetlabs.com/ precise main\ndeb-src http://apt.puppetlabs.com/ precise main" >> /etc/apt/sources.list')
-    run('apt-key adv --keyserver keyserver.ubuntu.com --recv 4BD6EC30')
-    run('apt-get update')
-    run('apt-get install puppet mercurial')
+    sudo('echo -e "deb http://apt.puppetlabs.com/ precise main\ndeb-src http://apt.puppetlabs.com/ precise main" >> /etc/apt/sources.list')
+    sudo('apt-key adv --keyserver keyserver.ubuntu.com --recv 4BD6EC30')
+    sudo('apt-get update')
+    sudo('apt-get install puppet mercurial')
 
 
 def install_modules():
@@ -69,7 +65,7 @@ def firstclone():
     """
     env.user = 'puppet'
     with cd('/puppet'):
-        run('git clone ssh://git@bitbucket.org/carlio/akvo-puppet/')
+        run('git clone ssh://git@github.com/akvo/akvo-provisioning/')
 
 
 def apt_update():
