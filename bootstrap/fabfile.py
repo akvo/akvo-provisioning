@@ -32,12 +32,12 @@ def setup_keys():
     execute puppet updates
     """
     sudo('mkdir -p /puppet/.ssh')
+    put('github_ssh_host', '/puppet/.ssh/known_hosts', use_sudo=True)
+    put('puppet.id_rsa.pub', '/puppet/.ssh/id_rsa.pub', use_sudo=True)
+    put('puppet.id_rsa', '/puppet/.ssh/id_rsa', use_sudo=True)
+    # fix permissions
     sudo('chown -R puppet.puppet /puppet')
-
-    put('puppet.id_rsa.pub', '/puppet/.ssh/id_rsa.pub')
     sudo('chown 644 /puppet/.ssh/id_rsa.pub')
-
-    put('puppet.id_rsa', '/puppet/.ssh/id_rsa')
     sudo('chown 600 /puppet/.ssh/id_rsa')
 
 
@@ -47,11 +47,20 @@ def add_puppet_repo():
     Adds the puppet apt repository. The version of puppet in the default Ubuntu 12.04 repositories
     is puppet 2.7.x, but we want to use puppet 3+
     """
-    env.key_filename = ['~/.ssh/servers']
     sudo('echo -e "deb http://apt.puppetlabs.com/ precise main\ndeb-src http://apt.puppetlabs.com/ precise main" >> /etc/apt/sources.list')
     sudo('apt-key adv --keyserver keyserver.ubuntu.com --recv 4BD6EC30')
+
+
+def update_puppet_version():
+    """
+    Upgrades the installed version of puppet
+    """
     sudo('apt-get update')
-    sudo('apt-get install puppet mercurial')
+    sudo('apt-get install -y puppet')
+
+
+def install_git():
+    sudo('apt-get install -y git')
 
 
 def install_modules():
@@ -69,9 +78,8 @@ def firstclone():
     Clones the puppet repository for the first time, which has the side-effect of
     creating the relevant repositories and validating that the keys work
     """
-    env.user = 'puppet'
     with cd('/puppet'):
-        run('git clone ssh://git@github.com/akvo/akvo-provisioning/')
+        sudo('git clone ssh://git@github.com/akvo/akvo-provisioning/ checkout', user='puppet')
 
 
 def apt_update():
@@ -81,8 +89,12 @@ def apt_update():
 def bootstrap():
     create_puppet_user()
     setup_keys()
+
     add_puppet_repo()
+    update_puppet_version()
     install_modules()
+
+    install_git()
     firstclone()
 
 
