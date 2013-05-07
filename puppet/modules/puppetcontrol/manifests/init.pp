@@ -5,6 +5,24 @@ class puppetcontrol {
     # separate script is required to do that. This fills in the missing details once that
     # bootstrap script has been run - see 'bootstrap.sh'
 
-    # Currently, everything takes place in bootstrap.sh!
+    file { "/puppet/bin/":
+        ensure  => "directory",
+        owner   => "puppet",
+        group   => "puppet",
+        mode    => "700",
+    }
 
+    file { "/puppet/bin/apply.sh":
+        ensure  => "present",
+        owner   => "puppet",
+        group   => "puppet",
+        mode    => 700,
+        source  => 'puppet:///modules/puppetcontrol/apply.sh',
+    }
+
+    sudo::allow_command { "puppet_apply":
+        user    => "puppet",
+        command => "/puppet/bin/apply",
+        require => File["/puppet/bin/apply.sh"],
+    }
 }
