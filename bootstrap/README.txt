@@ -21,6 +21,11 @@ It also requires that you are able to ssh into the target machine as a user with
 or as the root user directly.
 
 
+3. Ubuntu 12.04
+This setup script and the puppet configuration assumes Ubuntu 12.04. While it may 'just work' on
+newer/older versions of Ubuntu or other Debian systems, it's not expected to.
+
+
 Usage
 ---
 
