@@ -1,7 +1,9 @@
 #!/bin/bash
 
+
 # find out where we are relative to this script
 BASEDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+fabfile="$BASEDIR/fabfile.py"
 
 
 # help function
@@ -34,8 +36,9 @@ OPTIND=1         # Reset in case getopts has been used previously in the shell.
 
 user='root'
 verbose=0
+extra_fabric_args=''
 
-while getopts "h?vu:i:c:" opt; do
+while getopts "h?vu:i:c:A:" opt; do
     case "$opt" in
     h|\?)
         show_help
@@ -47,7 +50,10 @@ while getopts "h?vu:i:c:" opt; do
         ;;
     c)  command=$OPTARG
         ;;
+    A)  extra_fabric_args=$OPTARG
+        ;;
     v)  verbose=1
+        ;;
     esac
 done
 
@@ -93,7 +99,7 @@ command -v fab >/dev/null 2>&1 || {
 
 
 # set the base fabric command
-runfab="fab --fabfile=fabfile.py --user=$user --hosts=$target_host "
+runfab="fab --fabfile=$fabfile --user=$user --hosts=$target_host $extra_fabric_args "
 if [ -n "$ssh_key_file" ]
 then
     runfab="$runfab -i $ssh_key_file "

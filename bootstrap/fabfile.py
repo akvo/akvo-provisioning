@@ -1,4 +1,5 @@
 from fabric.api import local, run, env, cd, prefix, sudo, settings, put
+from fabric.config import files
 
 
 def echo_test():
@@ -21,8 +22,12 @@ def create_puppet_user():
     # Note that it won't recover if the user exists but the group does not
     # or vice-versa.
     user_exists = 'id -u puppet >/dev/null 2>&1'
-    create_user = 'useradd --user-group --create-home --shell=/bin/bash --home=/puppet/ puppet'
+    create_user = 'useradd --no-user-group --create-home --shell=/bin/bash --home=/puppet/ puppet'
     sudo('%s || %s' % (user_exists, create_user))
+
+    group_exists = 'grep -ie "^puppet" /etc/group >/dev/null 2>&1'
+    setup_group = '{ addgroup puppet; useradd puppet puppet; }'
+    sudo('%s || %s' % (group_exists, setup_group))
 
 
 def setup_keys():
@@ -79,7 +84,8 @@ def firstclone():
     creating the relevant repositories and validating that the keys work
     """
     with cd('/puppet'):
-        sudo('git clone git@github.com:akvo/akvo-provisioning.git checkout', user='puppet')
+        if not files.exists('/puppet/checkout'):
+           sudo('git clone git@github.com:akvo/akvo-provisioning.git checkout', user='puppet')
 
 
 def apt_update():
