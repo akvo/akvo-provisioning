@@ -79,7 +79,7 @@ def firstclone():
     creating the relevant repositories and validating that the keys work
     """
     with cd('/puppet'):
-        sudo('git clone ssh://git@github.com/akvo/akvo-provisioning/ checkout', user='puppet')
+        sudo('git clone git@github.com:akvo/akvo-provisioning.git checkout', user='puppet')
 
 
 def apt_update():
