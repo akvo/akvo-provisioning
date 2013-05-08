@@ -86,7 +86,13 @@ def apt_update():
     sudo('apt-get update')
 
 
-def bootstrap():
+def set_facts(**kwargs):
+    sudo('mkdir -p /etc/facter/facts.d')
+    for fact_name, fact_value in kwargs.iteritems():
+        sudo('echo %s=%s >> /etc/facter/facts.d/akvo.txt' % (fact_name, fact_value))
+
+
+def bootstrap(environment_type):
     create_puppet_user()
     setup_keys()
 
@@ -96,6 +102,8 @@ def bootstrap():
 
     install_git()
     firstclone()
+
+    set_facts(environment=environment_type)
 
 
 def update():

@@ -7,7 +7,7 @@ BASEDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # help function
 function show_help() {
     echo
-    echo "Usage: bootstrap.sh [options] <target_host>"
+    echo "Usage: bootstrap.sh [options] <environment> <target_host>"
     echo
     echo "Options:"
     echo "  -c COMMAND            run only the specified fabric task"
@@ -16,6 +16,14 @@ function show_help() {
     echo "                        based access will be used"
     echo "  -u USERNAME           the user to ssh into the target host as; defaults to root"
     echo "  -v                    turn on verbose output"
+    echo
+    echo "Settings:"
+    echo
+    echo "The <environment> variable represents the 'type' of environment the server is running"
+    echo "in. That is, if it is 'live', 'dev' or similar. Currently, valid values are:"
+    echo
+    echo "    live                For production machines running the live systems"
+    echo "    localdev            For machines running for local development, probably Vagrant-based"
     echo
     exit 0
 }
@@ -26,7 +34,6 @@ OPTIND=1         # Reset in case getopts has been used previously in the shell.
 
 user='root'
 verbose=0
-command='bootstrap'
 
 while getopts "h?vu:i:c:" opt; do
     case "$opt" in
@@ -47,10 +54,30 @@ done
 shift $((OPTIND-1))
 
 
+# figure out what environment the node will have
+if [ -z $1 ]
+then
+    echo >&2 "The environment for the node must be specified"
+    show_help
+    exit 1
+fi
+target_env="$1"
+echo "localdev live" | grep -e "\b$target_env\b" 2>&1 >/dev/null || {
+    echo >&2 "The environment value '$target_env' is invalid - it must be one of localdev, live"
+    show_help
+    exit 1
+}
+shift
+if [ -z $command ]
+then
+    command="bootstrap:$target_env"
+fi
+
+
 # figure out where we want to bootstrap
 if [ -z $1 ];
 then
-    echo "The target node hostname must be specified"
+    echo >&2 "The target node hostname must be specified"
     show_help
     exit 1
 fi
@@ -84,10 +111,5 @@ $runfab echo_test >/dev/null 2>&1 ||  {
 $runfab $command
 
 
-# install puppet apt repo
-# install puppet 3+
-# install facter
-# install puppet modules
-#    stdlib
 # install facter plugin
 # install role facts
