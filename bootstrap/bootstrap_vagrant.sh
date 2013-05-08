@@ -10,7 +10,7 @@ sudo apt-get install -y -q fabric
 
 orig_dir=`pwd`
 cd /vagrant/bootstrap/
-./bootstrap.sh -A "--linewise --password=vagrant" -u vagrant localdev localhost
+./bootstrap.sh -A "--linewise --password=vagrant" -u vagrant $1 localdev localhost
 cd $orig_dir
 
 

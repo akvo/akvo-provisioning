@@ -9,7 +9,7 @@ fabfile="$BASEDIR/fabfile.py"
 # help function
 function show_help() {
     echo
-    echo "Usage: bootstrap.sh [options] <environment> <target_host>"
+    echo "Usage: bootstrap.sh [options] <role> <environment> <target_host>"
     echo
     echo "Options:"
     echo "  -c COMMAND            run only the specified fabric task"
@@ -27,6 +27,10 @@ function show_help() {
     echo "    live                For production machines running the live systems"
     echo "    localdev            For machines running for local development, probably Vagrant-based"
     echo
+    echo "The <role> represents what kind of machine should be built. Possible values are:"
+    echo
+    echo "    management          The central management server including statistics and control"
+    echo "                        dashboards"
     exit 0
 }
 
@@ -37,6 +41,7 @@ OPTIND=1         # Reset in case getopts has been used previously in the shell.
 user='root'
 verbose=0
 extra_fabric_args=''
+command='bootstrap'
 
 while getopts "h?vu:i:c:A:" opt; do
     case "$opt" in
@@ -60,6 +65,22 @@ done
 shift $((OPTIND-1))
 
 
+# figure out what role the node will have
+if [ -z $1 ]
+then
+    echo >&2 "The role for the node must be specified"
+    show_help
+    exit 1
+fi
+role="$1"
+echo "management" | grep -e "\b$role\b" 2>&1 >/dev/null || {
+    echo >&2 "The role value '$role' is invalid"
+    show_help
+    exit 1
+}
+shift
+
+
 # figure out what environment the node will have
 if [ -z $1 ]
 then
@@ -69,15 +90,11 @@ then
 fi
 target_env="$1"
 echo "localdev live" | grep -e "\b$target_env\b" 2>&1 >/dev/null || {
-    echo >&2 "The environment value '$target_env' is invalid - it must be one of localdev, live"
+    echo >&2 "The environment value '$target_env' is invalid"
     show_help
     exit 1
 }
 shift
-if [ -z $command ]
-then
-    command="bootstrap:$target_env"
-fi
 
 
 # figure out where we want to bootstrap
@@ -99,7 +116,7 @@ command -v fab >/dev/null 2>&1 || {
 
 
 # set the base fabric command
-runfab="fab --fabfile=$fabfile --user=$user --hosts=$target_host $extra_fabric_args "
+runfab="fab $role $target_env --fabfile=$fabfile --user=$user --hosts=$target_host $extra_fabric_args "
 if [ -n "$ssh_key_file" ]
 then
     runfab="$runfab -i $ssh_key_file "

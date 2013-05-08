@@ -1,7 +1,17 @@
 from fabric.api import local, run, env, cd, prefix, sudo, settings, put
 from fabric.contrib import files
 
+# roles
+def management():
+    env.role = 'management'
 
+
+# environments
+def localdev():
+    env.environment = 'localdev'
+
+
+# commands
 def echo_test():
     sudo('echo test')
 
@@ -88,10 +98,10 @@ def firstclone():
            sudo('git clone git@github.com:akvo/akvo-provisioning.git checkout', user='puppet')
 
 
-def set_facts(**kwargs):
+def set_facts():
     sudo('mkdir -p /etc/facter/facts.d')
-    for fact_name, fact_value in kwargs.iteritems():
-        sudo('echo %s=%s >> /etc/facter/facts.d/akvo.txt' % (fact_name, fact_value))
+    sudo('echo environment=%s >  /etc/facter/facts.d/akvo.txt' % env.environment)
+    sudo('echo role=%s        >> /etc/facter/facts.d/akvo.txt' % env.role)
 
 
 def include_apply_script():
@@ -105,7 +115,7 @@ def apply_puppet():
     sudo('/puppet/bin/apply.sh')
 
 
-def bootstrap(environment_type):
+def bootstrap():
     create_puppet_user()
     setup_keys()
 
@@ -116,7 +126,7 @@ def bootstrap(environment_type):
     install_git()
     firstclone()
 
-    set_facts(environment=environment_type)
+    set_facts()
 
     include_apply_script()
     apply_puppet()

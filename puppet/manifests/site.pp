@@ -8,6 +8,7 @@ Exec["apt-update"] -> Package <| |>
 
 
 notice("Using environment ${::environment}")
+notice("Installing role ${::role}")
 
 
 # import all of the possible configurations
