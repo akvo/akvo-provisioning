@@ -1,5 +1,5 @@
 from fabric.api import local, run, env, cd, prefix, sudo, settings, put
-from fabric.config import files
+from fabric.contrib import files
 
 
 def echo_test():
@@ -60,12 +60,12 @@ def update_puppet_version():
     """
     Upgrades the installed version of puppet
     """
-    sudo('apt-get update')
-    sudo('apt-get install -y puppet')
+    sudo('apt-get update -q')
+    sudo('apt-get install -y -q puppet')
 
 
 def install_git():
-    sudo('apt-get install -y git')
+    sudo('apt-get install -y -q git')
 
 
 def install_modules():
@@ -88,14 +88,21 @@ def firstclone():
            sudo('git clone git@github.com:akvo/akvo-provisioning.git checkout', user='puppet')
 
 
-def apt_update():
-    sudo('apt-get update')
-
-
 def set_facts(**kwargs):
     sudo('mkdir -p /etc/facter/facts.d')
     for fact_name, fact_value in kwargs.iteritems():
         sudo('echo %s=%s >> /etc/facter/facts.d/akvo.txt' % (fact_name, fact_value))
+
+
+def include_apply_script():
+    sudo('mkdir -p /puppet/bin/')
+    put('apply.sh', '/puppet/bin/apply.sh', use_sudo=True)
+    sudo('chown -R puppet.puppet /puppet/bin/')
+    sudo('chmod 700 /puppet/bin/apply.sh')
+
+
+def apply_puppet():
+    sudo('/puppet/bin/apply.sh')
 
 
 def bootstrap(environment_type):
@@ -111,10 +118,6 @@ def bootstrap(environment_type):
 
     set_facts(environment=environment_type)
 
+    include_apply_script()
+    apply_puppet()
 
-def update():
-    with cd('/puppet/puppet'):
-        run('hg pull -u')
-        
-def apply():
-    sudo('puppet apply --modulepath=/etc/puppet/modules:/usr/share/puppet/modules:/puppet/puppet/modules -v /puppet/puppet/manifests/site.pp')

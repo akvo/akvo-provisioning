@@ -116,6 +116,3 @@ $runfab echo_test >/dev/null 2>&1 ||  {
 # run fabric to bootstrap the node!
 $runfab $command
 
-
-# install facter plugin
-# install role facts
