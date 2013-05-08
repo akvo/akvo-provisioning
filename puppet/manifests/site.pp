@@ -7,6 +7,8 @@ exec { "apt-update":
 Exec["apt-update"] -> Package <| |>
 
 
+notice("Using environment ${::environment}")
+
 
 # import all of the possible configurations
 import 'localdev'
