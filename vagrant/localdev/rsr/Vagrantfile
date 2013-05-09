@@ -3,7 +3,7 @@
 
 $whoami = `whoami`.strip
 $hosthost = `hostname`.strip
-$hostname = $whoami + '.' + $hosthost + '.akvo.devbox'
+$hostname = $whoami + '.' + $hosthost + '.localdev.akvo.org'
 
 Vagrant.configure("2") do |config|
     config.vm.box = "precise64"
@@ -11,6 +11,8 @@ Vagrant.configure("2") do |config|
     config.vm.hostname = $hostname
     config.vm.synced_folder "../../../bootstrap/", "/vagrant/bootstrap/"
     config.ssh.forward_agent = true
+
+    config.vm.network :private_network, ip: "192.168.50.102"
 
     config.vm.provision :shell do |s|
         s.path = "../../../bootstrap/bootstrap_vagrant.sh"
