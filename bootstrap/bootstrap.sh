@@ -26,6 +26,7 @@ function show_help() {
     echo
     echo "    live                For production machines running the live systems"
     echo "    localdev            For machines running for local development, probably Vagrant-based"
+    echo "    opstest             Used for testing puppet configuration"
     echo
     echo "The <role> represents what kind of machine should be built. Possible values are:"
     echo
@@ -89,7 +90,7 @@ then
     exit 1
 fi
 target_env="$1"
-echo "localdev live" | grep -e "\b$target_env\b" 2>&1 >/dev/null || {
+echo "opstest localdev live" | grep -e "\b$target_env\b" 2>&1 >/dev/null || {
     echo >&2 "The environment value '$target_env' is invalid"
     show_help
     exit 1

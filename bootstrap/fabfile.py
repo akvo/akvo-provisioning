@@ -9,6 +9,8 @@ def management():
 # environments
 def localdev():
     env.environment = 'localdev'
+def opstest():
+    env.environment = 'opstest'
 
 
 # commands
@@ -84,8 +86,10 @@ def install_modules():
     """
     with settings(warn_only=True):
         sudo('puppet module install puppetlabs/stdlib')
-        #sudo('puppet module install puppetlabs-postgresql')
-        #sudo('puppet module install puppetlabs-rabbitmq')
+        sudo('puppet module install puppetlabs/puppetdb')
+        # the puppetdb terminus is a special case, see
+        # http://docs.puppetlabs.com/puppetdb/1.1/connect_puppet_apply.html
+        sudo('apt-get install -q -y puppetdb-terminus')
 
 
 def firstclone():
