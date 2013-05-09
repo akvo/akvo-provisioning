@@ -1,0 +1,7 @@
+
+akvo services:
+8000 - 8099
+
+dashboard services:
+8100 - 8199
+ puppetdb dashboard   8100
