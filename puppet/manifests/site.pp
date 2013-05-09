@@ -11,5 +11,21 @@ notice("Using environment ${::environment}")
 notice("Installing role ${::role}")
 
 
-# import all of the possible configurations
-import 'localdev'
+case $::environment {
+    'localdev': {
+        $base_domain = 'localdev.akvo.org'
+    }
+    'live': {
+        $base_domain = 'akvo.org'
+    }
+}
+
+
+
+node default {
+    include common
+
+    if ( $::role == 'management' ) {
+    }
+
+}
