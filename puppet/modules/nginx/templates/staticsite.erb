@@ -1,0 +1,19 @@
+server {
+    listen 80;
+    server_name www.<%= hostname %>;
+    rewrite ^(.*) http://<%= hostname %>$1 permanent;
+}
+
+server {
+    listen 80;
+    server_name <%= hostname %>;
+
+    location / {
+        root <%= rootdir %>;
+
+        <% if @password_protected %>
+           auth_basic            "Restricted";
+           auth_basic_user_file  <%= htpasswd_file %>;
+        <% end -%>
+    }
+}
