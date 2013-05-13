@@ -30,8 +30,7 @@ ignore_file \.pod$
 # network notation unless the perl module Net::CIDR is installed.  You
 # may repeat the allow line as many times as you'd like
 
-allow  ^78\.46\.186\.145$
-allow  ^::ffff:78\.46\.186\.145$
+allow  ^<%= management_ip_regex %>$
 allow  ^127\.0\.0\.1$
 
 # Which address to bind to;

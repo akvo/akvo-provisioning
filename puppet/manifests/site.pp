@@ -13,6 +13,7 @@ notice("Installing role ${::role}")
 
 case $::environment {
     'localdev': {
+        $management_server_ip = '127.0.0.1'
         $base_domain = 'localdev.akvo.org'
     }
     'live': {
@@ -27,6 +28,7 @@ node default {
 
     if ( $::role == 'management' ) {
         include puppetdb
+        include munin::master
     }
 
 }

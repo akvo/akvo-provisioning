@@ -5,7 +5,7 @@ class munin::master {
     include nginx
     nginx::staticsite { 'munin-nginx':
         rootdir  => '/srv/munin/html',
-        hostname => 'munin.${::base_domain}',
+        hostname => "munin.${::base_domain}",
     }
 
     file { '/srv/munin':
@@ -27,5 +27,8 @@ class munin::master {
         source  => 'puppet:///modules/munin/munin.conf',
         require => Package['munin'],
     }
+
+    # Collect all exported munin-node file lines
+    File_Line <<| tag == "munin-node-host" |>>
 
 }
