@@ -26,6 +26,7 @@ node default {
     include common
 
     if ( $::role == 'management' ) {
+        include puppetdb
     }
 
 }

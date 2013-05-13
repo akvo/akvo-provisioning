@@ -5,3 +5,4 @@ akvo services:
 dashboard services:
 8100 - 8199
  puppetdb dashboard   8100
+ puppetdb repl        8102

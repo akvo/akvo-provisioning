@@ -31,14 +31,13 @@ def create_puppet_user():
     # user if it doesn't already exist", and therefore allows you to run
     # this command more than once without damaging anything.
     #
-    # Note that it won't recover if the user exists but the group does not
-    # or vice-versa.
+    # Similar behaviour exists for the puppet group
     user_exists = 'id -u puppet >/dev/null 2>&1'
     create_user = 'useradd --no-user-group --create-home --shell=/bin/bash --home=/puppet/ puppet'
     sudo('%s || %s' % (user_exists, create_user))
 
     group_exists = 'grep -ie "^puppet" /etc/group >/dev/null 2>&1'
-    setup_group = '{ addgroup puppet; useradd puppet puppet; }'
+    setup_group = '{ addgroup puppet; adduser puppet puppet; }'
     sudo('%s || %s' % (group_exists, setup_group))
 
 
@@ -86,7 +85,6 @@ def install_modules():
     """
     with settings(warn_only=True):
         sudo('puppet module install puppetlabs/stdlib')
-        sudo('puppet module install puppetlabs/puppetdb')
         # the puppetdb terminus is a special case, see
         # http://docs.puppetlabs.com/puppetdb/1.1/connect_puppet_apply.html
         sudo('apt-get install -q -y puppetdb-terminus')
@@ -99,7 +97,8 @@ def firstclone():
     """
     with cd('/puppet'):
         if not files.exists('/puppet/checkout'):
-           sudo('git clone git@github.com:akvo/akvo-provisioning.git checkout', user='puppet')
+            sudo('git clone git@github.com:akvo/akvo-provisioning.git checkout', user='puppet')
+            sudo('chown -R puppet.puppet /puppet/checkout')
 
 
 def set_facts():
@@ -133,5 +132,9 @@ def bootstrap():
     set_facts()
 
     include_apply_script()
+    apply_puppet()
+    # note: we do this twice the first time - the initial setup will also configure
+    # puppetdb, and the second time will reconfigure using any information read from
+    # puppetdb
     apply_puppet()
 
