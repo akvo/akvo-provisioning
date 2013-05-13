@@ -2,6 +2,9 @@ from fabric.api import local, run, env, cd, prefix, sudo, settings, put
 from fabric.contrib import files
 
 # roles
+import time
+
+
 def management():
     env.role = 'management'
 
@@ -136,6 +139,7 @@ def bootstrap():
     # note: we do this twice the first time - the initial setup will also configure
     # puppetdb, and the second time will reconfigure using any information read from
     # puppetdb
-    # TODO: this needs to wait for the puppetdb server to be actually responsive
+    # note: this needs to wait for the puppetdb server to be actually responsive
+    time.sleep(10)
     apply_puppet()
 
