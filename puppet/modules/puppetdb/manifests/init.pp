@@ -19,7 +19,7 @@ class puppetdb {
     include nginx
 
     # create an SSL proxy (puppet clients refuse to connect without SSL)
-    nginx::proxy { 'testproxy':
+    nginx::proxy { 'puppetdb':
         server_name        => "puppetdb.${::base_domain}",
         proxy_url          => 'http://localhost:8100',
         ssl                => true,

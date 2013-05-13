@@ -1,12 +1,13 @@
 from fabric.api import local, run, env, cd, prefix, sudo, settings, put
 from fabric.contrib import files
-
-# roles
 import time
 
 
+# roles
 def management():
     env.role = 'management'
+def basic():
+    env.role = 'basic'
 
 
 # environments

@@ -74,7 +74,7 @@ then
     exit 1
 fi
 role="$1"
-echo "management" | grep -e "\b$role\b" 2>&1 >/dev/null || {
+echo "management basic" | grep -e "\b$role\b" 2>&1 >/dev/null || {
     echo >&2 "The role value '$role' is invalid"
     show_help
     exit 1
@@ -123,9 +123,8 @@ then
     runfab="$runfab -i $ssh_key_file "
 fi
 
-
 # ensure we can ssh in and sudo
-$runfab echo_test >/dev/null 2>&1 ||  {
+$runfab echo_test 2>&1 ||  {
     echo >&2 'Failed to connect to target node or to run sudo - check your access!'
     exit 1
 }
