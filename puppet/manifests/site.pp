@@ -17,7 +17,7 @@ case $::environment {
         $base_domain = 'localdev.akvo.org'
     }
     'opstest': {
-        $management_server_ip = '72.44.50.191'
+        $management_server_ip = '50.16.156.27'
         $base_domain = 'opstest.akvo.org'
     }
     'live': {
