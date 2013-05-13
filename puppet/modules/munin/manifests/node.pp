@@ -20,7 +20,7 @@ class munin::node {
         subscribe  => File['/etc/munin/munin-node.conf'],
     }
 
-    @@file_line { 'munin_node-host':
+    @@file_line { "munin_node-host-${::fqdn}":
         path   => '/etc/munin/munin.conf',
         line   => inline_template("[<%= fqdn %>]\n  address <%= fqdn %>"),
         tag    => 'munin-node-host',

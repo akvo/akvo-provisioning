@@ -124,7 +124,7 @@ then
 fi
 
 # ensure we can ssh in and sudo
-$runfab echo_test 2>&1 ||  {
+$runfab echo_test >/dev/null 2>&1 ||  {
     echo >&2 'Failed to connect to target node or to run sudo - check your access!'
     exit 1
 }
