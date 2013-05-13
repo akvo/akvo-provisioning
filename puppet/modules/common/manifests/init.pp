@@ -30,6 +30,9 @@ class common {
     include sudo
     include puppetcontrol
 
+    # TODO: remove this once DNS is working!
+    include common::hosts
+
     # include sshd
     # include users
     # include munin::node

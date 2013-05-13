@@ -136,5 +136,6 @@ def bootstrap():
     # note: we do this twice the first time - the initial setup will also configure
     # puppetdb, and the second time will reconfigure using any information read from
     # puppetdb
+    # TODO: this needs to wait for the puppetdb server to be actually responsive
     apply_puppet()
 
