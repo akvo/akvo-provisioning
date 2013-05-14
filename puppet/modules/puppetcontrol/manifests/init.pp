@@ -36,7 +36,7 @@ class puppetcontrol {
         ensure  => present,
         owner   => 'root',
         group   => 'root',
-        mode    => '644',
+        mode    => '444',
         source  => 'puppet:///modules/puppetcontrol/puppet.conf',
     }
 
@@ -47,7 +47,7 @@ class puppetcontrol {
     file { '/etc/puppet/puppetdb.conf':
         ensure  => present,
         owner   => 'root',
-        mode    => '644',
+        mode    => '444',
         content => template('puppetcontrol/puppetdb.conf.erb'),
     }
 
@@ -55,7 +55,17 @@ class puppetcontrol {
         ensure  => present,
         owner   => 'root',
         group   => 'root',
-        mode    => '644',
+        mode    => '444',
         source  => 'puppet:///modules/puppetcontrol/routes.yaml',
+    }
+
+
+    # configure hiera
+    file { '/etc/puppet/hiera.yaml':
+        ensure => 'present',
+        owner  => 'root',
+        group  => 'root',
+        mode   => '444',
+        source => 'puppet:///modules/puppetcontrol/hiera.yaml',
     }
 }
