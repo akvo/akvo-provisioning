@@ -15,6 +15,8 @@ def localdev():
     env.environment = 'localdev'
 def opstest():
     env.environment = 'opstest'
+def live():
+    env.environment = 'live'
 
 
 # commands
@@ -52,9 +54,9 @@ def setup_keys():
     execute puppet updates
     """
     sudo('mkdir -p /puppet/.ssh')
-    put('github_ssh_host', '/puppet/.ssh/known_hosts', use_sudo=True)
-    put('puppet.id_rsa.pub', '/puppet/.ssh/id_rsa.pub', use_sudo=True)
-    put('puppet.id_rsa', '/puppet/.ssh/id_rsa', use_sudo=True)
+    put('files/github_ssh_host', '/puppet/.ssh/known_hosts', use_sudo=True)
+    put('files/puppet.id_rsa.pub', '/puppet/.ssh/id_rsa.pub', use_sudo=True)
+    put('files/puppet.id_rsa', '/puppet/.ssh/id_rsa', use_sudo=True)
     # fix permissions
     sudo('chown -R puppet.puppet /puppet')
     sudo('chown 644 /puppet/.ssh/id_rsa.pub')
@@ -113,13 +115,48 @@ def set_facts():
 
 def include_apply_script():
     sudo('mkdir -p /puppet/bin/')
-    put('apply.sh', '/puppet/bin/apply.sh', use_sudo=True)
+    put('files/apply.sh', '/puppet/bin/apply.sh', use_sudo=True)
     sudo('chown -R puppet.puppet /puppet/bin/')
     sudo('chmod 700 /puppet/bin/apply.sh')
 
 
+def setup_hiera():
+    sudo('mkdir /puppet/hiera/')
+    sudo('chown -R puppet.puppet /puppet/hiera')
+    relink_hiera()
+
+
+def relink_hiera():
+    sudo('find /puppet/hiera/ -type l -delete')
+    sudo('ln -s /puppet/checkout/hiera/* /puppet/hiera/')
+
+
+def get_latest_config():
+    with cd('/puppet/checkout'):
+        sudo('git pull', user='puppet')
+
+
 def apply_puppet():
     sudo('/puppet/bin/apply.sh')
+
+
+def add_role(role):
+    nodefile = "/puppet/hiera/nodespecific.yaml"
+
+    if files.exists(nodefile):
+        if files.contains(nodefile, '  - %s' % role, exact=True):
+            return
+        sudo('echo "  - %s" >> %s' % (role, nodefile))
+    else:
+        sudo('echo "roles:" > %s' % nodefile)
+        sudo('echo "  - %s" >> %s' % (role, nodefile))
+    apply_puppet()
+
+
+def update_config():
+    get_latest_config()
+    relink_hiera()
+    apply_puppet()
 
 
 def bootstrap():

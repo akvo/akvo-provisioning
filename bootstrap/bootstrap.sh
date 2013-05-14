@@ -9,7 +9,7 @@ fabfile="$BASEDIR/fabfile.py"
 # help function
 function show_help() {
     echo
-    echo "Usage: bootstrap.sh [options] <role> <environment> <target_host>"
+    echo "Usage: bootstrap.sh [options] <target_host> <environment>"
     echo
     echo "Options:"
     echo "  -c COMMAND            run only the specified fabric task"
@@ -17,6 +17,8 @@ function show_help() {
     echo "  -i SSH_IDENT          the ssh identity to use when logging in; otherwise password"
     echo "                        based access will be used"
     echo "  -u USERNAME           the user to ssh into the target host as; defaults to root"
+    echo "  -M                    use this flag to create a management node, otherwise a basic"
+    echo "                        node will be created"
     echo "  -v                    turn on verbose output"
     echo
     echo "Settings:"
@@ -27,11 +29,6 @@ function show_help() {
     echo "    live                For production machines running the live systems"
     echo "    localdev            For machines running for local development, probably Vagrant-based"
     echo "    opstest             Used for testing puppet configuration"
-    echo
-    echo "The <role> represents what kind of machine should be built. Possible values are:"
-    echo
-    echo "    management          The central management server including statistics and control"
-    echo "                        dashboards"
     exit 0
 }
 
@@ -43,8 +40,9 @@ user='root'
 verbose=0
 extra_fabric_args=''
 command='bootstrap'
+role='basic'
 
-while getopts "h?vu:i:c:A:" opt; do
+while getopts "h?vu:i:c:A:M" opt; do
     case "$opt" in
     h|\?)
         show_help
@@ -56,6 +54,8 @@ while getopts "h?vu:i:c:A:" opt; do
         ;;
     c)  command=$OPTARG
         ;;
+    M)  role='management'
+        ;;
     A)  extra_fabric_args=$OPTARG
         ;;
     v)  verbose=1
@@ -66,19 +66,14 @@ done
 shift $((OPTIND-1))
 
 
-# figure out what role the node will have
-if [ -z $1 ]
+# figure out where we want to bootstrap
+if [ -z $1 ];
 then
-    echo >&2 "The role for the node must be specified"
+    echo >&2 "The target node hostname must be specified"
     show_help
     exit 1
 fi
-role="$1"
-echo "management basic" | grep -e "\b$role\b" 2>&1 >/dev/null || {
-    echo >&2 "The role value '$role' is invalid"
-    show_help
-    exit 1
-}
+target_host="$1"
 shift
 
 
@@ -96,16 +91,6 @@ echo "opstest localdev live" | grep -e "\b$target_env\b" 2>&1 >/dev/null || {
     exit 1
 }
 shift
-
-
-# figure out where we want to bootstrap
-if [ -z $1 ];
-then
-    echo >&2 "The target node hostname must be specified"
-    show_help
-    exit 1
-fi
-target_host="$1"
 
 
 # make sure we have our dependencies
