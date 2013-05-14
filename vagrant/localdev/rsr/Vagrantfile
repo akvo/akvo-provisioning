@@ -16,7 +16,8 @@ Vagrant.configure("2") do |config|
 
     config.vm.provision :shell do |s|
         s.path = "../../../bootstrap/bootstrap_vagrant.sh"
-        s.args = "rsr"
+        # the arguments to this script are a list of roles the box should have
+        s.args = "management rsr"
     end
 end
 

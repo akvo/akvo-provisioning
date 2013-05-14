@@ -5,8 +5,8 @@ import time
 
 # roles
 env.initial_roles = []
-def management():
-    env.initial_roles = ['management']
+def with_roles(role_list):
+    env.initial_roles = role_list.split(' ')
 
 
 # environments

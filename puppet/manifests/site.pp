@@ -10,14 +10,17 @@ Exec["apt-update"] -> Package <| |>
 
 node default {
     # the default node simply switches based on the provided list of roles
-
     notice("Using environment ${::environment}")
-
-    include common
 
     $roles = hiera_array('roles')
 
-    if 'management' in $roles { import 'management' }
-    if 'monitor' in $roles { import 'monitor' }
+    # $roles will be something like ['basic', 'management', 'monitor']
+    #
+    # The call to prefix will convert that to
+    #  ['role::basic', 'role::management', 'role::monitor']
+    #
+    # Then include $role_classes includes each one of those roles.
+    $role_classes = prefix($roles, 'role::')
+    include $role_classes
 
 }

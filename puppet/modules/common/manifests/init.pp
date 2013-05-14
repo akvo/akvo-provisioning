@@ -22,21 +22,4 @@ class common {
     package { $useful_packages:
         ensure => 'latest',
     }
-
-
-    # These are all custom modules which will install the relevant packages as well as
-    # configure them:
-
-    include sudo
-    include puppetcontrol
-    include munin::node
-
-    # TODO: remove this once DNS is working!
-    include common::hosts
-
-    # include sshd
-    # include users
-    # include dotfiles
-    # include supervisord
-
 }

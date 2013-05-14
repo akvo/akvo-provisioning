@@ -33,7 +33,11 @@ There are some centralised services such as `puppetdb` which are required across
 
 Monitor
 ---
-The `monitor` role is for the node which will 
+The `monitor` role is for the node which will run all of the monitoring tools designed to keep track of the performance of the rest of the environment nodes.
+
+Everything
+---
+This is a shorthand for testing; including this role will cause every other role to be included.
 
 Environment Setup Instructions
 ===

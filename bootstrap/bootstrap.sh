@@ -9,7 +9,7 @@ fabfile="$BASEDIR/fabfile.py"
 # help function
 function show_help() {
     echo
-    echo "Usage: bootstrap.sh [options] <target_host> <environment>"
+    echo "Usage: bootstrap.sh [options] <target_host> <environment> [roles...]"
     echo
     echo "Options:"
     echo "  -c COMMAND            run only the specified fabric task"
@@ -29,6 +29,10 @@ function show_help() {
     echo "    live                For production machines running the live systems"
     echo "    localdev            For machines running for local development, probably Vagrant-based"
     echo "    opstest             Used for testing puppet configuration"
+    echo
+    echo "The [roles...] is an optional list of additional roles to be included. If not set, the node"
+    echo "will have only the minimal configuration required. The add_role.sh script can then be used"
+    echo "to add additional roles."
     exit 0
 }
 
@@ -40,9 +44,8 @@ user='root'
 verbose=0
 extra_fabric_args=''
 command='bootstrap'
-role=''
 
-while getopts "h?vu:i:c:A:M" opt; do
+while getopts "h?vu:i:c:A:" opt; do
     case "$opt" in
     h|\?)
         show_help
@@ -53,8 +56,6 @@ while getopts "h?vu:i:c:A:M" opt; do
     i)  ssh_key_file=$OPTARG
         ;;
     c)  command=$OPTARG
-        ;;
-    M)  role='management'
         ;;
     A)  extra_fabric_args=$OPTARG
         ;;
@@ -92,6 +93,8 @@ echo "opstest localdev live" | grep -e "\b$target_env\b" 2>&1 >/dev/null || {
 }
 shift
 
+roles=$@
+echo "Including roles: $roles"
 
 # make sure we have our dependencies
 command -v fab >/dev/null 2>&1 || {
@@ -102,7 +105,7 @@ command -v fab >/dev/null 2>&1 || {
 
 
 # set the base fabric command
-runfab="fab $role $target_env --fabfile=$fabfile --user=$user --hosts=$target_host $extra_fabric_args "
+runfab="fab $target_env with_roles:'$roles' --fabfile=$fabfile --user=$user --hosts=$target_host $extra_fabric_args "
 if [ -n "$ssh_key_file" ]
 then
     runfab="$runfab -i $ssh_key_file "
@@ -116,5 +119,6 @@ $runfab echo_test >/dev/null 2>&1 ||  {
 
 
 # run fabric to bootstrap the node!
+echo "Running fabric: $runfab $command"
 $runfab $command
 
