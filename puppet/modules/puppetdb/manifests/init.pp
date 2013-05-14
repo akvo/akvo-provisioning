@@ -2,6 +2,9 @@
 
 class puppetdb {
 
+    $base_domain = hiera('base_domain')
+    $puppet_domain = "puppetdb.${base_domain}"
+
     # make sure the package is installed and up to date
     package { 'puppetdb':
         ensure => 'latest',
@@ -20,7 +23,7 @@ class puppetdb {
 
     # create an SSL proxy (puppet clients refuse to connect without SSL)
     nginx::proxy { 'puppetdb':
-        server_name        => "puppetdb.${::base_domain}",
+        server_name        => $puppet_domain,
         proxy_url          => 'http://localhost:8100',
         ssl                => true,
         password_protected => false,

@@ -1,11 +1,14 @@
 class munin::master {
 
     include munin::common
-  
+
+    $base_domain = hiera('base_domain')
+    $munin_domain = "munin.${base_domain}"
+
     include nginx
     nginx::staticsite { 'munin-nginx':
         rootdir  => '/srv/munin/html',
-        hostname => "munin.${::base_domain}",
+        hostname => $munin_domain,
     }
 
     file { '/srv/munin':

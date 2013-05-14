@@ -43,7 +43,8 @@ class puppetcontrol {
 
     # connect it to the puppetdb server
     # note it is imperative that the puppetdb server is already configured and running!
-    $puppetdb_server = "puppetdb.${::base_domain}"
+    $base_domain = hiera('base_domain')
+    $puppetdb_server = "puppetdb.${base_domain}"
     file { '/etc/puppet/puppetdb.conf':
         ensure  => present,
         owner   => 'root',

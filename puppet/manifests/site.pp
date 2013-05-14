@@ -7,22 +7,17 @@ exec { "apt-update":
 Exec["apt-update"] -> Package <| |>
 
 
-notice("Using environment ${::environment}")
-notice("Installing role ${::role}")
-
-
-$base_domain = hiera('base_domain')
-$management_server_ip = hiera('management_server_ip')
-$roles = hiera_array('roles')
-
-
 
 node default {
+    # the default node simply switches based on the provided list of roles
+
+    notice("Using environment ${::environment}")
+
     include common
 
-    if 'management' in $::roles {
-        include puppetdb
-        include munin::master
-    }
+    $roles = hiera_array('roles')
+
+    if 'management' in $roles { import 'management' }
+    if 'monitor' in $roles { import 'monitor' }
 
 }

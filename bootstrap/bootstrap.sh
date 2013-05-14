@@ -40,7 +40,7 @@ user='root'
 verbose=0
 extra_fabric_args=''
 command='bootstrap'
-role='basic'
+role=''
 
 while getopts "h?vu:i:c:A:M" opt; do
     case "$opt" in

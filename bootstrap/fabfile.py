@@ -4,10 +4,9 @@ import time
 
 
 # roles
+env.initial_roles = []
 def management():
-    env.role = 'management'
-def basic():
-    env.role = 'basic'
+    env.initial_roles = ['management']
 
 
 # environments
@@ -91,9 +90,10 @@ def install_modules():
     """
     with settings(warn_only=True):
         sudo('puppet module install puppetlabs/stdlib')
-        # the puppetdb terminus is a special case, see
-        # http://docs.puppetlabs.com/puppetdb/1.1/connect_puppet_apply.html
-        sudo('apt-get install -q -y puppetdb-terminus')
+
+    # the puppetdb terminus is a special case, see
+    # http://docs.puppetlabs.com/puppetdb/1.1/connect_puppet_apply.html
+    sudo('apt-get install -q -y puppetdb-terminus')
 
 
 def firstclone():
@@ -110,7 +110,6 @@ def firstclone():
 def set_facts():
     sudo('mkdir -p /etc/facter/facts.d')
     sudo('echo environment=%s >  /etc/facter/facts.d/akvo.txt' % env.environment)
-    sudo('echo role=%s        >> /etc/facter/facts.d/akvo.txt' % env.role)
 
 
 def include_apply_script():
@@ -123,7 +122,10 @@ def include_apply_script():
 def setup_hiera():
     sudo('mkdir /puppet/hiera/')
     sudo('chown -R puppet.puppet /puppet/hiera')
+    put('files/hiera.yaml', '/etc/puppet/hiera.yaml', use_sudo=True)
     relink_hiera()
+    for role in env.initial_roles:
+        add_role(role)
 
 
 def relink_hiera():
@@ -150,7 +152,6 @@ def add_role(role):
     else:
         sudo('echo "roles:" > %s' % nodefile)
         sudo('echo "  - %s" >> %s' % (role, nodefile))
-    apply_puppet()
 
 
 def update_config():
@@ -171,6 +172,7 @@ def bootstrap():
     firstclone()
 
     set_facts()
+    setup_hiera()
 
     include_apply_script()
     apply_puppet()
