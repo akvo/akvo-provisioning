@@ -2,9 +2,10 @@
 :backends:
   - yaml
 :hierarchy:
+  - nodespecific
   - nodes/%{::fqdn}
   - environments/%{::environment}
   - common
 
 :yaml:
-  :datadir: /puppet/checkout/hiera/
+  :datadir: /puppet/hiera/
