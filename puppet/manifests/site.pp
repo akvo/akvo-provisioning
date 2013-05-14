@@ -11,26 +11,16 @@ notice("Using environment ${::environment}")
 notice("Installing role ${::role}")
 
 
-case $::environment {
-    'localdev': {
-        $management_server_ip = '127.0.0.1'
-        $base_domain = 'localdev.akvo.org'
-    }
-    'opstest': {
-        $management_server_ip = '50.16.156.27'
-        $base_domain = 'opstest.akvo.org'
-    }
-    'live': {
-        $base_domain = 'akvo.org'
-    }
-}
+$base_domain = hiera('base_domain')
+$management_server_ip = hiera('management_server_ip')
+$roles = hiera_array('roles')
 
 
 
 node default {
     include common
 
-    if ( $::role == 'management' ) {
+    if 'management' in $::roles {
         include puppetdb
         include munin::master
     }
