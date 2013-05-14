@@ -20,6 +20,21 @@ Node
 ---
 A node is an individual machine in an environment. A node has one or more roles
 
+Roles
+===
+
+Basic
+---
+The `basic` role is the minimal setup required to further configure this node. It is essentially bootstrapping further once the initial basic bootstrap scripts are finished.
+
+Management
+---
+There are some centralised services such as `puppetdb` which are required across the entire environment. These are provided by the management server. Note: a management node is required before any other nodes can be bootstrapped, as they will to contact their management node.
+
+Monitor
+---
+The `monitor` role is for the node which will 
+
 Environment Setup Instructions
 ===
 * Ensure the correct config is in [TODO: set up heira and include info here]
