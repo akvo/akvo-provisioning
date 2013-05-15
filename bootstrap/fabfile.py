@@ -120,7 +120,7 @@ def include_apply_script():
 
 
 def setup_hiera():
-    sudo('mkdir /puppet/hiera/')
+    sudo('mkdir -p /puppet/hiera/')
     sudo('chown -R puppet.puppet /puppet/hiera')
     put('files/hiera.yaml', '/etc/puppet/hiera.yaml', use_sudo=True)
     relink_hiera()
