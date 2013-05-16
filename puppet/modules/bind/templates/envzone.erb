@@ -1,0 +1,22 @@
+$TTL 1s
+; we set the TTL to be very short because we want very little caching
+
+
+@	IN	SOA	ns1.<%= zone %>. nsadmin.akvo.org. (
+				2013051601; Serial
+				5s	; Refresh time - how long a slave waits between checking for updates
+				2m	; Retry - how long a slave waits before retrying a failed transfer
+				5m	; Expire - how long a slave will keep data if it cannot update
+				1s	; Default TTL - the default TTL for all records with no value specified
+			)
+
+
+; configure where this nameserver lives
+@	IN	NS	ns1.<%= zone %>.
+ns1 IN  A   <%= dnsip %>
+
+; now we can add subdomains!
+; some are hardcoded:
+management  IN  A   <%= managementip %>
+
+; some are collected by exported resources:
