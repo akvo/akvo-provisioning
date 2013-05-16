@@ -1,3 +1,9 @@
 #!/bin/bash
+if [ `whoami` != "root" ]
+then
+    echo >&2 "This script must be run as root"
+    exit 1
+fi
+
 MODULEPATH=/puppet/checkout/puppet/modules:/etc/puppet/modules:/usr/share/puppet/modules
-sudo puppet apply --modulepath=$MODULEPATH --verbose /puppet/checkout/puppet/manifests/site.pp
+puppet apply --modulepath=$MODULEPATH --verbose /puppet/checkout/puppet/manifests/site.pp
