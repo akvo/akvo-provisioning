@@ -29,8 +29,6 @@ ignore_file \.pod$
 # regular expression, since Net::Server does not understand CIDR-style
 # network notation unless the perl module Net::CIDR is installed.  You
 # may repeat the allow line as many times as you'd like
-
-allow  ^<%= management_ip_regex %>$
 allow  ^127\.0\.0\.1$
 
 # Which address to bind to;

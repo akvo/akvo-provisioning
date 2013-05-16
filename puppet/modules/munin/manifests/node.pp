@@ -20,10 +20,9 @@ class munin::node {
         subscribe  => File['/etc/munin/munin-node.conf'],
     }
 
-    @@file_line { "munin_node-host-${::fqdn}":
-        path   => '/etc/munin/munin.conf',
-        line   => inline_template("[<%= fqdn %>]\n  address <%= fqdn %>"),
-        tag    => 'munin-node-host',
-    }
+    @@munin::nodeinfo { "munin_node-host-${::fqdn}": }
+
+    # figure out where the masters are so we can allow them to connect
+    Munin::MasterInfo <<| |>>
 
 }

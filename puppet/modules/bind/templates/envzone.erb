@@ -15,8 +15,4 @@ $TTL 1s
 @	IN	NS	ns1.<%= zone %>.
 ns1 IN  A   <%= dnsip %>
 
-; now we can add subdomains!
-; some are hardcoded:
-management  IN  A   <%= managementip %>
-
-; some are collected by exported resources:
+; the following are collected exported resources:

@@ -32,11 +32,14 @@ class munin::master {
     }
 
     # Collect all exported munin-node file lines
-    File_Line <<| tag == "munin-node-host" |>>
+    Munin::NodeInfo <<| |>>
 
     # let the DNS server know where we are
     @@bind::service_location { "munin":
         ip => hiera('external_ip')
     }
+
+    # let the munin nodes know where we are
+    @@munin::masterinfo { "munin": }
 
 }
