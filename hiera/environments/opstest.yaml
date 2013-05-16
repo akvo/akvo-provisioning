@@ -1,2 +1,2 @@
-base_domain          : 'opstest.akvo.org'
-management_server_ip : '54.224.49.40'
+base_domain          : 'akvotest.landscape.io'
+management_server_ip : '54.226.43.97'
