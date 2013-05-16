@@ -1,5 +1,11 @@
 class bind {
 
+    # get some environment specific vars
+    $zone = hiera('base_domain')
+    $zonefile = "/srv/bind/db.${zone}"
+    $managementip = hiera('management_server_ip')
+    $dnsip = $managementip
+
     # install bind and make sure puppet keeps the service alive
     package { 'bind9':
         ensure => installed,
@@ -23,11 +29,6 @@ class bind {
         require => Package['bind9'],
     }
 
-    # get some environment specific vars
-    $zone = hiera('base_domain')
-    $managementip = hiera('management_server_ip')
-    $dnsip = $managementip
-
     # configure the list of zones we will manage
     file { '/etc/bind/named.conf.local':
         ensure  => present,
@@ -40,7 +41,7 @@ class bind {
 
 
     # configure our default management server zone file
-    file { "/srv/bind/db.${zone}":
+    file { $zonefile:
         ensure  => present,
         content => template('bind/envzone.erb'),
         owner   => 'bind',
@@ -49,5 +50,9 @@ class bind {
         require => File['/srv/bind'],
         notify  => Service['bind9']
     }
+
+    # Collect all exported dns record file lines
+    Bind::Service_Location <<| |>>
+
 
 }

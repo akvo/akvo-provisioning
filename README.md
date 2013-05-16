@@ -39,7 +39,16 @@ Everything
 ---
 This is a shorthand for testing; including this role will cause every other role to be included.
 
-Environment Setup Instructions
+
+Creating a development environment
+===
+* Download vagrant
+* vagrant plugin install vagrant-hostmaster
+* checkout akvo-rsr
+* submodule update for akvo-rsr
+* vagrant up
+
+Creating a new eniromnent
 ===
 * Ensure the correct config is in [TODO: set up heira and include info here]
 
