@@ -69,4 +69,9 @@ class puppetdb {
         require => Package['puppetdb'],
         notify  => Service['puppetdb'],
     }
+
+    # let the DNS server know where we are
+    @@bind::service_location { "puppetdb":
+        ip => hiera('external_ip')
+    }
 }
