@@ -126,6 +126,23 @@ def setup_hiera():
     relink_hiera()
     for role in env.initial_roles:
         add_role(role)
+    hiera_add_external_ip()
+
+
+def hiera_add_external_ip():
+    links = sudo("ip -o link | sed 's/[0-9]\+:\s\+//' | sed 's/:.*$//' | grep eth")
+    links = links.split('\n')
+
+    # search for the first non-local ip
+    for link in links:
+        link = link.strip()
+        ip_addr = sudo("ifconfig %s | grep 'inet addr' | awk -F: '{print $2}' | awk '{print $1}'" % link)
+        if ip_addr.startswith('10.'):
+            continue
+        break
+
+    sudo("sed -i '/external_ip/d' /puppet/hiera/nodespecific.yaml")
+    sudo('echo "external_ip : %s" >> /puppet/hiera/nodespecific.yaml' % ip_addr)
 
 
 def relink_hiera():
