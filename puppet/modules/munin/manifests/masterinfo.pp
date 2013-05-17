@@ -1,7 +1,6 @@
 
-define munin::masterinfo() {
+define munin::masterinfo( $ip ) {
 
-    $ip = hiera('external_ip')
     $ip_regex = regsubst($ip, '\.', '\\.', 'G')
 
     # this exports a file line which will be collected by the
