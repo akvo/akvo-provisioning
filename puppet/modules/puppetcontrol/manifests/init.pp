@@ -27,7 +27,7 @@ class puppetcontrol {
     file { "/usr/bin/update_system_config":
         owner   => root,
         group   => root,
-        mode    => 500,
+        mode    => 555,
         source  => 'puppet:///modules/puppetcontrol/update_system_config',
         require => File["/puppet/bin/apply.sh"],
     }
