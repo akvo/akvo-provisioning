@@ -6,7 +6,7 @@ define bind::service_location(
 
     # get some environment specific vars
     $zone = hiera('base_domain')
-    $zonefile = "/srv/bind/db.${zone}"
+    $zonefile = "/etc/bind/db.${zone}"
 
     if ($subdomain != nil) {
         $subdomainval = $subdomain

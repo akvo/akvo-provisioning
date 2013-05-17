@@ -2,7 +2,7 @@ class bind {
 
     # get some environment specific vars
     $zone = hiera('base_domain')
-    $zonefile = "/srv/bind/db.${zone}"
+    $zonefile = "/etc/bind/db.${zone}"
     $dnsip = hiera("external_ip")
 
     # install bind and make sure puppet keeps the service alive
