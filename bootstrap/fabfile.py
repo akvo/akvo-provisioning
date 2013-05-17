@@ -96,7 +96,7 @@ def install_modules():
     # the puppetdb terminus is a special case, see
     # http://docs.puppetlabs.com/puppetdb/1.1/connect_puppet_apply.html
     flags = '-q' if env.verbose else '-qq'
-    sudo('apt-get install -y puppetdb-terminus' % flags)
+    sudo('apt-get install -y %s puppetdb-terminus' % flags)
 
 
 def firstclone():
