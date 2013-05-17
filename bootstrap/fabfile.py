@@ -140,6 +140,9 @@ def hiera_add_external_ip():
         if ip_addr.startswith('10.'):
             continue
         break
+    else:
+        # if we can't find one on our own interfaces, try an external tool
+        ip_addr = sudo('wget http://ipecho.net/plain -O - -q').strip()
 
     sudo("sed -i '/external_ip/d' /puppet/hiera/nodespecific.yaml")
     sudo('echo "external_ip : %s" >> /puppet/hiera/nodespecific.yaml' % ip_addr)
