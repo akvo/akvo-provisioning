@@ -25,11 +25,10 @@ class puppetcontrol {
 
     # link the helper script so it's on the path
     file { "/usr/bin/update_system_config":
-        ensure  => "link",
-        target  => "/puppet/bin/apply.sh",
         owner   => root,
         group   => root,
         mode    => 500,
+        source  => 'puppet:///modules/puppetcontrol/update_system_config',
         require => File["/puppet/bin/apply.sh"],
     }
 
@@ -37,8 +36,8 @@ class puppetcontrol {
     # let the puppet user apply the puppet config
     sudo::allow_command { "update_system_config":
         user    => "puppet",
-        command => "/usr/bin/update_system_config",
-        require => File["/usr/bin/update_system_config"],
+        command => "/puppet/bin/apply.sh",
+        require => File["/puppet/bin/apply.sh"],
     }
 
 

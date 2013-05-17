@@ -21,7 +21,7 @@ class munin::node {
     }
 
     @@munin::nodeinfo { "munin_node-host-${::fqdn}":
-        target_fqdn => ${::fqdn}
+        target_fqdn => $::fqdn
     }
 
     # figure out where the masters are so we can allow them to connect
