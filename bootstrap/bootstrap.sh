@@ -19,7 +19,7 @@ function show_help() {
     echo "  -u USERNAME           the user to ssh into the target host as; defaults to root"
     echo "  -M                    use this flag to create a management node, otherwise a basic"
     echo "                        node will be created"
-    echo "  -v                    turn on verbose output"
+    echo "  -v                    turn on verbose output (does not work with -c yet)"
     echo
     echo "Settings:"
     echo
@@ -59,7 +59,7 @@ while getopts "h?vu:i:c:A:" opt; do
         ;;
     A)  extra_fabric_args=$OPTARG
         ;;
-    v)  verbose=1
+    v)  command='bootstrap:verbose=1'
         ;;
     esac
 done

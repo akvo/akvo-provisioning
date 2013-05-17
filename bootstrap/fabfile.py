@@ -76,12 +76,14 @@ def update_puppet_version():
     """
     Upgrades the installed version of puppet
     """
-    sudo('apt-get update -q')
-    sudo('apt-get install -y -q puppet')
+    flags = '-q' if env.verbose else '-qq'
+    sudo('apt-get update %s' % flags)
+    sudo('apt-get install -y %s puppet' % flags)
 
 
 def install_git():
-    sudo('apt-get install -y -q git')
+    flags = '-q' if env.verbose else '-qq'
+    sudo('apt-get install -y %s git' % flags)
 
 
 def install_modules():
@@ -93,7 +95,8 @@ def install_modules():
 
     # the puppetdb terminus is a special case, see
     # http://docs.puppetlabs.com/puppetdb/1.1/connect_puppet_apply.html
-    sudo('apt-get install -q -y puppetdb-terminus')
+    flags = '-q' if env.verbose else '-qq'
+    sudo('apt-get install -y puppetdb-terminus' % flags)
 
 
 def firstclone():
@@ -180,7 +183,9 @@ def update_config():
     apply_puppet()
 
 
-def bootstrap():
+def bootstrap(verbose=False):
+    env.verbose = verbose == '1'
+
     create_puppet_user()
     setup_keys()
 
