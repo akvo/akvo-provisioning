@@ -1,4 +1,5 @@
-master:
+
+apply:
   facts:
-    terminus: puppetdb
-    cache: yaml
+    terminus: facter
+    cache: puppetdb_apply

@@ -70,6 +70,15 @@ class puppetcontrol {
         source  => 'puppet:///modules/puppetcontrol/routes.yaml',
     }
 
+    # HACKY MCTASTIC:
+    # See issue #3 - https://github.com/akvo/akvo-provisioning/issues/3
+    # Basically we need to add a custom fact handler due to bugs in the way
+    # puppet delegates fact checking.
+    file { '/usr/lib/ruby/vendor_ruby/puppet/indirector/facts/puppetdb_apply.rb':
+        ensure  => present,
+        source  => 'puppet:///modules/puppetcontrol/puppetdb_apply.rb'
+    }
+
 
     # configure hiera
     file { '/etc/puppet/hiera.yaml':
@@ -79,4 +88,5 @@ class puppetcontrol {
         mode   => '444',
         source => 'puppet:///modules/puppetcontrol/hiera.yaml',
     }
+
 }
