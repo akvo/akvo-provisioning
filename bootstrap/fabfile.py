@@ -91,7 +91,8 @@ def install_modules():
     Adds additional puppet modules required by the core puppet configuration.
     """
     with settings(warn_only=True):
-        sudo('puppet module install puppetlabs/stdlib')
+        install_puppet_module('puppetlabs/stdlib')
+        install_puppet_module('puppetlabs-postgresql')
 
     # the puppetdb terminus is a special case, see
     # http://docs.puppetlabs.com/puppetdb/1.1/connect_puppet_apply.html
@@ -165,6 +166,10 @@ def relink_hiera():
 def get_latest_config():
     with cd('/puppet/checkout'):
         sudo('git pull', user='puppet')
+
+
+def install_puppet_module(module_name):
+    sudo('puppet module install ' % module_name)
 
 
 def apply_puppet():
