@@ -41,7 +41,7 @@ class munin::master {
 
     # let the munin nodes know where we are
     @@munin::masterinfo { "munin":
-        ip => hiera('external_ip')
+        ip => hiera('internal_ip')
     }
 
 }
