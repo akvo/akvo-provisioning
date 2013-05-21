@@ -135,20 +135,26 @@ def setup_hiera():
 def hiera_add_external_ip():
     links = sudo("ip -o link | sed 's/[0-9]\+:\s\+//' | sed 's/:.*$//' | grep eth")
     links = links.split('\n')
+    external_ip_addr = None
+    internal_ip_addr = None
 
     # search for the first non-local ip
     for link in links:
         link = link.strip()
         ip_addr = sudo("ifconfig %s | grep 'inet addr' | awk -F: '{print $2}' | awk '{print $1}'" % link)
-        if ip_addr.startswith('10.'):
-            continue
-        break
-    else:
+        if ip_addr.startswith('10.') or ip_addr.startswith('192.168.') or ip_addr.startswith('172.16.'):
+            internal_ip_addr = ip_addr
+        else:
+            external_ip_addr = ip_addr
+
+    if external_ip_addr is None:
         # if we can't find one on our own interfaces, try an external tool
-        ip_addr = sudo('wget http://ipecho.net/plain -O - -q').strip()
+        external_ip_addr = sudo('wget http://ipecho.net/plain -O - -q').strip()
 
     sudo("sed -i '/external_ip/d' /puppet/hiera/nodespecific.yaml")
-    sudo('echo "external_ip : %s" >> /puppet/hiera/nodespecific.yaml' % ip_addr)
+    sudo("sed -i '/internal_ip/d' /puppet/hiera/nodespecific.yaml")
+    sudo('echo "external_ip : %s" >> /puppet/hiera/nodespecific.yaml' % external_ip_addr)
+    sudo('echo "internal_ip : %s" >> /puppet/hiera/nodespecific.yaml' % internal_ip_addr)
 
 
 def relink_hiera():
