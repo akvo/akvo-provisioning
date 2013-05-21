@@ -60,7 +60,6 @@ class puppetdb {
         notify  => Service['puppetdb'],
     }
 
-    $base_domain = hiera('base_domain')
     $database_url = "//psql.${base_domain}:5432/puppetdb"
     $database_password = "thisneedstobehiddensomehow"
     file { '/etc/puppetdb/conf.d/database.ini':
