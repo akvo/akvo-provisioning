@@ -1,5 +1,5 @@
 
-define bind::service_location(
+define named::service_location(
     $subdomain = nil,
     $ip
 ){

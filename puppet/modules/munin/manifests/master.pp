@@ -35,7 +35,7 @@ class munin::master {
     Munin::NodeInfo <<| |>>
 
     # let the DNS server know where we are
-    @@bind::service_location { "munin":
+    @@named::service_location { "munin":
         ip => hiera('external_ip')
     }
 

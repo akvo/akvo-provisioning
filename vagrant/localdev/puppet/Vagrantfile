@@ -6,25 +6,29 @@ $hosthost = `hostname`.strip
 $hostname = $whoami + '.' + $hosthost + '.localdev.akvo.org'
 
 Vagrant.configure("2") do |config|
+    config.ssh.forward_agent = true
+
     config.vm.box = "precise64"
     config.vm.box_url = "http://files.vagrantup.com/precise64.box"
-    config.vm.hostname = $hostname
     config.vm.synced_folder "../../../bootstrap/", "/vagrant/bootstrap/"
     config.vm.synced_folder "../../../", "/puppet/checkout"
 
-    config.hostsupdater.aliases = ["munin.localdev.akvo.org",
-                                   "puppetdb.localdev.akvo.org",
-                                   "localdev.akvo.org"]
-
-    config.ssh.forward_agent = true
-
-    config.vm.network :private_network, ip: "192.168.50.101"
-
-    config.vm.provision :shell do |s|
-        s.path = "../../../bootstrap/bootstrap_vagrant.sh"
-        # the arguments to this script are a list of roles the box should have
-        s.args = "everything"
+    config.vm.define :box1 do |box1|
+        box1.vm.network :private_network, ip: "192.168.50.101"
+        box1.vm.hostname = "box1." + $hostname
+        box1.vm.provision :shell do |s|
+            s.path = "../../../bootstrap/bootstrap_vagrant.sh"
+            s.args = "management"
+        end
     end
 
+    config.vm.define :box2 do |box2|
+        box2.vm.network :private_network, ip: "192.168.50.102"
+        box2.vm.hostname = "box2." + $hostname
+        box2.vm.provision :shell do |s|
+            s.path = "../../../bootstrap/bootstrap_vagrant.sh"
+            s.args = "monitor"
+        end
+    end
 end
 

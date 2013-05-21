@@ -22,4 +22,6 @@ class common {
     package { $useful_packages:
         ensure => 'latest',
     }
+
+    include common::resolve
 }

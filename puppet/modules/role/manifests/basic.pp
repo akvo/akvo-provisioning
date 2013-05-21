@@ -7,8 +7,13 @@ class role::basic {
     include puppetcontrol
     include munin::node
 
-    # TODO: remove this once DNS is working!
-    include common::hosts
+    if ( $::environment == 'localdev' ) {
+        $domain = hiera('base_domain')
+        file_line { "hosts_${name}":
+            path   => '/etc/hosts',
+            line   => inline_template("192.168.50.101 puppetdb.<%= domain %>"),
+        }
+    }
 
     # include sshd
     # include users

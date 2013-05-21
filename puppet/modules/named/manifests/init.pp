@@ -1,4 +1,4 @@
-class bind {
+class named {
 
     # get some environment specific vars
     $zone = hiera('base_domain')
@@ -34,7 +34,7 @@ class bind {
         owner   => 'bind',
         group   => 'bind',
         mode    => 644,
-        content => template('bind/named.conf.local.erb'),
+        content => template('named/named.conf.local.erb'),
         require => Package['bind9'],
     }
 
@@ -42,7 +42,7 @@ class bind {
     # configure our default management server zone file
     file { $zonefile:
         ensure  => present,
-        content => template('bind/envzone.erb'),
+        content => template('named/envzone.erb'),
         owner   => 'bind',
         group   => 'bind',
         mode    => 644,
@@ -51,7 +51,7 @@ class bind {
     }
 
     # Collect all exported dns record file lines
-    Bind::Service_Location <<| |>>
+    Named::Service_Location <<| |>>
 
 
 }
