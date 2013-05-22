@@ -5,8 +5,8 @@ import time
 
 # roles
 env.initial_roles = []
-def with_roles(role_list):
-    env.initial_roles = role_list.split(' ')
+def with_roles(*role_list):
+    env.initial_roles = role_list
 
 
 # environments
@@ -16,6 +16,7 @@ def opstest():
     env.environment = 'opstest'
 def live():
     env.environment = 'live'
+
 
 
 # commands
@@ -143,8 +144,14 @@ def hiera_add_external_ip():
     for link in links:
         link = link.strip()
         ip_addr = sudo("ifconfig %s | grep 'inet addr' | awk -F: '{print $2}' | awk '{print $1}'" % link)
-        if ip_addr.startswith('10.') or ip_addr.startswith('192.168.') or ip_addr.startswith('172.16.'):
+        if ip_addr.startswith('10.') or ip_addr.startswith('172.16.'):
             internal_ip_addr = ip_addr
+        elif ip_addr.startswith('192.168.'):
+            internal_ip_addr = ip_addr
+            # we use the 'internal' IP for 'external' too when running on a vagrant box
+            # as all services must be pointing to the local IP
+            if env.environment == 'localdev':
+                external_ip_addr = ip_addr
         else:
             external_ip_addr = ip_addr
 

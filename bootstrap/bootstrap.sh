@@ -94,6 +94,7 @@ echo "opstest localdev live" | grep -e "\b$target_env\b" 2>&1 >/dev/null || {
 shift
 
 roles=$@
+roles=`echo "$roles" | sed -r 's/ /,/g'`
 echo "Including roles: $roles"
 
 # make sure we have our dependencies
@@ -105,14 +106,14 @@ command -v fab >/dev/null 2>&1 || {
 
 
 # set the base fabric command
-runfab="fab $target_env with_roles:'$roles' --fabfile=$fabfile --user=$user --hosts=$target_host $extra_fabric_args "
+runfab="fab $target_env with_roles:$roles --fabfile=$fabfile --user=$user --hosts=$target_host $extra_fabric_args "
 if [ -n "$ssh_key_file" ]
 then
     runfab="$runfab -i $ssh_key_file "
 fi
 
 # ensure we can ssh in and sudo
-$runfab echo_test >/dev/null 2>&1 ||  {
+$runfab echo_test ||  {
     echo >&2 'Failed to connect to target node or to run sudo - check your access!'
     exit 1
 }
