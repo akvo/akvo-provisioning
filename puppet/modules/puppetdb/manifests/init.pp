@@ -60,14 +60,12 @@ class puppetdb {
         notify  => Service['puppetdb'],
     }
 
-    $database_url = "//psql.${base_domain}:5432/puppetdb"
-    $database_password = "thisneedstobehiddensomehow"
     file { '/etc/puppetdb/conf.d/database.ini':
         ensure  => present,
         owner   => 'puppetdb',
         group   => 'puppetdb',
         mode    => 640,
-        content => template('puppetdb/database.ini.erb'),
+        source  => 'puppet:///modules/puppetdb/database.ini',
         require => Package['puppetdb'],
         notify  => Service['puppetdb'],
     }
@@ -75,10 +73,5 @@ class puppetdb {
     # let the DNS server know where we are
     @@named::service_location { "puppetdb":
         ip => hiera('external_ip')
-    }
-
-    # we'd also like a postgres database, please!
-    @@psql::db { 'puppetdb':
-        password => $database_password
     }
 }
