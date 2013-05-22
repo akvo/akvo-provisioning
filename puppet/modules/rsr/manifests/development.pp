@@ -10,7 +10,7 @@ class rsr::development {
         command   => '/apps/rsr/venv/bin/pip install -r /apps/rsr/checkout/scripts/deployment/pip/requirements/2_rsr.txt',
         cwd       => '/apps/rsr/',
         user      => 'rsr',
-        require   => Exec['make_venv_rsr'],
-        logoutput => true,
+        require   => [ Exec['make_venv_rsr'], Package['libmysqlclient-dev']], # currently requires mysql...
+        logoutput => 'true',
     }
 }

@@ -15,19 +15,24 @@ define akvoapp::djangoapp (
     # some common stuff is required
     $required_packages = ['build-essential',
                           'python-dev',
-                          'python-virtualenv',
                           'python-pip']
-
     package { $required_packages: ensure => 'installed' }
+
+    # we install distribute and virtualenv with pip to get a newer version than the one
+    # packaged by ubuntu 12.04
+    package { ['distribute', 'virtualenv']:
+        ensure   => 'latest',
+        provider => 'pip',
+    }
 
     # we also need to create the virtualenv
     $approot = "/apps/${appnameval}/venv"
     exec { "make_venv_${appnameval}":
-        command => "/usr/bin/virtualenv ${approot}",
+        command => "/usr/local/bin/virtualenv ${approot}",
         creates => $approot,
         user    => $username,
         cwd     => "/apps/$username",
-        require => [User[$username], File["/apps/${username}"], Package['python-virtualenv']],
+        require => [User[$username], File["/apps/${username}"], Package['virtualenv']],
     }
 
 }
