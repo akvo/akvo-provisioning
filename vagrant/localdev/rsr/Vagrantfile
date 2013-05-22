@@ -9,15 +9,20 @@ Vagrant.configure("2") do |config|
     config.vm.box = "precise64"
     config.vm.box_url = "http://files.vagrantup.com/precise64.box"
     config.vm.hostname = $hostname
-    config.vm.synced_folder "../../../bootstrap/", "/vagrant/bootstrap/"
     config.ssh.forward_agent = true
 
-    config.vm.network :private_network, ip: "192.168.50.102"
+    config.vm.synced_folder "../../../bootstrap/", "/vagrant/bootstrap/"
+    config.vm.synced_folder "../../../", "/puppet/checkout"
+
+    # TODO: this is temporary until I create a submodule in the RSR repo
+    config.vm.synced_folder "/Users/carlcrowder/akvo/code/akvo-rsr/", "/apps/rsr/code/"
+
+    config.vm.network :private_network, ip: "192.168.50.101"
 
     config.vm.provision :shell do |s|
         s.path = "../../../bootstrap/bootstrap_vagrant.sh"
         # the arguments to this script are a list of roles the box should have
-        s.args = "management rsr"
+        s.args = "management database rsr"
     end
 end
 
