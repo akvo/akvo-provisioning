@@ -1,6 +1,6 @@
 
 define akvoapp::app (
-    $appname = nil
+    $appname = undef
 ) {
 
     if ( !$appname ) {
@@ -28,9 +28,10 @@ define akvoapp::app (
         ensure  => directory,
         owner   => $appnameval,
         group   => $appnameval,
-        mode    => 500,
+        mode    => 700,
         require => [ User[$appnameval], Group[$appnameval], File['/apps'] ],
     }
+
 
     # TODO: deploy SSH key also goes in this class
 

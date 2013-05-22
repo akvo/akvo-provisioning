@@ -8,6 +8,7 @@ class rsr::common {
 
     # include our RSR-specific akvo info
     akvoapp::app { 'rsr': } # no parameters yet
+    akvoapp::djangoapp { 'rsr': }
 
     # create an RSR database on the database server
     @@database::psql::db { 'rsr':
