@@ -169,7 +169,7 @@ def get_latest_config():
 
 
 def install_puppet_module(module_name):
-    sudo('puppet module install ' % module_name)
+    sudo('puppet module install %s' % module_name)
 
 
 def apply_puppet():
@@ -216,6 +216,6 @@ def bootstrap(verbose=False):
     # puppetdb, and the second time will reconfigure using any information read from
     # puppetdb
     # note: this needs to wait for the puppetdb server to be actually responsive
-    time.sleep(10)
+    time.sleep(20)
     apply_puppet()
 
