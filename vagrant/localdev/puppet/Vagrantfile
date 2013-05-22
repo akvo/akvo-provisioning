@@ -27,7 +27,7 @@ Vagrant.configure("2") do |config|
         box2.vm.hostname = "box2." + $hostname
         box2.vm.provision :shell do |s|
             s.path = "../../../bootstrap/bootstrap_vagrant.sh"
-            s.args = "monitor"
+            s.args = "monitor database"
         end
     end
 end
