@@ -1,4 +1,6 @@
-define psql::db ( $password ) {
+define database::psql::db ( $password ) {
+
+    notice("postgresql database ${name}")
 
     postgresql::db { $name:
       user          => $name,

@@ -1,7 +1,7 @@
 # note: this is called psql to avoid a conflict with the installed
 # puppet module, 'postgresql'
 
-class psql {
+class database::psql {
 
     class { 'postgresql::server':
         config_hash => {
@@ -17,6 +17,6 @@ class psql {
     }
 
     # collect any databases that services want
-    Psql::Db <<| |>>
+    Database::Psql::Db <<| |>>
 
 }
