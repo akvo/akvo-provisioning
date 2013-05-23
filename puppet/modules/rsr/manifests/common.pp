@@ -46,4 +46,18 @@ class rsr::common {
         content  => template('rsr/local.conf.erb'),
     }
 
+
+    # configure a service so we can start and restart RSR
+    include supervisord
+    supervisord::service { "rsr":
+        user      => $username,
+        # TODO: temporary, we allow anything to connect, until the nginx proxy is in place
+        command   => "/apps/rsr/venv/bin/python /apps/rsr/checkout/akvo/manage.py runserver 0.0.0.0:8000",
+        directory => "/apps/rsr/",
+    }
+    # we want the rsr user to be able to restart the process
+    sudo::service_control { "rsr":
+        user         => 'rsr',
+    }
+
 }
