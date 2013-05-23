@@ -8,7 +8,7 @@ class rsr::common {
     $base_domain = hiera('base_domain')
     $database_host = "psql.${base_domain}"
     $media_root = "/apps/rsr/checkout/akvo/mediaroot/"
-    $logdir = "/tmp/logs"
+    $logdir = "/var/log/akvo/rsr/"
 
 
     # make sure we also include the Akvoapp stuff, and that it is loaded

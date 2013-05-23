@@ -28,8 +28,18 @@ define akvoapp::app (
         ensure  => directory,
         owner   => $appnameval,
         group   => $appnameval,
-        mode    => 700,
+        mode    => 755,
         require => [ User[$appnameval], Group[$appnameval], File['/apps'] ],
+    }
+
+
+    # we need somewhere for logging to
+    file { "/var/log/akvo/${appnameval}":
+        ensure  => 'directory',
+        owner   => $appnameval,
+        group   => $appnameval,
+        mode    => 755,
+        require => [ User[$appnameval], Group[$appnameval], File['/var/log/akvo'] ],
     }
 
 

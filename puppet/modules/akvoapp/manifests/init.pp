@@ -15,4 +15,12 @@ class akvoapp {
         require => Group['akvoapp'],
     }
 
+    file { '/var/log/akvo':
+        ensure  => 'directory',
+        owner   => 'root',
+        group   => 'akvoapp',
+        mode    => '555',
+        require => Group['akvoapp'],
+    }
+
 }
