@@ -11,7 +11,7 @@ class role::basic {
         $domain = hiera('base_domain')
         file_line { "hosts_${name}":
             path   => '/etc/hosts',
-            line   => inline_template("192.168.50.101 puppetdb.<%= domain %>"),
+            line   => inline_template("192.168.50.101 puppetdb.<%= @domain %>"),
         }
     }
 

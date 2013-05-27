@@ -1,1 +1,1 @@
-<%= name %>    ALL=(ALL:ALL) ALL
+<%= @name %>    ALL=(ALL:ALL) ALL

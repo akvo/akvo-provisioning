@@ -1,5 +1,5 @@
 
-LOG_FILE_PATH='<%= logdir %>'
+LOG_FILE_PATH='<%= @logdir %>'
 
 SECRET_KEY='secret_key_todo_change_this'
 
@@ -8,12 +8,12 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'rsr',
         'USER': 'rsr',
-        'PASSWORD': '<%= database_password %>',
-        'HOST': '<%= database_host %>',
+        'PASSWORD': '<%= @database_password %>',
+        'HOST': '<%= @database_host %>',
         'PORT': '',
     }
 }
 
 DEBUG=True
 
-MEDIA_ROOT='<%= media_root %>'
+MEDIA_ROOT='<%= @media_root %>'

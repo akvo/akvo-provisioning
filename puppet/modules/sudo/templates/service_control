@@ -1,6 +1,6 @@
 
-Cmnd_Alias RESTART_<%= service_name_val.upcase %> = /usr/bin/supervisorctl restart <%= service_name_val %>
-Cmnd_Alias START_<%= service_name_val.upcase %>   = /usr/bin/supervisorctl start <%= service_name_val %>
-Cmnd_Alias STOP_<%= service_name_val.upcase %>    =  /usr/bin/supervisorctl stop <%= service_name_val %>
+Cmnd_Alias RESTART_<%= @service_name_val.upcase %> = /usr/bin/supervisorctl restart <%= @service_name_val %>
+Cmnd_Alias START_<%= @service_name_val.upcase %>   = /usr/bin/supervisorctl start <%= @service_name_val %>
+Cmnd_Alias STOP_<%= @service_name_val.upcase %>    =  /usr/bin/supervisorctl stop <%= @service_name_val %>
 
-<%= user %> ALL=(root) NOPASSWD:START_<%= service_name_val.upcase %>,STOP_<%= service_name_val.upcase %>,RESTART_<%= service_name_val.upcase %>
+<%= @user %> ALL=(root) NOPASSWD:START_<%= @service_name_val.upcase %>,STOP_<%= @service_name_val.upcase %>,RESTART_<%= @service_name_val.upcase %>

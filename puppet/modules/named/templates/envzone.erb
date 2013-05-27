@@ -2,7 +2,7 @@ $TTL 1s
 ; we set the TTL to be very short because we want very little caching
 
 
-@	IN	SOA	ns1.<%= zone %>. nsadmin.akvo.org. (
+@	IN	SOA	ns1.<%= @zone %>. nsadmin.akvo.org. (
 				2013051601; Serial
 				5s	; Refresh time - how long a slave waits between checking for updates
 				2m	; Retry - how long a slave waits before retrying a failed transfer
@@ -12,7 +12,7 @@ $TTL 1s
 
 
 ; configure where this nameserver lives
-@	IN	NS	ns1.<%= zone %>.
-ns1 IN  A   <%= dnsip %>
+@	IN	NS	ns1.<%= @zone %>.
+ns1 IN  A   <%= @dnsip %>
 
 ; the following are collected exported resources:
