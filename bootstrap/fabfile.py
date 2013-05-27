@@ -69,9 +69,19 @@ def add_puppet_repo():
     Adds the puppet apt repository. The version of puppet in the default Ubuntu 12.04 repositories
     is puppet 2.7.x, but we want to use puppet 3+
     """
-    sudo('echo -e "deb http://apt.puppetlabs.com/ precise main\ndeb-src http://apt.puppetlabs.com/ precise main" >> /etc/apt/sources.list')
-    sudo('apt-key adv --keyserver keyserver.ubuntu.com --recv 4BD6EC30')
+    # Note: as of release 3.2.1, the following method no longer works:
+    #
+    # sudo('echo -e "deb http://apt.puppetlabs.com/ precise main\ndeb-src http://apt.puppetlabs.com/ precise main" >> /etc/apt/sources.list')
+    # sudo('apt-key adv --keyserver keyserver.ubuntu.com --recv 4BD6EC30')
+    #
+    # see this discussion for why:
+    #    https://groups.google.com/forum/?fromgroups#!topic/puppet-users/FFlohAZDcBk
+    # and also here:
+    #    http://docs.puppetlabs.com/guides/puppetlabs_package_repositories.html#for-debian-and-ubuntu
 
+    sudo('wget http://apt.puppetlabs.com/puppetlabs-release-precise.deb')
+    sudo('sudo dpkg -i puppetlabs-release-precise.deb')
+    sudo('rm puppetlabs-release-precise.deb')
 
 def update_puppet_version():
     """
