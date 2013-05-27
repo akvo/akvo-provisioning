@@ -9,6 +9,7 @@ class rsr::common {
     $database_host = "psql.${base_domain}"
     $media_root = "/apps/rsr/checkout/akvo/mediaroot/"
     $logdir = "/var/log/akvo/rsr/"
+    $port = 8000
 
 
     # make sure we also include the Akvoapp stuff, and that it is loaded
@@ -47,12 +48,26 @@ class rsr::common {
     }
 
 
+    # we want a service address
+    # TODO: this needs to consider partnersite stuff
+    @@named::service_location { "rsr":
+        ip => hiera('external_ip')
+    }
+
+
+    # nginx sits in front of RSR
+    nginx::fcgi { 'rsr':
+        server_name  => "rsr.${base_domain}",
+        fcgi_address => "localhost:${port}",
+    }
+
+
     # configure a service so we can start and restart RSR
     include supervisord
     supervisord::service { "rsr":
         user      => 'rsr',
         # TODO: temporary, we allow anything to connect, until the nginx proxy is in place
-        command   => "/apps/rsr/venv/bin/python /apps/rsr/checkout/akvo/manage.py runserver 0.0.0.0:8000",
+        command   => "/apps/rsr/venv/bin/python /apps/rsr/checkout/akvo/manage.py runserver 0.0.0.0:${port}",
         directory => "/apps/rsr/",
     }
     # we want the rsr user to be able to restart the process
