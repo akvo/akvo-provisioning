@@ -50,7 +50,7 @@ class rsr::common {
     # configure a service so we can start and restart RSR
     include supervisord
     supervisord::service { "rsr":
-        user      => $username,
+        user      => 'rsr',
         # TODO: temporary, we allow anything to connect, until the nginx proxy is in place
         command   => "/apps/rsr/venv/bin/python /apps/rsr/checkout/akvo/manage.py runserver 0.0.0.0:8000",
         directory => "/apps/rsr/",

@@ -19,7 +19,7 @@ define named::service_location(
     # this exports a file line which will be collected by the
     file_line { "service_location_${name}":
         path   => $zonefile,
-        line   => inline_template("<%= @subdomainval %> IN A <%= ip %>"),
+        line   => inline_template("<%= @subdomainval %> IN A <%= @ip %>"),
         notify => Service['bind9'],
     }
 
