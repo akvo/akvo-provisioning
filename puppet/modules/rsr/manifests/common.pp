@@ -23,17 +23,13 @@ class rsr::common {
 
 
     # install all of the support packages
-    # currently, use of mysql is hardcoded in the requirements file
-    # this should be removed
     include akvoapp::pythonsupport::mysql
-    # we'll actually be using postgres
-    include akvoapp::pythonsupport::psql
     include akvoapp::pythonsupport::pil
     include akvoapp::pythonsupport::lxml
 
 
     # create an RSR database on the database server
-    @@database::psql::db { 'rsr':
+    @@database::my_sql::db { 'rsr':
         password => $database_password
     }
 

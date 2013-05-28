@@ -14,14 +14,4 @@ class rsr::development {
         logoutput => 'true',
         timeout   => 0, # this pip install step takes a looong time
     }
-
-    # for now, we manually install the psql driver
-    # TODO: move this into the RSR requirements files
-    exec { "rsr_install_psql_driver":
-        command   => '/apps/rsr/venv/bin/pip install psycopg2==2.4.6',
-        cwd       => '/apps/rsr',
-        user      => 'rsr',
-        require   => Exec['rsr_dev_install_requirements'],
-        logoutput => 'true'
-    }
 }

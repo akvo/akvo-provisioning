@@ -104,6 +104,7 @@ def install_modules():
     with settings(warn_only=True):
         install_puppet_module('puppetlabs/stdlib')
         install_puppet_module('puppetlabs-postgresql')
+        install_puppet_module('puppetlabs-mysql')
 
     # the puppetdb terminus is a special case, see
     # http://docs.puppetlabs.com/puppetdb/1.1/connect_puppet_apply.html
