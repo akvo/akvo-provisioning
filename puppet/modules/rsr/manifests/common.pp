@@ -62,8 +62,7 @@ class rsr::common {
     include supervisord
     supervisord::service { "rsr":
         user      => 'rsr',
-        # TODO: temporary, we allow anything to connect, until the nginx proxy is in place
-        command   => "/apps/rsr/venv/bin/python /apps/rsr/checkout/akvo/manage.py runserver 0.0.0.0:${port}",
+        command   => "/apps/rsr/venv/bin/gunicorn akvo.wsgi --pythonpath /apps/rsr/checkout/ --pid /apps/rsr/rsr.pid --bind 127.0.0.1:${port}",
         directory => "/apps/rsr/",
     }
     # we want the rsr user to be able to restart the process

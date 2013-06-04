@@ -20,7 +20,8 @@ sudo apt-get install -y -q fabric
 
 orig_dir=`pwd`
 cd /vagrant/bootstrap/
-./bootstrap.sh -A "--linewise --password=vagrant" -u vagrant localhost localdev $roles
+./control.sh -c 'bootstrap' -A "--linewise --password=vagrant" -u vagrant localhost localdev
+./addrole.sh -A "--linewise --password=vagrant" -u vagrant localhost localdev $roles
 cd $orig_dir
 
 

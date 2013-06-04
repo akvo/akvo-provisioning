@@ -20,7 +20,7 @@ Vagrant.configure("2") do |config|
     config.vm.network :private_network, ip: "192.168.50.101"
 
     config.vm.provision :shell do |s|
-        s.path = "../../../bootstrap/bootstrap_vagrant.sh"
+        s.path = "../../../bootstrap/bootstrap_vagrant.py"
         # the arguments to this script are a list of roles the box should have
         s.args = "management database rsr"
     end

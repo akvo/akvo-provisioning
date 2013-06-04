@@ -1,12 +1,8 @@
 from fabric.api import local, run, env, cd, prefix, sudo, settings, put
 from fabric.contrib import files
+import re
 import time
 
-
-# roles
-env.initial_roles = []
-def with_roles(*role_list):
-    env.initial_roles = role_list
 
 
 # environments
@@ -139,9 +135,8 @@ def setup_hiera():
     sudo('mkdir -p /puppet/hiera/')
     sudo('chown -R puppet.puppet /puppet/hiera')
     put('files/hiera.yaml', '/etc/puppet/hiera.yaml', use_sudo=True)
+    sudo('touch /puppet/hiera/nodespecific.yaml')
     relink_hiera()
-    for role in env.initial_roles:
-        add_role(role)
     hiera_add_external_ip()
 
 
@@ -194,16 +189,25 @@ def apply_puppet():
     sudo('/puppet/bin/apply.sh')
 
 
-def add_role(role):
+def add_roles(*roles):
     nodefile = "/puppet/hiera/nodespecific.yaml"
 
-    if files.exists(nodefile):
-        if files.contains(nodefile, '  - %s' % role, exact=True):
-            return
-        sudo('echo "  - %s" >> %s' % (role, nodefile))
-    else:
-        sudo('echo "roles:" > %s' % nodefile)
-        sudo('echo "  - %s" >> %s' % (role, nodefile))
+    contents = run('more %s' % nodefile).split('\n')
+    new_contents = []
+    existing_roles = []
+    for line in contents:
+        m = re.match('^roles: \[(.*)\]$', line)
+        if m:
+            existing_roles = [s.strip() for s in m.group(1).split(',')]
+        else:
+            new_contents.append(line.strip())
+
+    roles = list(set(list(roles) + existing_roles))
+    new_contents.append('roles: [%s]' % ', '.join(roles))
+    new_contents = '\n'.join(new_contents)
+
+    sudo('rm %s && touch %s' % (nodefile, nodefile))
+    files.append(nodefile, new_contents, use_sudo=True)
 
 
 def update_config():
@@ -212,8 +216,9 @@ def update_config():
     apply_puppet()
 
 
-def bootstrap(verbose=False):
+def bootstrap(management=False, verbose=False):
     env.verbose = verbose == '1'
+    management = management == '1'
 
     create_puppet_user()
     setup_keys()
@@ -227,6 +232,8 @@ def bootstrap(verbose=False):
 
     set_facts()
     setup_hiera()
+    if management:
+        add_roles('management')
 
     include_apply_script()
     apply_puppet()
