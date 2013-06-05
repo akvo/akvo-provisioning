@@ -32,6 +32,8 @@ in. That is, if it is 'live', 'dev' or similar. Currently, valid values are:
                         help='Any additional arguments to pass into fabric')
     parser.add_argument('-d', '--directory',
                         help='The location of the bootstrap scripts, if not in the current directory')
+    parser.add_argument('-c', '--ssh-config-file', dest='ssh_config',
+                        help='The location of an OpenSSH style ssh config file')
 
     return parser
 
@@ -52,6 +54,9 @@ def run(args):
         fabcmd += ['--user=%s' % args.username]
     if args.directory:
         fabcmd += ['--fabfile=%s' % os.path.join(args.directory, 'fabfile.py')]
+    if args.ssh_config:
+        fabcmd += ['--ssh-config-path=%s' % args.ssh_config]
+
     fabcmd += [args.environment] + args.command
     fabcmd = ' '.join(fabcmd)
 
