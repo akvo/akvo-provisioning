@@ -52,7 +52,7 @@ print "Using nameserver: %s" % nameserver_address
 if _already_provisioned():
     print "Already bootstrapped, nothing to do"
     _set_nameserver(nameserver_address)
-    #sys.exit(0)
+    sys.exit(0)
 
 
 roles = args.roles
