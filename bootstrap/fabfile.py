@@ -4,25 +4,94 @@ import re
 import time
 
 
+# note: 'roles' is used to map a hostname onto the list of roles that it will aquire
+# and perform. This is not the same as the fabric concept of "roles".
+
+def _set_hosts():
+    hosts = []
+    for host, config in env.akvonodes.iteritems():
+        hosts.append( (host, config.get('order', 0)) )
+    hosts = sorted(hosts, key=lambda x:x[1])
+    env.hosts = [x[0] for x in hosts]
+
 
 # environments
-def localdev():
+def dev_puppet():
     env.environment = 'localdev'
     env.puppetdb_url = 'puppetdb.localdev.akvo.org'
+    env.user = 'vagrant'
+    env.password = 'password'
+    env.akvonodes = {
+        '192.168.50.101': {
+            "roles": ['management'],
+            "order": 0
+        },
+        '192.168.50.102': {
+            "roles": ['monitor', 'database'],
+            "order": 10,
+        }
+    }
+    _set_hosts()
+
+
+def dev_rsr():
+    env.environment = 'dev_rsr'
+    env.puppetdb_url = 'puppetdb.localdev.akvo.org'
+    env.user = 'vagrant'
+    env.password = 'password'
+    env.akvonodes = {
+        '192.168.50.101': ['management', 'rsr', 'database']
+    }
+    _set_hosts()
+
+
 def opstest():
     env.environment = 'opstest'
     env.puppetdb_url = 'puppetdb.opstest.akvo.org'
+
+
 def carltest():
+    # note: this won't work on your computer if you aren't carl ;)
     env.environment = 'carltest'
     env.puppetdb_url = 'puppetdb.akvotest.carlcrowder.com'
+    env.key_filename = ["~/.ssh/ec2-test-instance.pem"]
+    env.user = 'ubuntu'
+    env.akvonodes = {
+        "ec2-54-224-119-4.compute-1.amazonaws.com": {
+            "roles": ['management'],
+            "order": 0
+        },
+        "ec2-50-17-50-212.compute-1.amazonaws.com": {
+            "roles": ['monitor'],
+            "order": 10,
+        },
+        "ec2-54-224-65-148.compute-1.amazonaws.com": {
+            "roles": ['database'],
+            "order": 20,
+        },
+        "ec2-107-20-19-207.compute-1.amazonaws.com": {
+            "roles": ['rsr'],
+            "order": 30,
+        }
+    }
+    _set_hosts()
+
+
 def live():
     env.environment = 'live'
     env.puppetdb_url = 'puppetdb.live.akvo.org'
 
 
+# helpers
+def _get_current_roles():
+    config = env.akvonodes[env.host_string]
+    return config.get('roles', [])
+
 
 # commands
 def echo_test():
+    print env.host_string
+    print _get_current_roles()
     sudo('echo test')
 
 
@@ -232,9 +301,11 @@ def is_puppetdb_ready():
     return status == '200'
 
 
-def bootstrap(management=False, verbose=False):
+def bootstrap(verbose=False):
     env.verbose = verbose == '1'
-    management = management == '1'
+    management = 'management' in _get_current_roles()
+    if management:
+        print "This is a management node"
 
     create_puppet_user()
     setup_keys()
@@ -252,11 +323,15 @@ def bootstrap(management=False, verbose=False):
         add_roles('management')
 
     include_apply_script()
+    # run the first time just setting up the basic information
     apply_puppet()
+
+    # now add the rest of the roles which are now configurable
+    add_roles(_get_current_roles())
 
     # note: we do this twice the first time - the initial setup will also configure
     # puppetdb, and the second time will reconfigure using any information read from
-    # puppetdb
+    # puppetdb, and will install anything from the additional roles
     # note: this needs to wait for the puppetdb server to be actually responsive
     while not is_puppetdb_ready():
         time.sleep(1)

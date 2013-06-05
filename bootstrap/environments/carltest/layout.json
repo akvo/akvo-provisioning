@@ -1,8 +1,29 @@
 {
-    "ec2-54-224-119-4.compute-1.amazonaws.com": {
-        "ip": "",
-        "label": "management",
-        "roles": ["management", "monitoring"],
-        "order": 0
+    "machines": [
+        "ec2-54-224-119-4.compute-1.amazonaws.com": {
+            "label": "management",
+            "roles": ["management", "monitoring"],
+            "order": 0
+        },
+        "ec2-50-17-50-212.compute-1.amazonaws.com":{
+            "label": "monitor",
+            "roles": ["monitor"],
+            "order": 10,
+        },
+        "ec2-54-224-65-148.compute-1.amazonaws.com": {
+            "label": "database",
+            "roles": ["database"],
+            "order": 30
+        },
+        "ec2-107-20-19-207.compute-1.amazonaws.com": {
+            "label": "rsr",
+            "roles": ["rsr"],
+            "order": 40
+        }
+    ],
+
+    "sshconfig": {
+        "identity_file": "/Users/carlcrowder/.ssh/ec2-test-instance.pem",
+        "username": "ubuntu"
     }
 }
