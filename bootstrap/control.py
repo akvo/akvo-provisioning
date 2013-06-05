@@ -41,7 +41,7 @@ def run(args):
     parser = _make_args()
     args = parser.parse_args(args)
 
-    if args.environment not in ('live', 'localdev', 'opstest'):
+    if args.environment not in ('live', 'localdev', 'opstest', 'carltest'):
         print 'Environment %s not valid' % args.environment
         sys.exit(1)
 
