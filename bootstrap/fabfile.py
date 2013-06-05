@@ -12,6 +12,9 @@ def localdev():
 def opstest():
     env.environment = 'opstest'
     env.puppetdb_url = 'puppetdb.opstest.akvo.org'
+def carltest():
+    env.environment = 'carltest'
+    env.puppetdb_url = 'puppetdb.akvotest.carlcrowder.com'
 def live():
     env.environment = 'live'
     env.puppetdb_url = 'puppetdb.live.akvo.org'

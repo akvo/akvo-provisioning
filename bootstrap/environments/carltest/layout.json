@@ -1,0 +1,8 @@
+{
+    "ec2-54-224-119-4.compute-1.amazonaws.com": {
+        "ip": "",
+        "label": "management",
+        "roles": ["management", "monitoring"],
+        "order": 0
+    }
+}
