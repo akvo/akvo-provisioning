@@ -8,10 +8,13 @@ import time
 # environments
 def localdev():
     env.environment = 'localdev'
+    env.puppetdb_url = 'puppetdb.localdev.akvo.org'
 def opstest():
     env.environment = 'opstest'
+    env.puppetdb_url = 'puppetdb.opstest.akvo.org'
 def live():
     env.environment = 'live'
+    env.puppetdb_url = 'puppetdb.live.akvo.org'
 
 
 
@@ -177,6 +180,9 @@ def relink_hiera():
 
 
 def get_latest_config():
+    if env.environment == 'localdev':
+        print "Refusing to pull puppet, as this is a vagrant box and the checkout is linked to your host machine"
+        return
     with cd('/puppet/checkout'):
         sudo('git pull', user='puppet')
 
@@ -216,6 +222,13 @@ def update_config():
     apply_puppet()
 
 
+def is_puppetdb_ready():
+    cmd = "wget --no-check-certificate --server-response https://%s 2>&1 | awk '/^  HTTP/{print $2}'" % env.puppetdb_url
+    status = run(cmd)
+    status = status.split('\n')[-1].strip()
+    return status == '200'
+
+
 def bootstrap(management=False, verbose=False):
     env.verbose = verbose == '1'
     management = management == '1'
@@ -237,10 +250,11 @@ def bootstrap(management=False, verbose=False):
 
     include_apply_script()
     apply_puppet()
+
     # note: we do this twice the first time - the initial setup will also configure
     # puppetdb, and the second time will reconfigure using any information read from
     # puppetdb
     # note: this needs to wait for the puppetdb server to be actually responsive
-    time.sleep(20)
+    while not is_puppetdb_ready():
+        time.sleep(1)
     apply_puppet()
-
