@@ -4,6 +4,11 @@ import re
 import time
 
 
+# the default branch to use for puppet config, can be overridden per-environment
+env.puppet_branch = 'master'
+# different behaviour might be required on, eg, ec2
+env.machine_type = 'generic'
+
 # note: 'roles' is used to map a hostname onto the list of roles that it will aquire
 # and perform. This is not the same as the fabric concept of "roles".
 
@@ -14,13 +19,16 @@ def _set_hosts():
     hosts = sorted(hosts, key=lambda x:x[1])
     env.hosts = [x[0] for x in hosts]
 
-
-# environments
-def dev_puppet():
-    env.environment = 'localdev'
+def _local_development():
+    env.machine_type = 'vagrant'
     env.puppetdb_url = 'puppetdb.localdev.akvo.org'
     env.user = 'vagrant'
     env.password = 'password'
+
+# environments
+def dev_puppet():
+    _local_development()
+    env.environment = 'dev_puppet'
     env.akvonodes = {
         '192.168.50.101': {
             "roles": ['management'],
@@ -36,9 +44,7 @@ def dev_puppet():
 
 def dev_rsr():
     env.environment = 'dev_rsr'
-    env.puppetdb_url = 'puppetdb.localdev.akvo.org'
-    env.user = 'vagrant'
-    env.password = 'password'
+    _local_development()
     env.akvonodes = {
         '192.168.50.101': ['management', 'rsr', 'database']
     }
@@ -52,9 +58,11 @@ def opstest():
 
 def carltest():
     # note: this won't work on your computer if you aren't carl ;)
+    env.machine_type = 'ec2'
     env.environment = 'carltest'
     env.puppetdb_url = 'puppetdb.akvotest.carlcrowder.com'
     env.key_filename = ["~/.ssh/ec2-test-instance.pem"]
+    env.puppet_branch = 'develop'
     env.user = 'ubuntu'
     env.akvonodes = {
         "ec2-54-224-119-4.compute-1.amazonaws.com": {
@@ -90,8 +98,6 @@ def _get_current_roles():
 
 # commands
 def echo_test():
-    print env.host_string
-    print _get_current_roles()
     sudo('echo test')
 
 
@@ -192,6 +198,8 @@ def firstclone():
         if not files.exists('/puppet/checkout'):
             sudo('git clone git@github.com:akvo/akvo-provisioning.git checkout', user='puppet')
             sudo('chown -R puppet.puppet /puppet/checkout')
+            with cd('/puppet/checkout'):
+                sudo('git checkout %s' % env.puppet_branch, user='puppet')
 
 
 def set_facts():
@@ -327,7 +335,7 @@ def bootstrap(verbose=False):
     apply_puppet()
 
     # now add the rest of the roles which are now configurable
-    add_roles(_get_current_roles())
+    add_roles(*_get_current_roles())
 
     # note: we do this twice the first time - the initial setup will also configure
     # puppetdb, and the second time will reconfigure using any information read from
