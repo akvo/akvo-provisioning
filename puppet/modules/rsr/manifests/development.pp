@@ -17,7 +17,7 @@ class rsr::development {
 
     # run the database setup and syncronisation
     rsr::djangocommand { "syncdb":
-        command  => 'syncdb --noinput --no-initial-data'
+        command  => 'syncdb --noinput'
     }
     rsr::djangocommand { "migrate":
         require => Rsr::Djangocommand['syncdb'],
