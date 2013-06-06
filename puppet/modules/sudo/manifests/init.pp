@@ -17,7 +17,7 @@ class sudo {
     # for vagrant boxen, we want to leave the vagrant user in the same
     # state as the default, namely, full sudo access without needing a
     # password
-    if ( $::machine_type == 'vagrant' ) {
+    if ( hiera('machine_type') == 'vagrant' ) {
         sudo::admin_user { 'vagrant':
             nopassword => true
         }

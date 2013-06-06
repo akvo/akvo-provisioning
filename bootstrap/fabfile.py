@@ -128,6 +128,10 @@ def install_git():
     sudo('apt-get install -y %s git' % flags)
 
 
+def install_puppet_module(module_name):
+    sudo('puppet module install %s' % module_name)
+
+
 def install_modules():
     """
     Adds additional puppet modules required by the core puppet configuration.
@@ -159,7 +163,6 @@ def firstclone():
 def set_facts():
     sudo('mkdir -p /etc/facter/facts.d')
     sudo('echo environment=%s >  /etc/facter/facts.d/akvo.txt' % env.environment)
-    sudo('echo machine_type=%s >  /etc/facter/facts.d/akvo.txt' % env.machine_type)
 
 
 def include_apply_script():
@@ -206,8 +209,11 @@ def hiera_add_external_ip():
 
     sudo("sed -i '/external_ip/d' /puppet/hiera/nodespecific.yaml")
     sudo("sed -i '/internal_ip/d' /puppet/hiera/nodespecific.yaml")
+    sudo("sed -i '/machine_type/d' /puppet/hiera/nodespecific.yaml")
+
     sudo('echo "external_ip : %s" >> /puppet/hiera/nodespecific.yaml' % external_ip_addr)
     sudo('echo "internal_ip : %s" >> /puppet/hiera/nodespecific.yaml' % internal_ip_addr)
+    sudo('echo "machine_type : %s" >> /puppet/hiera/nodespecific.yaml' % env.config['machine_type'])
 
 
 def relink_hiera():
@@ -221,10 +227,6 @@ def get_latest_config():
         return
     with cd('/puppet/checkout'):
         sudo('git pull', user='puppet')
-
-
-def install_puppet_module(module_name):
-    sudo('puppet module install %s' % module_name)
 
 
 def apply_puppet():

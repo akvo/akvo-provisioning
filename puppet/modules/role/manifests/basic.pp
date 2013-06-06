@@ -7,8 +7,11 @@ class role::basic {
     include puppetcontrol
     include munin::node
 
-    if ( $::environment == 'localdev' ) {
+    if ( $::machine_type == 'vagrant' ) {
+        # we can't use DNS delegation for local environments,
+        # so we'll hardcode the puppetdb server
         $domain = hiera('base_domain')
+
         file_line { "hosts_${name}":
             path   => '/etc/hosts',
             line   => inline_template("192.168.50.101 puppetdb.<%= @domain %>"),

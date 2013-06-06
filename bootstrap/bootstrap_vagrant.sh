@@ -22,6 +22,8 @@ cd /vagrant/bootstrap/
 fab --linewise on_environment:$environment bootstrap || ohno=1
 cd $orig_dir
 
+set_nameserver
+
 if [ $ohno -eq 1 ]
 then
     exit 1
@@ -29,4 +31,3 @@ fi
 
 echo `date` > /etc/akvo_provisioned
 
-set_nameserver
