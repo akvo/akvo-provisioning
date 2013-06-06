@@ -2,6 +2,9 @@ from fabric.api import local, run, env, cd, prefix, sudo, settings, put
 from fabric.contrib import files
 import re
 import time
+import json
+import os
+import sys
 
 
 # the default branch to use for puppet config, can be overridden per-environment
@@ -12,87 +15,42 @@ env.machine_type = 'generic'
 # note: 'roles' is used to map a hostname onto the list of roles that it will aquire
 # and perform. This is not the same as the fabric concept of "roles".
 
+
 def _set_hosts():
     hosts = []
-    for host, config in env.akvonodes.iteritems():
+    for host, config in env.config['nodes'].iteritems():
         hosts.append( (host, config.get('order', 0)) )
     hosts = sorted(hosts, key=lambda x:x[1])
     env.hosts = [x[0] for x in hosts]
 
-def _local_development():
-    env.machine_type = 'vagrant'
-    env.puppetdb_url = 'puppetdb.localdev.akvo.org'
-    env.user = 'vagrant'
-    env.password = 'password'
 
-# environments
-def dev_puppet():
-    _local_development()
-    env.environment = 'dev_puppet'
-    env.akvonodes = {
-        '192.168.50.101': {
-            "roles": ['management'],
-            "order": 0
-        },
-        '192.168.50.102': {
-            "roles": ['monitor', 'database'],
-            "order": 10,
-        }
-    }
+def on_environment(env_name_or_path):
+    """
+    Sets the environment up using the given name or file
+
+    :param env_name_or_path: Either the name of an environment, or a path
+        to an environment definition file
+    """
+    envfile = os.path.join(os.path.dirname('__file__'), 'environments', '%s.json' % env_name_or_path)
+    if not os.path.exists(envfile):
+        if not os.path.exists(env_name_or_path):
+            print "Could not find environment: %s" % env_name_or_path
+            sys.exit(1)
+        envfile = env_name_or_path
+
+    with open(envfile) as f:
+        env_config = json.load(f)
+
+    env.config = env_config
+    env.environment = env.config['name']
     _set_hosts()
 
 
-def dev_rsr():
-    env.environment = 'dev_rsr'
-    _local_development()
-    env.akvonodes = {
-        '192.168.50.101': ['management', 'rsr', 'database']
-    }
-    _set_hosts()
-
-
-def opstest():
-    env.environment = 'opstest'
-    env.puppetdb_url = 'puppetdb.opstest.akvo.org'
-
-
-def carltest():
-    # note: this won't work on your computer if you aren't carl ;)
-    env.machine_type = 'ec2'
-    env.environment = 'carltest'
-    env.puppetdb_url = 'puppetdb.akvotest.carlcrowder.com'
-    env.key_filename = ["~/.ssh/ec2-test-instance.pem"]
-    env.puppet_branch = 'develop'
-    env.user = 'ubuntu'
-    env.akvonodes = {
-        "ec2-54-224-119-4.compute-1.amazonaws.com": {
-            "roles": ['management'],
-            "order": 0
-        },
-        "ec2-50-17-50-212.compute-1.amazonaws.com": {
-            "roles": ['monitor'],
-            "order": 10,
-        },
-        "ec2-54-224-65-148.compute-1.amazonaws.com": {
-            "roles": ['database'],
-            "order": 20,
-        },
-        "ec2-107-20-19-207.compute-1.amazonaws.com": {
-            "roles": ['rsr'],
-            "order": 30,
-        }
-    }
-    _set_hosts()
-
-
-def live():
-    env.environment = 'live'
-    env.puppetdb_url = 'puppetdb.live.akvo.org'
 
 
 # helpers
 def _get_current_roles():
-    config = env.akvonodes[env.host_string]
+    config = env.config['nodes'][env.host_string]
     return config.get('roles', [])
 
 
@@ -160,6 +118,7 @@ def add_puppet_repo():
     sudo('sudo dpkg -i puppetlabs-release-precise.deb')
     sudo('rm puppetlabs-release-precise.deb')
 
+
 def update_puppet_version():
     """
     Upgrades the installed version of puppet
@@ -221,6 +180,7 @@ def setup_hiera():
     sudo('touch /puppet/hiera/nodespecific.yaml')
     relink_hiera()
     hiera_add_external_ip()
+    sudo('echo "base_domain: %s" >> /puppet/hiera/nodespecific.yaml' % env.config['base_domain'])
 
 
 def hiera_add_external_ip():
@@ -309,7 +269,15 @@ def is_puppetdb_ready():
     return status == '200'
 
 
+def use_bootstrap_credentials():
+    env.user = env.config.get('bootstrap_username', 'root')
+    env.password = env.config.get('bootstrap_password')
+    env.key_filename = env.config.get('bootstrap_key_filename')
+
+
 def bootstrap(verbose=False):
+    use_bootstrap_credentials()
+
     env.verbose = verbose == '1'
     management = 'management' in _get_current_roles()
     if management:

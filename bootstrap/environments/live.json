@@ -1,0 +1,14 @@
+{
+    "name": "live",
+
+    "machine_type": "generic",
+    "base_domain": "akvo.org",
+
+    //"bootstrap_key_filename": "~/.ssh/ec2-test-instance.pem",
+    //"bootstrap_username": "ubuntu",
+
+    "puppet_branch": "master",
+
+    "nodes": {
+    }
+}

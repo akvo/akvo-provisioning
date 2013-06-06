@@ -17,9 +17,15 @@ sudo apt-get install -y -q fabric
 environment=$1
 
 orig_dir=`pwd`
+ohno=0
 cd /vagrant/bootstrap/
-fab --linewise $environment bootstrap
+fab --linewise on_environment:$environment bootstrap || ohno=1
 cd $orig_dir
+
+if [ $ohno -eq 1 ]
+then
+    exit 1
+fi
 
 echo `date` > /etc/akvo_provisioned
 
