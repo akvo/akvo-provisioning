@@ -159,6 +159,7 @@ def firstclone():
 def set_facts():
     sudo('mkdir -p /etc/facter/facts.d')
     sudo('echo environment=%s >  /etc/facter/facts.d/akvo.txt' % env.environment)
+    sudo('echo machine_type=%s >  /etc/facter/facts.d/akvo.txt' % env.machine_type)
 
 
 def include_apply_script():
