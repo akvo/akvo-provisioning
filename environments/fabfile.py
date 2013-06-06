@@ -33,7 +33,7 @@ def on_environment(env_name_or_path):
     :param env_name_or_path: Either the name of an environment, or a path
         to an environment definition file
     """
-    envfile = os.path.join(os.path.dirname('__file__'), 'environments', '%s.json' % env_name_or_path)
+    envfile = os.path.join(os.path.dirname('__file__'), 'config', '%s.json' % env_name_or_path)
     if not os.path.exists(envfile):
         if not os.path.exists(env_name_or_path):
             print "Could not find environment: %s" % env_name_or_path
