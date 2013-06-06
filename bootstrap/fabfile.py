@@ -7,11 +7,6 @@ import os
 import sys
 
 
-# the default branch to use for puppet config, can be overridden per-environment
-env.puppet_branch = 'master'
-# different behaviour might be required on, eg, ec2
-env.machine_type = 'generic'
-
 # note: 'roles' is used to map a hostname onto the list of roles that it will aquire
 # and perform. This is not the same as the fabric concept of "roles".
 
@@ -158,7 +153,7 @@ def firstclone():
             sudo('git clone git@github.com:akvo/akvo-provisioning.git checkout', user='puppet')
             sudo('chown -R puppet.puppet /puppet/checkout')
             with cd('/puppet/checkout'):
-                sudo('git checkout %s' % env.puppet_branch, user='puppet')
+                sudo('git checkout %s' % env.config['puppet_branch'], user='puppet')
 
 
 def set_facts():
@@ -199,7 +194,7 @@ def hiera_add_external_ip():
             internal_ip_addr = ip_addr
             # we use the 'internal' IP for 'external' too when running on a vagrant box
             # as all services must be pointing to the local IP
-            if env.environment == 'localdev':
+            if env.config['machine_type'] == 'vagrant':
                 external_ip_addr = ip_addr
         else:
             external_ip_addr = ip_addr
@@ -263,7 +258,7 @@ def update_config():
 
 
 def is_puppetdb_ready():
-    cmd = "wget --no-check-certificate --server-response https://%s 2>&1 | awk '/^  HTTP/{print $2}'" % env.puppetdb_url
+    cmd = "wget --no-check-certificate --server-response https://puppetdb.%s 2>&1 | awk '/^  HTTP/{print $2}'" % env.config['base_domain']
     status = run(cmd)
     status = status.split('\n')[-1].strip()
     return status == '200'
