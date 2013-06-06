@@ -7,7 +7,7 @@ class role::basic {
     include puppetcontrol
     include munin::node
 
-    if ( $::machine_type == 'vagrant' ) {
+    if ( hiera('machine_type') == 'vagrant' ) {
         # we can't use DNS delegation for local environments,
         # so we'll hardcode the puppetdb server
         $domain = hiera('base_domain')

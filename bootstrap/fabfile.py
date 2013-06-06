@@ -14,8 +14,15 @@ import sys
 def _set_hosts():
     hosts = []
     for host, config in env.config['nodes'].iteritems():
-        hosts.append( (host, config.get('order', 0)) )
-    hosts = sorted(hosts, key=lambda x:x[1])
+        hosts.append( (host, config.get('order', 0), 'management' in config['roles']) )
+    def sort_nodes(node1, node2):
+        if node1[2]:
+            return 1
+        if node2[2]:
+            return -1
+        return node1[1] - node2[1]
+
+    hosts = sorted(hosts, cmp=sort_nodes)
     env.hosts = [x[0] for x in hosts]
 
 
@@ -157,7 +164,8 @@ def firstclone():
             sudo('git clone git@github.com:akvo/akvo-provisioning.git checkout', user='puppet')
             sudo('chown -R puppet.puppet /puppet/checkout')
             with cd('/puppet/checkout'):
-                sudo('git checkout %s' % env.config['puppet_branch'], user='puppet')
+                puppet_branch = env.config('puppet_branch', 'master')
+                sudo('git checkout %s' % puppet_branch, user='puppet')
 
 
 def set_facts():

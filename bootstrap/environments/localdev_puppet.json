@@ -2,7 +2,7 @@
     "name": "localdev_puppet",
 
     "machine_type": "vagrant",
-    "base_domain": "localdev.akvotest.org",
+    "base_domain": "localdev.akvo.org",
 
     "bootstrap_username": "vagrant",
     "bootstrap_password": "vagrant",
