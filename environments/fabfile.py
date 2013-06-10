@@ -17,13 +17,15 @@ def _set_hosts():
         hosts.append( (host, config.get('order', 0), 'management' in config['roles']) )
     def sort_nodes(node1, node2):
         if node1[2]:
-            return 1
-        if node2[2]:
             return -1
-        return node1[1] - node2[1]
+        if node2[2]:
+            return 1
+        return node2[1] - node1[1]
 
     hosts = sorted(hosts, cmp=sort_nodes)
     env.hosts = [x[0] for x in hosts]
+
+    print "Host order:\n%s" % '\n'.join(env.hosts)
 
 
 def on_environment(env_name_or_path):
@@ -164,7 +166,7 @@ def firstclone():
             sudo('git clone git@github.com:akvo/akvo-provisioning.git checkout', user='puppet')
             sudo('chown -R puppet.puppet /puppet/checkout')
             with cd('/puppet/checkout'):
-                puppet_branch = env.config('puppet_branch', 'master')
+                puppet_branch = env.config.get('puppet_branch', 'master')
                 sudo('git checkout %s' % puppet_branch, user='puppet')
 
 
@@ -214,6 +216,10 @@ def hiera_add_external_ip():
     if external_ip_addr is None:
         # if we can't find one on our own interfaces, try an external tool
         external_ip_addr = sudo('wget http://ipecho.net/plain -O - -q').strip()
+
+    if internal_ip_addr is None:
+        # if we only have an external IP, we'll have to use that for everything
+        internal_ip_addr = external_ip_addr
 
     sudo("sed -i '/external_ip/d' /puppet/hiera/nodespecific.yaml")
     sudo("sed -i '/internal_ip/d' /puppet/hiera/nodespecific.yaml")
