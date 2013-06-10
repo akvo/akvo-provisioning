@@ -12,6 +12,9 @@ define akvoapp::djangoapp (
     }
     $username = $appnameval
 
+    # we need nginx for proxying the django app
+    include nginx
+
     # some common stuff is required
     $required_packages = ['build-essential',
                           'python-dev',
