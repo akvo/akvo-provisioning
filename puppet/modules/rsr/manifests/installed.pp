@@ -2,5 +2,5 @@
 # and which is updated by an automatic deployment process.
 
 class rsr::installed {
-
+    include rsr::common
 }
