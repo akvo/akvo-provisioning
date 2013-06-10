@@ -15,7 +15,7 @@ class rsr::development {
         timeout   => 0, # this pip install step takes a looong time
     }
 
-    # run the database setup and syncronisation
+    # run the database setup and synchronisation
     rsr::djangocommand { "syncdb":
         command  => 'syncdb --noinput'
     }
