@@ -1,14 +1,21 @@
 {
-    "name": "localdev_opstest",
+    "name": "opstest",
 
     "machine_type": "generic",
     "base_domain": "opstest.akvotest.org",
 
-    //"bootstrap_key_filename": "~/.ssh/ec2-test-instance.pem",
-    //"bootstrap_username": "ubuntu",
+    "bootstrap_username": "root",
 
     "puppet_branch": "master",
 
     "nodes": {
+        "79.170.91.161": {
+           "roles": ["management", "monitor"],
+           "order": 0
+        },
+        "178.18.80.105": {
+            "roles": ["database", "rsr"],
+            "order": 10
+        }
     }
 }
