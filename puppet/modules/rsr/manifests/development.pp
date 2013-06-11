@@ -24,6 +24,10 @@ class rsr::development {
     }
 
 
+    $database_host = $rsr::common::database_host
+    $database_password = $rsr::common::database_password
+    $logdir = $rsr::common::logdir
+
     # add custom configuration
     file { '/apps/rsr/checkout/akvo/settings/60_puppet.conf':
         ensure   => present,

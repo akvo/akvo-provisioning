@@ -4,7 +4,7 @@ define rsr::djangocommand( $command = undef ) {
     $torun = pick($command, $name)
 
     exec { "rsr_command_${torun}":
-        command   => "$manage ${torun}",
+        command   => "${manage} ${torun}",
         cwd       => '/apps/rsr/',
         user      => 'rsr',
         logoutput => 'true',
