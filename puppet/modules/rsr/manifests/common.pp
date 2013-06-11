@@ -6,7 +6,7 @@ class rsr::common {
     # some shared config
     $database_password = 'lake'
     $base_domain = hiera('base_domain')
-    $database_host = "psql.${base_domain}"
+    $database_host = "mysql.${base_domain}"
     $media_root = "/apps/rsr/checkout/akvo/mediaroot/"
     $logdir = "/var/log/akvo/rsr/"
     $port = 8000

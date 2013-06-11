@@ -10,7 +10,7 @@ Vagrant.configure("2") do |config|
 
     config.vm.box = "precise64"
     config.vm.box_url = "http://files.vagrantup.com/precise64.box"
-    config.vm.synced_folder "../../../evironments/", "/vagrant/bootstrap/"
+    config.vm.synced_folder "../../../environments/", "/vagrant/bootstrap/"
     config.vm.synced_folder "../../../", "/puppet/checkout"
 
     config.vm.define :box1 do |box1|

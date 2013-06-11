@@ -3,23 +3,70 @@ class puppetcontrol {
     # This class installs and configures everything necessary for this node to function
     # autonomously as a puppet agent. Note that this does not bootstrap the node - a
     # separate script is required to do that. This fills in the missing details once that
-    # bootstrap script has been run - see 'bootstrap.sh'
+    # bootstrap script has been run - see 'fabfile.py#bootstrap()'
 
+    # although there is already a puppet user due to the bootstrap step, we still define
+    # it here just to make sure
+    user { 'puppet':
+        ensure => 'present',
+        home => '/puppet',
+        shell => '/bin/bash',
+    }
+
+    group { 'puppet':
+        require => User['puppet']
+    }
+
+    file { '/puppet/':
+       ensure => directory,
+       owner => 'puppet',
+       group => 'puppet',
+       mode => 750,
+       require => [ User['puppet'], Group['puppet'] ]
+    }
+
+
+    # insert the ssh info
+    file { '/puppet/.ssh':
+        ensure => directory,
+        owner => 'puppet',
+        group => 'puppet',
+        mode => 700,
+    }
+
+    file { '/puppet/.ssh/authorized_keys':
+        ensure => present,
+        owner => 'puppet',
+        group => 'puppet',
+        mode => 600,
+        require => File['/puppet/.ssh']
+    }
+
+    ssh_authorized_key { "puppet_key":
+        ensure  => present,
+        key     => hiera('puppet_public_key'),
+        type    => 'ssh-rsa',
+        user    => 'puppet',
+        require => File['/puppet/.ssh/authorized_keys']
+    }
+
+
+    # add some additional helper scripts
     file { "/puppet/bin/":
         ensure  => "directory",
         owner   => "puppet",
         group   => "puppet",
         mode    => "700",
+        require => File['/puppet/'],
     }
 
-
-    # copy the helper script in
     file { "/puppet/bin/apply.sh":
         ensure  => "present",
         owner   => "puppet",
         group   => "puppet",
         mode    => 700,
         source  => 'puppet:///modules/puppetcontrol/apply.sh',
+        require => File['/puppet/bin/']
     }
 
 
@@ -37,7 +84,7 @@ class puppetcontrol {
     sudo::allow_command { "update_system_config":
         user    => "puppet",
         command => "/puppet/bin/apply.sh",
-        require => File["/puppet/bin/apply.sh"],
+        require => [User['puppet'], File["/puppet/bin/apply.sh"]],
     }
 
 

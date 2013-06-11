@@ -12,6 +12,11 @@ import sys
 
 
 def _set_hosts():
+    if len(env.hosts) > 0:
+        # this was already set by the commandline
+        # so just ignore our custom values
+        return
+
     hosts = []
     for host, config in env.config['nodes'].iteritems():
         hosts.append( (host, config.get('order', 0), 'management' in config['roles']) )
@@ -27,6 +32,10 @@ def _set_hosts():
 
     print "Host order:\n%s" % '\n'.join(env.hosts)
 
+def _get_relative_file(*path_parts):
+    parts = (os.path.dirname('__file__'),) + (path_parts)
+    return os.path.join( *parts )
+
 
 def on_environment(env_name_or_path):
     """
@@ -35,7 +44,7 @@ def on_environment(env_name_or_path):
     :param env_name_or_path: Either the name of an environment, or a path
         to an environment definition file
     """
-    envfile = os.path.join(os.path.dirname('__file__'), 'config', '%s.json' % env_name_or_path)
+    envfile = _get_relative_file('config', '%s.json' % env_name_or_path)
     if not os.path.exists(envfile):
         if not os.path.exists(env_name_or_path):
             print "Could not find environment: %s" % env_name_or_path
@@ -47,6 +56,8 @@ def on_environment(env_name_or_path):
 
     env.config = env_config
     env.environment = env.config['name']
+    env.key_filename = env.config.get('puppet_public_key', _get_relative_file('keys', '%s_puppet' % env.environment))
+
     _set_hosts()
 
 
@@ -118,12 +129,8 @@ def setup_keys():
     """
     sudo('mkdir -p /puppet/.ssh')
     put('files/github_ssh_host', '/puppet/.ssh/known_hosts', use_sudo=True)
-    put('files/puppet.id_rsa.pub', '/puppet/.ssh/id_rsa.pub', use_sudo=True)
-    put('files/puppet.id_rsa', '/puppet/.ssh/id_rsa', use_sudo=True)
     # fix permissions
     sudo('chown -R puppet.puppet /puppet')
-    sudo('chown 644 /puppet/.ssh/id_rsa.pub')
-    sudo('chown 600 /puppet/.ssh/id_rsa')
 
 
 
@@ -215,6 +222,12 @@ def setup_hiera():
     hiera_add_external_ip()
     sudo('echo "base_domain: %s" >> /puppet/hiera/nodespecific.yaml' % env.config['base_domain'])
 
+    keyfile = env.config.get('puppet_public_key', _get_relative_file('keys', '%s_puppet.pub' % env.environment))
+    with open(keyfile) as f:
+        puppet_public_key = f.read().replace('\n','')
+    keyval = "'%s'" % puppet_public_key.replace('ssh-rsa ','')
+    sudo('echo "puppet_public_key: %s" >> /puppet/hiera/nodespecific.yaml' % keyval)
+
 
 def hiera_add_external_ip():
     links = sudo("ip -o link | sed 's/[0-9]\+:\s\+//' | sed 's/:.*$//' | grep eth")
@@ -275,21 +288,16 @@ def add_roles(*roles):
     nodefile = "/puppet/hiera/nodespecific.yaml"
 
     contents = run('more %s' % nodefile).split('\n')
-    new_contents = []
     existing_roles = []
     for line in contents:
         m = re.match('^roles: \[(.*)\]$', line)
         if m:
             existing_roles = [s.strip() for s in m.group(1).split(',')]
-        else:
-            new_contents.append(line.strip())
 
     roles = list(set(list(roles) + existing_roles))
-    new_contents.append('roles: [%s]' % ', '.join(roles))
-    new_contents = '\n'.join(new_contents)
 
-    sudo('rm %s && touch %s' % (nodefile, nodefile))
-    files.append(nodefile, new_contents, use_sudo=True)
+    sudo("sed -i '/roles:/d' %s" % nodefile)
+    files.append(nodefile, 'roles: [%s]' % ', '.join(roles), use_sudo=True)
 
 
 def update_config():

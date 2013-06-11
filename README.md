@@ -92,19 +92,23 @@ Example configuration, from `carltest.json`:
     "nodes": {
         "ec2-54-224-119-4.compute-1.amazonaws.com": {
            "roles": ["management"],
-            "order": 0
+            "order": 0,
+            "nodename": "n1"
         },
         "ec2-50-17-50-212.compute-1.amazonaws.com": {
             "roles": ["monitor"],
-            "order": 10
+            "order": 10,
+            "nodename": "n2"
         },
         "ec2-54-224-65-148.compute-1.amazonaws.com": {
             "roles": ["database"],
-            "order": 20
+            "order": 20,
+            "nodename": "n3"
         },
         "ec2-107-20-19-207.compute-1.amazonaws.com": {
             "roles": ["rsr"],
-            "order": 30
+            "order": 30,
+            "nodename": "n4"
         }
     }
 }
@@ -118,11 +122,11 @@ The name of the environment. Mostly for monitoring and reporting.
 
 ###### `base_domain`:
 
-An environment is expected to run entirely as subdomain of some other domain, for example, all `opstest` services are `<something>.opstest.akvotest.org`. This is because the subdomain is delegated to a DNS server on the environment, allowing dynamic updating of the service locations within the environment. This base domain is the 
+An environment is expected to run entirely as subdomain of some other domain, for example, all `opstest` services are `<something>.opstest.akvotest.org`. This is because the subdomain is delegated to a DNS server on the environment, allowing dynamic updating of the service locations within the environment.
 
 ###### `nodes`:
 
-A map of hostname to configuration for that node. Currently the only important configuration is the list of roles that the node will have (see above). You can also optionally specify an `order` parameter, to force a specific execution order for fabric to run through each node. 
+A map of hostname to configuration for that node. Currently the only important configuration is the list of roles that the node will have (see above). You can also optionally specify an `order` parameter, to force a specific execution order for fabric to run through each node. Adding a `nodename` value will cause the hostname of the machine to be set to `<nodename>.<base_domain>`. 
 
 ### Optional Fields
 
@@ -137,3 +141,7 @@ When bootstrapping, the empty machines will require credentials. They are provid
 ###### `puppet_branch`:
 
 For (non-local) environments, the nodes will have a local checkout of the `akvo-provisioning` repository. By default, they will checkout the `master` branch, but you can override this here.
+
+###### `puppet_private_key`, `puppet_public_key`:
+
+The path to the private and public ssh identity files, which the puppet user will allow you to connect with. This defaults to `keys/<environment>_puppet(.pub)`.
