@@ -22,4 +22,14 @@ class rsr::development {
     rsr::djangocommand { "migrate":
         require => Rsr::Djangocommand['syncdb'],
     }
+
+
+    # add custom configuration
+    file { '/apps/rsr/checkout/akvo/settings/60_puppet.conf':
+        ensure   => present,
+        owner    => 'rsr',
+        group    => 'rsr',
+        mode     => 444,
+        content  => template('rsr/local.conf.erb'),
+    }
 }
