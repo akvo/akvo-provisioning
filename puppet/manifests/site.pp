@@ -7,7 +7,6 @@ exec { "apt-update":
 Exec["apt-update"] -> Package <| |>
 
 
-
 node default {
     # the default node simply switches based on the provided list of roles
     notice("Using environment ${::environment}")
