@@ -9,7 +9,7 @@ class rsr::development {
     $logdir = $rsr::common::logdir
 
     # add custom configuration
-    file { '/apps/rsr/checkout/akvo/settings/60_puppet.conf':
+    file { '/var/akvo/rsr/local_settings.conf':
         ensure   => present,
         owner    => 'rsr',
         group    => 'rsr',

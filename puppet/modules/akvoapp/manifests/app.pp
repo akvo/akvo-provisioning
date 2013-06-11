@@ -13,7 +13,7 @@ define akvoapp::app (
     # create our user
     user { $appnameval:
         ensure => present,
-        home   => "/apps/${appnameval}",
+        home   => "/var/akvo/${appnameval}",
         shell  => '/bin/bash',
     }
 
@@ -24,22 +24,30 @@ define akvoapp::app (
 
 
     # make the directory that we'll use as the 'base'
-    file { "/apps/${appnameval}":
+    file { "/var/akvo/${appnameval}":
         ensure  => directory,
         owner   => $appnameval,
         group   => $appnameval,
         mode    => 755,
-        require => [ User[$appnameval], Group[$appnameval], File['/apps'] ],
+        require => [ User[$appnameval], Group[$appnameval], File['/var/akvo/'] ],
     }
 
+    # make the directory that we'll use for checkouts
+    file { "/var/akvo/${appnameval}/git/":
+        ensure  => directory,
+        owner   => $appnameval,
+        group   => $appnameval,
+        mode    => 755,
+        require => [ User[$appnameval], Group[$appnameval], File["/var/akvo/${appnameval}"] ],
+    }
 
     # we need somewhere for logging to
-    file { "/var/log/akvo/${appnameval}":
+    file { "/var/akvo/${appnameval}/logs":
         ensure  => 'directory',
         owner   => $appnameval,
         group   => $appnameval,
         mode    => 755,
-        require => [ User[$appnameval], Group[$appnameval], File['/var/log/akvo'] ],
+        require => [ User[$appnameval], Group[$appnameval], File["/var/akvo/${appnameval}"] ],
     }
 
 

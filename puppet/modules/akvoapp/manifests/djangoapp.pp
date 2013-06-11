@@ -29,13 +29,13 @@ define akvoapp::djangoapp (
     }
 
     # we also need to create the virtualenv
-    $approot = "/apps/${appnameval}/venv"
+    $approot = "/var/akvo/${appnameval}/venv"
     exec { "make_venv_${appnameval}":
         command => "/usr/local/bin/virtualenv ${approot}",
         creates => $approot,
         user    => $username,
-        cwd     => "/apps/$username",
-        require => [User[$username], File["/apps/${username}"], Package['virtualenv']],
+        cwd     => "/var/akvo/$username",
+        require => [User[$username], File["/var/akvo/${username}"], Package['virtualenv']],
     }
 
 }

@@ -221,7 +221,7 @@ def setup_hiera():
     sudo('chown -R puppet.puppet /puppet/hiera')
     put('files/hiera.yaml', '/etc/puppet/hiera.yaml', use_sudo=True)
     sudo('touch /puppet/hiera/nodespecific.yaml')
-    relink_hiera()
+    relink_hiera(run_method=sudo)
     hiera_add_external_ip()
     sudo('echo "base_domain: %s" >> /puppet/hiera/nodespecific.yaml' % env.config['base_domain'])
 
@@ -270,9 +270,9 @@ def hiera_add_external_ip():
     sudo('echo "machine_type : %s" >> /puppet/hiera/nodespecific.yaml' % env.config['machine_type'])
 
 
-def relink_hiera():
-    run('find /puppet/hiera/ -type l -delete')
-    run('ln -s /puppet/checkout/hiera/* /puppet/hiera/')
+def relink_hiera(run_method=run):
+    run_method('find /puppet/hiera/ -type l -delete')
+    run_method('ln -s /puppet/checkout/hiera/* /puppet/hiera/')
 
 
 def get_latest_config():
@@ -349,7 +349,7 @@ def bootstrap(verbose=False):
 
     include_apply_script()
     # run the first time just setting up the basic information
-    apply_puppet()
+    sudo('/puppet/bin/apply.sh')
 
     # now add the rest of the roles which are now configurable
     add_roles(*_get_current_roles())
@@ -360,4 +360,4 @@ def bootstrap(verbose=False):
     # note: this needs to wait for the puppetdb server to be actually responsive
     while not is_puppetdb_ready():
         time.sleep(1)
-    apply_puppet()
+    sudo('/puppet/bin/apply.sh')

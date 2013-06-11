@@ -7,8 +7,8 @@ class rsr::common {
     $database_password = 'lake'
     $base_domain = hiera('base_domain')
     $database_host = "mysql.${base_domain}"
-    $media_root = "/apps/rsr/checkout/akvo/mediaroot/"
-    $logdir = "/var/log/akvo/rsr/"
+    $media_root = "/var/akvo/rsr/current/git/akvo/mediaroot/"
+    $logdir = "/var/akvo/rsr/logs/"
     $port = 8000
 
 
@@ -53,8 +53,8 @@ class rsr::common {
     include supervisord
     supervisord::service { "rsr":
         user      => 'rsr',
-        command   => "/apps/rsr/venv/bin/gunicorn akvo.wsgi --pythonpath /apps/rsr/checkout/ --pid /apps/rsr/rsr.pid --bind 127.0.0.1:${port}",
-        directory => "/apps/rsr/",
+        command   => "/var/akvo/rsr/venv/bin/gunicorn akvo.wsgi --pythonpath /var/akvo/rsr/git/current/ --pid /var/akvo/rsr/rsr.pid --bind 127.0.0.1:${port}",
+        directory => "/var/akvo/rsr/",
     }
     # we want the rsr user to be able to restart the process
     sudo::service_control { "rsr":
