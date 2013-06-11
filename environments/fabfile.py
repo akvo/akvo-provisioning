@@ -10,6 +10,7 @@ import sys
 # note: 'roles' is used to map a hostname onto the list of roles that it will aquire
 # and perform. This is not the same as the fabric concept of "roles".
 
+env.user = 'puppet'
 
 def _set_hosts():
     if len(env.hosts) > 0:
@@ -270,8 +271,8 @@ def hiera_add_external_ip():
 
 
 def relink_hiera():
-    sudo('find /puppet/hiera/ -type l -delete')
-    sudo('ln -s /puppet/checkout/hiera/* /puppet/hiera/')
+    run('find /puppet/hiera/ -type l -delete')
+    run('ln -s /puppet/checkout/hiera/* /puppet/hiera/')
 
 
 def get_latest_config():
@@ -279,11 +280,11 @@ def get_latest_config():
         print "Refusing to pull puppet, as this is a vagrant box and the checkout is linked to your host machine"
         return
     with cd('/puppet/checkout'):
-        sudo('git pull', user='puppet')
+        run('git pull')
 
 
 def apply_puppet():
-    sudo('/puppet/bin/apply.sh')
+    run('sudo /puppet/bin/apply.sh')
 
 
 def add_roles(*roles):
