@@ -17,6 +17,7 @@ class common {
         'dnsutils',
         'telnet',
         'wget',
+        'curl',
     ]
 
     package { $useful_packages:
