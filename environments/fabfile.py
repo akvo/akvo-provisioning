@@ -129,8 +129,10 @@ def setup_keys():
     """
     sudo('mkdir -p /puppet/.ssh')
     put('files/github_ssh_host', '/puppet/.ssh/known_hosts', use_sudo=True)
+    put('files/github_deploy_key', '/puppet/.ssh/id_rsa', use_sudo=True)
     # fix permissions
     sudo('chown -R puppet.puppet /puppet')
+    sudo('chown 600 /puppet/.ssh/id_rsa')
 
 
 
