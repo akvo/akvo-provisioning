@@ -12,7 +12,8 @@ class rsr::development {
         user      => 'rsr',
         require   => [ Exec['make_venv_rsr'], Package['libmysqlclient-dev']], # currently requires mysql...
         logoutput => 'true',
-        timeout   => 0, # this pip install step takes a looong time
+        timeout   => 0, # this pip install step takes a looong time,
+        notify    => Supervisord::Service['rsr'] # restart once the required libs and binaries are in place
     }
 
     # run the database setup and synchronisation

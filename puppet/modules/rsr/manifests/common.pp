@@ -42,9 +42,10 @@ class rsr::common {
 
 
     # nginx sits in front of RSR
-    nginx::fcgi { 'rsr':
-        server_name  => "rsr.${base_domain}",
-        fcgi_address => "localhost:${port}",
+    nginx::proxy { 'rsr':
+        server_name        => "rsr.${base_domain}",
+        proxy_url          => "http://localhost:${port}",
+        password_protected => false,
     }
 
 
