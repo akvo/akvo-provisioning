@@ -53,14 +53,38 @@ def on_environment(env_name_or_path):
 
 
 # helpers
+def _get_node_config(setting_name, default=KeyError):
+    conf = env.config['nodes'][env.host_string]
+    if default == KeyError:
+        return conf['setting_name']
+    return conf.get(setting_name, default)
+
 def _get_current_roles():
-    config = env.config['nodes'][env.host_string]
-    return config.get('roles', [])
+    return _get_node_config('roles', [])
 
 
 # commands
 def echo_test():
     sudo('echo test')
+
+
+def set_hostname():
+    nodename = _get_node_config('nodename', None)
+    if nodename is None:
+        print "Not setting hostname as no nodename was set"
+        return
+
+    hostname = '%s.%s' % (nodename, env.config['base_domain'])
+    print "Setting hostname to %s" % hostname
+
+    # remove the current hostname from /etc/hosts
+    current_hostname = run('hostname -f').strip()
+    sudo('sed "/%s/d" -i /etc/hosts' % current_hostname)
+
+    # set the hostname everywhere
+    sudo('echo "127.0.0.1 %s %s" >> /etc/hosts' % (hostname, nodename))
+    sudo('hostname %s' % hostname)
+    sudo('echo %s > /etc/hostname' % hostname)
 
 
 def create_puppet_user():
@@ -294,6 +318,8 @@ def bootstrap(verbose=False):
     management = 'management' in _get_current_roles()
     if management:
         print "This is a management node"
+
+    set_hostname()
 
     create_puppet_user()
     setup_keys()

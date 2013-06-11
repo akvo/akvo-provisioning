@@ -10,10 +10,12 @@
 
     "nodes": {
         "79.170.91.161": {
-           "roles": ["management", "monitor"],
-           "order": 0
+            "nodename": "n1",
+            "roles": ["management", "monitor"],
+            "order": 0
         },
         "178.18.80.105": {
+            "nodename": "n2",
             "roles": ["database", "rsr"],
             "order": 10
         }
