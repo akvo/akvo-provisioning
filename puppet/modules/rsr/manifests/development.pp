@@ -7,6 +7,7 @@ class rsr::development {
     $database_host = $rsr::common::database_host
     $database_password = $rsr::common::database_password
     $logdir = $rsr::common::logdir
+    $media_root = $rsr::common::mediaroot
 
     # add custom configuration
     file { '/var/akvo/rsr/local_settings.conf':
