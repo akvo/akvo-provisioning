@@ -19,7 +19,8 @@ environment=$1
 orig_dir=`pwd`
 ohno=0
 cd /vagrant/bootstrap/
-fab --linewise on_environment:$environment bootstrap || ohno=1
+ip=`ifconfig eth1 | grep 'inet addr' | awk -F: '{print $2}' | awk '{print $1}'`
+fab --linewise --hosts=$ip on_environment:$environment bootstrap || ohno=1
 cd $orig_dir
 
 set_nameserver
