@@ -1,3 +1,11 @@
+<% if @ssl %>
+server {
+    listen 80;
+    server_name <%= @server_name %>;
+    rewrite ^(.*) https://<%= @server_name %>$1;
+}
+<% end -%>
+
 server {
 
     <% if @ssl %>
