@@ -2,7 +2,8 @@
 define nginx::proxy( $server_name,
                      $proxy_url,
                      $password_protected = true,
-                     $ssl = true ) {
+                     $ssl = true,
+                     $static_dirs = undef ) {
 
   $htpasswd_file = "/etc/nginx/passwd/${server_name}.htpasswd"
   $ssl_key = "/etc/nginx/certs/${server_name}.key"

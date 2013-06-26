@@ -43,5 +43,19 @@ server {
         <% end -%>
     }
 
+    <% if @static_dirs %>
+        <% @static_dirs.each_pair do |location, alias_val| %>
+            location <%= location %> {
+                autoindex off;
+                alias <%= alias_val %>;
+
+                <% if @password_protected %>
+                   auth_basic            "Restricted";
+                   auth_basic_user_file  <%= @htpasswd_file %>;
+                <% end -%>
+            }
+        <% end -%>
+    <% end -%>
+
 }
 

@@ -46,6 +46,10 @@ class rsr::common {
         server_name        => "rsr.${base_domain}",
         proxy_url          => "http://localhost:${port}",
         password_protected => false,
+        static_dirs        => {
+            "/rsr/media/admin/" => "/var/akvo/rsr/venv/lib/python2.7/site-packages/django/contrib/admin/static/admin/",
+            "/rsr/media/"       => "/var/akvo/rsr/git/current/akvo/mediaroot/",
+        }
     }
 
 
