@@ -17,4 +17,12 @@ class rsr::development {
         mode     => 444,
         content  => template('rsr/local.conf.erb'),
     }
+
+    # make sure watchdog is installed so we can trigger server refreshes
+    # see https://github.com/akvo/akvo-provisioning/wiki/Polling-Django-changes
+    package { 'watchdog':
+        ensure   => 'present',
+        provider => 'pip',
+    }
+
 }
