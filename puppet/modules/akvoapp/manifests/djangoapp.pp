@@ -26,6 +26,7 @@ define akvoapp::djangoapp (
     package { ['distribute', 'virtualenv']:
         ensure   => 'latest',
         provider => 'pip',
+        require  => Package['python-pip'],
     }
 
     # we also need to create the virtualenv

@@ -7,7 +7,7 @@ class rsr::common {
     $database_password = 'lake'
     $base_domain = hiera('base_domain')
     $database_host = "mysql.${base_domain}"
-    $media_root = "/var/akvo/rsr/current/git/akvo/mediaroot/"
+    $media_root = "/var/akvo/rsr/mediaroot/"
     $logdir = "/var/akvo/rsr/logs/"
     $port = 8000
 
@@ -16,10 +16,19 @@ class rsr::common {
     # before this module
     require akvoapp
 
-
     # include our RSR-specific akvo info
     akvoapp::app { 'rsr': } # no parameters yet
     akvoapp::djangoapp { 'rsr': }
+
+
+    # make sure the mediaroot exists
+    file { $media_root:
+        ensure  => directory,
+        owner   => 'rsr',
+        group   => 'rsr',
+        mode    => 755,
+        require => Akvoapp::App['rsr']
+    }
 
 
     # install all of the support packages
