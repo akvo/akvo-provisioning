@@ -57,7 +57,7 @@ class rsr::common {
         password_protected => false,
         static_dirs        => {
             "/rsr/media/admin/" => "/var/akvo/rsr/venv/lib/python2.7/site-packages/django/contrib/admin/static/admin/",
-            "/rsr/media/"       => "/var/akvo/rsr/git/current/akvo/mediaroot/",
+            "/rsr/media/"       => "/var/akvo/rsr/mediaroot/",
         }
     }
 
