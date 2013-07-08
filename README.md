@@ -142,6 +142,6 @@ When bootstrapping, the empty machines will require credentials. They are provid
 
 For (non-local) environments, the nodes will have a local checkout of the `akvo-provisioning` repository. By default, they will checkout the `master` branch, but you can override this here.
 
-###### `puppet_private_key`, `puppet_public_key`:
+###### `puppet_public_key`:
 
-The path to the private and public ssh identity files, which the puppet user will allow you to connect with. This defaults to `keys/<environment>_puppet(.pub)`.
+The path to the public ssh key file, which the puppet user will allow you to connect with. This defaults to `keys/<environment>_puppet.pub`.
