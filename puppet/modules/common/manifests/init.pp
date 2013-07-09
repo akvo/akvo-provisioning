@@ -29,4 +29,6 @@ class common {
         # otherwise it will be considered a subdomain
         ip => hiera('internal_ip')
     }
+
+    include locales
 }
