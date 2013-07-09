@@ -4,6 +4,8 @@ define nginx::staticsite( $hostname, $rootdir,
                           $ssl = true ) {
 
     $htpasswd_file = "/etc/nginx/${server_name}.htpasswd"
+    $ssl_key = "/etc/nginx/certs/${server_name}.key"
+    $ssl_crt = "/etc/nginx/certs/${server_name}.crt"
 
     file { "/etc/nginx/sites-enabled/$hostname":
         ensure  => present,
