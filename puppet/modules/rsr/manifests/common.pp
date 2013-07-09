@@ -17,7 +17,13 @@ class rsr::common {
     require akvoapp
 
     # include our RSR-specific akvo info
-    akvoapp::app { 'rsr': } # no parameters yet
+    akvoapp::app { 'rsr':
+        require => [
+            Class['akvoapp::pythonsupport::mysql'],
+            Class['akvoapp::pythonsupport::pil'],
+            Class['akvoapp::pythonsupport::lxml'],
+        ]
+    }
     akvoapp::djangoapp { 'rsr': }
 
 
