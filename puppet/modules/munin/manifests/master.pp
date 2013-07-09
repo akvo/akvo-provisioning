@@ -7,8 +7,9 @@ class munin::master {
 
     include nginx
     nginx::staticsite { 'munin-nginx':
-        rootdir  => '/srv/munin/html',
-        hostname => $munin_domain,
+        rootdir            => '/srv/munin/html',
+        hostname           => $munin_domain,
+        password_protected => false,
     }
 
     file { '/srv/munin':
