@@ -24,10 +24,10 @@ server {
         listen       80;
     <% end -%>
 
-    server_name <%= hostname %>;
+    server_name <%= @hostname %>;
 
     location / {
-        root <%= rootdir %>;
+        root <%= @rootdir %>;
 
         <% if @password_protected %>
            auth_basic            "Restricted";
