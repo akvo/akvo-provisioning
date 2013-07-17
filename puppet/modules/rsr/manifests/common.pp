@@ -4,11 +4,12 @@
 class rsr::common {
 
     # some shared config
+    $approot = '/var/akvo/rsr'
     $database_password = 'lake'
     $base_domain = hiera('base_domain')
     $database_host = "mysql.${base_domain}"
-    $media_root = "/var/akvo/rsr/mediaroot/"
-    $logdir = "/var/akvo/rsr/logs/"
+    $media_root = "${approot}/mediaroot/"
+    $logdir = "${approot}/logs/"
     $port = 8000
 
 
@@ -37,7 +38,7 @@ class rsr::common {
     }
 
     # add custom configuration
-    file { '/var/akvo/rsr/local_settings.conf':
+    file { "${approot}/local_settings.conf':
         ensure   => present,
         owner    => 'rsr',
         group    => 'rsr',
@@ -71,8 +72,8 @@ class rsr::common {
         proxy_url          => "http://localhost:${port}",
         password_protected => false,
         static_dirs        => {
-            "/rsr/media/admin/" => "/var/akvo/rsr/venv/lib/python2.7/site-packages/django/contrib/admin/static/admin/",
-            "/rsr/media/"       => "/var/akvo/rsr/mediaroot/",
+            "/rsr/media/admin/" => "${approot}/venv/lib/python2.7/site-packages/django/contrib/admin/static/admin/",
+            "/rsr/media/"       => $media_root,
         }
     }
 
@@ -81,8 +82,8 @@ class rsr::common {
     include supervisord
     supervisord::service { "rsr":
         user      => 'rsr',
-        command   => "/var/akvo/rsr/venv/bin/gunicorn akvo.wsgi --pythonpath /var/akvo/rsr/git/current/ --pid /var/akvo/rsr/rsr.pid --bind 127.0.0.1:${port}",
-        directory => "/var/akvo/rsr/",
+        command   => "${approot}/venv/bin/gunicorn akvo.wsgi --pythonpath ${approot}/git/current/ --pid ${approot}/rsr.pid --bind 127.0.0.1:${port}",
+        directory => $approot,
     }
     # we want the rsr user to be able to restart the process
     sudo::service_control { "rsr":

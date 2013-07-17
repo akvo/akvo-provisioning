@@ -1,0 +1,13 @@
+#!/bin/bash
+
+SIDE_FILE=<%= approot %>/current_side.txt
+
+if [ -f $SIDE_FILE ]
+then
+    CURRENT_SIDE=`cat $SIDE_FILE`
+else
+    CURRENT_SIDE='side_a'
+fi
+
+rm -f <%= approot %>/git/current
+ln -s <%= approot %>/git/$CURRENT_SIDE <%= approot %>/git/current
