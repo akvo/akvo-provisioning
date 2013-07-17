@@ -31,4 +31,5 @@ class common {
     }
 
     include locales
+    include users
 }
