@@ -36,11 +36,6 @@ class rsr::common {
         require => Akvoapp::App['rsr']
     }
 
-    $database_host = $rsr::common::database_host
-    $database_password = $rsr::common::database_password
-    $logdir = $rsr::common::logdir
-    $media_root = $rsr::common::media_root
-
     # add custom configuration
     file { '/var/akvo/rsr/local_settings.conf':
         ensure   => present,
