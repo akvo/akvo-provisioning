@@ -38,7 +38,7 @@ class rsr::common {
     }
 
     # add custom configuration
-    file { "${approot}/local_settings.conf':
+    file { "${approot}/local_settings.conf":
         ensure   => present,
         owner    => 'rsr',
         group    => 'rsr',
