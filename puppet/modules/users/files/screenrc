@@ -1,0 +1,3 @@
+startup_message off
+hardstatus alwayslastline "%{= Wk}%D %d %M %y %c:%s %H %l% %{= Wb} -  %-Lw%{= Wr}%50>%n%f* %t%{-}%+Lw%<"
+shelltitle \$|bash
