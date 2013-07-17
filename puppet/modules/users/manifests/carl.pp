@@ -1,11 +1,12 @@
 class users::carl { 
 
     user { 'carl':
-        ensure => 'present',
-        home => '/home/carl',
-        shell => '/bin/bash',
-        groups => ['ops'],
+        ensure   => 'present',
+        home     => '/home/carl',
+        shell    => '/bin/bash',
+        groups   => ['ops'],
         password => '$6$w2FK/jnb$9KqSVzM1ha2rPMF8SfLayCIrnkqqyRSSSvVTPQEUTBa46Hd2AcoSDuyzsywWTyCpb7guoHn.on/08qJW1IhGJ.',
+        require  => Group['ops']
     }
   
     group { 'carl':
