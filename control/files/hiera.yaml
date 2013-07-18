@@ -3,8 +3,8 @@
   - yaml
 :hierarchy:
   - nodespecific
-  - nodes/%{::fqdn}
-  - environments/%{::environment}
+  - %{::fqdn}
+  - %{::environment}
   - common
 
 :yaml:
