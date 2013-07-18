@@ -50,8 +50,9 @@ def on_environment(env_name_or_path):
     :param env_name_or_path: Either the name of an environment, or a path
         to an environment definition file
     """
-    if os.path.exists(env_name_or_path):
-        envfile = env_name_or_path
+    envfile = os.path.abspath(os.path.expanduser(env_name_or_path))
+    if os.path.exists(envfile):
+        env.config_dir = os.path.dirname(envfile)
         print "Using configuration found at %s" % envfile
     else:
         # try to find it relative to the config root
@@ -250,7 +251,6 @@ def include_apply_script():
 
 
 def setup_hiera():
-    env.user = 'carl'
     sudo('mkdir -p /puppet/hiera/')
     sudo('chown -R puppet.puppet /puppet/hiera')
     put('files/hiera.yaml', '/etc/puppet/hiera.yaml', use_sudo=True)
@@ -260,7 +260,7 @@ def setup_hiera():
     sudo('echo "base_domain: %s" >> /puppet/hiera/nodespecific.yaml' % env.config['base_domain'])
 
     for keyname in ('puppet', 'rsr-deploy'):
-        keyfile = _get_config_file('%s.pub' % keyname)
+        keyfile = _get_node_config('%s_public_key',  _get_config_file('%s.pub' % keyname))
         with open(keyfile) as f:
             key = f.read().replace('\n', '')
         key = "'%s'" % key.split(' ')[1]
