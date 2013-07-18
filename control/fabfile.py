@@ -38,6 +38,10 @@ def _get_relative_file(*path_parts):
     parts = (os.path.dirname('__file__'),) + (path_parts)
     return os.path.join( *parts )
 
+def _get_config_file(file_name):
+    return os.path.join(env.config_dir, file_name)
+
+
 
 def on_environment(env_name_or_path):
     """
@@ -46,19 +50,31 @@ def on_environment(env_name_or_path):
     :param env_name_or_path: Either the name of an environment, or a path
         to an environment definition file
     """
-    envfile = _get_relative_file('config', '%s.json' % env_name_or_path)
-    if not os.path.exists(envfile):
-        if not os.path.exists(env_name_or_path):
-            print "Could not find environment: %s" % env_name_or_path
-            sys.exit(1)
+    if os.path.exists(env_name_or_path):
         envfile = env_name_or_path
+        print "Using configuration found at %s" % envfile
+    else:
+        # try to find it relative to the config root
+        config_dir = os.environ.get('AKVO_CONFIG_DIR', None)
+        if config_dir is None:
+            sys.stderr.write("Cannot find config - the AKVO_CONFIG_DIR environment variable is not set.\n")
+            sys.exit(1)
+
+        env.config_dir = os.path.join(config_dir, env_name_or_path)
+
+        envfile = _get_config_file('config.json')
+        if not os.path.exists(envfile):
+            sys.stderr.write("No such config file: %s" % envfile)
+            sys.exit(1)
 
     with open(envfile) as f:
         env_config = json.load(f)
 
     env.config = env_config
     env.environment = env.config['name']
-    env.key_filename = env.config.get('puppet_public_key', _get_relative_file('keys', '%s_puppet' % env.environment))
+
+    default_key = _get_config_file('puppet')
+    env.key_filename = env.config.get('puppet_private_key', default_key)
 
     _set_hosts()
 
@@ -69,6 +85,7 @@ def update_rsr(to_branch, in_place=None):
         print 'Not an RSR node'
 
     env.user = 'rsr'
+    env.key_filename = _get_config_file('rsr-deploy')
     in_place = in_place is not None
 
     if in_place:
@@ -233,6 +250,7 @@ def include_apply_script():
 
 
 def setup_hiera():
+    env.user = 'carl'
     sudo('mkdir -p /puppet/hiera/')
     sudo('chown -R puppet.puppet /puppet/hiera')
     put('files/hiera.yaml', '/etc/puppet/hiera.yaml', use_sudo=True)
@@ -241,11 +259,12 @@ def setup_hiera():
     hiera_add_external_ip()
     sudo('echo "base_domain: %s" >> /puppet/hiera/nodespecific.yaml' % env.config['base_domain'])
 
-    keyfile = env.config.get('puppet_public_key', _get_relative_file('keys', '%s_puppet.pub' % env.environment))
-    with open(keyfile) as f:
-        puppet_public_key = f.read().replace('\n','')
-    keyval = "'%s'" % puppet_public_key.replace('ssh-rsa ','')
-    sudo('echo "puppet_public_key: %s" >> /puppet/hiera/nodespecific.yaml' % keyval)
+    for keyname in ('puppet', 'rsr-deploy'):
+        keyfile = _get_config_file('%s.pub' % keyname)
+        with open(keyfile) as f:
+            key = f.read().replace('\n', '')
+        key = "'%s'" % key.split(' ')[1]
+        sudo('echo "%s_public_key: %s" >> /puppet/hiera/nodespecific.yaml' % (keyname, key))
 
 
 def hiera_add_external_ip():
