@@ -23,4 +23,12 @@ define named::service_location(
         notify => Service['bind9'],
     }
 
+    # Export hostkeys from these hostnames.
+    $base_domain = hiera('base_domain')
+    @@sshkey { "${subdomainval}.${base_domain}":
+        ensure       => present,
+        host_aliases => [$subdomainval],
+        type         => 'rsa',
+        key          => $::sshrsakey,
+    }
 }

@@ -32,4 +32,6 @@ class common {
 
     include locales
     include users
+    include sshd
 }
+
