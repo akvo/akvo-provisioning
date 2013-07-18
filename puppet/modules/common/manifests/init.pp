@@ -33,5 +33,7 @@ class common {
     include locales
     include users
     include sshd
+    include common::repos
+    include common::resolv
 }
 
