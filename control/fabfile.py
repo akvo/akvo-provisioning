@@ -13,6 +13,18 @@ from datetime import datetime
 
 env.user = 'puppet'
 
+# helpers
+def _get_node_config(setting_name, default=KeyError):
+    conf = env.config['nodes'][env.host_string]
+    if default == KeyError:
+        return conf['setting_name']
+    return conf.get(setting_name, default)
+
+
+def _get_current_roles():
+    return _get_node_config('roles', [])
+
+
 def _set_hosts():
     if len(env.hosts) > 0:
         # this was already set by the commandline
@@ -34,15 +46,32 @@ def _set_hosts():
 
     print "Host order:\n%s" % '\n'.join(env.hosts)
 
+
 def _get_relative_file(*path_parts):
     parts = (os.path.dirname('__file__'),) + (path_parts)
     return os.path.join( *parts )
+
 
 def _get_config_file(file_name):
     return os.path.join(env.config_dir, file_name)
 
 
+def _write_yaml(filepath, data, use_sudo=False):
+    run_method = sudo if use_sudo else run
 
+    run_method('echo "---"> %s' % filepath)
+
+    for key, value in data.iteritems():
+        if isinstance(value, (tuple, list)):
+            run_method('echo "%s:" >> %s' % (key, filepath))
+            for item in value:
+                run_method('echo "  - %s" >> %s' % (item, filepath))
+            continue
+        run_method('echo "%s: %s" >> %s' % (key, value, filepath))
+    run_method('chown puppet.puppet %s' % filepath)
+
+
+# configuring which machines
 def on_environment(env_name_or_path):
     """
     Sets the environment up using the given name or file
@@ -96,17 +125,6 @@ def update_rsr(to_branch, in_place=None):
         new_name = 'rsr__%s' % now
         run('./make_app.sh %s %s' % (new_name, to_branch))
         run('./make_current.sh %s' % new_name)
-
-
-# helpers
-def _get_node_config(setting_name, default=KeyError):
-    conf = env.config['nodes'][env.host_string]
-    if default == KeyError:
-        return conf['setting_name']
-    return conf.get(setting_name, default)
-
-def _get_current_roles():
-    return _get_node_config('roles', [])
 
 
 # commands
@@ -267,6 +285,17 @@ def setup_hiera():
         sudo('echo "%s_public_key: %s" >> /puppet/hiera/nodespecific.yaml' % (keyname, key))
 
 
+def create_hiera_facts(use_sudo=False):
+    env_facts = env.config.get('facts', None)
+    if env_facts is not None:
+        _write_yaml('/puppet/hiera/%s.yaml' % env.config['name'], env_facts, use_sudo=use_sudo)
+
+    node_facts = _get_node_config('facts', default=None)
+    if node_facts is not None:
+        hostname = run('hostname -f').strip()
+        _write_yaml('/puppet/hiera/%s.yaml' % hostname, node_facts, use_sudo=use_sudo)
+
+
 def hiera_add_external_ip():
     links = sudo("ip -o link | sed 's/[0-9]\+:\s\+//' | sed 's/:.*$//' | grep eth")
     links = links.split('\n')
@@ -341,6 +370,7 @@ def add_roles(*roles):
 def update_config():
     get_latest_config()
     relink_hiera()
+    create_hiera_facts()
     apply_puppet()
 
 
@@ -379,6 +409,7 @@ def bootstrap(verbose=False):
 
     set_facts()
     setup_hiera()
+    create_hiera_facts(use_sudo=True)
     if management:
         add_roles('management')
 
