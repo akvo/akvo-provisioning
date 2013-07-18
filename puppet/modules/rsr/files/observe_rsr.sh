@@ -3,7 +3,7 @@
 while true
 do
     touch /tmp/lastcheck
-    CODE_PATH='/var/akvo/rsr/git/current/akvo/'
+    CODE_PATH='/var/akvo/rsr/code/akvo/'
     CHANGED_COUNT=`find $CODE_PATH -newer /tmp/lastcheck | wc -l`
 
     if [ "$CHANGED_COUNT" -gt "0" ]

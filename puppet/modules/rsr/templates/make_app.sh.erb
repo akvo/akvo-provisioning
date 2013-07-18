@@ -1,2 +1,24 @@
 #!/bin/bash
 
+ORIG_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+DATE=`date "+%Y-%m-%d_%H-%M-%S"`
+NAME=rsr__$DATE
+ROOT=<%= @approot %>/versions/$NAME
+
+mkdir -p $ROOT
+virtualenv $ROOT/venv
+
+git clone https://github.com/akvo/akvo-rsr.git $ROOT/code
+cd $ROOT/code
+git checkout $1
+
+PIP=$ROOT/venv/bin/pip
+
+$PIP install -r $ROOT/code/scripts/deployment/pip/requirements/2_rsr.txt
+# due to a stupid dependency of django-counter, both PIL and Pillow will be installed, so we'll remove them
+# here and reinstall
+$PIP uninstall --yes PIL Pillow
+$PIP install Pillow==2.0.0
+
+cd $ORIG_DIR

@@ -1,6 +1,6 @@
 # adds the system libraries required to use PIL
 
-class akvoapp::pythonsupport::pil {
+class pythonsupport::pil {
 
     $required_packages = [ 'libjpeg-dev',
                            'libfreetype6',

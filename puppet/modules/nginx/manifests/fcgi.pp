@@ -4,6 +4,8 @@ define nginx::fcgi( $server_name,
                     $password_protected = true,
                     $ssl = true ) {
 
+    include nginx
+
     $htpasswd_file = "/etc/nginx/${server_name}.htpasswd"
     $ssl_key = "/etc/nginx/certs/${server_name}.key"
     $ssl_crt = "/etc/nginx/certs/${server_name}.crt"

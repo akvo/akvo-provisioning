@@ -5,6 +5,8 @@ define nginx::proxy( $server_name,
                      $ssl = true,
                      $static_dirs = undef ) {
 
+  include nginx
+
   $htpasswd_file = "/etc/nginx/passwd/${server_name}.htpasswd"
   $ssl_key = "/etc/nginx/certs/${server_name}.key"
   $ssl_crt = "/etc/nginx/certs/${server_name}.crt"

@@ -4,6 +4,7 @@
 class rsr::common {
 
     # some shared config
+    $username = 'rsr'
     $approot = '/var/akvo/rsr'
     $database_password = 'lake'
     $base_domain = hiera('base_domain')
@@ -16,25 +17,37 @@ class rsr::common {
     # make sure we also include the Akvoapp stuff, and that it is loaded
     # before this module
     require akvoapp
+    require rsr::packages
 
     # include our RSR-specific akvo info
-    akvoapp::app { 'rsr':
-        require => [
-            Class['akvoapp::pythonsupport::mysql'],
-            Class['akvoapp::pythonsupport::pil'],
-            Class['akvoapp::pythonsupport::lxml'],
-        ]
+    rsr::user { 'rsr':
+        approot  => $approot,
+        username => $username,
     }
-    akvoapp::djangoapp { 'rsr': }
+    rsr::dirs { 'rsr':
+        username   => $username,
+        approot    => $approot,
+        media_root => $media_root,
+    }
 
+    # include the script for downloading and creating an app
+    file { "${approot}/make_app.sh":
+        ensure  => present,
+        content => template('rsr/make_app.sh.erb'),
+        owner   => $username,
+        group   => $username,
+        mode    => 744,
+        require => File[$approot]
+    }
 
-    # make sure the mediaroot exists
-    file { $media_root:
-        ensure  => directory,
-        owner   => 'rsr',
-        group   => 'rsr',
-        mode    => 755,
-        require => Akvoapp::App['rsr']
+    # include the script for switching the app
+    file { "${approot}/make_current.sh":
+        ensure  => present,
+        content => template('rsr/make_current.sh.erb'),
+        owner   => $username,
+        group   => $username,
+        mode    => 744,
+        require => File[$approot]
     }
 
     # add custom configuration
@@ -48,9 +61,9 @@ class rsr::common {
 
 
     # install all of the support packages
-    include akvoapp::pythonsupport::mysql
-    include akvoapp::pythonsupport::pil
-    include akvoapp::pythonsupport::lxml
+    include pythonsupport::mysql
+    include pythonsupport::pil
+    include pythonsupport::lxml
 
 
     # create an RSR database on the database server
@@ -82,7 +95,7 @@ class rsr::common {
     include supervisord
     supervisord::service { "rsr":
         user      => 'rsr',
-        command   => "${approot}/venv/bin/gunicorn akvo.wsgi --pythonpath ${approot}/git/current/ --pid ${approot}/rsr.pid --bind 127.0.0.1:${port}",
+        command   => "${approot}/venv/bin/gunicorn akvo.wsgi --pythonpath ${approot}/code/ --pid ${approot}/rsr.pid --bind 127.0.0.1:${port}",
         directory => $approot,
     }
     # we want the rsr user to be able to restart the process
