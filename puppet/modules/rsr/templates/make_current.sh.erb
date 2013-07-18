@@ -4,9 +4,9 @@ APP_DIR=$1
 
 sudo supervisorctl stop rsr
 
-rm -f <%= @approot %>code
-rm -f <%= @approot %>venv
-ln -s $APP_DIR/code <%= @approot %>code
-ln -s $APP_DIR/venv <%= @approot %>venv
+rm -f <%= @approot %>/code
+rm -f <%= @approot %>/venv
+ln -s $APP_DIR/code <%= @approot %>/code
+ln -s $APP_DIR/venv <%= @approot %>/venv
 
 sudo supervisorctl start rsr

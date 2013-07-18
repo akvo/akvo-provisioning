@@ -5,6 +5,7 @@ import time
 import json
 import os
 import sys
+from datetime import datetime
 
 
 # note: 'roles' is used to map a hostname onto the list of roles that it will aquire
@@ -62,6 +63,21 @@ def on_environment(env_name_or_path):
     _set_hosts()
 
 
+# app updating
+def update_rsr(to_branch, in_place=None):
+    if 'rsr' not in _get_current_roles():
+        print 'Not an RSR node'
+
+    env.user = 'rsr'
+    in_place = in_place is not None
+
+    if in_place:
+        run('./update_current.sh %s' % to_branch)
+    else:
+        now = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+        new_name = 'rsr__%s' % now
+        run('./make_app.sh %s %s' % (new_name, to_branch))
+        run('./make_current.sh %s' % new_name)
 
 
 # helpers
