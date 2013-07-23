@@ -1,6 +1,6 @@
 
 
-class puppetdb {
+class puppetdb::server {
 
     $base_domain = hiera('base_domain')
     $puppet_domain = "puppetdb.${base_domain}"
