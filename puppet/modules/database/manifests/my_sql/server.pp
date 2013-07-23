@@ -11,11 +11,11 @@ class database::my_sql::server {
     }
 
     # let everyone know where we are
-    @@named::service_location { "mysql":
+    named::service_location { "mysql":
         ip => hiera('internal_ip')
     }
 
     # collect any databases that services want
-    Database::My_sql::Db <<| |>>
+    Database::My_sql::Db_exported <<| tag == $::environment |>>
 
 }

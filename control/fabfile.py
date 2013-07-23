@@ -48,8 +48,8 @@ def _set_hosts():
 
 
 def _get_relative_file(*path_parts):
-    parts = (os.path.dirname('__file__'),) + (path_parts)
-    return os.path.join( *parts )
+    parts = (os.path.dirname('__file__'),) + path_parts
+    return os.path.join(*parts)
 
 
 def _get_config_file(file_name):
@@ -72,6 +72,18 @@ def _write_yaml(filepath, data, use_sudo=False):
 
 
 # configuring which machines
+def _validate_config(config):
+    if 'puppetdb' not in config:
+        # if we aren't using an external puppetdb, then we need to install one ourselves
+        roles = set()
+        for node in config['nodes'].values():
+            for role in node['roles']:
+                roles.add(role)
+        if 'puppetdb' not in roles:
+            sys.stderr.write('No puppetdb role and no puppetdb URL given\n')
+            sys.exit(1)
+
+
 def on_environment(env_name_or_path):
     """
     Sets the environment up using the given name or file
@@ -100,6 +112,8 @@ def on_environment(env_name_or_path):
     with open(envfile) as f:
         env_config = json.load(f)
 
+    _validate_config(env_config)
+
     env.config = env_config
     env.environment = env.config['name']
 
@@ -111,11 +125,14 @@ def on_environment(env_name_or_path):
 
 # app updating
 def update_rsr(to_branch, in_place=None):
-    if 'rsr' not in _get_current_roles():
-        print 'Not an RSR node'
+    #if 'rsr' not in _get_current_roles():
+    #    print 'Not an RSR node'
 
     env.user = 'rsr'
-    env.key_filename = _get_config_file('rsr-deploy')
+    #default_key = _get_config_file('rsr-deploy')
+    #env.key_filename = env.config.get('rsr-deploy_private_key', default_key)
+    env.key_filename = '/Users/carlcrowder/akvo/code/akvo-config/opstest/rsr-deploy'
+
     in_place = in_place is not None
 
     if in_place:

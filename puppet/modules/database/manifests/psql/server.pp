@@ -12,11 +12,11 @@ class database::psql::server {
     }
 
     # let everyone know where we are
-    @@named::service_location { "psql":
+    named::service_location { "psql":
         ip => hiera('internal_ip')
     }
 
     # collect any databases that services want
-    Database::Psql::Db <<| |>>
+    Database::Psql::Db_exported <<| tag == $::environment |>>
 
 }

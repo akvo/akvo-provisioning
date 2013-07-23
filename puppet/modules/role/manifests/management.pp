@@ -7,6 +7,5 @@ class role::management {
         ip => hiera('external_ip')
     }
 
-    include puppetdb
     include named
 }

@@ -87,14 +87,14 @@ class rsr::common {
 
 
     # create an RSR database on the database server
-    @@database::my_sql::db { 'rsr':
+    database::my_sql::db { 'rsr':
         password => $database_password
     }
 
 
     # we want a service address
     # TODO: this needs to consider partnersite stuff
-    @@named::service_location { "rsr":
+    named::service_location { "rsr":
         ip => hiera('external_ip')
     }
 

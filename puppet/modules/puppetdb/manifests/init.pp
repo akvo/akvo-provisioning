@@ -71,10 +71,6 @@ class puppetdb {
     }
 
     # let the DNS server know where we are
-    # note: this is not an exported resource, because we would be unable to
-    # collect it when bootstrapping puppetdb - you need to run puppetdb to
-    # do that, and if we are in this part of the manifest, clearly we haven't
-    # configured it yet!
     named::service_location { "puppetdb":
         ip => hiera('external_ip')
     }

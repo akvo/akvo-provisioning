@@ -51,7 +51,7 @@ class named {
     }
 
     # Collect all exported dns record file lines
-    Named::Service_Location <<| |>>
+    File_Line <<| tag == "service-location--${::environment}" |>>
 
 
 }

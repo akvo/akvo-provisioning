@@ -17,10 +17,11 @@ define named::service_location(
     notice("Service ${subdomainval} is at IP ${ip}")
 
     # this exports a file line which will be collected by the
-    file_line { "service_location_${name}":
+    @@file_line { "service_location_${name}":
         path   => $zonefile,
         line   => inline_template("<%= @subdomainval %> IN A <%= @ip %>"),
         notify => Service['bind9'],
+        tag    => "service-location--${::environment}"
     }
 
     # Export hostkeys from these hostnames.
