@@ -411,6 +411,9 @@ def bootstrap(verbose=False):
     management = 'management' in _get_current_roles()
     if management:
         print "This is a management node"
+    puppetdb = 'puppetdb' in _get_current_roles()
+    if puppetdb:
+        print "This is a puppetdb node"
 
     set_hostname()
 
@@ -429,6 +432,8 @@ def bootstrap(verbose=False):
     create_hiera_facts(use_sudo=True)
     if management:
         add_roles('management')
+    if puppetdb:
+        add_roles('puppetdb')
 
     include_apply_script()
     # run the first time just setting up the basic information

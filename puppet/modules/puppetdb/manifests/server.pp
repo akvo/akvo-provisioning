@@ -74,4 +74,13 @@ class puppetdb::server {
     named::service_location { "puppetdb":
         ip => hiera('external_ip')
     }
+
+    # this feels delicate, but will have to do for now: we also add this to
+    # /etc/hosts to ensure that the puppetdb bootstrap process can find itself
+    # without requiring the exported service name to work..
+    file_line { "puppetdb_etc_hosts":
+        path => '/etc/hosts',
+        ensure => present,
+        line => "127.0.0.1 puppetdb ${puppet_domain}"
+    }
 }
