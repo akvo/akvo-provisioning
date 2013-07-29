@@ -5,6 +5,7 @@ import time
 import json
 import os
 import sys
+import tempfile
 from datetime import datetime
 
 
@@ -205,7 +206,6 @@ def setup_keys():
     sudo('chown 600 /puppet/.ssh/id_rsa')
 
 
-
 def add_puppet_repo():
     """
     Adds the puppet apt repository. The version of puppet in the default Ubuntu 12.04 repositories
@@ -296,7 +296,7 @@ def setup_hiera():
     hiera_add_external_ip()
     sudo('echo "base_domain: %s" >> /puppet/hiera/nodespecific.yaml' % env.config['base_domain'])
 
-    puppetdb_server = _get_node_config('puppetdb', 'puppetdb.%s' % env.config['base_domain'])
+    puppetdb_server = env.config.get('puppetdb', 'puppetdb.%s' % env.config['base_domain'])
     sudo('echo "puppetdb_server: %s" >> /puppet/hiera/nodespecific.yaml' % puppetdb_server)
 
     for keyname in ('puppet', 'rsr-deploy'):
@@ -307,15 +307,38 @@ def setup_hiera():
         sudo('echo "%s_public_key: %s" >> /puppet/hiera/nodespecific.yaml' % (keyname, key))
 
 
+def _write_yaml(f, data):
+
+    f.write('---\n')
+
+    for key, value in data.iteritems():
+        if isinstance(value, (tuple, list)):
+            f.write('%s:\n' % key)
+            for item in value:
+                f.write('  - %s\n' % item)
+            continue
+        f.write('%s: %s\n' % (key, value))
+    f.flush()
+
 def create_hiera_facts(use_sudo=False):
-    env_facts = env.config.get('facts', None)
-    if env_facts is not None:
-        _write_yaml('/puppet/hiera/%s.yaml' % env.config['name'], env_facts, use_sudo=use_sudo)
+    run_method = sudo if use_sudo else run
+
+    with tempfile.NamedTemporaryFile() as f:
+        env_facts = env.config.get('facts', None)
+        if env_facts is not None:
+            _write_yaml(f, env_facts)
+        filepath = '/puppet/hiera/%s.yaml' % env.config['name']
+        put(f.name, filepath, use_sudo=use_sudo)
+        run_method('chown puppet.puppet %s' % filepath)
 
     node_facts = _get_node_config('facts', default=None)
     if node_facts is not None:
         hostname = run('hostname -f').strip()
-        _write_yaml('/puppet/hiera/%s.yaml' % hostname, node_facts, use_sudo=use_sudo)
+        with tempfile.NamedTemporaryFile() as f:
+            _write_yaml(f, node_facts)
+        filepath = '/puppet/hiera/%s.yaml' % hostname
+        put(f.name, filepath, use_sudo=use_sudo)
+        run_method('chown puppet.puppet %s' % filepath)
 
 
 def hiera_add_external_ip():
@@ -389,9 +412,30 @@ def add_roles(*roles):
     files.append(nodefile, 'roles: [%s]' % ', '.join(roles), use_sudo=True)
 
 
+def add_roles(roles, use_sudo=False):
+    nodefile = "/puppet/hiera/nodespecific.yaml"
+
+    contents = run('more %s' % nodefile).split('\n')
+    existing_roles = []
+    for line in contents:
+        m = re.match('^roles: \[(.*)\]$', line)
+        if m:
+            existing_roles = [s.strip() for s in m.group(1).split(',')]
+
+    roles = list(set(list(roles) + existing_roles))
+
+    run_method = sudo if use_sudo else run
+    run_method("sed -i '/roles:/d' %s" % nodefile)
+    files.append(nodefile, 'roles: [%s]' % ', '.join(roles), use_sudo=use_sudo)
+
+    if use_sudo:
+        sudo('chown puppet.puppet %s' % nodefile)
+
+
 def update_config():
     get_latest_config()
     relink_hiera()
+    add_roles(_get_current_roles(), use_sudo=False)
     create_hiera_facts()
     apply_puppet()
 
@@ -436,16 +480,16 @@ def bootstrap(verbose=False):
     setup_hiera()
     create_hiera_facts(use_sudo=True)
     if management:
-        add_roles('management')
+        add_roles(['management'])
     if puppetdb:
-        add_roles('puppetdb')
+        add_roles(['puppetdb'])
 
     include_apply_script()
     # run the first time just setting up the basic information
     sudo('/puppet/bin/apply.sh')
 
     # now add the rest of the roles which are now configurable
-    add_roles(*_get_current_roles())
+    add_roles(_get_current_roles())
 
     # note: we do this twice the first time - the initial setup will also configure
     # puppetdb, and the second time will reconfigure using any information read from
