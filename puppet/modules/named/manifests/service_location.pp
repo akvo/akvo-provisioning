@@ -4,9 +4,6 @@ define named::service_location(
     $ip
 ){
 
-    # get some environment specific vars
-    $zone = hiera('base_domain')
-
     if ($subdomain != nil) {
         $subdomainval = $subdomain
     } else {
@@ -17,9 +14,9 @@ define named::service_location(
 
     # this exports a file line which will be collected by the
     @@named::exported_location { $name:
-        zone      => hiera('base_domain'),
         subdomain => $subdomainval,
-        ip        => $ip
+        ip        => $ip,
+        tag       => $::environment
     }
 
     # Export hostkeys from these hostnames.

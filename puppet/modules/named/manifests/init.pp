@@ -51,6 +51,6 @@ class named {
     }
 
     # Collect all exported dns record file lines
-    Named::Exported_location <<||>>
+    Named::Exported_location <<| tag == $::environment |>>
 
 }
