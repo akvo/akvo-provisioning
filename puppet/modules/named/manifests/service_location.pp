@@ -6,7 +6,6 @@ define named::service_location(
 
     # get some environment specific vars
     $zone = hiera('base_domain')
-    $zonefile = "/etc/bind/db.${zone}"
 
     if ($subdomain != nil) {
         $subdomainval = $subdomain
@@ -18,6 +17,7 @@ define named::service_location(
 
     # this exports a file line which will be collected by the
     @@named::exported_location { $name:
+        zone      => hiera('base_domain'),
         subdomain => $subdomainval,
         ip        => $ip
     }
