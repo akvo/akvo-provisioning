@@ -24,7 +24,7 @@ class common {
         ensure => 'latest',
     }
 
-    @@named::service_location { "${::fqdn}.":
+    named::service_location { "${::fqdn}.":
         # note the trailing full stop after fqdn - this is very important!
         # otherwise it will be considered a subdomain
         ip => hiera('internal_ip')
