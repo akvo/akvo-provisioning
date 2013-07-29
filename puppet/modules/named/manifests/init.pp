@@ -36,7 +36,7 @@ class named {
         owner   => 'bind',
         group   => 'bind',
         mode    => 644,
-        require => File['/srv/bind'],
+        require => Package['bind9'],
         notify  => Service['bind9']
     }
 
