@@ -1,5 +1,5 @@
 
-define psql::db_exported( $password ) {
+define database::psql::db_exported( $password ) {
 
     postgresql::db { $name:
         user          => $name,
