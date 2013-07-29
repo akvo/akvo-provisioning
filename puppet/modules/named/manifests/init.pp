@@ -18,16 +18,6 @@ class named {
         subscribe  => File['/etc/bind/named.conf.local'],
     }
 
-    # create a place for our custom config, outside of the default package
-    # paths to make them independent of bind
-    file { '/srv/bind':
-        ensure  => directory,
-        owner   => "bind",
-        group   => "bind",
-        mode    => 750,
-        require => Package['bind9'],
-    }
-
     # configure the list of zones we will manage
     file { '/etc/bind/named.conf.local':
         ensure  => present,
