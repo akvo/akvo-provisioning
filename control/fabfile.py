@@ -290,9 +290,14 @@ def setup_hiera():
     sudo('chown -R puppet.puppet /puppet/hiera')
     put('files/hiera.yaml', '/etc/puppet/hiera.yaml', use_sudo=True)
     sudo('touch /puppet/hiera/nodespecific.yaml')
+
     relink_hiera(run_method=sudo)
+
     hiera_add_external_ip()
     sudo('echo "base_domain: %s" >> /puppet/hiera/nodespecific.yaml' % env.config['base_domain'])
+
+    puppetdb_server = _get_node_config('puppetdb', 'puppetdb.%s' % env.config['base_domain'])
+    sudo('echo "puppetdb_server: %s" >> /puppet/hiera/nodespecific.yaml' % puppetdb_server)
 
     for keyname in ('puppet', 'rsr-deploy'):
         keyfile = _get_node_config('%s_public_key',  _get_config_file('%s.pub' % keyname))
