@@ -23,7 +23,7 @@ define users::basic (
         require => User[$usernameval]
     }
 
-    file { "/home/${usernameval}/':
+    file { "/home/${usernameval}/":
         ensure => directory,
         owner => $usernameval,
         group => $usernameval,
