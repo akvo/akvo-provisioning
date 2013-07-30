@@ -3,7 +3,9 @@ define htpasswd::user ($user, $role, $password) {
 
     include htpasswd::fs
 
-    ensure_resource('file', "/etc/htpasswd/${role}", {
+    $rolefile = "/etc/htpasswd/${role}"
+
+    ensure_resource('file', $rolefile, {
         ensure  => present,
         owner   => root,
         group   => root,
@@ -12,9 +14,9 @@ define htpasswd::user ($user, $role, $password) {
     })
 
     file_line { "htpasswd-${user}-${role}":
-        path    => "/etc/htpasswd/${role}",
+        path    => $rolefile,
         line    => inline_template("${user}:${password}"),
-        require => File['/etc/htpasswd/']
+        require => File[$rolefile]
     }
 
 }
