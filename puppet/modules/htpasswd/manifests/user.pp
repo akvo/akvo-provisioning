@@ -1,7 +1,7 @@
 
 define htpasswd::user ($user, $role, $password) {
 
-    include htpasswd
+    include htpasswd::fs
 
     file_line { "htpasswd-${user}-${role}":
         path    => "/etc/htpasswd/${role}",

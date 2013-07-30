@@ -1,5 +1,5 @@
 
-class htpasswd {
+class htpasswd::fs {
 
     file { '/etc/htpasswd/':
         ensure => directory,
