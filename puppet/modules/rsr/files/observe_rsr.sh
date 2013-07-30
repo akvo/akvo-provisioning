@@ -1,10 +1,12 @@
 #!/bin/bash
+touch /tmp/rsr_lastcheck
 
 while true
 do
-    touch /tmp/lastcheck
+    echo "checking..."
     CODE_PATH='/var/akvo/rsr/code/akvo/'
-    CHANGED_COUNT=`find $CODE_PATH -newer /tmp/lastcheck | wc -l`
+    CHANGED_COUNT=`find $CODE_PATH -newer /tmp/rsr_lastcheck | wc -l`
+    touch /tmp/lastcheck
 
     if [ "$CHANGED_COUNT" -gt "0" ]
     then
