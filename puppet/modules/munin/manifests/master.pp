@@ -9,7 +9,7 @@ class munin::master {
     nginx::staticsite { 'munin-nginx':
         rootdir            => '/srv/munin/html',
         hostname           => $munin_domain,
-        password_protected => false,
+        #htpasswd          => 'ops',
     }
 
     file { '/srv/munin':

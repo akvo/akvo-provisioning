@@ -26,7 +26,6 @@ class puppetdb::server {
         server_name        => $puppet_domain,
         proxy_url          => 'http://localhost:8100',
         ssl                => true,
-        password_protected => false,
     }
 
     # insert the config which runs the puppetdb service

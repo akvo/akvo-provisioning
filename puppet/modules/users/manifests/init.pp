@@ -1,9 +1,10 @@
 
 class users {
+    include users::groups
+
     include users::carl
+    include users::oliver
     include users::root
 
-    group { ['developer', 'ops']:
-        ensure => present
-    }
+    Users::Groups -> Users::Basic
 }

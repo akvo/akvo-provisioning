@@ -1,7 +1,7 @@
 
 define nginx::proxy( $server_name,
                      $proxy_url,
-                     $password_protected = true,
+                     $htpasswd = undef,
                      $ssl = true,
                      $static_dirs = undef ) {
 
@@ -20,10 +20,10 @@ define nginx::proxy( $server_name,
   }
 
 
-  if $password_protected {
+  if $htpasswd {
       file { $htpasswd_file:
-          ensure  => present,
-          source  => 'puppet:///modules/nginx/htpasswd',
+          ensure  => link,
+          target  => '/etc/htpasswd/${htpasswd}',
           owner   => 'root',
           group   => 'root',
           mode    => 444,
@@ -31,6 +31,7 @@ define nginx::proxy( $server_name,
           notify  => Service['nginx'],
       }
   }
+
 
   if $ssl {
       file { $ssl_key:

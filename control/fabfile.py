@@ -425,7 +425,8 @@ def update_config():
 
 
 def is_puppetdb_ready():
-    cmd = "wget --no-check-certificate --server-response https://puppetdb.%s 2>&1 | awk '/^  HTTP/{print $2}'" % env.config['base_domain']
+    puppetdb_server = env.config.get('puppetdb', 'puppetdb.%s' % env.config['base_domain'])
+    cmd = "wget --no-check-certificate --server-response https://%s 2>&1 | awk '/^  HTTP/{print $2}'" % puppetdb_server
     status = run(cmd)
     status = status.split('\n')[-1].strip()
     return status == '200'

@@ -103,7 +103,6 @@ class rsr::common {
     nginx::proxy { 'rsr':
         server_name        => "rsr.${base_domain}",
         proxy_url          => "http://localhost:${port}",
-        password_protected => false,
         static_dirs        => {
             "/rsr/media/admin/" => "${approot}/venv/lib/python2.7/site-packages/django/contrib/admin/static/admin/",
             "/rsr/media/"       => $media_root,

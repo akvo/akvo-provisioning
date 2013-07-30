@@ -1,7 +1,7 @@
 
 define nginx::fcgi( $server_name,
                     $fcgi_address,
-                    $password_protected = true,
+                    $htpasswd = undef,
                     $ssl = true ) {
 
     include nginx
@@ -17,17 +17,18 @@ define nginx::fcgi( $server_name,
         notify  => Service['nginx'],
     }
 
-    if $password_protected {
+    if $htpasswd {
         file { $htpasswd_file:
-            ensure  => present,
-            source  => 'puppet:///modules/nginx/htpasswd',
+            ensure  => link,
+            target  => '/etc/htpasswd/${htpasswd}',
             owner   => 'root',
             group   => 'root',
-            mode    => 644,
+            mode    => 444,
             require => Package['nginx'],
             notify  => Service['nginx'],
         }
     }
+
 
     if $ssl {
         file { $ssl_key:
