@@ -6,5 +6,5 @@ class users {
     include users::oliver
     include users::root
 
-    Users::Groups -> Users::Basic
+    Class['Users::Groups'] -> Users::Basic<||>
 }
