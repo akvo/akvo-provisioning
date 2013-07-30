@@ -1,6 +1,8 @@
 
 class htpasswd::fs {
 
+    notice("Creating htpasswd dir")
+
     file { '/etc/htpasswd/':
         ensure => directory,
         owner  => root,
