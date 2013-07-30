@@ -300,7 +300,7 @@ def setup_hiera():
     sudo('echo "puppetdb_server: %s" >> /puppet/hiera/nodespecific.yaml' % puppetdb_server)
 
     for keyname in ('puppet', 'rsr-deploy'):
-        keyfile = _get_node_config('%s_public_key',  _get_config_file('%s.pub' % keyname))
+        keyfile = env.config.get('%s_public_key' % keyname, _get_config_file('%s.pub' % keyname))
         with open(keyfile) as f:
             key = f.read().replace('\n', '')
         key = "'%s'" % key.split(' ')[1]
@@ -396,22 +396,6 @@ def apply_puppet():
     run('sudo /puppet/bin/apply.sh')
 
 
-def add_roles(*roles):
-    nodefile = "/puppet/hiera/nodespecific.yaml"
-
-    contents = run('more %s' % nodefile).split('\n')
-    existing_roles = []
-    for line in contents:
-        m = re.match('^roles: \[(.*)\]$', line)
-        if m:
-            existing_roles = [s.strip() for s in m.group(1).split(',')]
-
-    roles = list(set(list(roles) + existing_roles))
-
-    sudo("sed -i '/roles:/d' %s" % nodefile)
-    files.append(nodefile, 'roles: [%s]' % ', '.join(roles), use_sudo=True)
-
-
 def add_roles(roles, use_sudo=False):
     nodefile = "/puppet/hiera/nodespecific.yaml"
 
@@ -480,16 +464,16 @@ def bootstrap(verbose=False):
     setup_hiera()
     create_hiera_facts(use_sudo=True)
     if management:
-        add_roles(['management'])
+        add_roles(['management'], use_sudo=True)
     if puppetdb:
-        add_roles(['puppetdb'])
+        add_roles(['puppetdb'], use_sudo=True)
 
     include_apply_script()
     # run the first time just setting up the basic information
     sudo('/puppet/bin/apply.sh')
 
     # now add the rest of the roles which are now configurable
-    add_roles(_get_current_roles())
+    add_roles(_get_current_roles(), use_sudo=True)
 
     # note: we do this twice the first time - the initial setup will also configure
     # puppetdb, and the second time will reconfigure using any information read from
