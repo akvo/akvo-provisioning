@@ -55,7 +55,7 @@ define users::basic (
         require => File["/home/${usernameval}/.ssh/authorized_keys"]
     }
 
-    users::htpasswd { $usernameval:
+    htpasswd::user { $usernameval:
         user     => $usernameval,
         role     => $role,
         password => $htpasswd
