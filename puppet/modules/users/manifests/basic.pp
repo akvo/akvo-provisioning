@@ -1,7 +1,7 @@
 define users::basic (
     $username = undef,
     $role,
-    $ssh_key,
+    $sshkey,
     $htpasswd
 ) {
 
