@@ -71,6 +71,7 @@ class rsr::common {
     }
 
     # add custom configuration
+    $rsr_domain = 'rsr.opstest.akvotest.org'
     file { "${approot}/local_settings.conf":
         ensure   => present,
         owner    => 'rsr',
