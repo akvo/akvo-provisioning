@@ -1,5 +1,5 @@
 
-define nginx::proxy( $server_name,
+define nginx::proxy( $server_name = undef,
                      $proxy_url,
                      $htpasswd = undef,
                      $ssl = true,
@@ -7,12 +7,18 @@ define nginx::proxy( $server_name,
 
   include nginx
 
-  $htpasswd_file = "/etc/nginx/passwd/${server_name}.htpasswd"
-  $ssl_key = "/etc/nginx/certs/${server_name}.key"
-  $ssl_crt = "/etc/nginx/certs/${server_name}.crt"
+  if ( !$server_name ) {
+      $server_name_val = $name
+  } else {
+      $server_name_val = $server_name
+  }
+
+  $htpasswd_file = "/etc/nginx/passwd/${server_name_val}.htpasswd"
+  $ssl_key = "/etc/nginx/certs/${server_name_val}.key"
+  $ssl_crt = "/etc/nginx/certs/${server_name_val}.crt"
 
 
-  file { "/etc/nginx/sites-enabled/$server_name":
+  file { "/etc/nginx/sites-enabled/${server_name_val}":
       ensure  => present,
       content => template('nginx/proxy.erb'),
       require => Package['nginx'],

@@ -8,7 +8,6 @@ class users {
     users::basic { 'paul':
         role     => ['developer'],
         ssh_key  => 'AAAAB3NzaC1yc2EAAAADAQABAAABAQDHS7Q2Qv/ynGVmoMgqBDoqsj6WXN1IoP2XdfVjdZ+mGdT5zBSvbQZklL55eisKgmnqxb7aXV2LVOVhrrlJTTh6nAWEBsxkXaDr9tS2VedV6MYbmv3bEjJIu4QvIZY1F5rzwFTcTUghem1fQUEzWibSof99F3rUwDDOBMJZZ2GVhYIDy7ottObtOt3KvTUV+V37Y+xaZzwo4Y0YwRygk48IdLAa4pr4SAxDTFyUfWazxxn6SAc4F5On2Zx1GcuFb3AKgz7tVTXe6WC+7KIrOwkSjdx9eAmgKxhUk2e/Ic9XjcalKV3LqRbHFq05iDKkoiC4ASMBiLnVdPz1Tc87mqwT'
-        htpasswd => '',
     }
 
     users::basic { 'oliver':

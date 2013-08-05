@@ -2,7 +2,7 @@ define users::basic (
     $username = undef,
     $role,
     $sshkey,
-    $htpasswd
+    $htpasswd = undef
 ) {
 
     if ( $username ) {
@@ -55,10 +55,12 @@ define users::basic (
         require => File["/home/${usernameval}/.ssh/authorized_keys"]
     }
 
-    htpasswd::user { $usernameval:
-        user     => $usernameval,
-        role     => $role,
-        password => $htpasswd
+    if ( $htpasswd ) {
+        htpasswd::user { $usernameval:
+            user     => $usernameval,
+            role     => $role,
+            password => $htpasswd
+        }
     }
 
 }

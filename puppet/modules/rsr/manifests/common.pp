@@ -93,16 +93,21 @@ class rsr::common {
     }
 
 
+    # we need the list of partners:
+    $partners = hiera('rsr_partners')
+    # and we want to combine that with the standard RSR app
+    $all_sites = concat(['rsr'], $partners)
+
+
     # we want a service address
-    # TODO: this needs to consider partnersite stuff
-    named::service_location { "rsr":
+    named::service_location { $all_sites:
         ip => hiera('external_ip')
     }
 
 
     # nginx sits in front of RSR
-    nginx::proxy { 'rsr':
-        server_name        => "rsr.${base_domain}",
+    $all_servers = suffix($all_sites, ".${base_domain}")
+    nginx::proxy { $all_servers:
         proxy_url          => "http://localhost:${port}",
         static_dirs        => {
             "/rsr/media/admin/" => "${approot}/venv/lib/python2.7/site-packages/django/contrib/admin/static/admin/",
