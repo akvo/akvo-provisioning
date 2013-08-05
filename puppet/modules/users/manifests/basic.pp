@@ -18,6 +18,7 @@ define users::basic (
         shell    => '/bin/bash',
         groups   => $role,
         require  => Group[$role],
+        password => '$1$lU8491Lf$07pmQGDJNZKuRMc/VuRGG/' # this means 'no password'
     }
 
     group { $usernameval:
