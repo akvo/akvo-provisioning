@@ -1,7 +1,8 @@
 define users::basic (
     $username = undef,
     $role,
-    $sshkey,
+    $ssh_key,
+    $ssh_type = 'ssh-rsa',
     $htpasswd = undef
 ) {
 
@@ -49,8 +50,8 @@ define users::basic (
 
     ssh_authorized_key { "${usernameval}_key":
         ensure  => present,
-        key     => $sshkey,
-        type    => 'ssh-rsa',
+        key     => $ssh_key,
+        type    => $ssh_type,
         user    => $usernameval,
         require => File["/home/${usernameval}/.ssh/authorized_keys"]
     }
