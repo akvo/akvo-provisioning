@@ -20,6 +20,20 @@ define users::basic (
         require  => Group[$role],
     }
 
+    file { "/home/${usernameval}/.bash_login":
+        ensure  => present,
+        owner   => $usernameval,
+        group   => $usernameval,
+        mode    => 700,
+        source  => 'puppet:///modules/users/set_pass_if_empty.sh',
+        require => File["/home/${usernameval}"],
+    }
+
+    exec { "/usr/bin/passwd --delete ${usernameval}":
+        onlyif  => "/bin/egrep -q '^${usernameval}:[*!]' /etc/shadow",
+        require => User[$usernameval];
+    }
+
     group { $usernameval:
         require => User[$usernameval]
     }
