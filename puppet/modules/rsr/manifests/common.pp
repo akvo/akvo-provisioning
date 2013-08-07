@@ -14,6 +14,22 @@ class rsr::common {
     $port = 8000
 
 
+    # we need the list of partners:
+    $partners = hiera('rsr_partners')
+    # and we want to combine that with the standard RSR app
+
+    $rsr_secret_key = hiera('rsr_secret_key')
+    $additional_rsr_domains = hiera('rsr_additional_rsr_domains')
+    $partner_site_domain = hiera('rsr_partner_site_domain')
+
+    $rsr_hostnames = concat($additional_rsr_domains, ["rsr.${base_domain}"])
+    $partner_hostnames = concat(suffix($partners, ".${base_domain}"), suffix($partners, ".${partner_site_domain}"))
+    $all_hostnames = concat(concat([], $rsr_hostnames), $partner_hostnames)
+    # note: we concatenate onto an empty array because otherwise $rsr_hostnames would have $partner_hostnames appended
+    # to it as well...
+    $all_sites = concat(['rsr'], $partners)
+
+
     # make sure we also include the Akvoapp stuff, and that it is loaded
     # before this module
     require akvoapp
@@ -61,9 +77,6 @@ class rsr::common {
     }
 
     # add custom configuration
-    $rsr_secret_key = hiera('rsr_secret_key')
-    $rsr_domain = "rsr.${base_domain}"
-    $rsr_site_regexps = concat( hiera('rsr_rsr_site_regexps'), $rsr_domain )
     file { "${approot}/local_settings.conf":
         ensure   => present,
         owner    => 'rsr',
@@ -85,12 +98,6 @@ class rsr::common {
     }
 
 
-    # we need the list of partners:
-    $partners = hiera('rsr_partners')
-    # and we want to combine that with the standard RSR app
-    $all_sites = concat(['rsr'], $partners)
-
-
     # we want a service address
     named::service_location { $all_sites:
         ip => hiera('external_ip')
@@ -98,8 +105,7 @@ class rsr::common {
 
 
     # nginx sits in front of RSR
-    $all_servers = suffix($all_sites, ".${base_domain}")
-    nginx::proxy { $all_servers:
+    nginx::proxy { $all_hostnames:
         proxy_url          => "http://localhost:${port}",
         static_dirs        => {
             "/rsr/media/admin/" => "${approot}/venv/lib/python2.7/site-packages/django/contrib/admin/static/admin/",

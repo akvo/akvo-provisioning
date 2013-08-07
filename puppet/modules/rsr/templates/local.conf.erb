@@ -21,14 +21,13 @@ MEDIA_ROOT='<%= @media_root %>'
 DEBUG=True
 
 RSR_SITE_REGEXPS = [
-    '<%= @rsr_domain %>'
+    <% @rsr_hostnames.each do |rsr_hostname| -%>
+        '^<%= rsr_hostname.gsub('.', '\\.') %>$',
+    <% end -%>
 ]
 
 PARTNER_SITE_REGEXPS = [
-    '\.akvoapp\.org$',
-    '\.akvoapp\.dev$',
-    '\.akvoapp\.org$',
-    '\.akvotest\.org$',
-    '\.akvotest2\.org$',
-    '\.akvotest3\.org$',
+    <% @partner_hostnames.each do |partner_hostname| -%>
+        '^<%= partner_hostname.gsub('.', '\\.') %>$',
+    <% end -%>
 ]

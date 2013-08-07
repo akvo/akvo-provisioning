@@ -6,7 +6,7 @@ do
     echo "checking..."
     CODE_PATH='/var/akvo/rsr/code/akvo/'
     CHANGED_COUNT=`find $CODE_PATH -newer /tmp/rsr_lastcheck | wc -l`
-    touch /tmp/lastcheck
+    touch /tmp/rsr_lastcheck
 
     if [ "$CHANGED_COUNT" -gt "0" ]
     then

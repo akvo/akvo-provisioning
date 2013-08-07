@@ -1,6 +1,8 @@
 class role::database {
     notice("Including role: database")
 
-    include database::psql::server
+    # no need for psql just yet
+    # include database::psql::server
+
     include database::my_sql::server
 }

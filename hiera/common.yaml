@@ -3,7 +3,6 @@ roles :
 
 rsr_development: 'false'
 rsr_secret_key: 'KiWoM0GxvbkAk1HDh26epwEAUCqteNF9mkjKBwIG'
-rsr_base_domain: 'akvo.org'
-rsr_partnersite_base_domain: 'akvoapp.org'
-rsr_rsr_site_regexps: []
-rsr_partner_site_regexps: []
+
+rsr_additional_rsr_domains: []
+rsr_partner_site_domain: "akvoapp.org"
