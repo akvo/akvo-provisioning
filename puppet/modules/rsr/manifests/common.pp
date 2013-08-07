@@ -108,8 +108,8 @@ class rsr::common {
     nginx::proxy { $all_hostnames:
         proxy_url          => "http://localhost:${port}",
         static_dirs        => {
-            "/rsr/media/admin/" => "${approot}/venv/lib/python2.7/site-packages/django/contrib/admin/static/admin/",
-            "/rsr/media/"       => $media_root,
+            "/media/admin/" => "${approot}/venv/lib/python2.7/site-packages/django/contrib/admin/static/admin/",
+            "/media/"       => $media_root,
         }
     }
 
