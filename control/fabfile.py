@@ -248,11 +248,6 @@ def install_modules():
     """
     Adds additional puppet modules required by the core puppet configuration.
     """
-    with settings(warn_only=True):
-        install_puppet_module('puppetlabs/stdlib')
-        install_puppet_module('puppetlabs-postgresql')
-        install_puppet_module('puppetlabs-mysql')
-
     # the puppetdb terminus is a special case, see
     # http://docs.puppetlabs.com/puppetdb/1.1/connect_puppet_apply.html
     flags = '-q' if env.verbose else '-qq'
@@ -271,6 +266,8 @@ def firstclone():
             with cd('/puppet/checkout'):
                 puppet_branch = env.config.get('puppet_branch', 'master')
                 sudo('git checkout %s' % puppet_branch, user='puppet')
+                sudo('git submodule init')
+                sudo('git submodule update --recursive')
 
 
 def set_facts():
@@ -390,6 +387,7 @@ def get_latest_config():
         return
     with cd('/puppet/checkout'):
         run('git pull')
+        run('git submodule update --recursive')
 
 
 def apply_puppet():
