@@ -51,16 +51,6 @@ class rsr::common {
     }
 
     # include the script for switching the app
-    file { "${approot}/list_oldest.py":
-        ensure  => present,
-        content => template('rsr/list_oldest.py.erb'),
-        owner   => $username,
-        group   => $username,
-        mode    => 744,
-        require => File[$approot]
-    }
-
-    # include the script for switching the app
     file { "${approot}/update_current.sh":
         ensure  => present,
         content => template('rsr/update_current.sh.erb'),
@@ -71,7 +61,9 @@ class rsr::common {
     }
 
     # add custom configuration
-    $rsr_domain = 'rsr.opstest.akvotest.org'
+    $rsr_secret_key = hiera('rsr_secret_key')
+    $rsr_domain = "rsr.${base_domain}"
+    $rsr_site_regexps = concat( hiera('rsr_rsr_site_regexps'), $rsr_domain )
     file { "${approot}/local_settings.conf":
         ensure   => present,
         owner    => 'rsr',

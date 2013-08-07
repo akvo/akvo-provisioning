@@ -1,7 +1,9 @@
 
 LOG_FILE_PATH='<%= @logdir %>'
 
-SECRET_KEY='secret_key_todo_change_this'
+SECRET_KEY='<%= @rsr_secret_key %>'
+
+PARTNER_SITES_MARKETING_SITE = 'http://www.akvoapp.org/'
 
 DATABASES = {
     'default': {
@@ -16,9 +18,17 @@ DATABASES = {
 
 MEDIA_ROOT='<%= @media_root %>'
 
-RSR_DOMAINS=("<%= @rsr_domain %>",)
-
-PARTNER_SITES_DOMAINS=("localdev.akvo.org")
-
-
 DEBUG=True
+
+RSR_SITE_REGEXPS = [
+    '<%= @rsr_domain %>'
+]
+
+PARTNER_SITE_REGEXPS = [
+    '\.akvoapp\.org$',
+    '\.akvoapp\.dev$',
+    '\.akvoapp\.org$',
+    '\.akvotest\.org$',
+    '\.akvotest2\.org$',
+    '\.akvotest3\.org$',
+]
