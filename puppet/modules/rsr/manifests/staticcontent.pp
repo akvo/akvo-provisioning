@@ -1,4 +1,4 @@
-define rsr::staticcontent ($media_root) {
+define rsr::staticcontent ($approot, $media_root) {
 
     file { "${media_root}/${name}":
         ensure  => 'link',

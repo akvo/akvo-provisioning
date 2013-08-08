@@ -34,7 +34,8 @@ define rsr::dirs ( $approot, $username, $media_root ) {
 
     # link in our media which is kind of static
     rsr::staticcontent { [ 'akvo', 'core', 'widgets', 'ps_widgets', 'ps_widgets_old', 'partner_sites' ]:
-        media_root => $media_root
+        media_root => $media_root,
+        approot    => $approot
     }
 
 }
