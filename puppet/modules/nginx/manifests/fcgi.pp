@@ -2,7 +2,7 @@
 define nginx::fcgi( $server_name,
                     $fcgi_address,
                     $htpasswd = undef,
-                    $ssl = true ) {
+                    $ssl = false ) {
 
     include nginx
 

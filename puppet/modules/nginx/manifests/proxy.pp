@@ -2,7 +2,7 @@
 define nginx::proxy( $server_name = undef,
                      $proxy_url,
                      $htpasswd = undef,
-                     $ssl = true,
+                     $ssl = false,
                      $static_dirs = undef ) {
 
   include nginx

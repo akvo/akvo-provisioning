@@ -1,7 +1,7 @@
 
 define nginx::staticsite( $hostname, $rootdir,
                           $htpasswd = undef,
-                          $ssl = true ) {
+                          $ssl = false ) {
 
     include nginx
 

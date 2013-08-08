@@ -110,7 +110,7 @@ class rsr::common {
         static_dirs        => {
             "/media/admin/" => "${approot}/venv/lib/python2.7/site-packages/django/contrib/admin/static/admin/",
             "/media/"       => $media_root,
-        }
+        },
     }
 
 
