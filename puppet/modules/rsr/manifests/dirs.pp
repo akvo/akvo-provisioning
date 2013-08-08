@@ -32,16 +32,7 @@ define rsr::dirs ( $approot, $username, $media_root ) {
         require => Class['Akvoapp']
     }
 
-
     # link in our media which is kind of static
-    define rsr::staticcontent {
-        file { "${media_root}/${name}":
-            ensure  => 'link',
-            target  => "${approot}/code/akvo/mediaroot/${name}",
-            require => File[$media_root],
-        }
-    }
-
     rsr::staticcontent { [
         'akvo', 'core', 'widgets', 'ps_widgets', 'ps_widgets_old', 'partner_sites'
     ]: }
