@@ -1,8 +1,6 @@
 #!/bin/bash
 
-passwd --status | grep ' NP '
 SET_PASS=$?
-
 
 if [ "$SET_PASS" -eq 0 ]
 then
