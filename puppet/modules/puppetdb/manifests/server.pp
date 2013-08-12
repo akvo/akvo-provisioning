@@ -26,7 +26,15 @@ class puppetdb::server {
         server_name        => $puppet_domain,
         proxy_url          => 'http://localhost:8100',
         ssl                => true,
+        htpasswd           => 'puppet',
     }
+
+    # make sure we don't allow random connections!
+#    htpasswd::user { 'puppet':
+#        user     => 'puppet',
+#        allow    => ['puppet'],
+#        password => hiera('puppetdb_htpasswd')
+#    }
 
     # insert the config which runs the puppetdb service
     file { '/etc/puppetdb/conf.d/config.ini':
