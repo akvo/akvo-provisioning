@@ -24,6 +24,14 @@ class common {
         ensure => 'latest',
     }
 
+
+    # make sure pip is installed before anything tries to use it as a package provider
+    package { 'python-pip':
+        ensure => 'latest',
+    }
+    Package['python-pip'] -> Package<| provider == 'pip' |>
+
+
     named::service_location { "${::fqdn}.":
         # note the trailing full stop after fqdn - this is very important!
         # otherwise it will be considered a subdomain
