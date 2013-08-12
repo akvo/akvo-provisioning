@@ -32,7 +32,7 @@ class pypi::server {
     nginx::proxy { "pypi.${base_domain}":
         proxy_url        => 'http://localhost:3141',
         ssl              => false,
-        htpasswd_source  => 'puppet:///modules/pypi/htpasswd'
+        htpasswd         => 'pypi'
     }
 
     named::service_location { 'pypi':

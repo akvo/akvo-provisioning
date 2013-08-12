@@ -13,7 +13,8 @@ define htpasswd::user ($user, $allow, $password) {
         require => File['/etc/htpasswd']
     })
 
-    htpasswd::entry { $allow_files:
+    $entries = prefix($allow_files, "${user}::")
+    htpasswd::entry { $entries:
         user     => $user,
         password => $password,
     }

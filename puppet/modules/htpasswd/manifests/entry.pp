@@ -1,9 +1,13 @@
 define htpasswd::entry($user, $password) {
 
-    file_line { "htpasswd-${user}-${name}":
-        path    => $name,
+    $path = regsubst($name, '^.*::', '')
+
+    notice("Allowing user ${user} access using file ${path}")
+
+    file_line { "htpasswd-${user}-${path}":
+        path    => $path,
         line    => inline_template("${user}:${password}"),
-        require => File[$name]
+        require => File[$path]
     }
 
 }
