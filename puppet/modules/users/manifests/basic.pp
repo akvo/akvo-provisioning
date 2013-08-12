@@ -1,6 +1,7 @@
 define users::basic (
     $username = undef,
     $role,
+    $allow = [],
     $ssh_key,
     $ssh_type = 'ssh-rsa',
     $htpasswd = undef
@@ -73,7 +74,7 @@ define users::basic (
     if ( $htpasswd ) {
         htpasswd::user { $usernameval:
             user     => $usernameval,
-            role     => $role,
+            allow    => $allow,
             password => $htpasswd
         }
     }
