@@ -405,6 +405,7 @@ def add_roles(roles, use_sudo=False):
             existing_roles = [s.strip() for s in m.group(1).split(',')]
 
     roles = list(set(list(roles) + existing_roles))
+    roles = filter(lambda x: x.strip() != '', roles)
 
     run_method = sudo if use_sudo else run
     run_method("sed -i '/roles:/d' %s" % nodefile)
