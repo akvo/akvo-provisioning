@@ -18,6 +18,7 @@ class common {
         'telnet',
         'wget',
         'curl',
+        'molly-guard',
     ]
 
     package { $useful_packages:
