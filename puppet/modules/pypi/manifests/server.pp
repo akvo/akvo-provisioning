@@ -29,7 +29,7 @@ class pypi::server {
     }
 
     $base_domain = hiera('base_domain')
-    nginx::proxy { "pypi.${base_domain}":
+    nginx::proxy { ["pypi.akvo-ops.org", "pypi.${base_domain}"]:
         proxy_url        => 'http://localhost:3141',
         ssl              => false,
     }
