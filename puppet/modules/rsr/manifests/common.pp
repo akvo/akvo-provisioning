@@ -23,11 +23,6 @@ class rsr::common {
     $partner_site_domain = hiera('rsr_partner_site_domain')
 
     $rsr_hostnames = concat($additional_rsr_domains, ["rsr.${base_domain}"])
-    $partner_hostnames = concat(suffix($partners, ".${base_domain}"), suffix($partners, ".${partner_site_domain}"))
-    $all_hostnames = concat(concat([], $rsr_hostnames), $partner_hostnames)
-    # note: we concatenate onto an empty array because otherwise $rsr_hostnames would have $partner_hostnames appended
-    # to it as well...
-    $all_sites = concat(['rsr'], $partners)
 
 
     # make sure we also include the Akvoapp stuff, and that it is loaded
@@ -99,13 +94,13 @@ class rsr::common {
 
 
     # we want a service address
-    named::service_location { $all_sites:
+    named::service_location { ["rsr", "*"]:
         ip => hiera('external_ip')
     }
 
 
     # nginx sits in front of RSR
-    nginx::proxy { $all_hostnames:
+    nginx::proxy { [$rsr_hostnames, "*.${base_domain}", "*.${partner_site_domain}"]:
         proxy_url          => "http://localhost:${port}",
         static_dirs        => {
             "/media/admin/" => "${approot}/venv/lib/python2.7/site-packages/django/contrib/admin/static/admin/",

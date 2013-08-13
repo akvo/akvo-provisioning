@@ -13,12 +13,14 @@ define nginx::proxy( $server_name = undef,
       $server_name_val = $server_name
   }
 
-  $htpasswd_file = "/etc/nginx/passwd/${server_name_val}.htpasswd"
-  $ssl_key = "/etc/nginx/certs/${server_name_val}.key"
-  $ssl_crt = "/etc/nginx/certs/${server_name_val}.crt"
+  $filename = regsubst($server_name_val, '\*', '__star__')
+
+  $htpasswd_file = "/etc/nginx/passwd/${filename}.htpasswd"
+  $ssl_key = "/etc/nginx/certs/${filename}.key"
+  $ssl_crt = "/etc/nginx/certs/${filename}.crt"
 
 
-  file { "/etc/nginx/sites-enabled/${server_name_val}":
+  file { "/etc/nginx/sites-enabled/${filename}":
       ensure  => present,
       content => template('nginx/proxy.erb'),
       require => Package['nginx'],

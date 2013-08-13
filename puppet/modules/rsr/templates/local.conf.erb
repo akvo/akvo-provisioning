@@ -27,7 +27,6 @@ RSR_SITE_REGEXPS = [
 ]
 
 PARTNER_SITE_REGEXPS = [
-    <% @partner_hostnames.each do |partner_hostname| -%>
-        '^<%= partner_hostname.gsub('.', '\\.') %>$',
-    <% end -%>
+    '^.*\.<%= @base_domain.gsub('.', '\\.') %>$',
+    '^.*\.<%= @partner_site_domain.gsub('.', '\\.') %>$',
 ]
