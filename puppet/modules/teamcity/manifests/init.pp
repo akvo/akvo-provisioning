@@ -33,4 +33,9 @@ class teamcity {
         require => File[$unpackdir],
     }
 
+    file { '/opt/teamcity/TeamCity':
+        ensure => link,
+        target => "${unpackdir}/TeamCity",
+    }
+
 }
