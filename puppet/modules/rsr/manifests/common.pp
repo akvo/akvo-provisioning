@@ -109,6 +109,14 @@ class rsr::common {
     }
 
 
+    # let the build server know how to log in to us
+    @@teamcity::deploykey { "rsr-${::environment}":
+        service     => 'rsr',
+        environment => $::environment,
+        key         => hiera('rsr-deploy_private_key'),
+    }
+
+
     # configure a service so we can start and restart RSR
     include supervisord
     supervisord::service { "rsr":

@@ -14,15 +14,6 @@ class teamcity::user {
         require => User['teamcity'],
     }
 
-#    file { '/opt/teamcity/.ssh/known_hosts':
-#        ensure  => present,
-#        owner   => 'teamcity',
-#        group   => 'teamcity',
-#        mode    => 644,
-#        source  => 'puppet:///modules/teamcity/known_hosts',
-#        require => File['/opt/teamcity/.ssh']
-#    }
-
     group { 'teamcity':
         ensure => 'present',
     }
@@ -34,5 +25,7 @@ class teamcity::user {
         mode    => 750,
         require => [ User['teamcity'], Group['teamcity'] ],
     }
+
+    Teamcity::Deploykey<<||>>
 
 }

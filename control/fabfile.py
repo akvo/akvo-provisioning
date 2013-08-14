@@ -130,9 +130,8 @@ def update_rsr(to_branch, in_place=None):
     #    print 'Not an RSR node'
 
     env.user = 'rsr'
-    #default_key = _get_config_file('rsr-deploy')
-    #env.key_filename = env.config.get('rsr-deploy_private_key', default_key)
-    env.key_filename = '/Users/carlcrowder/akvo/code/akvo-config/opstest/rsr-deploy'
+    default_key = _get_config_file('rsr-deploy')
+    env.key_filename = env.config.get('rsr-deploy_private_key', default_key)
 
     in_place = in_place is not None
 
@@ -324,6 +323,17 @@ def create_hiera_facts(use_sudo=False):
         env_facts = env.config.get('facts', None)
         if env_facts is not None:
             _write_yaml(f, env_facts)
+
+        for keyname in ('rsr-deploy',):
+            private_key = env.config.get('%s_private_key' % keyname, _get_config_file(keyname))
+
+            with open(private_key) as keyfile:
+                f.write('rsr-deploy_private_key: |\n')
+                lines = keyfile.readlines()
+                f.write(''.join(['    %s' % line for line in lines]))
+                f.write('\n')
+            f.flush()
+
         filepath = '/puppet/hiera/%s.yaml' % env.config['name']
         put(f.name, filepath, use_sudo=use_sudo)
         run_method('chown puppet.puppet %s' % filepath)
