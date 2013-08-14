@@ -12,6 +12,13 @@ class sshd {
         source  => 'puppet:///modules/sshd/sshd_config',
         require => Package['openssh-server']
     }
+
+    file { '/etc/ssh/ssh_known_hosts':
+      ensure => file,
+      owner  => 'root',
+      group  => 'root',
+      mode   => '0644',
+    }
   
     service { 'ssh':
         ensure => running,
