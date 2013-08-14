@@ -1,4 +1,4 @@
-class teamcity::deploykey ( $service, $environment, $key ) {
+define teamcity::deploykey ( $service, $environment, $key ) {
 
     file { "/opt/teamcity/.ssh/${service}-${environment}":
         ensure  => present,
