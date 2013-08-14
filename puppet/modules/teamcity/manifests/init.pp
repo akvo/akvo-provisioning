@@ -39,13 +39,15 @@ class teamcity {
         require => Exec['unpack_teamcity']
     }
 
+    $listen_address = '127.0.0.1'
     file { '/opt/teamcity/TeamCity/conf/server.xml':
-        ensure => present,
-        owner => teamcity,
-        group => teamcity,
+        ensure  => present,
+        owner   => teamcity,
+        group   => teamcity,
         content => template('teamcity/server.xml.erb'),
-        mode => 644,
+        mode    => 644,
         require => Exec['unpack_teamcity'],
+        notify  => Supervisord::Restart['teamcity_server']
     }
 
 
