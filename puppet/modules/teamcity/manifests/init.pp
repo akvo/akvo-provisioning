@@ -30,14 +30,25 @@ class teamcity {
         creates => "${unpackdir}/TeamCity",
         user    => 'teamcity',
         cwd     => "/opt/teamcity",
-        require => File[$unpackdir],
+        require => [Exec['fetch_teamcity'], File[$unpackdir]],
     }
 
     file { '/opt/teamcity/TeamCity':
-        ensure => link,
-        target => "${unpackdir}/TeamCity",
+        ensure  => link,
+        target  => "${unpackdir}/TeamCity",
+        require => Exec['unpack_teamcity']
     }
 
+    file { '/opt/teamcity/TeamCity/conf/server.xml':
+        ensure => present,
+        owner => teamcity,
+        group => teamcity,
+        content => template('teamcity/server.xml.erb'),
+        mode => 644,
+        require => Exec['unpack_teamcity'],
+    }
+
+    
     include supervisord
 
     supervisord::service { "teamcity-server":
