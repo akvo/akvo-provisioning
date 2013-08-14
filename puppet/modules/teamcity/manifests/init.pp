@@ -38,4 +38,16 @@ class teamcity {
         target => "${unpackdir}/TeamCity",
     }
 
+    include supervisord
+
+    supervisord::service { "teamcity-server":
+        user      => 'teamcity',
+        command   => "/opt/teamcity/TeamCity/bin/teamcity-server.sh run",
+        directory => '/opt/teamcity/TeamCity',
+    }
+    # we want the rsr user to be able to restart the process
+    sudo::service_control { "teamcity-server":
+        user         => 'teamcity',
+    }
+
 }
