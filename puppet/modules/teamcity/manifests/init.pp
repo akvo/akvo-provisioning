@@ -50,6 +50,13 @@ class teamcity {
         notify  => Class['teamcity::reload']
     }
 
+
+    # nginx sits in front of team city
+    $base_domain = hiera('base_domain')
+    nginx::proxy { "ci.${base_domain}":
+        proxy_url          => "http://localhost:8111",
+    }
+
     include teamcity::reload
 
     include supervisord
