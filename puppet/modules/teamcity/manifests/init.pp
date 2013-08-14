@@ -10,7 +10,7 @@ class teamcity {
 
     exec { 'fetch_teamcity':
         command => "/usr/bin/wget --output-document ${dest} ${url}",
-        creates => ${dest},
+        creates => $dest,
         user    => 'teamcity',
         cwd     => "/opt/",
         require => [File['/opt/teamcity'], User['teamcity']],
