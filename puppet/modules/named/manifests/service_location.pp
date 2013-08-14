@@ -20,11 +20,13 @@ define named::service_location(
     }
 
     # Export hostkeys from these hostnames.
-    $base_domain = hiera('base_domain')
-    @@sshkey { "${subdomainval}.${base_domain}":
-        ensure       => present,
-        host_aliases => [$subdomainval],
-        type         => 'rsa',
-        key          => $::sshrsakey,
+    if '*' != $subdomainval {
+        $base_domain = hiera('base_domain')
+        @@sshkey { "${subdomainval}.${base_domain}":
+            ensure       => present,
+            host_aliases => [$subdomainval],
+            type         => 'rsa',
+            key          => $::sshrsakey,
+        }
     }
 }
