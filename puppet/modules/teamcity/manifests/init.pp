@@ -66,8 +66,13 @@ class teamcity {
         command   => "/opt/teamcity/TeamCity/bin/teamcity-server.sh run",
         directory => '/opt/teamcity/TeamCity',
     }
-    # we want the rsr user to be able to restart the process
-    sudo::service_control { "teamcity_server":
+    supervisord::service { "teamcity_build_agent":
+        user      => 'teamcity',
+        command   => '/opt/teamcity/TeamCity/buildAgent/bin/agent.sh run',
+        directory => '/opt/teamcity/TeamCity'
+    }
+
+    sudo::service_control { ["teamcity_server", "teamcity_build_agent"]:
         user         => 'teamcity',
     }
 
