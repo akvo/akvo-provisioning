@@ -47,9 +47,10 @@ class teamcity {
         content => template('teamcity/server.xml.erb'),
         mode    => 644,
         require => Exec['unpack_teamcity'],
-        notify  => Supervisord::Restart['teamcity_server']
+        notify  => Class['teamcity::reload']
     }
 
+    include teamcity::reload
 
     include supervisord
 
