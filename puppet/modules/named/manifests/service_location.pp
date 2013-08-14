@@ -28,13 +28,5 @@ define named::service_location(
             type         => 'rsa',
             key          => $::sshrsakey,
         }
-    } else {
-        $base_domain = hiera('base_domain')
-        @@sshkey { "${subdomainval}.${base_domain}":
-            ensure       => absent,
-            host_aliases => [$subdomainval],
-            type         => 'rsa',
-            key          => $::sshrsakey,
-        }
     }
 }
