@@ -23,12 +23,11 @@ ip=`ifconfig eth1 | grep 'inet addr' | awk -F: '{print $2}' | awk '{print $1}'`
 fab --linewise --hosts=$ip on_environment:$environment bootstrap || ohno=1
 cd $orig_dir
 
-set_nameserver
-
 if [ $ohno -eq 1 ]
 then
     exit 1
 fi
 
+set_nameserver
 echo `date` > /etc/akvo_provisioned
 
