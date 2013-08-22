@@ -21,8 +21,7 @@ class graphite::server {
         'django',
         'twisted',
         'django-tagging',
-        'simplejson',
-        'MySQL-python',
+        'simplejson'
     ]
     ensure_resource( 'package', $required_packages, {
         ensure   => installed,
@@ -30,8 +29,15 @@ class graphite::server {
         before   => Exec['graphite-ownership'],
     })
 
+    package { 'MySQL-python':
+        ensure   => installed,
+        provider => 'pip',
+        require  => Class['pythonsupport::mysql']
+    }
+
     package { 'python-cairo': # becuase pycairo doesn't have a setup.py so can't be installed by pip..
         ensure => installed,
+        require => Class['pythonsupport::pycairo']
     }
 
     exec { 'graphite-ownership':
