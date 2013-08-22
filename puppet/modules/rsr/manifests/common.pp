@@ -13,11 +13,6 @@ class rsr::common {
     $logdir = "${approot}/logs/"
     $port = 8000
 
-
-    # we need the list of partners:
-    $partners = hiera('rsr_partners')
-    # and we want to combine that with the standard RSR app
-
     $rsr_secret_key = hiera('rsr_secret_key')
     $additional_rsr_domains = hiera('rsr_additional_rsr_domains')
     $partner_site_domain = hiera('rsr_partner_site_domain')
