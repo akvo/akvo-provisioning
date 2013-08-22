@@ -50,6 +50,9 @@ class teamcity {
         notify  => Class['teamcity::reload']
     }
 
+    named::service_location { ["ci", 'teamcity']:
+        ip => hiera('external_ip')
+    }
 
     # nginx sits in front of team city
     $base_domain = hiera('base_domain')
