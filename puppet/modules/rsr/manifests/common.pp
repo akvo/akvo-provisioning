@@ -28,7 +28,14 @@ class rsr::common {
     # make sure we also include the Akvoapp stuff, and that it is loaded
     # before this module
     require akvoapp
-    require rsr::packages
+
+
+    # install all of the support packages
+    include pythonsupport::mysql
+    include pythonsupport::pil
+    include pythonsupport::lxml
+    include pythonsupport::standard
+
 
     # include our RSR-specific akvo info
     rsr::user { 'rsr':
@@ -81,12 +88,6 @@ class rsr::common {
     }
 
 
-    # install all of the support packages
-    include pythonsupport::mysql
-    include pythonsupport::pil
-    include pythonsupport::lxml
-
-
     # create an RSR database on the database server
     database::my_sql::db { 'rsr':
         password => $database_password
@@ -118,7 +119,6 @@ class rsr::common {
 
 
     # configure a service so we can start and restart RSR
-    include supervisord
     supervisord::service { "rsr":
         user      => 'rsr',
         command   => "${approot}/venv/bin/gunicorn akvo.wsgi --pid ${approot}/rsr.pid --bind 127.0.0.1:${port}",

@@ -30,7 +30,7 @@ class common {
     package { 'python-pip':
         ensure => 'latest',
     }
-    Package['python-pip'] -> Package<| provider == 'pip' |>
+    Package['python-pip'] -> Package <| provider == 'pip' and ensure != absent and ensure != purged |>
 
 
     named::service_location { "${::fqdn}.":

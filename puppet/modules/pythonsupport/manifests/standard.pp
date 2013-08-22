@@ -1,8 +1,8 @@
-class rsr::packages {
+class pythonsupport::standard {
 
-    # some common stuff is required
-    $required_packages = ['build-essential',
+    $required_packages = ['build-essential',    # standard stuff
                           'python-dev']
+
     package { $required_packages: ensure => 'installed' }
 
     # we install distribute and virtualenv with pip to get a newer version than the one
@@ -12,4 +12,5 @@ class rsr::packages {
         provider => 'pip',
         require  => Package['python-pip'],
     }
+
 }

@@ -20,8 +20,5 @@ ln -s <%= @approot %>/local_settings.conf $ROOT/code/akvo/settings/65_puppet.con
 PIP=$ROOT/venv/bin/pip
 
 $PIP install -r $ROOT/code/scripts/deployment/pip/requirements/2_rsr.txt
-# due to a stupid dependency of django-counter, both PIL and Pillow will be installed, so we'll remove them
-# here and reinstall
-$PIP uninstall --yes PIL Pillow
-$PIP install Pillow==2.0.0
+
 
