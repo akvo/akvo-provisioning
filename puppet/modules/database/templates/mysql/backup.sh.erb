@@ -1,0 +1,29 @@
+#!/bin/bash
+#
+# MySQL Backup Script
+#  Dumps mysql databases to a file for another backup tool to pick up.
+#
+# MySQL code:
+# GRANT SELECT, RELOAD, LOCK TABLES ON *.* TO 'user'@'localhost'
+# IDENTIFIED BY 'password';
+# FLUSH PRIVILEGES;
+#
+##### START CONFIG ###################################################
+
+USER='backup'
+DBNAME='<%= @dbname %>'
+PASS='<%= @backuppassword %>'
+DIR='/backups/mysql'
+
+##### STOP CONFIG ####################################################
+PATH=/usr/bin:/usr/sbin:/bin:/sbin
+
+TIMESTAMP=`date +%Y%m%d-%H%M%S`
+FILENAME="${DIR}/${DBNAME}-backup-${TIMESTAMP}.sql.gz"
+
+set -o pipefail
+
+find "${DIR}/" -type f -name "${DBNAME}-backup-*.sql.gz" -mtime +7 -delete
+
+mysqldump -u${USER} -p${PASS} --opt --flush-logs --single-transaction ${DBNAME} | gzip > $FILENAME
+

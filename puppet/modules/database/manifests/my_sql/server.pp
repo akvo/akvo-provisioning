@@ -18,4 +18,7 @@ class database::my_sql::server {
     # collect any databases that services want
     Database::My_sql::Db_exported <<| tag == $::environment |>>
 
+    # we want to keep our data!
+    include database::my_sql::backup_support
+
 }

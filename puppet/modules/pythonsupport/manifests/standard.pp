@@ -13,4 +13,7 @@ class pythonsupport::standard {
         require  => Package['python-pip'],
     }
 
+    # install the newest distribute before any other packages
+    Package['distribute'] -> Package<| provider == 'pip' and name != 'distribute' |>
+
 }

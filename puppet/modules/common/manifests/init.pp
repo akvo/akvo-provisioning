@@ -39,6 +39,7 @@ class common {
         ip => hiera('internal_ip')
     }
 
+    include backups
     include locales
     include users
     include sshd

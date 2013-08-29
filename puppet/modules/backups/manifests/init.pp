@@ -3,12 +3,20 @@ class backups {
 
     user { 'backup':
         ensure => present,
-        shell => '/bin/sh',
+        shell  => '/bin/sh',
+        home   => '/backups',
     }
 
-    file { '/backups': {
-        ensure => directory,
+    group { 'backup':
+        ensure => present,
+    }
 
+    file { ['/backups', '/backups/bin']:
+        ensure  => directory,
+        owner   => 'backup',
+        group   => 'backup',
+        mode    => 770,
+        require => User['backup'],
     }
 
 }
