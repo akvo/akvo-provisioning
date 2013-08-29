@@ -11,7 +11,7 @@ define database::my_sql::db_exported ( $password, $backup = true ) {
     }
 
     if ($backup) {
-        database::my_sql::backup_db { $name }
+        database::my_sql::backup_db { $name: }
     }
 
 }
