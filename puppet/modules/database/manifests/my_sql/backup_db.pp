@@ -2,7 +2,7 @@ define database::my_sql::backup_db {
     $dbname = $name
 
     $backuppassword = hiera('mysql_backup_password')
-    backups::script { 'mysqlbackup':
+    backups::script { "mysqlbackup-${dbname}":
         scriptname => "mysqlbackup-${dbname}.sh",
         content    => template('database/mysql/backup.sh.erb'),
         require    => Backups::Dir['mysql']
