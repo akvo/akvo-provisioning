@@ -25,6 +25,12 @@ class users {
         htpasswd => '$apr1$DPt9tUH8$tAcbjLu6KBUw5WshJzHr91'
     }
 
+    users::basic { 'loic':
+        role     => 'www-edit',
+        allow    => [],
+        ssh_key  => 'AAAAB3NzaC1yc2EAAAADAQABAAABAQDMcxo84hJzUijPZpIOFWMlsm+7ECh+ap9KqkKcQG5rvJiDCtlSXyX5z3Vyw0D3Nc+TUc9uWA3oololWuxBHrVuv7r3WzdfYY7vfQ7byv5cyGrVV/VYW6AnlYa9zrglA3GjTXjCrLfCUedBO6s49sCAUeDBm9fM3N6R8FgAHYUbUXrsmgwGHWNkzZS/SpDjHVXyucVhJ2i1KgDpcLt6SHDxqPUbLES8/yEBfuRVDmJj1MQJSfUYQhGfyxiQCgFh30ADRscAp24laavYRxtGz5X/krKkOFnC23OHwoqkt/e+Fb9woC9J7PPaMwYKkJIlkZvdhLlVuTJRO7LaGJH5rPTV',
+    }
+
     users::basic { 'ivan':
         role     => 'developer',
         allow    => ['munin'],
