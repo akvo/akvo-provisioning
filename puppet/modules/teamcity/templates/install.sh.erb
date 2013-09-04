@@ -2,7 +2,7 @@
 
 ## config
 
-VERSION=<%= @version %>
+VERSION=$1
 TARBALL="/opt/teamcity/tarballs/teamcity-${VERSION}.tar.gz"
 URL="http://download.jetbrains.com/teamcity/TeamCity-${VERSION}.tar.gz"
 UNPACKDIR="/opt/teamcity/versions/${VERSION}/"
@@ -26,4 +26,5 @@ tar -xzvf $TARBALL -C $UNPACKDIR
 wget --output-document /tmp/${MYSQL_TARBALL} ${MYSQL_JAR_URL}
 # extract only the jar
 mkdir -p $DATA_DIR/lib/jdbc/
-tar -xzvf $TARBALL -C ${DATA_DIR}/lib/jdbc/ --strip=1 ${MYSQL_JAR}
+tar -xzvf /tmp/${MYSQL_TARBALL} -C ${DATA_DIR}/lib/jdbc/ --strip=1 ${MYSQL_JAR}
+chown -R teamcity.teamcity $DATA_DIR
