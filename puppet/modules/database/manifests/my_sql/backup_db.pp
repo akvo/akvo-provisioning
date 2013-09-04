@@ -15,7 +15,7 @@ define database::my_sql::backup_db {
         hour    => '3',
         minute  => '0',
         command => "/backups/bin/mysqlbackup-${dbname}.sh",
-        require => Backups::Script['mysqlbackup']
+        require => Backups::Script["mysqlbackup-${dbname}"]
     }
 
 }
