@@ -1,0 +1,30 @@
+#!/bin/bash
+
+## config
+
+VERSION=$1
+TARBALL="/opt/teamcity/tarballs/teamcity-${VERSION}.tar.gz"
+URL="http://download.jetbrains.com/teamcity/TeamCity-${VERSION}.tar.gz"
+UNPACKDIR="/opt/teamcity/versions/${VERSION}/"
+
+DATA_DIR="/opt/teamcity/.BuildServer/"
+
+MYSQL_TARBALL='mysql-connector-java-5.1.26.tar.gz'
+MYSQL_JAR='mysql-connector-java-5.1.26/mysql-connector-java-5.1.26-bin.jar'
+MYSQL_JAR_URL="http://cdn.mysql.com/Downloads/Connector-J/${MYSQL_TARBALL}"
+
+## exec
+
+# fetch teamcity
+wget --output-document $TARBALL $URL
+
+# unpack it
+mkdir -p $UNPACKDIR
+tar -xzvf $TARBALL -C $UNPACKDIR
+
+# get the mysql connector
+wget --output-document /tmp/${MYSQL_TARBALL} ${MYSQL_JAR_URL}
+# extract only the jar
+mkdir -p $DATA_DIR/lib/jdbc/
+tar -xzvf /tmp/${MYSQL_TARBALL} -C ${DATA_DIR}/lib/jdbc/ --strip=1 ${MYSQL_JAR}
+chown -R teamcity.teamcity $DATA_DIR
