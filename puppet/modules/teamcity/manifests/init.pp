@@ -15,6 +15,7 @@ class teamcity {
         user    => 'teamcity',
         cwd     => "/opt/teamcity/",
         require => [File['/opt/teamcity/tarballs/'], User['teamcity']],
+        timeout => 0,
     }
 
     file { ['/opt/teamcity/tarballs/', '/opt/teamcity/versions', $unpackdir]:
