@@ -24,7 +24,7 @@ class teamcity::configure {
         group   => teamcity,
         content => template('teamcity/database.properties.erb'),
         mode    => 644,
-        require => file['/opt/teamcity/.BuildServer/config'],
+        require => File['/opt/teamcity/.BuildServer/config'],
     }
 
 }
