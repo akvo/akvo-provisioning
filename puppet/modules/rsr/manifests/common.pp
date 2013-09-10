@@ -73,6 +73,16 @@ class rsr::common {
         require => File[$approot]
     }
 
+    # include the script for cleaning up old versions
+    file { "${approot}/cleanup_old.sh":
+        ensure  => present,
+        content => template('rsr/cleanup_old.sh.erb'),
+        owner   => $username,
+        group   => $username,
+        mode    => 744,
+        require => File[$approot]
+    }
+
     # add custom configuration
     file { "${approot}/local_settings.conf":
         ensure   => present,
