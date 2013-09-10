@@ -12,5 +12,5 @@ fi
 for x in `ls -t ${VERSIONS_DIR} | tail -n +${REMOVE_COUNT}`
 do
     echo "Removing old version: $x"
-    rm -r $x
+    rm -r $VERSIONS_DIR/$x
 done
