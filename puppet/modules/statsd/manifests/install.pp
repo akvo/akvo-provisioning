@@ -20,6 +20,7 @@ class statsd::install {
     exec { 'clone_statsd':
         command => '/usr/bin/git clone https://github.com/etsy/statsd.git /opt/statsd',
         creates => '/opt/statsd/.git',
+        cwd     => '/opt/statsd',
         user    => 'statsd',
         require => File['/opt/statsd']
     }
