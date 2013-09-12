@@ -1,12 +1,10 @@
 
-define backups::dir {
+define backups::dir (
+    $path
+) {
 
-    file { "/backups/${name}":
-        ensure  => directory,
-        owner   => 'backup',
-        group   => 'backup',
-        mode    => 770,
-        require => File['/backups']
+    file { "/backups/bin/${name}_weekly.sh":
+
     }
 
 }

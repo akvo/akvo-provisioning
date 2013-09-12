@@ -14,6 +14,9 @@
     "rsr-deploy_public_key": "/puppet/checkout/vagrant/files/localdev_puppet_rsr-deploy.pub",
     "rsr-deploy_private_key": "/puppet/checkout/vagrant/files/localdev_puppet_rsr-deploy",
 
+    "backup_public_key": "/puppet/checkout/vagrant/files/localdev_backup.pub",
+    "backup_private_key": "/puppet/checkout/vagrant/files/localdev_backup",
+
     "nodes": {
         "192.168.50.101": {
             "roles": ["management", "puppetdb", "database"],
@@ -29,6 +32,15 @@
         "mysql_root_password": "flibble",
         "mysql_backup_password": "flibble",
         "graphite_secret_key": "RM30sUWohUac2B5tMTNLp5MsglRTRm5nrM590fXW",
-        "graphite_database_password": "6527UEg9Jrhuj7CyWsREWuvAdUQ8tUs2t0CKl5fV"
+        "graphite_database_password": "6527UEg9Jrhuj7CyWsREWuvAdUQ8tUs2t0CKl5fV",
+
+        "backup_servers": {
+            "local": {
+                "username": "testbackup",
+                "remote_host": "localhost",
+                "port": 22,
+                "dest_dir": "/home/testbackup/backups/"
+            }
+        }
     }
 }

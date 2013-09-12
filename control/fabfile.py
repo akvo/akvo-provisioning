@@ -295,7 +295,7 @@ def setup_hiera():
     puppetdb_server = env.config.get('puppetdb', 'puppetdb.%s' % env.config['base_domain'])
     sudo('echo "puppetdb_server: %s" >> /puppet/hiera/nodespecific.yaml' % puppetdb_server)
 
-    for keyname in ('puppet', 'rsr-deploy'):
+    for keyname in ('puppet', 'rsr-deploy', 'backup'):
         keyfile = env.config.get('%s_public_key' % keyname, _get_config_file('%s.pub' % keyname))
         with open(keyfile) as f:
             key = f.read().replace('\n', '')
@@ -324,11 +324,11 @@ def create_hiera_facts(use_sudo=False):
         if env_facts is not None:
             _write_yaml(f, env_facts)
 
-        for keyname in ('rsr-deploy',):
+        for keyname in ('rsr-deploy', 'backup'):
             private_key = env.config.get('%s_private_key' % keyname, _get_config_file(keyname))
 
             with open(private_key) as keyfile:
-                f.write('rsr-deploy_private_key: |\n')
+                f.write('%s_private_key: |\n' % keyname)
                 lines = keyfile.readlines()
                 f.write(''.join(['    %s' % line for line in lines]))
                 f.write('\n')
