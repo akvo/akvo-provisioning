@@ -3,4 +3,5 @@ class role::monitor {
 
     include munin::master
     include graphite::server
+    include statsd
 }
