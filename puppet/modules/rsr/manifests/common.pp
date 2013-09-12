@@ -84,6 +84,13 @@ class rsr::common {
     }
 
     # add custom configuration
+    $use_graphite = hiera("rsr_use_graphite", false)
+    if $use_graphite {
+        $statsd_host = hiera('statsd_host', "statsd.${base_domain}")
+        $statsd_port = 8125
+        $statsd_prefix = "${::environment}.rsr."
+    }
+
     file { "${approot}/local_settings.conf":
         ensure   => present,
         owner    => 'rsr',
