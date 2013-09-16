@@ -26,4 +26,8 @@ class role::fileserver {
         rootdir  => '/srv/fileserver',
     }
 
+    named::service_location { 'files':
+        ip => hiera('external_ip')
+    }
+
 }
