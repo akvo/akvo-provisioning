@@ -78,14 +78,9 @@ class puppetcontrol {
     }
 
     # let the puppet user do package upgrades
-    sudo::allow_command { "puppet_apt_update":
+    sudo::allow_command { "puppet_apt-get":
         user    => "puppet",
-        command => "apt-get update",
-        require => User['puppet'],
-    }
-    sudo::allow_command { "puppet_apt_upgrade":
-        user    => "puppet",
-        command => "apt-get upgrade",
+        command => "/usr/bin/apt-get",
         require => User['puppet'],
     }
 
