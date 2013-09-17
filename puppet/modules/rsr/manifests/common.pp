@@ -83,6 +83,16 @@ class rsr::common {
         require => File[$approot]
     }
 
+    # include the script for managing the django application
+    file { "${approot}/manage.sh":
+        ensure  => present,
+        content => template('rsr/manage.sh.erb'),
+        owner   => $username,
+        group   => $username,
+        mode    => 744,
+        require => File[$approot]
+    }
+
     # add custom configuration
     $use_graphite = hiera("rsr_use_graphite", false)
     if $use_graphite {
