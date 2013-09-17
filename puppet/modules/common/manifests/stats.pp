@@ -18,22 +18,9 @@ class common::stats {
         require => User['stats'],
     }
 
-    $statsd_host = hiera('statsd_host')
-
-    file { '/var/stats/bin/packages_available.sh':
-        ensure  => present,
-        owner   => 'stats',
-        mode    => 744,
-        require => File['/var/stats/bin'],
-        content => template('common/packages_available.sh.erb')
-    }
-
-    file { '/var/stats/bin/restart_required.sh':
-        ensure  => present,
-        owner   => 'stats',
-        mode    => 744,
-        require => File['/var/stats/bin'],
-        content => template('common/restart_required.sh.erb')
-    }
+    common::stats_sender { [
+        'packages_available',
+        'restart_required',
+    ]: }
 
 }
