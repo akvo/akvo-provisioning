@@ -433,6 +433,11 @@ def update_config():
     apply_puppet()
 
 
+def update_system_packages():
+    sudo('apt-get update')
+    sudo('apt-get upgrade')
+
+
 def is_puppetdb_ready():
     puppetdb_server = env.config.get('puppetdb', 'puppetdb.%s' % env.config['base_domain'])
     cmd = "wget --no-check-certificate --server-response https://%s 2>&1 | awk '/^  HTTP/{print $2}'" % puppetdb_server
