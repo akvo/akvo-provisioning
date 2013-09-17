@@ -77,6 +77,18 @@ class puppetcontrol {
         require => [User['puppet'], File["/puppet/bin/apply.sh"]],
     }
 
+    # let the puppet user do package upgrades
+    sudo::allow_command { "puppet_apt_update":
+        user    => "puppet",
+        command => "apt-get update",
+        require => User['puppet'],
+    }
+    sudo::allow_command { "puppet_apt_upgrade":
+        user    => "puppet",
+        command => "apt-get upgrade",
+        require => User['puppet'],
+    }
+
 
     # configure puppet
     file { '/etc/puppet/puppet.conf':
