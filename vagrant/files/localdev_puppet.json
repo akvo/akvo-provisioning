@@ -16,7 +16,7 @@
 
     "nodes": {
         "192.168.50.101": {
-            "roles": ["management", "puppetdb", "database", "monitor"],
+            "roles": ["management", "puppetdb", "database", "fileserver"],
             "order": 0
         },
         "192.168.50.102": {
