@@ -8,15 +8,15 @@
     "bootstrap_password": "vagrant",
 
     "puppet_branch": "develop",
-    "puppet_public_key": "/puppet/checkout/vagrant/files/localdev_puppet.pub",
-    "puppet_private_key": "/puppet/checkout/vagrant/files/localdev_puppet",
+    "puppet_public_key": "/vagrant/files/localdev_puppet.pub",
+    "puppet_private_key": "/vagrant/files/localdev_puppet",
 
-    "rsr-deploy_public_key": "/puppet/checkout/vagrant/files/localdev_puppet_rsr-deploy.pub",
-    "rsr-deploy_private_key": "/puppet/checkout/vagrant/files/localdev_puppet_rsr-deploy",
+    "rsr-deploy_public_key": "/vagrant/files/localdev_puppet_rsr-deploy.pub",
+    "rsr-deploy_private_key": "/vagrant/files/localdev_puppet_rsr-deploy",
 
     "nodes": {
         "192.168.50.101": {
-            "roles": ["management", "puppetdb", "database", "fileserver"],
+            "roles": ["management", "puppetdb", "database"],
             "order": 0
         },
         "192.168.50.102": {

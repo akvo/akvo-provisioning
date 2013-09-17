@@ -1,0 +1,30 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+    config.ssh.forward_agent = true
+
+    config.vm.box = "precise64"
+    config.vm.box_url = "http://files.vagrantup.com/precise64.box"
+    config.vm.synced_folder "../../../control/", "/vagrant/bootstrap/"
+    config.vm.synced_folder "../../../", "/puppet/checkout"
+
+    config.vm.define :box1 do |box1|
+        box1.vm.network :private_network, ip: "192.168.50.101"
+        box1.vm.hostname = "puppet1.localdev.akvo-ops.org"
+        box1.vm.provision :shell do |s|
+            s.path = "../../../control/bootstrap_vagrant.sh"
+            s.args = "/vagrant/files/localdev_puppet.json"
+        end
+    end
+
+    config.vm.define :box2 do |box2|
+        box2.vm.network :private_network, ip: "192.168.50.102"
+        box2.vm.hostname = "puppet2.localdev.akvo-ops.org"
+        box2.vm.provision :shell do |s|
+            s.path = "../../../control/bootstrap_vagrant.sh"
+            s.args = "/vagrant/files/localdev_puppet.json"
+        end
+    end
+end
+
