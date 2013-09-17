@@ -19,6 +19,7 @@ class common {
         'wget',
         'curl',
         'molly-guard',
+        'update-notifier-common',
     ]
 
     package { $useful_packages:
@@ -45,5 +46,6 @@ class common {
     include sshd
     include common::repos
     include common::resolv
+    include common::stats
 }
 

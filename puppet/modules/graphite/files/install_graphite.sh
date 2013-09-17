@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 /usr/local/bin/virtualenv /opt/graphite/venv --system-site-packages
 
