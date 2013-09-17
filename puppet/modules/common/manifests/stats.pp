@@ -4,7 +4,7 @@ class common::stats {
     user { 'stats':
         ensure => present,
         shell => '/bin/bash',
-        home => '/etc/stats',
+        home => '/var/stats',
     }
 
     group { 'stats':
