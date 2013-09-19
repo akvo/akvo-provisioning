@@ -295,7 +295,7 @@ def create_hiera_facts(use_sudo=False):
         private_key = env.config.get('%s_private_key' % keyname, _get_config_file(keyname))
 
         with open(private_key) as keyfile:
-            env_facts['%s_private_key' % keyname] = keyfile.readlines()
+            env_facts['%s_private_key' % keyname] = keyfile.read()
 
     with tempfile.NamedTemporaryFile() as f:
         json.dump(env_facts, f)
