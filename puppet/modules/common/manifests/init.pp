@@ -46,6 +46,6 @@ class common {
     include sshd
     include common::repos
     include common::resolv
-    include common::stats
+    include systemstats
 }
 

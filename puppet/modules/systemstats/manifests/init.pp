@@ -1,5 +1,5 @@
 
-class common::stats {
+class systemstats {
 
     user { 'stats':
         ensure => present,
@@ -18,9 +18,11 @@ class common::stats {
         require => User['stats'],
     }
 
-    common::stats_sender { [
+    systemstats::stat { [
         'packages_available',
         'restart_required',
-    ]: }
+    ]:
+        user => 'root'
+    }
 
 }
