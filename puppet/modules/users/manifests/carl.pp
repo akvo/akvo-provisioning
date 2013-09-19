@@ -11,7 +11,7 @@ class users::carl {
         ensure => present,
         owner => 'carl',
         group => 'carl',
-        mode => 755,
+        mode => '0755',
         source => 'puppet:///modules/users/screenrc',
         require => File['/home/carl'],
     }

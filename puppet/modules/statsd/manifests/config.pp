@@ -5,7 +5,7 @@ class statsd::config {
         ensure  => present,
         owner   => 'statsd',
         group   => 'statsd',
-        mode    => 400,
+        mode    => '0400',
         content => template('statsd/config.js.erb'),
         require => Exec['clone_statsd'],
     }

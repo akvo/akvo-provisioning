@@ -5,7 +5,7 @@ define teamcity::deploykey ( $service, $environment, $key ) {
         owner   => 'teamcity',
         group   => 'teamcity',
         require => File['/opt/teamcity/.ssh'],
-        mode    => 600,
+        mode    => '0600',
         content => $key
     }
 

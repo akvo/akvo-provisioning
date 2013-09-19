@@ -21,7 +21,7 @@ class puppetcontrol {
        ensure => directory,
        owner => 'puppet',
        group => 'puppet',
-       mode => 750,
+       mode => '0750',
        require => [ User['puppet'], Group['puppet'] ]
     }
 
@@ -31,14 +31,14 @@ class puppetcontrol {
         ensure => directory,
         owner => 'puppet',
         group => 'puppet',
-        mode => 700,
+        mode => '0700',
     }
 
     file { '/puppet/.ssh/authorized_keys':
         ensure => present,
         owner => 'puppet',
         group => 'puppet',
-        mode => 600,
+        mode => '0600',
         require => File['/puppet/.ssh']
     }
 
@@ -64,7 +64,7 @@ class puppetcontrol {
         ensure  => "present",
         owner   => "puppet",
         group   => "puppet",
-        mode    => 700,
+        mode    => '0700',
         source  => 'puppet:///modules/puppetcontrol/apply.sh',
         require => File['/puppet/bin/']
     }

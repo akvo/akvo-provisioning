@@ -14,7 +14,7 @@ class pypi::server {
     file { '/srv/devpi':
         ensure  => directory,
         owner   => 'devpi',
-        mode    => 744,
+        mode    => '0744',
         require => User['devpi']
     }
 

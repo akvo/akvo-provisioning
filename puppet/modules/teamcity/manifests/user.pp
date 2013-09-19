@@ -10,7 +10,7 @@ class teamcity::user {
         ensure  => directory,
         owner   => 'teamcity',
         group   => 'teamcity',
-        mode    => 700,
+        mode    => '0700',
         require => User['teamcity'],
     }
 
@@ -22,7 +22,7 @@ class teamcity::user {
         ensure  => 'directory',
         owner   => 'teamcity',
         group   => 'teamcity',
-        mode    => 750,
+        mode    => '0750',
         require => [ User['teamcity'], Group['teamcity'] ],
     }
 

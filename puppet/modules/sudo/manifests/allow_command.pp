@@ -5,7 +5,7 @@ define sudo::allow_command ( $user, $command ) {
 
     file { "/etc/sudoers.d/${user}__${name}":
         ensure  => present,
-        mode    => 0440,
+        mode    => '0044'0,
         owner   => root,
         content => template("sudo/allow_command")
     }

@@ -24,7 +24,7 @@ define users::basic (
         ensure  => present,
         owner   => $usernameval,
         group   => $usernameval,
-        mode    => 700,
+        mode    => '0700',
         source  => 'puppet:///modules/users/set_pass_if_empty.sh',
         require => File["/home/${usernameval}"],
     }
@@ -42,7 +42,7 @@ define users::basic (
         ensure => directory,
         owner => $usernameval,
         group => $usernameval,
-        mode => 750,
+        mode => '0750',
         require => [ User[$usernameval], Group[$usernameval] ],
     }
 
@@ -50,7 +50,7 @@ define users::basic (
         ensure => directory,
         owner => $usernameval,
         group => $usernameval,
-        mode => 700,
+        mode => '0700',
         require => File["/home/${usernameval}/"],
     }
 
@@ -58,7 +58,7 @@ define users::basic (
         ensure => present,
         owner => $usernameval,
         group => $usernameval,
-        mode => 600,
+        mode => '0600',
         require => File["/home/${usernameval}/.ssh"],
     }
 

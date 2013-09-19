@@ -5,7 +5,7 @@ define rsr::dirs ( $approot, $username, $media_root ) {
         ensure  => directory,
         owner   => $username,
         group   => $username,
-        mode    => 755,
+        mode    => '0755',
         require => [ User[$username], Group[$username], File['/var/akvo/'] ],
     }
 
@@ -19,7 +19,7 @@ define rsr::dirs ( $approot, $username, $media_root ) {
         ensure  => directory,
         owner   => $username,
         group   => $username,
-        mode    => 755,
+        mode    => '0755',
         require => [ User[$username], Group[$username], File[$approot] ],
     }
 
@@ -28,7 +28,7 @@ define rsr::dirs ( $approot, $username, $media_root ) {
         ensure  => directory,
         owner   => 'rsr',
         group   => 'rsr',
-        mode    => 755,
+        mode    => '0755',
         require => Class['Akvoapp']
     }
 

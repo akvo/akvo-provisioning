@@ -21,7 +21,7 @@ class graphite::install {
         ensure  => directory,
         owner   => 'graphite',
         group   => 'graphite',
-        mode    => 700,
+        mode    => '0700',
         require => User['graphite']
     }
 
@@ -33,7 +33,7 @@ class graphite::install {
     file { '/opt/graphite/install.sh':
         ensure  => present,
         owner   => 'graphite',
-        mode    => 500,
+        mode    => '0500',
         source  => 'puppet:///modules/graphite/install_graphite.sh',
         require => File['/opt/graphite'],
     }

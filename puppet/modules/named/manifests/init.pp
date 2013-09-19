@@ -23,7 +23,7 @@ class named {
         ensure  => present,
         owner   => 'bind',
         group   => 'bind',
-        mode    => 644,
+        mode    => '0644',
         content => template('named/named.conf.local.erb'),
         require => Package['bind9'],
     }
@@ -35,7 +35,7 @@ class named {
         content => template('named/envzone.erb'),
         owner   => 'bind',
         group   => 'bind',
-        mode    => 644,
+        mode    => '0644',
         require => Package['bind9'],
         notify  => Service['bind9']
     }

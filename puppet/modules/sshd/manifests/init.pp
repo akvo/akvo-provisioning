@@ -6,7 +6,7 @@ class sshd {
   
     file { '/etc/ssh/sshd_config':
         ensure  => file,
-        mode    => 600,
+        mode    => '0600',
         owner   => 'root',
         group   => 'root',
         source  => 'puppet:///modules/sshd/sshd_config',

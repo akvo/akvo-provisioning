@@ -7,7 +7,7 @@ class locales {
         source => "puppet:///modules/locales/locale.gen",
         owner => "root",
         group => "root",
-        mode => 644,
+        mode => '0644',
         require => Package['locales'],
     }
 
@@ -20,7 +20,7 @@ class locales {
     file { "/etc/default/locale":
         owner => "root",
         group => "root",
-        mode  => 644,
+        mode  => '0644',
         require => Package['locales'],
         content => "LC_ALL=en_US.UTF-8",
     }

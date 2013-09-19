@@ -11,7 +11,7 @@ class akvoapp {
         ensure  => directory,
         owner   => 'root',
         group   => 'akvoapp',
-        mode    => 555,
+        mode    => '0555',
         require => Group['akvoapp'],
     }
 

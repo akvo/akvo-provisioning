@@ -5,7 +5,7 @@ define backups::dest_dir {
         ensure  => directory,
         owner   => 'backup',
         group   => 'backup',
-        mode    => 770,
+        mode    => '0770',
         require => File['/backups']
     }
 

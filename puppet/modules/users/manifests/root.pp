@@ -4,7 +4,7 @@ class users::root {
     ensure => present,
     owner => 'root',
     group => 'root',
-    mode => 755,
+    mode => '0755',
     source => 'puppet:///modules/users/screenrc',
   } 
   

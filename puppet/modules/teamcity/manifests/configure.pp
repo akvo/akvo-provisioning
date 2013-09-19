@@ -7,14 +7,14 @@ class teamcity::configure {
         owner   => teamcity,
         group   => teamcity,
         content => template('teamcity/server.xml.erb'),
-        mode    => 644
+        mode    => '0644'
     }
 
     file { '/opt/teamcity/.BuildServer/config':
         ensure => directory,
         owner  => teamcity,
         group  => teamcity,
-        mode   => 755,
+        mode   => '0755',
     }
 
     $teamcity_database_password = hiera('teamcity_database_password')
@@ -23,7 +23,7 @@ class teamcity::configure {
         owner   => teamcity,
         group   => teamcity,
         content => template('teamcity/database.properties.erb'),
-        mode    => 644,
+        mode    => '0644',
         require => File['/opt/teamcity/.BuildServer/config'],
     }
 

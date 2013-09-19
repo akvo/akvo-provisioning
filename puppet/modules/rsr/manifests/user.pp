@@ -16,7 +16,7 @@ define rsr::user ( $username, $approot ) {
         ensure  => directory,
         owner   => $username,
         group   => $username,
-        mode    => 700,
+        mode    => '0700',
         require => File[$approot],
     }
 

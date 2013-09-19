@@ -33,7 +33,7 @@ class graphite::config {
         ensure  => present,
         owner   => 'graphite',
         group   => 'graphite',
-        mode    => 444,
+        mode    => '0444',
         content => template('graphite/graphite_settings.py.erb'),
     }
 

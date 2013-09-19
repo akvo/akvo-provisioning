@@ -7,7 +7,7 @@ class htpasswd::fs {
         ensure => directory,
         owner  => root,
         group  => root,
-        mode   => 755
+        mode   => '0755'
     }
 
 }

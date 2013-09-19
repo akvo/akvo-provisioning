@@ -15,7 +15,7 @@ define backups::dir (
     file { $script_name:
         ensure => present,
         owner => backup,
-        mode => 700,
+        mode => '0700',
         content => template('backups/backup_directory.sh.erb')
     }
 

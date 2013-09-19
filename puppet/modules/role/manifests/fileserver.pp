@@ -15,7 +15,7 @@ class role::fileserver {
         ensure => directory,
         owner => 'fileserver',
         group => 'fileserver',
-        mode => 775,
+        mode => '0775',
         require => User['fileserver'],
     }
 

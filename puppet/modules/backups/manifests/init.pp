@@ -15,7 +15,7 @@ class backups {
         ensure  => directory,
         owner   => 'backup',
         group   => 'backup',
-        mode    => 770,
+        mode    => '0770',
         require => User['backup'],
     }
 
@@ -23,7 +23,7 @@ class backups {
         ensure  => present,
         owner   => 'backup',
         group   => 'backup',
-        mode    => 600,
+        mode    => '0600',
         content => hiera('backup_private_key'),
         require => File['/backups/ssh']
     }

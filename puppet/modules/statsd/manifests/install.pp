@@ -13,7 +13,7 @@ class statsd::install {
         ensure  => directory,
         owner   => 'statsd',
         group   => 'statsd',
-        mode    => 700,
+        mode    => '0700',
         require => User['statsd']
     }
 

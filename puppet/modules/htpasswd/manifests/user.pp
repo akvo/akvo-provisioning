@@ -9,7 +9,7 @@ define htpasswd::user ($user, $allow, $password) {
         ensure  => present,
         owner   => root,
         group   => root,
-        mode    => 444,
+        mode    => '0444',
         require => File['/etc/htpasswd']
     })
 

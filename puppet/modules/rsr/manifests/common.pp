@@ -49,7 +49,7 @@ class rsr::common {
         content => template('rsr/make_app.sh.erb'),
         owner   => $username,
         group   => $username,
-        mode    => 744,
+        mode    => '0744',
         require => File[$approot]
     }
 
@@ -59,7 +59,7 @@ class rsr::common {
         content => template('rsr/make_current.sh.erb'),
         owner   => $username,
         group   => $username,
-        mode    => 744,
+        mode    => '0744',
         require => File[$approot]
     }
 
@@ -69,7 +69,7 @@ class rsr::common {
         content => template('rsr/update_current.sh.erb'),
         owner   => $username,
         group   => $username,
-        mode    => 744,
+        mode    => '0744',
         require => File[$approot]
     }
 
@@ -79,7 +79,7 @@ class rsr::common {
         content => template('rsr/cleanup_old.sh.erb'),
         owner   => $username,
         group   => $username,
-        mode    => 744,
+        mode    => '0744',
         require => File[$approot]
     }
 
@@ -89,7 +89,7 @@ class rsr::common {
         content => template('rsr/manage.sh.erb'),
         owner   => $username,
         group   => $username,
-        mode    => 744,
+        mode    => '0744',
         require => File[$approot]
     }
 
@@ -105,7 +105,7 @@ class rsr::common {
         ensure   => present,
         owner    => 'rsr',
         group    => 'rsr',
-        mode     => 444,
+        mode     => '0444',
         content  => template('rsr/local.conf.erb'),
     }
 

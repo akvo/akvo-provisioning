@@ -6,7 +6,7 @@ class teamcity::install {
         ensure  => 'directory',
         owner   => 'teamcity',
         group   => 'teamcity',
-        mode    => 750,
+        mode    => '0750',
         require => File['/opt/teamcity'],
     }
 
