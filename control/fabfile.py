@@ -57,22 +57,6 @@ def _get_config_file(file_name):
     return os.path.join(env.config_dir, file_name)
 
 
-def _write_yaml(filepath, data, use_sudo=False):
-    run_method = sudo if use_sudo else run
-
-    run_method('echo "---"> %s' % filepath)
-
-    for key, value in data.iteritems():
-        if isinstance(value, (tuple, list)):
-            run_method('echo "%s:" >> %s' % (key, filepath))
-            for item in value:
-                run_method('echo "  - %s" >> %s' % (item, filepath))
-            continue
-        run_method('echo "%s: %s" >> %s' % (key, value, filepath))
-    run_method('chown puppet.puppet %s' % filepath)
-
-
-# configuring which machines
 def _validate_config(config):
     if 'puppetdb' not in config:
         # if we aren't using an external puppetdb, then we need to install one ourselves
@@ -303,47 +287,33 @@ def setup_hiera():
         sudo('echo "%s_public_key: %s" >> /puppet/hiera/nodespecific.yaml' % (keyname, key))
 
 
-def _write_yaml(f, data):
-
-    f.write('---\n')
-
-    for key, value in data.iteritems():
-        if isinstance(value, (tuple, list)):
-            f.write('%s:\n' % key)
-            for item in value:
-                f.write('  - %s\n' % item)
-            continue
-        f.write('%s: %s\n' % (key, value))
-    f.flush()
-
 def create_hiera_facts(use_sudo=False):
     run_method = sudo if use_sudo else run
 
+    env_facts = env.config.get('facts', None)
+    for keyname in ('rsr-deploy',):
+        private_key = env.config.get('%s_private_key' % keyname, _get_config_file(keyname))
+
+        with open(private_key) as keyfile:
+            env_facts['%s_private_key' % keyname] = keyfile.read()
+
     with tempfile.NamedTemporaryFile() as f:
-        env_facts = env.config.get('facts', None)
-        if env_facts is not None:
-            _write_yaml(f, env_facts)
+        json.dump(env_facts, f)
+        f.flush()
 
-        for keyname in ('rsr-deploy', 'backup'):
-            private_key = env.config.get('%s_private_key' % keyname, _get_config_file(keyname))
-
-            with open(private_key) as keyfile:
-                f.write('%s_private_key: |\n' % keyname)
-                lines = keyfile.readlines()
-                f.write(''.join(['    %s' % line for line in lines]))
-                f.write('\n')
-            f.flush()
-
-        filepath = '/puppet/hiera/%s.yaml' % env.config['name']
+        filepath = '/puppet/hiera/%s.json' % env.config['name']
         put(f.name, filepath, use_sudo=use_sudo)
         run_method('chown puppet.puppet %s' % filepath)
 
     node_facts = _get_node_config('facts', default=None)
-    if node_facts is not None:
-        hostname = run('hostname -f').strip()
-        with tempfile.NamedTemporaryFile() as f:
-            _write_yaml(f, node_facts)
-        filepath = '/puppet/hiera/%s.yaml' % hostname
+    if node_facts is None:
+        return
+
+    hostname = run('hostname -f').strip()
+    with tempfile.NamedTemporaryFile() as f:
+        json.dump(node_facts, f)
+        f.flush()
+        filepath = '/puppet/hiera/%s.json' % hostname
         put(f.name, filepath, use_sudo=use_sudo)
         run_method('chown puppet.puppet %s' % filepath)
 
@@ -431,6 +401,11 @@ def update_config():
     add_roles(_get_current_roles(), use_sudo=False)
     create_hiera_facts()
     apply_puppet()
+
+
+def update_system_packages():
+    sudo('apt-get update')
+    sudo('apt-get upgrade')
 
 
 def is_puppetdb_ready():

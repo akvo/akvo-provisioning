@@ -1,0 +1,12 @@
+#!/bin/bash
+
+HOSTNAME=`hostname -s`
+
+if [ -f /var/run/reboot-required ]
+then
+    REQUIRES_REBOOT=1
+else
+    REQUIRES_REBOOT=0
+fi
+
+echo "systems.<%=@environment%>.$HOSTNAME.requires_restart:${REQUIRES_REBOOT}|g" | nc -w 1 -u <%=@statsd_host%> 8125

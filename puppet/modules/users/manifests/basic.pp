@@ -1,6 +1,6 @@
 define users::basic (
     $username = undef,
-    $role,
+    $roles = [],
     $allow = [],
     $ssh_key,
     $ssh_type = 'ssh-rsa',
@@ -17,8 +17,7 @@ define users::basic (
         ensure   => 'present',
         home     => "/home/${usernameval}",
         shell    => '/bin/bash',
-        groups   => $role,
-        require  => Group[$role],
+        groups   => $roles,
     }
 
     file { "/home/${usernameval}/.bash_login":

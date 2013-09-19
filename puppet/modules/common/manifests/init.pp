@@ -19,6 +19,7 @@ class common {
         'wget',
         'curl',
         'molly-guard',
+        'update-notifier-common',
     ]
 
     package { $useful_packages:
@@ -30,7 +31,7 @@ class common {
     package { 'python-pip':
         ensure => 'latest',
     }
-    Package['python-pip'] -> Package <| provider == 'pip' and ensure != absent and ensure != purged |>
+    Package['python-pip'] -> Package <| provider == 'pip' |>
 
 
     named::service_location { "${::fqdn}.":
@@ -45,5 +46,6 @@ class common {
     include sshd
     include common::repos
     include common::resolv
+    include systemstats
 }
 
