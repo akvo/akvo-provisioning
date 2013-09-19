@@ -13,7 +13,8 @@
 USER='backup'
 DBNAME='<%= @dbname %>'
 PASS='<%= @backuppassword %>'
-DIR='/backups/mysql'
+PERIODICITY=$1
+DIR=/backups/data/mysql/$PERIODICITY/
 
 ##### STOP CONFIG ####################################################
 PATH=/usr/bin:/usr/sbin:/bin:/sbin
@@ -23,6 +24,7 @@ FILENAME="${DIR}/${DBNAME}-backup-${TIMESTAMP}.sql.gz"
 
 set -o pipefail
 
+mkdir -p $DIR
 find "${DIR}/" -type f -name "${DBNAME}-backup-*.sql.gz" -mtime +7 -delete
 
 mysqldump -u${USER} -p${PASS} --opt --flush-logs --single-transaction ${DBNAME} | gzip > $FILENAME

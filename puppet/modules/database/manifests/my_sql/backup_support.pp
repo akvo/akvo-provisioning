@@ -18,4 +18,6 @@ class database::my_sql::backup_support {
 
     backups::dest_dir { 'mysql': }
 
+    database::my_sql::backup_db { 'mysql': }
+
 }

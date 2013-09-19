@@ -11,7 +11,7 @@ SOURCE_DIR=$1
 PERIOD=$2
 RETAIN_COUNT=$3
 NAME=$4
-BASE_DEST_DIR=<%= @dest_dir %>/$NAME
+BASE_DEST_DIR=<%= @dest_dir %>/<%= @environment %>/<%= @hostname %>/$NAME
 SSH_COMMAND="ssh -p $PORT -i /backups/ssh/backup_key"
 
 
@@ -44,7 +44,7 @@ do
 done
 
 # hardlink to old files
-$ON_REMOTE cp --archive --link $BASE_DEST_DIR/$PERIOD/0 $BASE_DEST_DIR/$PERIOD/1
+$ON_REMOTE cp -al $BASE_DEST_DIR/$PERIOD/0 $BASE_DEST_DIR/$PERIOD/1
 
 # Now copy!
 DEST_DIR=$BASE_DEST_DIR/$PERIOD/0

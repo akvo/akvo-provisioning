@@ -14,8 +14,8 @@
     "rsr-deploy_public_key": "/vagrant/files/localdev_puppet_rsr-deploy.pub",
     "rsr-deploy_private_key": "/vagrant/files/localdev_puppet_rsr-deploy",
 
-    "backup_public_key": "/puppet/checkout/vagrant/files/localdev_backup.pub",
-    "backup_private_key": "/puppet/checkout/vagrant/files/localdev_backup",
+    "backup_public_key": "/vagrant/files/localdev_backup.pub",
+    "backup_private_key": "/vagrant/files/localdev_backup",
 
     "nodes": {
         "192.168.50.101": {
@@ -41,6 +41,12 @@
                 "remote_host": "localhost",
                 "port": 22,
                 "dest_dir": "/home/testbackup/backups/"
+            },
+            "kakelbont": {
+                "username": "backup",
+                "remote_host": "89.233.254.200",
+                "port": 2255,
+                "dest_dir": "/mnt/baljan/cloudvps/backups/"
             }
         }
     }
