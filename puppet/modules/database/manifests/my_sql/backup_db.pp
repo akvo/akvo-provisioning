@@ -10,7 +10,7 @@ define database::my_sql::backup_db (
     backups::script { "mysqlbackup-${dbname}":
         scriptname => "mysqlbackup-${dbname}.sh",
         content    => template('database/mysql/backup.sh.erb'),
-        require    => Backups::Dir['mysql']
+        require    => Backups::Dest_Dir['mysql']
     }
 
     if $hourly {
@@ -60,10 +60,5 @@ define database::my_sql::backup_db (
             require  => Backups::Script["mysqlbackup-${dbname}"]
         }
     }
-
-
-    #backups::dir { "mysql":
-    #    path => "/backups/data/mysql"
-    #}
 
 }

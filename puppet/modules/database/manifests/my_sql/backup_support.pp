@@ -20,4 +20,8 @@ class database::my_sql::backup_support {
 
     database::my_sql::backup_db { 'mysql': }
 
+    #backups::dir { "mysql":
+    #    path => "/backups/data/mysql"
+    #}
+
 }

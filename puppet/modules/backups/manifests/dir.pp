@@ -10,7 +10,7 @@ define backups::dir (
 
     $backup_servers = hiera_hash('backup_servers')
     $backup_bin_dir = '/backups/bin/'
-    $script_name = "/backups/bin/backup-${name}.sh"
+    $script_name = "${backup_bin_dir}/backup-${name}.sh"
 
     file { $script_name:
         ensure => present,
@@ -32,37 +32,37 @@ define backups::dir (
     }
 
     if $daily {
-        cron { "backup-dir-${name}-hourly":
+        cron { "backup-dir-${name}-daily":
             ensure  => present,
             user    => 'backup',
             weekday => '*',
             hour    => '3',
             minute  => '0',
-            command => "/backups/bin/$script_name hourly",
+            command => "$script_name daily",
             require => File[$script_name]
         }
     }
 
     if $weekly {
-        cron { "backup-dir-${name}-hourly":
+        cron { "backup-dir-${name}-weekly":
             ensure  => present,
             user    => 'backup',
             weekday => '2',
             hour    => '4',
             minute  => '0',
-            command => "/backups/bin/$script_name hourly",
+            command => "$script_name weekly",
             require => File[$script_name]
         }
     }
 
     if $monthly {
-        cron { "backup-dir-${name}-hourly":
+        cron { "backup-dir-${name}-monthly":
             ensure   => present,
             user     => 'backup',
             monthday => '4',
             hour     => '5',
             minute   => '0',
-            command  => "/backups/bin/$script_name hourly",
+            command  => "$script_name monthly",
             require  => File[$script_name]
         }
     }
