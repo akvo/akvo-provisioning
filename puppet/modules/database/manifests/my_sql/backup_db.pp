@@ -30,7 +30,7 @@ define database::my_sql::backup_db (
             ensure  => present,
             user    => 'backup',
             weekday => '*',
-            hour    => '3',
+            hour    => '2',
             minute  => '5',
             command => "/backups/bin/mysqlbackup-${dbname}.sh daily",
             require => Backups::Script["mysqlbackup-${dbname}"]
@@ -42,7 +42,7 @@ define database::my_sql::backup_db (
             ensure  => present,
             user    => 'backup',
             weekday => '2',
-            hour    => '3',
+            hour    => '2',
             minute  => '10',
             command => "/backups/bin/mysqlbackup-${dbname}.sh weekly",
             require => Backups::Script["mysqlbackup-${dbname}"]
@@ -54,7 +54,7 @@ define database::my_sql::backup_db (
             ensure   => present,
             user     => 'backup',
             monthday => '2',
-            hour     => '3',
+            hour     => '2',
             minute   => '20',
             command  => "/backups/bin/mysqlbackup-${dbname}.sh monthly",
             require  => Backups::Script["mysqlbackup-${dbname}"]
@@ -62,8 +62,8 @@ define database::my_sql::backup_db (
     }
 
 
-    backups::dir { "mysql":
-        path => "/backups/data/mysql"
-    }
+    #backups::dir { "mysql":
+    #    path => "/backups/data/mysql"
+    #}
 
 }
