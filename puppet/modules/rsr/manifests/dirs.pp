@@ -39,6 +39,8 @@ define rsr::dirs ( $approot, $username, $media_root ) {
     }
 
     # make sure that we back up the media!
-    backups::dir { "${media_root}/db": }
+    backups::dir { "rsr_media":
+        path => "${media_root}/db"
+    }
 
 }
