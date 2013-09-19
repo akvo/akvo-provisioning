@@ -1,6 +1,7 @@
 ---
 :backends:
   - yaml
+  - json
 :hierarchy:
   - nodespecific
   - %{::fqdn}
@@ -8,4 +9,7 @@
   - common
 
 :yaml:
+  :datadir: /puppet/hiera/
+
+:json:
   :datadir: /puppet/hiera/
