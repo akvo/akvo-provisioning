@@ -42,7 +42,7 @@ class graphite::install {
         command => '/bin/bash /opt/graphite/install.sh',
         user    => 'graphite',
         creates => '/opt/graphite/.installed',
-        require => File['/opt/graphite/install.sh']
+        require => [File['/opt/graphite/install.sh'], Package['virtualenv']]
     }
 
 }
