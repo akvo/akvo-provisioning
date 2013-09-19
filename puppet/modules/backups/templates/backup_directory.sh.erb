@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# ====
+# <%= @name %>
+# ====
+
+# This script will back up <%= @path %>
+
+# ====
+# Config
+# ====
+
+SOURCE=<%= @path%>
+PERIOD=$1
+RETAIN=<%= @retain_count %>
+NAME=<%= @name %>
+BASE_SCRIPT_DIR=<%= @backup_bin_dir %>
+
+
+# ====
+# Exec
+# ====
+
+<% @backup_servers.each_pair do |dest_name, details| %>
+BACKUP_TO_DEST=${BASE_SCRIPT_DIR}/backup_to_<%= "#{dest_name}" %>.sh
+$BACKUP_TO_DEST $SOURCE $PERIOD $RETAIN $NAME
+<% end %>

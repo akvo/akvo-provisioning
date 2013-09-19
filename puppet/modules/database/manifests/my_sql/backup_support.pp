@@ -16,32 +16,8 @@ class database::my_sql::backup_support {
         require    => Database_user["${backupuser}@localhost"],
     }
 
-    backups::dir { 'mysql': }
+    backups::dest_dir { 'mysql': }
 
-#  cron { 'mysql-backup':
-#    ensure  => $ensure,
-#    command => '/usr/local/sbin/mysqlbackup.sh',
-#    user    => 'root',
-#    hour    => 23,
-#    minute  => 5,
-#    require => File['mysqlbackup.sh'],
-#  }
-
-#  file { 'mysqlbackup.sh':
-#    ensure  => $ensure,
-#    path    => '/usr/local/sbin/mysqlbackup.sh',
-#    mode    => '0700',
-#    owner   => 'root',
-#    group   => 'root',
-#    content => template('mysql/mysqlbackup.sh.erb'),
-#  }
-
-#  file { 'mysqlbackupdir':
-#    ensure => 'directory',
-#    path   => $backupdir,
-#    mode   => '0700',
-#    owner  => 'root',
-#    group  => 'root',
-#  }
+    database::my_sql::backup_db { 'mysql': }
 
 }

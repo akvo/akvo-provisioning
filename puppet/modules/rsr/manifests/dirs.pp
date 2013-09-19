@@ -38,4 +38,7 @@ define rsr::dirs ( $approot, $username, $media_root ) {
         approot    => $approot
     }
 
+    # make sure that we back up the media!
+    backups::dir { "$media_root/db": }
+
 }
