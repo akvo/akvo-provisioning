@@ -6,28 +6,28 @@ class nginx {
     }
 
     service { 'nginx':
-        require => Package['nginx'],
-        ensure => running,
-        enable => true,
+        require    => Package['nginx'],
+        ensure     => running,
+        enable     => true,
         hasrestart => true,
     }
 
     file { '/etc/nginx/certs':
         ensure  => 'directory',
         owner   => 'www-data',
-        mode    => '700',
+        mode    => '0700',
         require => Package['nginx'],
     }
 
     file { '/etc/nginx/passwd':
         ensure  => 'directory',
         owner   => 'www-data',
-        mode    => '700',
+        mode    => '0700',
         require => Package['nginx'],
     }
 
     file { '/etc/nginx/sites-enabled/default':
-        ensure => absent,
+        ensure  => absent,
         require => Package['nginx'],
     }
 

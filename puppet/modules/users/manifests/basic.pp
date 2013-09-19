@@ -1,8 +1,8 @@
 define users::basic (
+    $ssh_key,
     $username = undef,
     $roles = [],
     $allow = [],
-    $ssh_key,
     $ssh_type = 'ssh-rsa',
     $htpasswd = undef
 ) {
@@ -39,26 +39,26 @@ define users::basic (
     }
 
     file { "/home/${usernameval}/":
-        ensure => directory,
-        owner => $usernameval,
-        group => $usernameval,
-        mode => '0750',
+        ensure  => directory,
+        owner   => $usernameval,
+        group   => $usernameval,
+        mode    => '0750',
         require => [ User[$usernameval], Group[$usernameval] ],
     }
 
     file { "/home/${usernameval}/.ssh":
-        ensure => directory,
-        owner => $usernameval,
-        group => $usernameval,
-        mode => '0700',
+        ensure  => directory,
+        owner   => $usernameval,
+        group   => $usernameval,
+        mode    => '0700',
         require => File["/home/${usernameval}/"],
     }
 
     file { "/home/${usernameval}/.ssh/authorized_keys":
-        ensure => present,
-        owner => $usernameval,
-        group => $usernameval,
-        mode => '0600',
+        ensure  => present,
+        owner   => $usernameval,
+        group   => $usernameval,
+        mode    => '0600',
         require => File["/home/${usernameval}/.ssh"],
     }
 

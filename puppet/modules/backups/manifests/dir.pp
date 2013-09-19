@@ -13,9 +13,9 @@ define backups::dir (
     $script_name = "${backup_bin_dir}/backup-${name}.sh"
 
     file { $script_name:
-        ensure => present,
-        owner => backup,
-        mode => '0700',
+        ensure  => present,
+        owner   => backup,
+        mode    => '0700',
         content => template('backups/backup_directory.sh.erb')
     }
 
@@ -26,7 +26,7 @@ define backups::dir (
             weekday => '*',
             hour    => '*',
             minute  => '30',
-            command => "/backups/bin/$script_name hourly",
+            command => "${script_name} hourly",
             require => File[$script_name]
         }
     }
@@ -38,7 +38,7 @@ define backups::dir (
             weekday => '*',
             hour    => '3',
             minute  => '0',
-            command => "$script_name daily",
+            command => "${script_name} daily",
             require => File[$script_name]
         }
     }
@@ -50,7 +50,7 @@ define backups::dir (
             weekday => '2',
             hour    => '4',
             minute  => '0',
-            command => "$script_name weekly",
+            command => "${script_name} weekly",
             require => File[$script_name]
         }
     }
@@ -62,7 +62,7 @@ define backups::dir (
             monthday => '4',
             hour     => '5',
             minute   => '0',
-            command  => "$script_name monthly",
+            command  => "${script_name} monthly",
             require  => File[$script_name]
         }
     }

@@ -9,7 +9,7 @@ define nginx::staticsite( $hostname, $rootdir,
     $ssl_key = "/etc/nginx/certs/${hostname}.key"
     $ssl_crt = "/etc/nginx/certs/${hostname}.crt"
 
-    file { "/etc/nginx/sites-enabled/$hostname":
+    file { "/etc/nginx/sites-enabled/${hostname}":
         ensure  => present,
         content => template('nginx/staticsite.erb'),
         require => Package['nginx'],

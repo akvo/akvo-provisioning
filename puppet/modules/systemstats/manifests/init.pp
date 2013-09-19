@@ -3,8 +3,8 @@ class systemstats {
 
     user { 'stats':
         ensure => present,
-        shell => '/bin/bash',
-        home => '/var/stats',
+        shell  => '/bin/bash',
+        home   => '/var/stats',
     }
 
     group { 'stats':
@@ -12,9 +12,9 @@ class systemstats {
     }
 
     file { ['/var/stats', '/var/stats/bin/']:
-        ensure => directory,
-        owner => 'stats',
-        mode => '755',
+        ensure  => directory,
+        owner   => 'stats',
+        mode    => '755',
         require => User['stats'],
     }
 

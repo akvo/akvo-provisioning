@@ -1,7 +1,7 @@
 
 class graphite {
 
-    notice("Graphite")
+    notice('Graphite')
 
     class { 'graphite::install': } ->
     class { 'graphite::config': } ~>

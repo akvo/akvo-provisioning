@@ -1,7 +1,7 @@
 
 class graphite::install {
 
-    debug("Installing Graphite")
+    debug('Installing Graphite')
 
     include pythonsupport::standard
     include pythonsupport::mysql
@@ -45,8 +45,8 @@ class graphite::install {
         require => [File['/opt/graphite/install.sh'], Package['virtualenv']]
     }
 
-    backups::dir { "graphite":
-        path => "/opt/graphite/storage/"
+    backups::dir { 'graphite':
+        path => '/opt/graphite/storage/'
     }
 
 }

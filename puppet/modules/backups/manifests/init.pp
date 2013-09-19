@@ -19,7 +19,7 @@ class backups {
         require => User['backup'],
     }
 
-    file { "/backups/ssh/backup_key":
+    file { '/backups/ssh/backup_key':
         ensure  => present,
         owner   => 'backup',
         group   => 'backup',
@@ -28,6 +28,6 @@ class backups {
         require => File['/backups/ssh']
     }
 
-    create_resources("backups::server", hiera('backup_servers'))
+    create_resources('backups::server', hiera('backup_servers'))
 
 }

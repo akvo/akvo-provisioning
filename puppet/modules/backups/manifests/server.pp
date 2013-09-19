@@ -1,9 +1,9 @@
 
 define backups::server (
-    $username, $remote_host, $port = 22, $dest_dir
+    $username, $remote_host, $dest_dir, $port = 22
 ) {
 
-    notice("Backup server: $name")
+    notice("Backup server: ${name}")
 
     file { "/backups/bin/backup_to_${name}.sh":
         ensure  => present,

@@ -1,14 +1,14 @@
 
 class graphite::config {
 
-    debug("Configuring Graphite")
+    debug('Configuring Graphite')
 
     file { '/opt/graphite/conf/storage-schemas.conf':
         ensure  => present,
         source  => 'puppet:///modules/graphite/storage-schemas.conf',
         owner   => 'graphite',
         group   => 'graphite',
-        mode    => '444',
+        mode    => '0444',
     }
 
     file { '/opt/graphite/conf/carbon.conf':
@@ -16,7 +16,7 @@ class graphite::config {
         source  => 'puppet:///modules/graphite/carbon.conf',
         owner   => 'graphite',
         group   => 'graphite',
-        mode    => '444',
+        mode    => '0444',
     }
 
     $secret_key = hiera('graphite_secret_key')
@@ -38,13 +38,13 @@ class graphite::config {
     }
 
 
-    named::service_location { "graphite":
+    named::service_location { 'graphite':
         ip => hiera('external_ip')
     }
 
     $base_domain = hiera('base_domain')
     nginx::proxy { "graphite.${base_domain}":
-        proxy_url          => "http://localhost:5115",
+        proxy_url          => 'http://localhost:5115',
     }
 
 }

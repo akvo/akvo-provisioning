@@ -9,8 +9,8 @@ class puppetcontrol {
     # it here just to make sure
     user { 'puppet':
         ensure => 'present',
-        home => '/puppet',
-        shell => '/bin/bash',
+        home   => '/puppet',
+        shell  => '/bin/bash',
     }
 
     group { 'puppet':
@@ -18,31 +18,31 @@ class puppetcontrol {
     }
 
     file { '/puppet/':
-       ensure => directory,
-       owner => 'puppet',
-       group => 'puppet',
-       mode => '0750',
-       require => [ User['puppet'], Group['puppet'] ]
+        ensure  => directory,
+        owner   => 'puppet',
+        group   => 'puppet',
+        mode    => '0750',
+        require => [ User['puppet'], Group['puppet'] ]
     }
 
 
     # insert the ssh info
     file { '/puppet/.ssh':
         ensure => directory,
-        owner => 'puppet',
-        group => 'puppet',
-        mode => '0700',
+        owner  => 'puppet',
+        group  => 'puppet',
+        mode   => '0700',
     }
 
     file { '/puppet/.ssh/authorized_keys':
-        ensure => present,
-        owner => 'puppet',
-        group => 'puppet',
-        mode => '0600',
+        ensure  => present,
+        owner   => 'puppet',
+        group   => 'puppet',
+        mode    => '0600',
         require => File['/puppet/.ssh']
     }
 
-    ssh_authorized_key { "puppet_key":
+    ssh_authorized_key { 'puppet_key':
         ensure  => present,
         key     => hiera('puppet_public_key'),
         type    => 'ssh-rsa',
@@ -52,18 +52,18 @@ class puppetcontrol {
 
 
     # add some additional helper scripts
-    file { "/puppet/bin/":
-        ensure  => "directory",
-        owner   => "puppet",
-        group   => "puppet",
-        mode    => "700",
+    file { '/puppet/bin/':
+        ensure  => 'directory',
+        owner   => 'puppet',
+        group   => 'puppet',
+        mode    => '0700',
         require => File['/puppet/'],
     }
 
-    file { "/puppet/bin/apply.sh":
-        ensure  => "present",
-        owner   => "puppet",
-        group   => "puppet",
+    file { '/puppet/bin/apply.sh':
+        ensure  => 'present',
+        owner   => 'puppet',
+        group   => 'puppet',
         mode    => '0700',
         source  => 'puppet:///modules/puppetcontrol/apply.sh',
         require => File['/puppet/bin/']
@@ -71,16 +71,16 @@ class puppetcontrol {
 
 
     # let the puppet user apply the puppet config
-    sudo::allow_command { "update_system_config":
-        user    => "puppet",
-        command => "/puppet/bin/apply.sh",
-        require => [User['puppet'], File["/puppet/bin/apply.sh"]],
+    sudo::allow_command { 'update_system_config':
+        user    => 'puppet',
+        command => '/puppet/bin/apply.sh',
+        require => [User['puppet'], File['/puppet/bin/apply.sh']],
     }
 
     # let the puppet user do package upgrades
-    sudo::allow_command { "puppet_apt-get":
-        user    => "puppet",
-        command => "/usr/bin/apt-get",
+    sudo::allow_command { 'puppet_apt-get':
+        user    => 'puppet',
+        command => '/usr/bin/apt-get',
         require => User['puppet'],
     }
 
@@ -90,7 +90,7 @@ class puppetcontrol {
         ensure  => present,
         owner   => 'root',
         group   => 'root',
-        mode    => '444',
+        mode    => '0444',
         source  => 'puppet:///modules/puppetcontrol/puppet.conf',
     }
 
@@ -109,7 +109,7 @@ class puppetcontrol {
         ensure  => present,
         owner   => 'root',
         group   => 'root',
-        mode    => '444',
+        mode    => '0444',
         source  => 'puppet:///modules/puppetcontrol/routes.yaml',
     }
 
@@ -128,7 +128,7 @@ class puppetcontrol {
         ensure => 'present',
         owner  => 'root',
         group  => 'root',
-        mode   => '444',
+        mode   => '0444',
         source => 'puppet:///modules/puppetcontrol/hiera.yaml',
     }
 
