@@ -1,7 +1,7 @@
 
 class mta {
 
-    package { 'postfix', 'mailutils':
+    package { ['postfix', 'mailutils']:
         ensure => installed,
     }
 
