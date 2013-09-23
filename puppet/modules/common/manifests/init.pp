@@ -47,5 +47,6 @@ class common {
     include common::repos
     include common::resolv
     include systemstats
+    include mta
 }
 
