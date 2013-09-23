@@ -14,7 +14,7 @@ class rsr::common {
     $port = 8000
 
     $rsr_secret_key = hiera('rsr_secret_key')
-    $additional_rsr_domains = hiera('rsr_additional_rsr_domains')
+    $additional_rsr_domains = hiera_array('rsr_additional_rsr_domains', [])
     $partner_site_domain = hiera('rsr_partner_site_domain')
 
     $rsr_hostnames = concat($additional_rsr_domains, ["rsr.${base_domain}"])
