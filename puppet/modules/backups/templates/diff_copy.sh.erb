@@ -37,18 +37,25 @@ ON_REMOTE="$SSH_COMMAND $USER@$HOST"
 # first clean up the old dirs
 $ON_REMOTE rm -rf $BASE_DEST_DIR/$PERIOD/$RETAIN_COUNT
 
-for i in $(seq $RETAIN_COUNT -1 2)
+for i in $(seq $RETAIN_COUNT -1 1)
 do
     PREV=`expr $i - 1`
     $ON_REMOTE mv $BASE_DEST_DIR/$PERIOD/$PREV $BASE_DEST_DIR/$PERIOD/$i
 done
 
-# hardlink to old files
-$ON_REMOTE cp -al $BASE_DEST_DIR/$PERIOD/0 $BASE_DEST_DIR/$PERIOD/1
+# hardlink to old files if possible
+if [ "$?" -eq "1" ]
+then
+    # this means that the previous 'mv' failed, ie, there is no current backup
+    # to link to
+    LINK_DEST=''
+else
+    LINK_DEST="--link-dest=../1"
+fi
 
 # Now copy!
 DEST_DIR=$BASE_DEST_DIR/$PERIOD/0
 $ON_REMOTE mkdir -p $DEST_DIR
 $ON_REMOTE ln -s $DEST_DIR $BASE_DEST_DIR/$PERIOD/current
 
-rsync --verbose --archive --delete --rsh "${SSH_COMMAND}" $SOURCE_DIR $USER@$HOST:$DEST_DIR/
+rsync --verbose --archive --delete ${LINK_DEST} --rsh "${SSH_COMMAND}" $SOURCE_DIR $USER@$HOST:$DEST_DIR/
