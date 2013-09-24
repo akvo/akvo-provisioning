@@ -34,6 +34,12 @@ define backups::dir (
     $backup_bin_dir = '/backups/bin/'
     $script_name = "${backup_bin_dir}/backup-${name}.sh"
 
+    if $plain_copy {
+        $script_prefix = 'plain'
+    } else {
+        $script_prefix = 'diff'
+    }
+
     file { $script_name:
         ensure  => present,
         owner   => backup,

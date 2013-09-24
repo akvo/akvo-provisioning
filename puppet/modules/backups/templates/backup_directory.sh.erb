@@ -24,7 +24,7 @@ NAME=<%= @name %>
 BASE_SCRIPT_DIR=<%= @backup_bin_dir %>
 SCRIPT_PREFIX=<%= @script_prefix %>
 
-SCRIPT_ARGS=$SOURCE $PERIOD $RETAIN $NAME
+SCRIPT_ARGS="$SOURCE $PERIOD $RETAIN $NAME"
 
 
 # ====
@@ -32,6 +32,6 @@ SCRIPT_ARGS=$SOURCE $PERIOD $RETAIN $NAME
 # ====
 
 <% @backup_servers.each_pair do |dest_name, details| %>
-BACKUP_TO_DEST=${BASE_SCRIPT_DIR}/${SCRIPT_PREFIX}_<%= "#{dest_name}" %>.sh
+BACKUP_TO_DEST=${BASE_SCRIPT_DIR}/${SCRIPT_PREFIX}_backup_to_<%= "#{dest_name}" %>.sh
 $BACKUP_TO_DEST $SCRIPT_ARGS
 <% end %>
