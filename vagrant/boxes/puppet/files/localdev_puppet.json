@@ -19,7 +19,7 @@
 
     "nodes": {
         "192.168.50.101": {
-            "roles": ["management", "puppetdb", "database", "monitor"],
+            "roles": ["management", "puppetdb", "database"],
             "order": 0
         },
         "192.168.50.102": {
@@ -35,18 +35,19 @@
         "graphite_secret_key": "RM30sUWohUac2B5tMTNLp5MsglRTRm5nrM590fXW",
         "graphite_database_password": "6527UEg9Jrhuj7CyWsREWuvAdUQ8tUs2t0CKl5fV",
 
+        "rsr_database_password": "lake",
+        "rsr_development": true,
+        "rsr_additional_rsr_domains": ["localakvo.org"],
+        "rsr_partner_site_domain": "localakvoapp.org",
+        "rsr_secret_key": "UAqweM2pNCQXDtwkDUy4f5Xe1rie2XrLxnV1j6aG",
+        "rsr_site_id": "1004",
+
         "backup_servers": {
             "local": {
                 "username": "testbackup",
                 "remote_host": "localhost",
                 "port": 22,
                 "dest_dir": "/home/testbackup/backups/"
-            },
-            "kakelbont": {
-                "username": "backup",
-                "remote_host": "89.233.254.200",
-                "port": 2255,
-                "dest_dir": "/mnt/baljan/cloudvps/backups/"
             }
         }
     }
