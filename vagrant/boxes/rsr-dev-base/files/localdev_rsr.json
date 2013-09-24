@@ -29,6 +29,7 @@
         "rsr_development": true,
         "rsr_additional_rsr_domains": ["localakvo.org"],
         "rsr_partner_site_domain": "localakvoapp.org",
-        "rsr_secret_key": "Jk1TTdSAL4rjgSFGht7pmH1CqGBJERmGFTRRSNCn"
+        "rsr_secret_key": "Jk1TTdSAL4rjgSFGht7pmH1CqGBJERmGFTRRSNCn",
+        "rsr_site_id": "1004"
     }
 }
