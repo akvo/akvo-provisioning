@@ -1,0 +1,38 @@
+#!/bin/bash
+
+# ======
+# CONFIG
+# ======
+
+HOST=<%= @remote_host %>
+PORT=<%= @port %>
+USER=<%= @username %>
+SOURCE_DIR=$1
+NAME=$2
+DEST_DIR=<%= @dest_dir %>/<%= @environment %>/<%= @hostname %>/$NAME
+SSH_COMMAND="ssh -p $PORT -i /backups/ssh/backup_key"
+
+
+# ==========
+# VALIDATION
+# ==========
+
+if [[ -z $SOURCE_DIR ]] || [[ -z $NAME ]]
+then
+    echo "Usage: backup_to_<%=@name%>.sh source name"
+    exit 1
+fi
+
+
+# ====
+# EXEC
+# ====
+
+echo "Backing up $SOURCE_DIR to <%=@name%>"
+
+ON_REMOTE="$SSH_COMMAND $USER@$HOST"
+
+# Now copy!
+$ON_REMOTE mkdir -p $DEST_DIR
+
+rsync --verbose --archive --delete --rsh "${SSH_COMMAND}" $SOURCE_DIR $USER@$HOST:$DEST_DIR/

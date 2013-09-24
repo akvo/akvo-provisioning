@@ -1,6 +1,5 @@
 define backups::script ($scriptname, $content) {
 
-
     file { "/backups/bin/${scriptname}":
         ensure  => present,
         mode    => '0700',

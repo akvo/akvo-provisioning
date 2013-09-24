@@ -1,11 +1,33 @@
 
+# Creating a resource of this type results in the contents of a directory being backed
+# up onto the list of backup servers.
+#
+# Params:
+#    $path
+#      - The path to the directory to back up
+#    $hourly, $daily, $weekly, $monthly
+#      - Whether the backups should be run hourly, daily etc. The default is not to run hourly
+#        but to run daily, weekly and monthly
+#    $retain_count
+#      - How many backups of each periodicity should be kept. The default is 4, meaning 4 daily,
+#        4 weekly and 4 monthly backups will be kept. This is ignored if using $plain_copy,
+#        as it is assumed that the source directory will be managed outside of this resource.
+#    $plain_copy
+#      - Whether to simply synchronise the backup folder on the current system with the
+#        target backup servers (true) or to use rsyncing/hardlinks to provide a 'diff-based'
+#        backup strategy where only the file changes need to be copied (false).
+#        Plain copy should be used when new files are created every day and old files are never
+#        changed, for example, daily MySQL dumps. For variable assets such as Wordpress PHP
+#        files or RSR media assets, plain copy should not be used. The default is 'false'.
+
 define backups::dir (
     $path,
     $hourly = false,
     $daily = true,
     $weekly = true,
     $monthly = true,
-    $retain_count = 4
+    $retain_count = 4,
+    $plain_copy = false,
 ) {
 
     $backup_servers = hiera_hash('backup_servers')

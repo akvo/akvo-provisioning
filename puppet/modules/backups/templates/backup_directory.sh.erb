@@ -11,10 +11,20 @@
 # ====
 
 SOURCE=<%= @path%>
-PERIOD=$1
-RETAIN=<%= @retain_count %>
+
+<% if @plain_copy %>
+    RETAIN=''
+    PERIOD=''
+<% else %>
+    PERIOD=$1
+    RETAIN=<%= @retain_count %>
+<% end %>
+
 NAME=<%= @name %>
 BASE_SCRIPT_DIR=<%= @backup_bin_dir %>
+SCRIPT_PREFIX=<%= @script_prefix %>
+
+SCRIPT_ARGS=$SOURCE $PERIOD $RETAIN $NAME
 
 
 # ====
@@ -22,6 +32,6 @@ BASE_SCRIPT_DIR=<%= @backup_bin_dir %>
 # ====
 
 <% @backup_servers.each_pair do |dest_name, details| %>
-BACKUP_TO_DEST=${BASE_SCRIPT_DIR}/backup_to_<%= "#{dest_name}" %>.sh
-$BACKUP_TO_DEST $SOURCE $PERIOD $RETAIN $NAME
+BACKUP_TO_DEST=${BASE_SCRIPT_DIR}/${SCRIPT_PREFIX}_<%= "#{dest_name}" %>.sh
+$BACKUP_TO_DEST $SCRIPT_ARGS
 <% end %>
