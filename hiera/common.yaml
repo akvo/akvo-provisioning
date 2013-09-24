@@ -3,9 +3,6 @@ roles :
 
 rsr_development: 'false'
 
-rsr_additional_rsr_domains: []
-rsr_partner_site_domain: "akvoapp.org"
-
 graphite_database_host: 'mysql'
 graphite_database_user: 'graphite'
 graphite_database_name: 'graphite'
