@@ -1,4 +1,19 @@
 
+<% if @rsr_debug %>
+    DEBUG=True
+    DONATION_TEST = False
+    DONATION_NOTIFICATION_EMAILS = False
+    REGISTRATION_NOTIFICATION_EMAILS = False
+    PAYPAL_SANDBOX_GATEWAY="test_1348582750_biz@akvo.org"
+<% else %>
+    DEBUG = False
+    DONATION_TEST = False
+    MOLLIE_TEST = False
+    PAYPAL_TEST = False
+    DONATION_NOTIFICATION_EMAILS = True
+    REGISTRATION_NOTIFICATION_EMAILS = True
+<% end %>
+
 LOG_FILE_PATH='<%= @logdir %>'
 
 SECRET_KEY='<%= @rsr_secret_key %>'
@@ -19,8 +34,6 @@ DATABASES = {
 }
 
 MEDIA_ROOT='<%= @media_root %>'
-
-DEBUG=True
 
 RSR_SITE_REGEXPS = [
     <% @rsr_hostnames.each do |rsr_hostname| -%>

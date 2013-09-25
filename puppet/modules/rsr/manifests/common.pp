@@ -13,6 +13,7 @@ class rsr::common {
     $logdir = "${approot}/logs/"
     $port = 8000
     $site_id = hiera('rsr_site_id')
+    $rsr_debug = hiera('rsr_debug')
 
     $rsr_secret_key = hiera('rsr_secret_key')
     $additional_rsr_domains = hiera_array('rsr_additional_rsr_domains', [])
