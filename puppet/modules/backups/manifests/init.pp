@@ -11,7 +11,7 @@ class backups {
         ensure => present,
     }
 
-    file { ['/backups', '/backups/bin', '/backups/data', '/backups/ssh']:
+    file { ['/backups', '/backups/bin', '/backups/data', '/backups/ssh', '/backups/logs']:
         ensure  => directory,
         owner   => 'backup',
         group   => 'backup',

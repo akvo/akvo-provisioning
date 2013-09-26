@@ -32,6 +32,7 @@ define backups::dir (
 
     $backup_servers = hiera_hash('backup_servers')
     $backup_bin_dir = '/backups/bin/'
+    $backup_logs_dir = '/backups/logs/'
     $script_name = "${backup_bin_dir}/backup-${name}.sh"
 
     if $plain_copy {

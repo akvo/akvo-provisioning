@@ -56,6 +56,7 @@ fi
 # Now copy!
 DEST_DIR=$BASE_DEST_DIR/$PERIOD/0
 $ON_REMOTE mkdir -p $DEST_DIR
+$ON_REMOTE rm -f $BASE_DEST_DIR/$PERIOD/current
 $ON_REMOTE ln -s $DEST_DIR $BASE_DEST_DIR/$PERIOD/current
 
 rsync --verbose --archive --delete ${LINK_DEST} --rsh "${SSH_COMMAND}" $SOURCE_DIR $USER@$HOST:$DEST_DIR/

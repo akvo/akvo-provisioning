@@ -23,9 +23,14 @@ SOURCE=<%= @path%>
 NAME=<%= @name %>
 BASE_SCRIPT_DIR=<%= @backup_bin_dir %>
 SCRIPT_PREFIX=<%= @script_prefix %>
+TIMESTAMP=`date +%Y%m%d-%H%M%S`
+LOGFILE=<%= @backup_logs_dir %>/backup-<%= @name %>-$TIMESTAMP.log
 
 SCRIPT_ARGS="$SOURCE $PERIOD $RETAIN $NAME"
 
+echo "Performing backup of <%= @path %>" >> $LOGFILE
+echo "Script arguments: ${SCRIPT_ARGS}" >> $LOGFILE
+echo >> $LOGFILE
 
 # ====
 # Exec
@@ -33,5 +38,8 @@ SCRIPT_ARGS="$SOURCE $PERIOD $RETAIN $NAME"
 
 <% @backup_servers.each_pair do |dest_name, details| %>
 BACKUP_TO_DEST=${BASE_SCRIPT_DIR}/${SCRIPT_PREFIX}_backup_to_<%= "#{dest_name}" %>.sh
-$BACKUP_TO_DEST $SCRIPT_ARGS
+echo "Backup script: ${BACKUP_TO_DEST}" >> $LOGFILE
+echo >> $LOGFILE
+
+$BACKUP_TO_DEST $SCRIPT_ARGS >> $LOGFILE 2>&1
 <% end %>
