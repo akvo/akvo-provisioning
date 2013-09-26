@@ -1,4 +1,8 @@
-define rsr::user ( $username, $approot ) {
+class rsr::user {
+
+    include rsr::params
+    $username = $rsr::params::username
+    $approot = $rsr::params::approot
 
     # create our user
     user { $username:
