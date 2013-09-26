@@ -9,6 +9,4 @@ class rsr (
     class { 'rsr::service': } ->
     Class['rsr']
 
-
-
 }

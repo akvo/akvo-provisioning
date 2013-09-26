@@ -19,7 +19,7 @@ class rsr::config {
         proxy_url          => "http://localhost:${rsr::params::port}",
         static_dirs        => {
             "/media/admin/" => "${rsr::params::approot}/venv/lib/python2.7/site-packages/django/contrib/admin/static/admin/",
-            "/media/"       => $media_root,
+            "/media/"       => $rsr::params::media_root,
         },
     }
 
