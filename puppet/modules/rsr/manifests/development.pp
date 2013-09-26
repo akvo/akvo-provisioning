@@ -1,9 +1,8 @@
 
 class rsr::development ( $enabled = false ) {
 
-    include rsr::params
-
     if ( $enabled ) {
+        include rsr::params
         $approot = $rsr::params::approot
 
         # add the watcher script
