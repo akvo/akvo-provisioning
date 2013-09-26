@@ -3,7 +3,8 @@ define nginx::proxy( $server_name = undef,
                      $proxy_url,
                      $htpasswd = undef,
                      $ssl = false,
-                     $static_dirs = undef ) {
+                     $static_dirs = undef,
+                     $extra_nginx_config = undef ) {
 
   include nginx
 

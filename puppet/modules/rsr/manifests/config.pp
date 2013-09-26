@@ -21,6 +21,7 @@ class rsr::config {
             "/media/admin/" => "${rsr::params::approot}/venv/lib/python2.7/site-packages/django/contrib/admin/static/admin/",
             "/media/"       => $rsr::params::media_root,
         },
+        extra_nginx_config  => "client_max_body_size 3m;",
     }
 
 

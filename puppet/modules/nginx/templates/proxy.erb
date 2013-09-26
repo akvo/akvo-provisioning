@@ -43,6 +43,8 @@ server {
         <% end -%>
     }
 
+    <%= @extra_nginx_config %>
+
     <% if @static_dirs %>
         <% @static_dirs.each_pair do |location, alias_val| %>
             location <%= location %> {
