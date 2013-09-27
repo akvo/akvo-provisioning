@@ -1,6 +1,6 @@
 
 define backups::server (
-    $username, $remote_host, $dest_dir, $port = 22
+    $username, $remote_host, $dest_dir, $host_key, $port = 22
 ) {
 
     notice("Backup server: ${name}")
@@ -20,4 +20,12 @@ define backups::server (
         content => template('backups/plain_copy.sh.erb'),
         require => File['/backups/bin']
     }
+
+    ssh_key { "backup-server-${name}":
+        ensure => present,
+        name   => $remote_host,
+        type   => 'rsa',
+        key    => $host_key
+    }
+
 }
