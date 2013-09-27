@@ -21,7 +21,7 @@ define backups::server (
         require => File['/backups/bin']
     }
 
-    ssh_key { "backup-server-${name}":
+    sshkey { "backup-server-${name}":
         ensure => present,
         name   => $remote_host,
         type   => 'rsa',
