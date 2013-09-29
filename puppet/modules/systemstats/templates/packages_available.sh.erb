@@ -1,12 +1,10 @@
 #!/bin/bash
 
-HOSTNAME=`hostname -s`
-
 COUNTS=`/usr/lib/update-notifier/update-motd-updates-available | sed '/^$/d' | sed 's/[^0-9]//g'`
 read -ra AVAILABLE <<< $COUNTS
 
 TOTAL="${AVAILABLE[0]}"
 SECURITY="${AVAILABLE[1]}"
 
-echo "systems.<%=@environment%>.$HOSTNAME.packages.total:${TOTAL}|g" | nc -w 1 -u <%=@statsd_host%> 8125
-echo "systems.<%=@environment%>.$HOSTNAME.packages.security:${SECURITY}|g" | nc -w 1 -u <%=@statsd_host%> 8125
+sendstat packages.total $TOTAL g
+sendstat packages.security $SECURITY g

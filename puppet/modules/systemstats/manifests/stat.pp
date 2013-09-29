@@ -1,8 +1,6 @@
 
 define systemstats::stat ( $user = 'stats' ) {
 
-    $statsd_host = hiera('statsd_host')
-
     file { "/var/stats/bin/${name}.sh":
         ensure  => present,
         owner   => $user,
