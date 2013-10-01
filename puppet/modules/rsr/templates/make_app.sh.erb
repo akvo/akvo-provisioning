@@ -17,6 +17,10 @@ cd $ORIG_DIR
 
 ln -s <%= @approot %>/local_settings.conf $ROOT/code/akvo/settings/65_puppet.conf
 
+echo "DEPLOY_COMMIT_ID = '`git rev-parse HEAD`'" > $ROOT/code/akvo/settings/66_deploy_info.conf
+echo "DEPLOY_BRANCH = '$BRANCH'" >> $ROOT/code/akvo/settings/66_deploy_info.conf
+echo "DEPLOY_TAG = '`git tag | tail -1`'" >> $ROOT/code/akvo/settings/66_deploy_info.conf
+
 PIP=$ROOT/venv/bin/pip
 
 $PIP install -r $ROOT/code/scripts/deployment/pip/requirements/2_rsr.txt
