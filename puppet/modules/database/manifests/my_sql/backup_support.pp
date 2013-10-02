@@ -13,6 +13,7 @@ class database::my_sql::backup_support {
 
     mysql_grant { "${backupuser}@localhost":
         user       => $backupuser,
+        table      => '*.*',
         privileges => [ 'Select_priv', 'Reload_priv', 'Lock_tables_priv', 'Show_view_priv' ],
         require    => Mysql_user["${backupuser}@localhost"],
     }
