@@ -2,7 +2,7 @@
 define backups::server (
     $username, $password,
     $remote_host, $dest_dir, $host_key,
-    $host_key_type = 'rsa', $port = 22
+    $host_key_type = 'rsa', $port = 22, $use_sftp = false
 ) {
 
     notice("Backup server: ${name}")

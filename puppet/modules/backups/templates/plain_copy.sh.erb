@@ -30,9 +30,21 @@ fi
 
 echo "Backing up $SOURCE_DIR to <%=@name%>"
 
-ON_REMOTE="$SSH_COMMAND $USER@$HOST"
 
 # Now copy!
+<% if @use_sftp %>
+sftp -b - $USER@$HOST <<EOF >>/dev/null 2>&1
+mkdir <%= @dest_dir %>
+cd <%= @dest_dir %>
+mkdir <%= @environment %>
+cd <%= @environment %>
+mkdir <%= @hostname %>
+cd <%= @hostname %>
+mkdir $NAME
+EOF
+<% else %>
+ON_REMOTE="$SSH_COMMAND $USER@$HOST"
 $ON_REMOTE mkdir -p $DEST_DIR
+<% endif %>
 
 rsync --verbose --archive --delete --rsh "${SSH_COMMAND}" $SOURCE_DIR $USER@$HOST:$DEST_DIR/
