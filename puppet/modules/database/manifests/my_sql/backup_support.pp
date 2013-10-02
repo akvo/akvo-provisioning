@@ -5,7 +5,6 @@ class database::my_sql::backup_support {
     $backuppassword = hiera('mysql_backup_password')
 
     mysql_user { "${backupuser}@localhost":
-        ensure        => present,
         password_hash => mysql_password($backuppassword),
         provider      => 'mysql',
         require       => Class['mysql::server'],
