@@ -20,12 +20,22 @@
     "nodes": {
         "192.168.50.101": {
             "roles": ["management", "puppetdb", "database"],
-            "order": 0
+            "order": 0,
+            "facts": {
+                "backup_servers": {
+                    "local2": {
+                        "username": "testbackup2",
+                        "remote_host": "localhost",
+                        "port": 22,
+                        "dest_dir": "/home/testbackup2/backups/"
+                    }
+                }
+            }
         },
-        "192.168.50.102": {
+        /*"192.168.50.102": {
             "roles": [],
             "order": 10
-        }
+        }*/
     },
 
     "facts": {

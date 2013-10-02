@@ -311,11 +311,10 @@ def create_hiera_facts(use_sudo=False):
 
     hostname = run('hostname -f').strip()
     with tempfile.NamedTemporaryFile() as f:
-        json.dump(node_facts, f)
+        json.dump(node_facts, f, indent=2)
         f.flush()
         filepath = '/puppet/hiera/%s.json' % hostname
         put(f.name, filepath, use_sudo=use_sudo)
-        run_method('chown puppet.puppet %s' % filepath)
 
 
 def hiera_add_external_ip():
