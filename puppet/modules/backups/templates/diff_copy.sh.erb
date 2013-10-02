@@ -56,7 +56,7 @@ fi
 # Now copy!
 DEST_DIR=$BASE_DEST_DIR/$PERIOD/0
 <% if @use_sftp %>
-sftp -b - $USER@$HOST <<EOF >>/dev/null 2>&1
+sftp -i /backups/ssh/backup_key -P $PORT -b - $USER@$HOST <<EOF >>/dev/null 2>&1
 mkdir <%= @dest_dir %>
 cd <%= @dest_dir %>
 mkdir <%= @environment %>
@@ -64,6 +64,10 @@ cd <%= @environment %>
 mkdir <%= @hostname %>
 cd <%= @hostname %>
 mkdir $NAME
+cd $NAME
+mkdir $PERIOD
+cd $PERIOD
+mkdir 0
 EOF
 <% else %>
 $ON_REMOTE mkdir -p $DEST_DIR

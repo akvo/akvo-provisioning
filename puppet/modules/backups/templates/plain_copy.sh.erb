@@ -33,7 +33,7 @@ echo "Backing up $SOURCE_DIR to <%=@name%>"
 
 # Now copy!
 <% if @use_sftp %>
-sftp -b - $USER@$HOST <<EOF >>/dev/null 2>&1
+sftp -i /backups/ssh/backup_key -P $PORT -b - $USER@$HOST <<EOF >>/dev/null 2>&1
 mkdir <%= @dest_dir %>
 cd <%= @dest_dir %>
 mkdir <%= @environment %>
