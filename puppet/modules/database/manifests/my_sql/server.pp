@@ -1,12 +1,23 @@
 class database::my_sql::server {
 
     class { 'mysql::server':
-        # for possible values in this hash, see
-        # https://github.com/puppetlabs/puppetlabs-mysql/blob/master/manifests/config.pp#L5
-        config_hash => {
-            'root_password'  => hiera('mysql_root_password'),
-            'bind_address'   => hiera('external_ip'),
-            'character_set'  => 'utf8',
+        root_password    => hiera('mysql_root_password'),
+        override_options => {
+            # for possible values in this hash, see
+            # https://github.com/puppetlabs/puppetlabs-mysql/blob/master/manifests/init.pp
+            client => {
+                'default-character-set' => 'utf8'
+            },
+            mysql => {
+                'default-character-set' => 'utf8'
+            },
+            mysqld => {
+                bind_address           => hiera('external_ip'),
+                default_storage_engine => 'MyISAM',
+                'collation-server'     => 'utf8_unicode_ci',
+                'character-set-server' => 'utf8',
+                'init-connect'         => 'SET NAMES utf8'
+            }
         }
     }
 
