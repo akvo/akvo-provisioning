@@ -1,6 +1,8 @@
 
 define backups::server (
-    $username, $remote_host, $dest_dir, $host_key, $port = 22
+    $username, $password,
+    $remote_host, $dest_dir, $host_key,
+    $host_key_type = 'rsa', $port = 22
 ) {
 
     notice("Backup server: ${name}")
@@ -24,7 +26,7 @@ define backups::server (
     sshkey { "backup-server-${name}":
         ensure => present,
         name   => $remote_host,
-        type   => 'rsa',
+        type   => $host_key_type,
         key    => $host_key
     }
 
