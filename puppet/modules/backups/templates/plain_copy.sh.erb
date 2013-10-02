@@ -45,6 +45,6 @@ EOF
 <% else %>
 ON_REMOTE="$SSH_COMMAND $USER@$HOST"
 $ON_REMOTE mkdir -p $DEST_DIR
-<% endif %>
+<% end %>
 
 rsync --verbose --archive --delete --rsh "${SSH_COMMAND}" $SOURCE_DIR $USER@$HOST:$DEST_DIR/
