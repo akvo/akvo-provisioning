@@ -22,20 +22,8 @@
             "roles": ["management", "puppetdb", "database"],
             "order": 0,
             "facts": {
-                "backup_servers": {
-                    "local2": {
-                        "username": "testbackup2",
-                        "remote_host": "localhost",
-                        "port": 22,
-                        "dest_dir": "/home/testbackup2/backups/"
-                    }
-                }
             }
-        },
-        /*"192.168.50.102": {
-            "roles": [],
-            "order": 10
-        }*/
+        }
     },
 
     "facts": {
@@ -53,11 +41,14 @@
         "rsr_site_id": "1004",
 
         "backup_servers": {
-            "local": {
-                "username": "testbackup",
-                "remote_host": "localhost",
-                "port": 22,
-                "dest_dir": "/home/testbackup/backups/"
+            "cloudvps": {
+                "username": "vps36545",
+                "password": "nnweDRVCk3VOXa4j",
+                "remote_host": "backup-024.cloudvps.com",
+                "dest_dir": "/home/vps36545/backups",
+                "host_key": "AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBKweIHsOoVL8eUpMd94rnK/6lgiB8C2AhZ/61cwf5SpJp/b5NY8Pr6nmZXPp/nRMfiYBn8o6VJCWvIPSt/x7+pc=",
+                "host_key_type": "ecdsa-sha2-nistp256",
+                "use_sftp": true
             }
         }
     }

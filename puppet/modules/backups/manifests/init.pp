@@ -11,6 +11,10 @@ class backups {
         ensure => present,
     }
 
+    package { 'lftp':
+        ensure => 'present'
+    }
+
     file { ['/backups', '/backups/bin', '/backups/data', '/backups/ssh', '/backups/logs']:
         ensure  => directory,
         owner   => 'backup',

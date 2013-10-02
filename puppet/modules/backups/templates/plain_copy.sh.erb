@@ -30,21 +30,17 @@ fi
 
 echo "Backing up $SOURCE_DIR to <%=@name%>"
 
+function on_remote {
+    CMD=$@
+<% if @use_sftp %>
+    lftp -u $USER,nothing sftp://$HOST -e "set sftp:connect-program $SSH_COMMAND; $CMD; quit"
+<% else %>
+    $SSH_COMMAND $USER@$HOST $CMD
+<% end %>
+}
+
 
 # Now copy!
-<% if @use_sftp %>
-sftp -i /backups/ssh/backup_key -P $PORT -b - $USER@$HOST <<EOF >>/dev/null 2>&1
-mkdir <%= @dest_dir %>
-cd <%= @dest_dir %>
-mkdir <%= @environment %>
-cd <%= @environment %>
-mkdir <%= @hostname %>
-cd <%= @hostname %>
-mkdir $NAME
-EOF
-<% else %>
-ON_REMOTE="$SSH_COMMAND $USER@$HOST"
-$ON_REMOTE mkdir -p $DEST_DIR
-<% end %>
+on_remote mkdir -p $DEST_DIR
 
 rsync --verbose --archive --delete --rsh "${SSH_COMMAND}" $SOURCE_DIR $USER@$HOST:$DEST_DIR/

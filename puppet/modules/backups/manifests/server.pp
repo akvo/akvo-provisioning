@@ -1,7 +1,8 @@
 
 define backups::server (
-    $username, $password,
+    $username,
     $remote_host, $dest_dir, $host_key,
+    $password = undef,
     $host_key_type = 'rsa', $port = 22, $use_sftp = false
 ) {
 

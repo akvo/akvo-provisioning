@@ -32,15 +32,22 @@ fi
 
 echo "Backing up $SOURCE_DIR to <%=@name%>"
 
-ON_REMOTE="$SSH_COMMAND $USER@$HOST"
+function on_remote {
+    CMD=$@
+<% if @use_sftp %>
+    lftp -u $USER,nothing sftp://$HOST -e "set sftp:connect-program $SSH_COMMAND; $CMD; quit"
+<% else %>
+    $SSH_COMMAND $USER@$HOST $CMD
+<% end %>
+}
 
 # first clean up the old dirs
-$ON_REMOTE rm -rf $BASE_DEST_DIR/$PERIOD/$RETAIN_COUNT
+on_remote rm -rf $BASE_DEST_DIR/$PERIOD/$RETAIN_COUNT
 
 for i in $(seq $RETAIN_COUNT -1 1)
 do
     PREV=`expr $i - 1`
-    $ON_REMOTE mv $BASE_DEST_DIR/$PERIOD/$PREV $BASE_DEST_DIR/$PERIOD/$i
+    on_remote mv $BASE_DEST_DIR/$PERIOD/$PREV $BASE_DEST_DIR/$PERIOD/$i
 done
 
 # hardlink to old files if possible
@@ -55,24 +62,9 @@ fi
 
 # Now copy!
 DEST_DIR=$BASE_DEST_DIR/$PERIOD/0
-<% if @use_sftp %>
-sftp -i /backups/ssh/backup_key -P $PORT -b - $USER@$HOST <<EOF >>/dev/null 2>&1
-mkdir <%= @dest_dir %>
-cd <%= @dest_dir %>
-mkdir <%= @environment %>
-cd <%= @environment %>
-mkdir <%= @hostname %>
-cd <%= @hostname %>
-mkdir $NAME
-cd $NAME
-mkdir $PERIOD
-cd $PERIOD
-mkdir 0
-EOF
-<% else %>
-$ON_REMOTE mkdir -p $DEST_DIR
-$ON_REMOTE rm -f $BASE_DEST_DIR/$PERIOD/current
-$ON_REMOTE ln -s $DEST_DIR $BASE_DEST_DIR/$PERIOD/current
-<% end %>
+
+on_remote mkdir -p $DEST_DIR
+on_remote rm -f $BASE_DEST_DIR/$PERIOD/current
+on_remote ln -s $DEST_DIR $BASE_DEST_DIR/$PERIOD/current
 
 rsync --verbose --archive --delete ${LINK_DEST} --rsh "${SSH_COMMAND}" $SOURCE_DIR $USER@$HOST:$DEST_DIR/
