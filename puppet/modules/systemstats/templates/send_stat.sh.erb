@@ -1,0 +1,13 @@
+#!/bin/bash
+
+HOSTNAME=`hostname -s`
+
+STAT_NAME="systems.<%=@environment%>.${HOSTNAME}.$1"
+STAT_VALUE=$2
+STAT_TYPE=$3
+
+STAT="${STAT_NAME}:${STAT_VALUE}|${STAT_TYPE}"
+
+SEND='nc -q 0 -w 1 -u <%=@statsd_host%> 8125'
+
+echo $STAT | $SEND

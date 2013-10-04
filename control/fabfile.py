@@ -133,6 +133,25 @@ def echo_test():
     sudo('echo test')
 
 
+def put_backup_key_on_cloudvps():
+    node_config = _get_node_config('facts', default={})
+    env_config = env.config.get('facts', {})
+
+    for config in (node_config, env_config):
+        backup_servers = config.get('backup_servers', None)
+        if backup_servers is None:
+            continue
+        cloudvps_config = backup_servers.get('cloudvps', None)
+        if cloudvps_config is None:
+            continue
+
+        env.user = cloudvps_config['username']
+        env.password = cloudvps_config['password']
+        env.host_string = cloudvps_config['remote_host']
+        backup_key = env.config.get('backup_public_key', _get_config_file('backup.pub'))
+        put(backup_key, '.ssh/authorized_keys')
+
+
 def set_hostname():
     nodename = _get_node_config('nodename', None)
     if nodename is None:
@@ -311,11 +330,10 @@ def create_hiera_facts(use_sudo=False):
 
     hostname = run('hostname -f').strip()
     with tempfile.NamedTemporaryFile() as f:
-        json.dump(node_facts, f)
+        json.dump(node_facts, f, indent=2)
         f.flush()
         filepath = '/puppet/hiera/%s.json' % hostname
         put(f.name, filepath, use_sudo=use_sudo)
-        run_method('chown puppet.puppet %s' % filepath)
 
 
 def hiera_add_external_ip():

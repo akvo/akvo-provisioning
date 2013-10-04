@@ -20,11 +20,9 @@
     "nodes": {
         "192.168.50.101": {
             "roles": ["management", "puppetdb", "database"],
-            "order": 0
-        },
-        "192.168.50.102": {
-            "roles": [],
-            "order": 10
+            "order": 0,
+            "facts": {
+            }
         }
     },
 
@@ -43,12 +41,6 @@
         "rsr_site_id": "1004",
 
         "backup_servers": {
-            "local": {
-                "username": "testbackup",
-                "remote_host": "localhost",
-                "port": 22,
-                "dest_dir": "/home/testbackup/backups/"
-            }
         }
     }
 }

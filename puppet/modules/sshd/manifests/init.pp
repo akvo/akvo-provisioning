@@ -10,7 +10,7 @@ class sshd {
         owner   => 'root',
         group   => 'root',
         source  => 'puppet:///modules/sshd/sshd_config',
-        require => Package['openssh-server']
+        require => Package['openssh-server'],
     }
 
     file { '/etc/ssh/ssh_known_hosts':
