@@ -115,7 +115,7 @@ class rsr::install {
         require => File[$approot]
     }
 
-    cronjob { 'cleanup_stale_invoices':
+    cron { 'cleanup_stale_invoices':
       command => "bash -c ${approot}/cleanup_stale_invoices.sh",
       user    => 'rsr',
       minute  => '*/15'
