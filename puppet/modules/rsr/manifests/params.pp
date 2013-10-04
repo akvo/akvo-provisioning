@@ -11,7 +11,8 @@ class rsr::params {
     $logdir = "${approot}/logs/"
     $port = 8000
     $site_id = hiera('rsr_site_id')
-    $rsr_debug = hiera('rsr_debug', false  )
+    $rsr_debug = hiera('rsr_debug', false)
+    $main_domain = hiera('rsr_main_domain', "rsr.${base_domain}")
 
     $rsr_secret_key = hiera('rsr_secret_key')
     $additional_rsr_domains = hiera_array('rsr_additional_rsr_domains', [])

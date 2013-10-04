@@ -46,6 +46,8 @@ PARTNER_SITE_REGEXPS = [
     '^.*\.<%= @partner_site_domain.gsub('.', '\\.') %>$',
 ]
 
+DOMAIN_NAME = '<%= @main_domain %>'
+
 <% if @use_graphite %>
 
 STATSD_HOST = '<%= @statsd_host %>'
