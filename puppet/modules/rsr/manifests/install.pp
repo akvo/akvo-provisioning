@@ -105,6 +105,22 @@ class rsr::install {
         require => File[$approot]
     }
 
+    # include the script for cleaning up stale invoices
+    file { "${approot}/cleanup_stale_invoices.sh":
+        ensure  => present,
+        content => template('rsr/cleanup_stale_invoices.sh.erb'),
+        owner   => $username,
+        group   => $username,
+        mode    => '0744',
+        require => File[$approot]
+    }
+
+    cronjob { 'cleanup_stale_invoices':
+      command => "bash -c ${approot}/cleanup_stale_invoices.sh",
+      user    => 'rsr',
+      minute  => '*/15'
+    }
+
 
     # link in our media which is kind of static
     rsr::staticcontent { [ 'akvo', 'core', 'widgets', 'ps_widgets', 'ps_widgets_old', 'partner_sites' ]:
