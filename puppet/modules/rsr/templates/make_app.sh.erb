@@ -16,11 +16,12 @@ git checkout $BRANCH
 cd $ORIG_DIR
 
 ln -s <%= @approot %>/local_settings.conf $ROOT/code/akvo/settings/65_puppet.conf
-
+export GIT_DIR=$ROOT/code/.git
 echo "DEPLOY_COMMIT_FULL_ID = '`git rev-parse HEAD`'" > $ROOT/code/akvo/settings/66_deploy_info.conf
 echo "DEPLOY_COMMIT_ID = '`git rev-parse --short HEAD`'" >> $ROOT/code/akvo/settings/66_deploy_info.conf
 echo "DEPLOY_BRANCH = '$BRANCH'" >> $ROOT/code/akvo/settings/66_deploy_info.conf
 echo "DEPLOY_TAG = '`git tag | tail -1`'" >> $ROOT/code/akvo/settings/66_deploy_info.conf
+unset GIT_DIR # otherwise it will interfere with the pip+git requirements
 
 PIP=$ROOT/venv/bin/pip
 

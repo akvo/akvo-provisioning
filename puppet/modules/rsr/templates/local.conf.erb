@@ -1,8 +1,8 @@
 
 <% if @rsr_debug %>
-DEBUG=True
-DONATION_TEST = False
-DONATION_NOTIFICATION_EMAILS = False
+DEBUG = True
+DONATION_TEST = True
+DONATION_NOTIFICATION_EMAILS = True
 REGISTRATION_NOTIFICATION_EMAILS = False
 PAYPAL_SANDBOX_GATEWAY="test_1348582750_biz@akvo.org"
 <% else %>
@@ -45,6 +45,9 @@ PARTNER_SITE_REGEXPS = [
     '^.*\.<%= @base_domain.gsub('.', '\\.') %>$',
     '^.*\.<%= @partner_site_domain.gsub('.', '\\.') %>$',
 ]
+
+DOMAIN_NAME = '<%= @main_domain %>'
+APP_DOMAIN_NAME = '<%= @partner_site_domain %>'
 
 <% if @use_graphite %>
 

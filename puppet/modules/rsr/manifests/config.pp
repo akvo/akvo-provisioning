@@ -41,6 +41,8 @@ class rsr::config {
         $statsd_prefix = "rsr.${::environment}"
     }
 
+    $main_domain = $rsr::params::main_domain
+    $partner_site_domain = $rsr::params::partner_site_domain
     file { "${rsr::params::approot}/local_settings.conf":
         ensure   => present,
         owner    => $rsr::params::username,
