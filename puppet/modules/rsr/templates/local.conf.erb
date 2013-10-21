@@ -46,8 +46,8 @@ PARTNER_SITE_REGEXPS = [
     '^.*\.<%= @partner_site_domain.gsub('.', '\\.') %>$',
 ]
 
-DOMAIN_NAME = '<%= @main_domain %>'
-APP_DOMAIN_NAME = '<%= @partner_site_domain %>'
+RSR_DOMAIN = '<%= @main_domain %>'
+AKVOAPP_DOMAIN = '<%= @partner_site_domain %>'
 
 <% if @use_graphite %>
 
