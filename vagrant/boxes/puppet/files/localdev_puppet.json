@@ -29,7 +29,10 @@
     "facts": {
         "mysql_root_password": "flibble",
         "mysql_backup_password": "flibble",
+        "mysql_reports_password": "flibble",
+
         "statsd_host": "localhost",
+        
         "graphite_secret_key": "RM30sUWohUac2B5tMTNLp5MsglRTRm5nrM590fXW",
         "graphite_database_password": "6527UEg9Jrhuj7CyWsREWuvAdUQ8tUs2t0CKl5fV",
 

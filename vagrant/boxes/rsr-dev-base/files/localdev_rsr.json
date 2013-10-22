@@ -24,6 +24,7 @@
     "facts": {
         "mysql_root_password": "lake",
         "mysql_backup_password": "cake",
+        "mysql_reports_password": "bake",
 
         "rsr_database_password": "lake",
         "rsr_development": true,
