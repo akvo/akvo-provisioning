@@ -25,7 +25,7 @@ define database::my_sql::db_exported (
             user       => 'reports@%',
             table      => "${dbname}.*",
             privileges => [ 'SELECT', 'SHOW VIEW' ],
-            require    => Mysql_user['reports@localhost'],
+            require    => Mysql_user['reports@%'],
         }
     }
 
