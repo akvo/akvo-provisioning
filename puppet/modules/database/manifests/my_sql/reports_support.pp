@@ -1,5 +1,5 @@
 
-class database::my_sql::reports_support($dbname) {
+class database::my_sql::reports_support {
 
     $reports_password = hiera('mysql_reports_password')
 
