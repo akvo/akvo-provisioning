@@ -21,7 +21,7 @@ define database::my_sql::db_exported (
 
     if ($reportable) {
         mysql_grant { 'reports@localhost':
-            user       => $backupuser,
+            user       => 'reports',
             table      => "${dbname}.*",
             privileges => [ 'SELECT', 'SHOW VIEW' ],
             require    => Mysql_user['reports@localhost'],
