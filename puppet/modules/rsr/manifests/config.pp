@@ -5,7 +5,8 @@ class rsr::config {
 
     # create an RSR database on the database server
     database::my_sql::db { 'rsr':
-        password => $rsr::params::database_password
+        password   => $rsr::params::database_password,
+        reportable => true
     }
 
     # we want a service address

@@ -1,4 +1,9 @@
-define database::my_sql::db_exported ( $password, $backup = true ) {
+define database::my_sql::db_exported (
+        $password,
+        $backup = true,
+        $reportable = false
+) {
+
     $dbname = $name
     $username = $dbname
 
@@ -12,6 +17,15 @@ define database::my_sql::db_exported ( $password, $backup = true ) {
 
     if ($backup) {
         database::my_sql::backup_db { $name: }
+    }
+
+    if ($reportable) {
+        mysql_grant { 'reports@localhost':
+            user       => $backupuser,
+            table      => "${dbname}.*",
+            privileges => [ 'SELECT', 'SHOW VIEW' ],
+            require    => Mysql_user['reports@localhost'],
+        }
     }
 
 }

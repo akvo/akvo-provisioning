@@ -32,4 +32,7 @@ class database::my_sql::server {
     # we want to keep our data!
     include database::my_sql::backup_support
 
+    # and people want to see it
+    include database::my_sql::reports_support
+
 }
