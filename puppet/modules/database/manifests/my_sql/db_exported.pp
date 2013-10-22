@@ -20,9 +20,9 @@ define database::my_sql::db_exported (
     }
 
     if ($reportable) {
-        mysql_grant { "reports@localhost/${dbname}.*":
+        mysql_grant { "reports@%/${dbname}.*":
             ensure     => present,
-            user       => 'reports',
+            user       => 'reports@%',
             table      => "${dbname}.*",
             privileges => [ 'SELECT', 'SHOW VIEW' ],
             require    => Mysql_user['reports@localhost'],
