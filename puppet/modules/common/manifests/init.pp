@@ -20,6 +20,8 @@ class common {
         'curl',
         'molly-guard',
         'update-notifier-common',
+        'finger',
+        'members',
     ]
 
     package { $useful_packages:
