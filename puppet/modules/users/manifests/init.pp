@@ -8,7 +8,7 @@ class users {
     users::basic { 'paul':
         roles    => ['developer'],
         allow    => ['munin'],
-        ssh_key  => 'AAAAB3NzaC1yc2EAAAADAQABAAABAQDHS7Q2Qv/ynGVmoMgqBDoqsj6WXN1IoP2XdfVjdZ+mGdT5zBSvbQZklL55eisKgmnqxb7aXV2LVOVhrrlJTTh6nAWEBsxkXaDr9tS2VedV6MYbmv3bEjJIu4QvIZY1F5rzwFTcTUghem1fQUEzWibSof99F3rUwDDOBMJZZ2GVhYIDy7ottObtOt3KvTUV+V37Y+xaZzwo4Y0YwRygk48IdLAa4pr4SAxDTFyUfWazxxn6SAc4F5On2Zx1GcuFb3AKgz7tVTXe6WC+7KIrOwkSjdx9eAmgKxhUk2e/Ic9XjcalKV3LqRbHFq05iDKkoiC4ASMBiLnVdPz1Tc87mqwT'
+        ssh_key  => 'AAAAB3NzaC1yc2EAAAADAQABAAABAQC1ULfLajCQea2fE1SgyKETnKC5WGPyG0kzwTHWgjZSoW8OEEf/1GYL50/ncQhm1Zz4jTIPMCoP1gm3sw7HBvMOgZjlR1wRiUXF6b2Z1KLNjQkSouHT6904a1g048mzJLlaglhXGupXGsM6PQy5woTQdHFzDBZSEImc49zyJEunVowpo6IuFVOUrhoBrnO3chYISjqmrPozBkP/YsHw0Dv3e5DsQIg7GK+1QyA7sUuaOT39yqqNHuP64j+aSUgeEPTLnhX1GJ4LqnVTiw+EWI2prDjT1izVRRmlaj3j9dFclThBEIz6u08/A3N98dhU62doepdTJMnrKcYEbKG9Xu5d'
     }
 
     users::basic { 'oliver':
