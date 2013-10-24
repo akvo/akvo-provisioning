@@ -1,0 +1,32 @@
+server {
+    listen 80;
+    server_name
+        <% @homepage_hostnames.each do |homepage_hostname| %>
+        <%= homepage_hostname %>
+        <%- end %>;
+
+    access_log /var/akvo/homepage/logs/access.log;
+    error_log /var/akvo/homepage/logs/error.log;
+
+    location / {
+        root /var/akvo/homepage/wordpress/;
+        index index.php index.html index.htm;
+
+        if (-f $request_filename) {
+            expires 30d;
+            break;
+        }
+
+        if (!-e $request_filename) {
+            rewrite ^(.+)$ /index.php?q=$1 last;
+        }
+    }
+
+    location ~ .php$ {
+        include /etc/nginx/fastcgi_params;
+        fastcgi_pass    localhost:9000;
+        fastcgi_index   index.php;
+        fastcgi_param   SCRIPT_FILENAME     /var/akvo/homepage/wordpress/$fastcgi_script_name;
+        fastcgi_param   PATH_INFO           $fastcgi_script_name;
+    }
+}

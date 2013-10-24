@@ -1,0 +1,39 @@
+{
+    "name": "localdev_homepage",
+
+    "machine_type": "vagrant",
+    "base_domain": "localdev.akvo.org",
+
+    "bootstrap_username": "vagrant",
+    "bootstrap_password": "vagrant",
+
+    "puppet_branch": "develop",
+
+    "puppet_public_key": "/vagrant/files/localdev_homepage_puppet.pub",
+    "puppet_private_key": "/vagrant/files/localdev_homepage_puppet",
+
+    "rsr-deploy_private_key": "/vagrant/files/localdev_homepage_rsr-deploy",
+    "rsr-deploy_public_key": "/vagrant/files/localdev_homepage_rsr-deploy.pub",
+
+    "backup_public_key": "/vagrant/files/localdev_homepage_backup.pub",
+    "backup_private_key": "/vagrant/files/localdev_homepage_backup",
+
+    "nodes": {
+        "192.168.50.101": {
+            "roles": ["puppetdb", "management", "homepage", "database"]
+        }
+    },
+
+    "facts": {
+        "mysql_root_password": "lake",
+        "mysql_backup_password": "cake",
+        "mysql_reports_password": "bake",
+
+        "homepage_wordpress_database_password": "rake",
+        "homepage_hostnames": [],
+
+        "statsd_host": "localhost",
+        "backup_servers": {
+        }
+    }
+}
