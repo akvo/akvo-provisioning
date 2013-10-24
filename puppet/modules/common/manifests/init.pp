@@ -22,6 +22,7 @@ class common {
         'update-notifier-common',
         'finger',
         'members',
+        'zip',
     ]
 
     package { $useful_packages:
