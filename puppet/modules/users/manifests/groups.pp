@@ -1,6 +1,6 @@
 class users::groups {
 
-    $groups = [ 'ops', 'developer', 'test', 'www-edit' ]
+    $groups = [ 'ops', 'developer', 'test', 'reporting', 'content' ]
 
     group { $groups:
         ensure => present
