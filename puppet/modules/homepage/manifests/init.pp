@@ -27,7 +27,7 @@ class homepage {
         ensure => present,
         home   => $wwwroot,
         shell  => '/bin/bash',
-        groups => ['homepage', 'www-edit']
+        groups => ['homepage']
     }
 
     group { 'homepage':
