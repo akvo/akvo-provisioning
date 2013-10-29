@@ -18,6 +18,12 @@ class users {
         htpasswd => '$apr1$WdYFnpfb$nE14MA.Yra5q6K5MILDOO.'
     }
 
+    users::basic { 'mark':
+        roles    => ['developer'],
+        allow    => ['munin'],
+        ssh_key  => 'AAAAB3NzaC1yc2EAAAADAQABAAABAQDWClGycX1cV/MWmOZewiwPqv7Oev4znxOtN3FaVx1jxAHVqL0CC+pwm8vymKQ3oY4BxuHoKWnlEMV41YElOHKfBYRxVT3lzJPOK8531yobBaXcvmHYg2eHFYEn/dE4d0bVpbt6+9Q1uY5QZpqifPiLpf/xAKWOO3eccsgih7y3baqmMeU6XxBgcEt9ZI5Chqvm8bT/y026hvqhQhia0EKY5Wi/YFIVg39+fvCZpmKmHldusp9/9FkET+180Qt0IeOhG8FeqokoCYfI9W9wYQu+0N+zoKw3FMXYli1qarqF4RwpRiuiHAp44iGeE3z3+kiwRQW6ZDkP0m5oJDKhNXTB'
+    }
+
     users::basic { 'gabriel':
         roles    => ['developer'],
         allow    => ['munin'],
