@@ -29,4 +29,8 @@ class homepage {
         password => $db_password
     }
 
+    named::service_location { 'homepage':
+        ip => hiera('external_ip')
+    }
+
 }
