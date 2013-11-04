@@ -1,7 +1,8 @@
 class php {
 
     package { ['php5-fpm', 'php5-cgi', 'php5-mysql']:
-        ensure => installed
+        ensure => installed,
+        notify => Service['php5-fpm']
     }
 
     file { '/etc/php5/fpm/php.ini':
