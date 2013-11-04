@@ -7,9 +7,10 @@ class consortia {
     $consortia_hostnames = hiera('consortia_hostnames')
 
     php::app { 'consortia':
-        app_hostnames => $consortia_hostnames,
-        group         => 'www-edit',
-        wordpress     => true,
+        app_hostnames  => $consortia_hostnames,
+        group          => 'www-edit',
+        wordpress      => true,
+        nginx_writable => true,
     }
 
     file { "/var/akvo/consortia/code/wp-config.php":
