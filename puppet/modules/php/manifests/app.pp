@@ -37,7 +37,7 @@ define php::app (
         ensure  => directory,
         owner   => $app_user,
         group   => $app_group,
-        mode    => '0775',
+        mode    => '2775',
         require => File['/var/akvo']
     }
 
