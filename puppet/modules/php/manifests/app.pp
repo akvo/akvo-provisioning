@@ -3,7 +3,8 @@ define php::app (
   $app_hostnames,
   $username = undef,
   $group = undef,
-  $wordpress = false
+  $wordpress = false,
+  $nginx_writable = false
 ) {
 
     include php
@@ -21,7 +22,6 @@ define php::app (
         $app_group = $name
     }
 
-
     user { $app_user:
         ensure => present,
         home   => $app_path,
@@ -30,6 +30,13 @@ define php::app (
     }
 
     ensure_resource('group', $app_group, { ensure => present })
+
+    if ($nginx_writable) {
+        exec { "${name}_add_nginx_to_${app_group}":
+            command => "/usr/sbin/adduser www-edit ${app_group} --quiet",
+            require => Group['www-edit']
+        }
+    }
 
     $app_path = "/var/akvo/${name}"
 

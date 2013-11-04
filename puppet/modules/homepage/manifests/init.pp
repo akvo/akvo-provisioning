@@ -10,9 +10,10 @@ class homepage {
     $homepage_hostnames = concat($default_hostname, $specified_hostnames)
 
     php::app { 'homepage':
-        app_hostnames => $homepage_hostnames,
-        group         => 'www-edit',
-        wordpress     => true,
+        app_hostnames  => $homepage_hostnames,
+        group          => 'www-edit',
+        wordpress      => true,
+        nginx_writable => true,
     }
 
     file { "/var/akvo/homepage/code/wp-config.php":
