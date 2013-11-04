@@ -33,7 +33,7 @@ define php::app (
 
     if ($nginx_writable) {
         exec { "${name}_add_nginx_to_${app_group}":
-            command => "/usr/sbin/adduser www-edit ${app_group} --quiet",
+            command => "/usr/sbin/adduser www-data ${app_group} --quiet",
             require => Group['www-edit']
         }
     }
