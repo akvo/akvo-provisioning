@@ -4,7 +4,8 @@ define php::app (
   $username = undef,
   $group = undef,
   $wordpress = false,
-  $nginx_writable = false
+  $nginx_writable = false,
+  $config_file_contents = undef
 ) {
 
     include php
@@ -56,8 +57,14 @@ define php::app (
         require => File[$app_path]
     }
 
+    if ($config_file_contents) {
+        $config_val = $config_file_contents
+    } else {
+        $config_val = template('php/phpapp-nginx.conf.erb')
+    }
+
     nginx::configfile { $name:
-        content => template('php/phpapp-nginx.conf.erb')
+        content => $config_val
     }
 
     backups::dir { $name:
