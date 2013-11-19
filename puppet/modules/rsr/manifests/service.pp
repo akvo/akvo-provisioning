@@ -17,7 +17,7 @@ class rsr::service {
     # configure a service so we can start and restart RSR
     supervisord::service { "rsr":
         user      => $rsr::params::username,
-        command   => "${rsr::params::approot}/venv/bin/gunicorn akvo.wsgi --workers 5 --timeout 300 --pid ${rsr::params::approot}/rsr.pid --bind 127.0.0.1:${rsr::params::port}",
+        command   => "${rsr::params::approot}/venv/bin/gunicorn akvo.wsgi --max-requests 200 --workers 5 --timeout 300 --pid ${rsr::params::approot}/rsr.pid --bind 127.0.0.1:${rsr::params::port}",
         directory => $rsr::params::approot,
         env_vars  => {
             'PYTHONPATH' => "${rsr::params::approot}/code/"
