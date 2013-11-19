@@ -11,10 +11,11 @@ class homepage {
     $rsr_domain = hiera('rsr_main_domain') # for legacy redirects
 
     php::app { 'homepage':
-        app_hostnames  => $homepage_hostnames,
-        group          => 'www-edit',
-        wordpress      => true,
-        nginx_writable => true,
+        app_hostnames        => $homepage_hostnames,
+        group                => 'www-edit',
+        wordpress            => true,
+        nginx_writable       => true,
+        config_file_contents => template('homepage/homepage-nginx.conf.erb')
     }
 
     file { "/var/akvo/homepage/code/wp-config.php":
