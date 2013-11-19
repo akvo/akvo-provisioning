@@ -485,3 +485,16 @@ def bootstrap(verbose=False):
     while not is_puppetdb_ready():
         time.sleep(1)
     sudo('/puppet/bin/apply.sh')
+
+
+# shortcuts
+def test():
+    on_environment('test')
+def opstest():
+    on_environment('opstest')
+def uat():
+    on_environment('uat')
+def live():
+    on_environment('live')
+def up():
+    update_config()
