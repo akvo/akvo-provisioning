@@ -8,6 +8,7 @@ class homepage {
     $base_domain = hiera('base_domain')
     $default_hostname = ["homepage.${base_domain}"]
     $homepage_hostnames = concat($default_hostname, $specified_hostnames)
+    $rsr_domain = hiera('rsr_main_domain') # for legacy redirects
 
     php::app { 'homepage':
         app_hostnames  => $homepage_hostnames,
