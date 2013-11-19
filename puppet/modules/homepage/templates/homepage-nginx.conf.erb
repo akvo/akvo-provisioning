@@ -5,9 +5,17 @@ server {
         <%= homepage_hostname %>
         <%- end %>;
 
-    access_log /var/akvo/homepage/logs/access.log;
-    error_log /var/akvo/homepage/logs/error.log;
+    # Legacy redirects, see https://github.com/akvo/akvo-provisioning/issues/37
+    rewrite ^/rsr(/.*|$)$   http://<%=@rsr_domain %>/$1;
+    rewrite ^/api           http://<%=@rsr_domain %>$request_uri?;
+    rewrite ^/media         http://<%=@rsr_domain %>$request_uri?;
+    rewrite ^/wiki          http://akvopedia.org$request_uri?;
 
+    # Logging:
+    access_log /var/akvo/homepage/logs/homepage.log;
+    error_log /var/akvo/homepage/logs/homepage.log;
+
+    # Serve stuff!
     location / {
         root /var/akvo/homepage/wordpress/;
         index index.php index.html index.htm;
