@@ -23,6 +23,7 @@ class common {
         'finger',
         'members',
         'zip',
+        'rkhunter'
     ]
 
     package { $useful_packages:
@@ -40,8 +41,18 @@ class common {
     named::service_location { "${::fqdn}.":
         # note the trailing full stop after fqdn - this is very important!
         # otherwise it will be considered a subdomain
-        ip => hiera('internal_ip')
+        ip => hiera('external_ip')
     }
+
+    $rkrun = "/usr/bin/rkhunter --update --rwo --nocolors --skip-keypress --check"
+    $rkmail = "/usr/bin/mail -s '[`hostname -f`] RKHunter run for `date +\"%d-%m-%Y\"' devops-reports@akvo.org"
+    cron { 'rkhunter':
+        command => "${rkrun} | ${rkmail}",
+        user    => root,
+        hour    => 2,
+        minute  => 0
+    }
+
 
     include backups
     include locales
