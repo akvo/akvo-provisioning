@@ -32,6 +32,6 @@ class backups {
         require => File['/backups/ssh']
     }
 
-    create_resources('backups::server', hiera('backup_servers'))
+    create_resources('backups::server', hiera_hash('backup_servers'))
 
 }
