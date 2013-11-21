@@ -5,6 +5,10 @@ class mta {
         ensure => installed,
     }
 
+    package { 'sendmail':
+        ensure => absent
+    }
+
     $base_domain = hiera('base_domain')
     file { '/etc/postfix/main.cf':
         ensure  => present,
