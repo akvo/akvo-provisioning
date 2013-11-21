@@ -1,0 +1,26 @@
+#!/bin/bash
+if [ `whoami` != "root" ]
+then
+    if [ `whoami` != "puppet" ]
+    then
+        echo >&2 "This script must be run as the puppet user"
+        exit 1
+    fi
+fi
+
+HERE=`pwd`
+
+cd /puppet/checkout
+
+if [ `whoami` == "root" ]
+then
+    sudo -u puppet bash -c 'git pull'
+    sudo -u puppet bash -c 'git submodule update --recursive'
+else
+    git pull
+    git submodule update --recursive
+fi
+
+sudo /puppet/bin/apply.sh
+
+cd $HERE
