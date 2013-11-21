@@ -16,3 +16,6 @@
 [submodule "puppet/ext/mysql"]
 	path = puppet/ext/mysql
 	url = https://github.com/puppetlabs/puppetlabs-mysql.git
+[submodule "puppet/ext/puppetdb"]
+	path = puppet/ext/puppetdb
+	url = https://github.com/puppetlabs/puppetdb.git
