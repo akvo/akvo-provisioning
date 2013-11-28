@@ -11,8 +11,9 @@ from datetime import datetime
 
 # note: 'roles' is used to map a hostname onto the list of roles that it will aquire
 # and perform. This is not the same as the fabric concept of "roles".
+if '--user' not in sys.argv:
+    env.user = 'puppet'
 
-env.user = 'puppet'
 
 # helpers
 def _get_node_config(setting_name, default=KeyError):
@@ -76,6 +77,7 @@ def on_environment(env_name_or_path):
     :param env_name_or_path: Either the name of an environment, or a path
         to an environment definition file
     """
+
     envfile = os.path.abspath(os.path.expanduser(env_name_or_path))
     if os.path.exists(envfile):
         env.config_dir = os.path.dirname(envfile)
@@ -102,8 +104,9 @@ def on_environment(env_name_or_path):
     env.config = env_config
     env.environment = env.config['name']
 
-    default_key = _get_config_file('puppet')
-    env.key_filename = env.config.get('puppet_private_key', default_key)
+    if '-i' not in sys.argv:
+        default_key = _get_config_file('puppet')
+        env.key_filename = env.config.get('puppet_private_key', default_key)
 
     _set_hosts()
 
@@ -324,9 +327,19 @@ def create_hiera_facts(use_sudo=False):
         put(f.name, filepath, use_sudo=use_sudo)
         run_method('chown puppet.puppet %s' % filepath)
 
-    node_facts = _get_node_config('facts', default=None)
-    if node_facts is None:
-        return
+    node_facts = _get_node_config('facts', default={})
+
+    if 'puppetdb' in _get_current_roles():
+        certs = (
+            ('puppetdb_ca_cert', 'puppetdb-ca.crt'),
+            ('puppetdb_server_cert', 'puppetdb-server.crt'),
+            ('puppetdb_server_key', 'puppetdb-server.key')
+        )
+
+        for confname, default_filename in certs:
+            filepath = env.config.get(confname, _get_config_file(default_filename))
+            with open(filepath) as certfile:
+                node_facts[confname] = certfile.read()
 
     hostname = run('hostname -f').strip()
     with tempfile.NamedTemporaryFile() as f:
@@ -334,6 +347,28 @@ def create_hiera_facts(use_sudo=False):
         f.flush()
         filepath = '/puppet/hiera/%s.json' % hostname
         put(f.name, filepath, use_sudo=use_sudo)
+
+
+def create_client_cert():
+    sudo('mkdir -p /var/lib/puppet/ssl/{private_keys,certs}')
+    sudo('chown -R puppet.puppet /var/lib/puppet/ssl')
+
+    cacrt = env.config.get('puppetdb_ca_cert', _get_config_file('puppetdb-ca.crt'))
+    cakey = env.config.get('puppetdb_ca_key', _get_config_file('puppetdb-ca.key'))
+    put(cacrt, '/var/lib/puppet/ssl/certs/ca.pem', use_sudo=True)
+    hostname = run('hostname -f').strip()
+
+    with tempfile.NamedTemporaryFile() as keyfile:
+        local('openssl genrsa -out %s 2048' % keyfile.name)
+        with tempfile.NamedTemporaryFile() as csrfile:
+            subj = '/CN=%s/O=akvo.org/C=NL' % hostname
+            local('openssl req -new -key %s -out %s -subj "%s"' % (keyfile.name, csrfile.name, subj))
+            with tempfile.NamedTemporaryFile() as crtfile:
+                local('openssl x509 -req -days 3650 -in %s '
+                      '-CA %s -CAkey %s -set_serial 01 -out %s' % (csrfile.name, cacrt, cakey, crtfile.name))
+
+                put(keyfile.name, '/var/lib/puppet/ssl/private_keys/%s.pem' % hostname, use_sudo=True)
+                put(crtfile.name, '/var/lib/puppet/ssl/certs/%s.pem' % hostname, use_sudo=True)
 
 
 def hiera_add_external_ip():
@@ -427,9 +462,13 @@ def update_system_packages():
 
 
 def is_puppetdb_ready():
+    hostname = run('hostname -f').strip()
+    key = "--private-key=/var/lib/puppet/ssl/private_keys/%s.pem" % hostname
+    cert = "--certificate=/var/lib/puppet/ssl/certs/%s.pem" % hostname
+
     puppetdb_server = env.config.get('puppetdb', 'puppetdb.%s' % env.config['base_domain'])
-    cmd = "wget --no-check-certificate --server-response https://%s 2>&1 | awk '/^  HTTP/{print $2}'" % puppetdb_server
-    status = run(cmd)
+    cmd = "wget --no-check-certificate %s %s --server-response https://%s 2>&1 | awk '/^  HTTP/{print $2}'" % (key, cert, puppetdb_server)
+    status = sudo(cmd)
     status = status.split('\n')[-1].strip()
     return status == '200'
 
@@ -459,6 +498,7 @@ def bootstrap(verbose=False):
     add_puppet_repo()
     update_puppet_version()
     install_modules()
+    create_client_cert()
 
     install_git()
     firstclone()

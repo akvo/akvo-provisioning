@@ -18,23 +18,41 @@ class puppetdb::server {
     }
 
 
-    # we need nginx for proxying the puppetdb server
-    include nginx
-
     # create an SSL proxy (puppet clients refuse to connect without SSL)
-    nginx::proxy { 'puppetdb':
-        server_name        => $puppet_domain,
-        proxy_url          => 'http://localhost:8100',
-        ssl                => true,
-        htpasswd           => 'puppet',
+    $server_name = $puppet_domain
+    $certfilename = "/etc/nginx/certs/${puppet_domain}.crt"
+    $keyfilename = "/etc/nginx/certs/${puppet_domain}.key"
+    $cacertfilename = "/etc/nginx/certs/puppetdb.ca.crt"
+
+    file { $certfilename:
+        ensure  => present,
+        owner   => root,
+        mode    => 0444,
+        content => hiera('puppetdb_server_cert'),
+        require => Package['nginx'],
+        notify  => Service['nginx'],
+    }
+    file { $keyfilename:
+        ensure  => present,
+        owner   => root,
+        mode    => 0444,
+        content => hiera('puppetdb_server_key'),
+        require => Package['nginx'],
+        notify  => Service['nginx'],
+    }
+    file { $cacertfilename:
+        ensure  => present,
+        owner   => root,
+        mode    => 0444,
+        content => hiera('puppetdb_ca_cert'),
+        require => Package['nginx'],
+        notify  => Service['nginx'],
     }
 
-    # make sure we don't allow random connections!
-#    htpasswd::user { 'puppet':
-#        user     => 'puppet',
-#        allow    => ['puppet'],
-#        password => hiera('puppetdb_htpasswd')
-#    }
+    include nginx
+    nginx::configfile { 'puppetdb':
+        content => template('puppetdb/puppetdb-nginx.conf.erb')
+    }
 
     # insert the config which runs the puppetdb service
     file { '/etc/puppetdb/conf.d/config.ini':
