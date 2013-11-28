@@ -17,6 +17,11 @@
     "backup_public_key": "/vagrant/files/localdev_backup.pub",
     "backup_private_key": "/vagrant/files/localdev_backup",
 
+    "puppetdb_ca_cert": "/vagrant/files/puppetdb-ca.crt",
+    "puppetdb_ca_key": "/vagrant/files/puppetdb-ca.key",
+    "puppetdb_server_cert": "/vagrant/files/puppetdb-server.crt",
+    "puppetdb_server_key": "/vagrant/files/puppetdb-server.key",
+
     "nodes": {
         "192.168.50.101": {
             "roles": ["management", "puppetdb", "database"],
