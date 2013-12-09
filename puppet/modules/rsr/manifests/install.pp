@@ -33,17 +33,20 @@ class rsr::install {
         require => [ User[$username], Group[$username], File['/var/akvo/'] ],
     }
 
-    $dirs = prefix([
-        'logs',     # the log dir
-        'versions'  # the directory for each version of the app
-            ], "${approot}/")
-
-    file { $dirs:
+    file { "${approot}/versions":
         ensure  => directory,
         owner   => $username,
         group   => $username,
         mode    => '0755',
         require => [ User[$username], Group[$username], File[$approot] ],
+    }
+
+    file { "${approot}/logs":
+        ensure  => directory,
+        owner   => $username,
+        group   => 'www-data',
+        mode    => '0775',
+        require => [ Package['nginx'], File[$approot] ],
     }
 
     # make sure the mediaroot exists
