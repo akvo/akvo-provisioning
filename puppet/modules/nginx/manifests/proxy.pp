@@ -3,6 +3,8 @@ define nginx::proxy( $server_name = undef,
                      $proxy_url,
                      $htpasswd = undef,
                      $ssl = false,
+                     $ssl_key_source = undef,
+                     $ssl_cert_source = undef,
                      $static_dirs = undef,
                      $extra_nginx_config = undef ) {
 
@@ -45,7 +47,7 @@ define nginx::proxy( $server_name = undef,
   if $ssl {
       file { $ssl_key:
           ensure  => present,
-          source  => 'puppet:///modules/nginx/akvo-self.key',
+          source  => $ssl_key_source,
           owner   => 'root',
           group   => 'root',
           mode    => '0444',
@@ -55,7 +57,7 @@ define nginx::proxy( $server_name = undef,
 
       file { $ssl_crt:
           ensure  => present,
-          source  => 'puppet:///modules/nginx/akvo-self.crt',
+          source  => $ssl_cert_source,
           owner   => 'root',
           group   => 'root',
           mode    => '0444',
