@@ -24,6 +24,9 @@ server {
         listen       80;
     <% end -%>
 
+    access_log <%= @access_log_val %>;
+    error_log <%= @error_log_val %>;
+
     server_name  <%= @server_name_val %>;
     
     location / {
