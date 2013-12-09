@@ -58,6 +58,28 @@ def _get_config_file(file_name):
     return os.path.join(env.config_dir, file_name)
 
 
+def _get_config_file_path(config_key, default_path):
+    path = env.config.get(config_key)
+    if path is None:
+        # not specified, so fall back on the default path, which might be relative to the config dir
+        return os.path.join(env.config_dir, default_path)
+
+    if path.startswith('config://'):
+        # this sort-of scheme indicates that we want to use another (predefined) environment's config
+        base_dir = os.environ.get('AKVO_CONFIG_DIR', None)
+        # we expect 'config://<envname>/<relative_path>'
+        match = re.match(r'^config://(\w+)/(.*)$', path)
+        if match is None:
+            sys.stderr("Could not parse config location: %s" % path)
+            sys.exit(1)
+        env_name = match.group(1)
+        relpath = match.group(2)
+        return os.path.join(base_dir, env_name, relpath)
+    else:
+        # we will assume that the path is absolute, or relative to our config dir
+        return os.path.join(env.config_dir, default_path)
+
+
 def _validate_config(config):
     if 'puppetdb' not in config:
         # if we aren't using an external puppetdb, then we need to install one ourselves
@@ -353,8 +375,8 @@ def create_client_cert():
     sudo('mkdir -p /var/lib/puppet/ssl/{private_keys,certs}')
     sudo('chown -R puppet.puppet /var/lib/puppet/ssl')
 
-    cacrt = env.config.get('puppetdb_ca_cert', _get_config_file('puppetdb-ca.crt'))
-    cakey = env.config.get('puppetdb_ca_key', _get_config_file('puppetdb-ca.key'))
+    cacrt = _get_config_file_path('puppetdb_ca_cert', 'puppetdb-ca.crt')
+    cakey = _get_config_file_path('puppetdb_ca_key', 'puppetdb-ca.key')
     put(cacrt, '/var/lib/puppet/ssl/certs/ca.pem', use_sudo=True)
     hostname = run('hostname -f').strip()
 
