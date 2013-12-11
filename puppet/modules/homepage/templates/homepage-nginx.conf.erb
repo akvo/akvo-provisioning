@@ -12,8 +12,8 @@ server {
     rewrite ^/wiki          http://akvopedia.org$request_uri?;
 
     # Logging:
-    access_log /var/akvo/homepage/logs/homepage.log;
-    error_log /var/akvo/homepage/logs/homepage.log;
+    access_log /var/akvo/homepage/logs/nginx-access.log;
+    error_log /var/akvo/homepage/logs/nginx-error.log;
 
     # Serve stuff!
     location / {

@@ -5,8 +5,8 @@ server {
         <%= app_hostname %>
         <%- end %>;
 
-    access_log <%= @app_path %>/logs/access.log;
-    error_log <%= @app_path %>/logs/error.log;
+    access_log <%= @app_path %>/logs/nginx-access.log;
+    error_log <%= @app_path %>/logs/nginx-error.log;
 
     location / {
         root <%= @app_path %>/code/;
