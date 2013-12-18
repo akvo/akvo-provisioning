@@ -6,6 +6,7 @@ server {
         <%- end %>;
 
     # Legacy redirects, see https://github.com/akvo/akvo-provisioning/issues/37
+    rewrite ^/blog/wp-content(.*)$ /wp-content$1 last;
     rewrite ^/rsr(/.*|$)$   http://<%=@rsr_domain %>/$1;
     rewrite ^/api           http://<%=@rsr_domain %>$request_uri?;
     rewrite ^/media         http://<%=@rsr_domain %>$request_uri?;
@@ -14,6 +15,7 @@ server {
     # Logging:
     access_log /var/akvo/homepage/logs/nginx-access.log;
     error_log /var/akvo/homepage/logs/nginx-error.log;
+    rewrite_log on;
 
     # Serve stuff!
     location / {
