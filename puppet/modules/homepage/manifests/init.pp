@@ -28,7 +28,8 @@ class homepage {
     }
 
     database::my_sql::db { 'homepage':
-        password => $db_password
+        password   => $db_password,
+        reportable => true
     }
 
     named::service_location { 'homepage':
