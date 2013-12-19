@@ -550,6 +550,8 @@ def bootstrap(verbose=False):
 
 
 # shortcuts
+def admin():
+    on_environment('admin')
 def test():
     on_environment('test')
 def opstest():
