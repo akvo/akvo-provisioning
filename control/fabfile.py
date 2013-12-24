@@ -369,6 +369,7 @@ def create_hiera_facts(use_sudo=False):
         f.flush()
         filepath = '/puppet/hiera/%s.json' % hostname
         put(f.name, filepath, use_sudo=use_sudo)
+        run_method('chown puppet.puppet %s' % filepath)
 
 
 def create_client_cert():
