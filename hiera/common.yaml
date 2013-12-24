@@ -1,8 +1,0 @@
-roles :
-  - 'basic'
-
-rsr_development: 'false'
-
-graphite_database_host: 'mysql'
-graphite_database_user: 'graphite'
-graphite_database_name: 'graphite'
