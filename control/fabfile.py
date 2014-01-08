@@ -203,7 +203,7 @@ def hiera_add_external_ip():
             internal_ip_addr = ip_addr
             # we use the 'internal' IP for 'external' too when running on a vagrant box
             # as all services must be pointing to the local IP
-            if env.config['machine_type'] == 'vagrant':
+            if env.config['machine_type'] == 'vagrant' or env.environment == 'localdev':
                 external_ip_addr = ip_addr
         else:
             external_ip_addr = ip_addr
