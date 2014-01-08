@@ -2,8 +2,6 @@
 define users::remove_user(
     $username = undef
 ) {
-
-}
     if ( $username ) {
         $usernameval = $username
     } else {
