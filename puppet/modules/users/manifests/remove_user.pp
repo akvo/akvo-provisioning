@@ -13,7 +13,8 @@ define users::remove_user(
     }
 
     file { "/home/${usernameval}":
-        ensure => absent
+        ensure => absent,
+        force  => true,
     }
 
     # TODO: needs to remove htpasswds too
