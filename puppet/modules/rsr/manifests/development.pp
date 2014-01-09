@@ -28,10 +28,10 @@ class rsr::development ( $enabled = false ) {
         }
 
         # include the dev db installation script
-        file { '/usr/local/bin/install_test_db.sh':
+        file { "${approot}/install_test_db.sh":
             ensure => 'present',
             source => 'puppet:///modules/rsr/install_test_db.sh',
-            owner  => 'root',
+            owner  => 'rsr',
             mode   => '0755'
         }
 
