@@ -25,6 +25,12 @@ class users {
         htpasswd => '$apr1$DPt9tUH8$tAcbjLu6KBUw5WshJzHr91'
     }
 
+    users::basic { 'stellan':
+        roles    => ['developer'],
+        allow    => ['munin'],
+        ssh_key  => 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAgQDE+s/CSGkvynr/7nWe7/9Vkv2Nv6m84HTruEo9yN5vpvDp5j6XpsNklq9NgLYQs8/C46iKvbFTF/apIauHCr1lC27PI0m2n5coUNbNGoJZMhWoq4LmHdbhu4vhDgz+Vqx0hbQrNHiG7XIhsaqFnCJua8faKJUn6RKTantQr5aQDQ==',
+    }
+
     users::basic { 'loic':
         roles    => ['content', 'www-edit'],
         allow    => [],
