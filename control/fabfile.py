@@ -26,6 +26,10 @@ def _get_node_config(setting_name, default=KeyError):
     return conf.get(setting_name, default)
 
 
+def _get_key_file_path(keyname):
+    return os.path.join(env.keys_dir, keyname)
+
+
 def _get_config_file(filename):
     return os.path.join(env.config_dir, filename)
 
@@ -62,21 +66,7 @@ def _set_hosts():
         # so just ignore our custom values
         return
 
-    hosts = []
-    for host, config in env.config['nodes'].iteritems():
-        hosts.append( (host, config.get('order', 0), 'management' in config['roles']) )
-
-    def sort_nodes(node1, node2):
-        if node1[2]:
-            return -1
-        if node2[2]:
-            return 1
-        return node2[1] - node1[1]
-
-    hosts = sorted(hosts, cmp=sort_nodes)
-    env.hosts = [x[0] for x in hosts]
-
-    print "Host order:\n%s" % '\n'.join(env.hosts)
+    env.hosts = env.config['nodes'].keys()
 
 
 # --------------------
@@ -93,6 +83,7 @@ def on_environment(env_name_or_path):
     envfile = os.path.abspath(os.path.expanduser(env_name_or_path))
     if os.path.exists(envfile):
         env.config_dir = os.path.dirname(envfile)
+        env.env_config_dir = os.path.join(env.config_dir, 'config')
         env.config_file = env_name_or_path
         print "Using configuration found at %s" % envfile
     else:
@@ -102,7 +93,9 @@ def on_environment(env_name_or_path):
             sys.stderr.write("Cannot find config - the AKVO_CONFIG_DIR environment variable is not set.\n")
             sys.exit(1)
 
+        env.env_config_dir = os.path.join(config_dir, 'config')
         env.config_dir = os.path.join(config_dir, env_name_or_path)
+        env.keys_dir = os.path.join(config_dir, 'keys', env_name_or_path)
 
         envfile = _get_config_file('config.json')
         if not os.path.exists(envfile):
@@ -124,9 +117,10 @@ def on_environment(env_name_or_path):
         # VMs (hopefully...)
         print "This is a Vagrant VM, so using puppet checkout dir for config"
         env.config_dir = '/puppet/checkout/config/'
+        env.keys_dir = '/puppet/checkout/config/keys/localdev/'
 
     if '-i' not in sys.argv:
-        env.key_filename = _get_config_file_path('puppet_private_key', 'keys/%s/puppet' % env.environment)
+        env.key_filename = env.config.get('puppet_private_key', _get_key_file_path('puppet'))
 
     _set_hosts()
 
@@ -172,7 +166,7 @@ def setup_hiera():
 
 
 def create_hiera_facts(use_sudo=False):
-    put(os.path.join(env.config_dir, '*'), '/puppet/hiera/', use_sudo=use_sudo)
+    put(os.path.join(env.env_config_dir, '*'), '/puppet/hiera/', use_sudo=use_sudo)
 
     run_method = sudo if use_sudo else run
     if env.environment == 'localdev':
@@ -227,6 +221,25 @@ def hiera_add_external_ip():
         facts_json.flush()
         put(facts_json.name, '/puppet/hiera/nodefacts.json', use_sudo=True)
     sudo('chown puppet.puppet /puppet/hiera/nodefacts.json')
+
+
+def get_latest_config():
+    if env.environment == 'localdev':
+        print "Refusing to pull puppet, as this is a vagrant box and the checkout is linked to your host machine"
+        return
+    with cd('/puppet/checkout'):
+        run('git pull')
+        run('git submodule update --recursive')
+
+
+def apply_puppet():
+    run('sudo /puppet/bin/apply.sh')
+
+
+def update_config():
+    get_latest_config()
+    create_hiera_facts()
+    apply_puppet()
 
 
 # --------------------
