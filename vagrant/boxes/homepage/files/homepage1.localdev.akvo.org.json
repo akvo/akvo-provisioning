@@ -1,0 +1,9 @@
+{
+    "roles": [
+        "puppetdb",
+        "management",
+
+        "database",
+        "homepage"
+    ]
+}
