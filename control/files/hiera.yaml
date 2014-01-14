@@ -3,10 +3,13 @@
   - yaml
   - json
 :hierarchy:
+  - envs/%{::environment}/%{::fqdn}
+  - envs/%{::environment}
   - nodespecific
   - %{::fqdn}
   - %{::environment}
   - common
+  - nodefacts
 
 :yaml:
   :datadir: /puppet/hiera/
