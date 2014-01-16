@@ -1,9 +1,6 @@
 {
     "name": "localdev",
 
-    "machine_type": "vagrant",
-    "base_domain": "localdev.akvo.org",
-
     "bootstrap_username": "vagrant",
     "bootstrap_password": "vagrant",
 
