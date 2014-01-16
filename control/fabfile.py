@@ -133,8 +133,9 @@ def create_client_cert():
     sudo('mkdir -p /var/lib/puppet/ssl/{private_keys,certs}')
     sudo('chown -R puppet.puppet /var/lib/puppet/ssl')
 
-    cacrt = _get_config_file_path('puppetdb_ca_cert', 'keys/%s/puppetdb-ca.crt' % env.environment)
-    cakey = _get_config_file_path('puppetdb_ca_key', 'keys/%s/puppetdb-ca.key' % env.environment)
+    cacrt = env.config.get('puppetdb_ca_cert', _get_key_file_path('puppetdb-ca.crt'))
+    cakey = env.config.get('puppetdb_ca_key', _get_key_file_path('puppetdb-ca.key'))
+
     put(cacrt, '/var/lib/puppet/ssl/certs/ca.pem', use_sudo=True)
     hostname = run('hostname -f').strip()
 
@@ -166,16 +167,18 @@ def setup_hiera():
 
 
 def create_hiera_facts(use_sudo=False):
-    put(os.path.join(env.env_config_dir, '*'), '/puppet/hiera/', use_sudo=use_sudo)
-
     run_method = sudo if use_sudo else run
+
     if env.environment == 'localdev':
         # if we are a vagrant VM, see if there are any host-specific files to copy in
         run_method('mkdir -p /puppet/hiera/envs/localdev/')
+        put(os.path.join(env.config_dir, '*'), '/puppet/hiera/', use_sudo=use_sudo)
         hostname = run('hostname -f').strip()
         host_config = os.path.join(os.path.dirname(env.config_file), '%s.json' % hostname)
         if os.path.exists(host_config):
             put(host_config, '/puppet/hiera/envs/localdev/%s.json' % hostname, use_sudo=use_sudo)
+    else:
+        put(os.path.join(env.env_config_dir, '*'), '/puppet/hiera/', use_sudo=use_sudo)
 
     if use_sudo:
         sudo('chown -R puppet.puppet /puppet/hiera')
@@ -197,7 +200,7 @@ def hiera_add_external_ip():
             internal_ip_addr = ip_addr
             # we use the 'internal' IP for 'external' too when running on a vagrant box
             # as all services must be pointing to the local IP
-            if env.config['machine_type'] == 'vagrant' or env.environment == 'localdev':
+            if env.environment == 'localdev':
                 external_ip_addr = ip_addr
         else:
             external_ip_addr = ip_addr
