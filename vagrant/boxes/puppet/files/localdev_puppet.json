@@ -1,54 +1,14 @@
 {
-    "name": "localdev_puppet",
-
-    "machine_type": "vagrant",
-    "base_domain": "localdev.akvo.org",
+    "name": "localdev",
 
     "bootstrap_username": "vagrant",
     "bootstrap_password": "vagrant",
 
     "puppet_branch": "develop",
-    "puppet_public_key": "/vagrant/files/localdev_puppet.pub",
-    "puppet_private_key": "/vagrant/files/localdev_puppet",
-
-    "rsr-deploy_public_key": "/vagrant/files/localdev_puppet_rsr-deploy.pub",
-    "rsr-deploy_private_key": "/vagrant/files/localdev_puppet_rsr-deploy",
-
-    "backup_public_key": "/vagrant/files/localdev_backup.pub",
-    "backup_private_key": "/vagrant/files/localdev_backup",
-
-    "puppetdb_ca_cert": "/vagrant/files/puppetdb-ca.crt",
-    "puppetdb_ca_key": "/vagrant/files/puppetdb-ca.key",
-    "puppetdb_server_cert": "/vagrant/files/puppetdb-server.crt",
-    "puppetdb_server_key": "/vagrant/files/puppetdb-server.key",
 
     "nodes": {
         "192.168.50.101": {
-            "roles": ["management", "puppetdb", "database"],
-            "order": 0,
-            "facts": {
-            }
-        }
-    },
-
-    "facts": {
-        "mysql_root_password": "flibble",
-        "mysql_backup_password": "flibble",
-        "mysql_reports_password": "flibble",
-
-        "statsd_host": "localhost",
-        
-        "graphite_secret_key": "RM30sUWohUac2B5tMTNLp5MsglRTRm5nrM590fXW",
-        "graphite_database_password": "6527UEg9Jrhuj7CyWsREWuvAdUQ8tUs2t0CKl5fV",
-
-        "rsr_database_password": "lake",
-        "rsr_development": true,
-        "rsr_additional_rsr_domains": ["localakvo.org"],
-        "rsr_partner_site_domain": "localakvoapp.org",
-        "rsr_secret_key": "UAqweM2pNCQXDtwkDUy4f5Xe1rie2XrLxnV1j6aG",
-        "rsr_site_id": "1004",
-
-        "backup_servers": {
         }
     }
+
 }
