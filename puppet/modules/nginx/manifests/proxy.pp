@@ -3,8 +3,12 @@ define nginx::proxy( $server_name = undef,
                      $proxy_url,
                      $htpasswd = undef,
                      $ssl = false,
+                     $ssl_key_source = undef,
+                     $ssl_cert_source = undef,
                      $static_dirs = undef,
-                     $extra_nginx_config = undef ) {
+                     $extra_nginx_config = undef,
+                     $access_log = undef,
+                     $error_log = undef ) {
 
   include nginx
 
@@ -12,6 +16,18 @@ define nginx::proxy( $server_name = undef,
       $server_name_val = $name
   } else {
       $server_name_val = $server_name
+  }
+
+  if ( !$access_log ) {
+      $access_log_val = "/var/log/nginx/access-${server_name_val}.log"
+  } else {
+      $access_log_val = $access_log
+  }
+
+  if ( !$error_log ) {
+      $error_log_val = "/var/log/nginx/error-${server_name_val}.log"
+  } else {
+      $error_log_val = $error_log
   }
 
   $filename = regsubst($server_name_val, '\*', '__star__')
@@ -45,7 +61,7 @@ define nginx::proxy( $server_name = undef,
   if $ssl {
       file { $ssl_key:
           ensure  => present,
-          source  => 'puppet:///modules/nginx/akvo-self.key',
+          source  => $ssl_key_source,
           owner   => 'root',
           group   => 'root',
           mode    => '0444',
@@ -55,7 +71,7 @@ define nginx::proxy( $server_name = undef,
 
       file { $ssl_crt:
           ensure  => present,
-          source  => 'puppet:///modules/nginx/akvo-self.crt',
+          source  => $ssl_cert_source,
           owner   => 'root',
           group   => 'root',
           mode    => '0444',

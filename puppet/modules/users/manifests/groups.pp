@@ -6,4 +6,9 @@ class users::groups {
         ensure => present
     }
 
+    sudo::allow_as_user { 'devs_can_rsr':
+        group => 'developer',
+        as_user => 'rsr'
+    }
+
 }
