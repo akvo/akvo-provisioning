@@ -1,0 +1,13 @@
+{
+    "name": "localdev",
+
+    "bootstrap_username": "vagrant",
+    "bootstrap_password": "vagrant",
+
+    "puppet_branch": "develop",
+
+    "nodes": {
+        "192.168.50.101": {
+        }
+    }
+}
