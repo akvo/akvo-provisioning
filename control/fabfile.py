@@ -298,10 +298,8 @@ def setup_keys():
     """
     sudo('mkdir -p /puppet/.ssh')
     put('files/github_ssh_host', '/puppet/.ssh/known_hosts', use_sudo=True)
-    put('files/github_deploy_key', '/puppet/.ssh/id_rsa', use_sudo=True)
     # fix permissions
     sudo('chown -R puppet.puppet /puppet')
-    sudo('chown 600 /puppet/.ssh/id_rsa')
 
 
 def add_puppet_repo():
@@ -349,7 +347,7 @@ def firstclone():
     """
     with cd('/puppet'):
         if not files.exists('/puppet/checkout'):
-            sudo('git clone git@github.com:akvo/akvo-provisioning.git checkout', user='puppet')
+            sudo('git clone https://github.com:akvo/akvo-provisioning.git checkout', user='puppet')
             sudo('chown -R puppet.puppet /puppet/checkout')
             with cd('/puppet/checkout'):
                 puppet_branch = env.config.get('puppet_branch', 'master')
