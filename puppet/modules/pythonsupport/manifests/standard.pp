@@ -15,10 +15,8 @@ class pythonsupport::standard {
         require  => Package['python-pip'],
     }
 
-    # virtualenv 1.11 is broken, so we make sure we don't install it:
-    # see https://github.com/pypa/virtualenv/issues/524
     package { 'virtualenv':
-        ensure => '1.10.1',
+        ensure => 'latest',
         provider => 'pip',
         require => Package['python-pip']
     }
