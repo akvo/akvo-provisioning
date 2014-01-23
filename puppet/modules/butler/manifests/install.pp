@@ -1,5 +1,5 @@
 
-class rsr::install {
+class butler::install {
     
     # make sure we also include the Akvoapp stuff, and that it is loaded
     # before this module
@@ -29,14 +29,6 @@ class rsr::install {
         group   => $username,
         mode    => '0755',
         require => [ User[$username], Group[$username], File['/var/akvo/'] ],
-    }
-    
-    file { "${approot}/versions":
-        ensure  => directory,
-        owner   => $username,
-        group   => $username,
-        mode    => '0755',
-        require => [ User[$username], Group[$username], File[$approot] ],
     }
     
     file { "${approot}/logs":
