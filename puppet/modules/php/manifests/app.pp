@@ -9,7 +9,6 @@ define php::app (
 ) {
 
     include php
-    include akvoapp
 
     if ($username) {
         $app_user = $username
@@ -23,11 +22,7 @@ define php::app (
         $app_group = $name
     }
 
-    user { $app_user:
-        ensure => present,
-        home   => $app_path,
-        shell  => '/bin/bash',
-        groups => $app_group
+    akvoapp { $app_user:
     }
 
     ensure_resource('group', $app_group, { ensure => present })
@@ -41,19 +36,11 @@ define php::app (
 
     $app_path = "/var/akvo/${name}"
 
-    file { [$app_path, "${app_path}/code"]:
+    file { ["${app_path}/code", "${app_path}/conf"]:
         ensure  => directory,
         owner   => $app_user,
         group   => $app_group,
         mode    => '2775',
-        require => File['/var/akvo']
-    }
-
-    file { "${app_path}/logs":
-        ensure  => directory,
-        owner   => 'www-data',
-        group   => $app_group,
-        mode    => '0755',
         require => File[$app_path]
     }
 

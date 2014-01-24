@@ -2,6 +2,8 @@
     "roles": [
         "puppetdb",
         "management",
-        "database"
+        "database",
+
+        "flowreportshim"
     ]
 }
