@@ -1,15 +1,15 @@
 
 class butler::install {
-    
-    # make sure we also include the Akvoapp stuff, and that it is loaded
-    # before this module
-    require akvoapp
-    
-    
+
     # we need the config
     include butler::params
-    include butler::user
-    
+
+    # make sure we also include the Akvoapp stuff, and that it is loaded
+    # before this module
+    akvoapp { $butler::params::username:
+        deploy_key => hiera('butler-deploy_key')
+    }
+
     
     # install all of the support packages
     include pythonsupport::mysql
