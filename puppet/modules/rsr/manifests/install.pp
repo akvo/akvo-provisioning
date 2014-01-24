@@ -1,15 +1,18 @@
 
 class rsr::install {
 
-    # make sure we also include the Akvoapp stuff, and that it is loaded
-    # before this module
-    require akvoapp
-
-
     # we need the config
     include rsr::params
-    include rsr::user
 
+    $approot = $rsr::params::approot
+    $username = $rsr::params::username
+    $media_root = $rsr::params::media_root
+
+    # make sure we also include the Akvoapp stuff, and that it is loaded
+    # before this module
+    akvoapp { $username:
+        deploy_key => hiera('rsr-deploy_public_key')
+    }
 
     # install all of the support packages
     include pythonsupport::mysql
@@ -18,35 +21,12 @@ class rsr::install {
     include pythonsupport::standard
     include memcached
 
-
-    # create all of the directories
-    $approot = $rsr::params::approot
-    $username = $rsr::params::username
-    $media_root = $rsr::params::media_root
-
-    # make the directory that we'll use as the 'base'
-    file { $approot:
-        ensure  => directory,
-        owner   => $username,
-        group   => $username,
-        mode    => '0755',
-        require => [ User[$username], Group[$username], File['/var/akvo/'] ],
-    }
-
     file { "${approot}/versions":
         ensure  => directory,
         owner   => $username,
         group   => $username,
         mode    => '0755',
         require => [ User[$username], Group[$username], File[$approot] ],
-    }
-
-    file { "${approot}/logs":
-        ensure  => directory,
-        owner   => $username,
-        group   => 'www-data',
-        mode    => '0775',
-        require => [ Package['nginx'], File[$approot] ],
     }
 
     # make sure the mediaroot exists
