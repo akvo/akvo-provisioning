@@ -10,7 +10,8 @@ class php {
         source  => 'puppet:///modules/homepage/php.ini',
         owner   => root,
         mode    => '0444',
-        require => Package['php5-fpm']
+        require => Package['php5-fpm'],
+        notify  => Service['php5-fpm']
     }
 
     service { 'php5-fpm':
