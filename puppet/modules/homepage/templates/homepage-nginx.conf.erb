@@ -8,6 +8,7 @@ server {
     include /var/akvo/homepage/conf/*.conf
 
     # Legacy redirects, see https://github.com/akvo/akvo-provisioning/issues/37
+    # TODO: move these into the akvo-web repository
     rewrite ^/blog/wp-content(.*)$ /wp-content$1 last;
     rewrite ^/rsr(/.*|$)$   http://<%=@rsr_domain %>/$1;
     rewrite ^/web(.*)$      $1 last;
