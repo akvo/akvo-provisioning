@@ -8,7 +8,7 @@ server {
     access_log <%= @app_path %>/logs/nginx-access.log;
     error_log <%= @app_path %>/logs/nginx-error.log;
 
-    include <%= @app_path %>/conf/*.conf
+    include <%= @app_path %>/conf/*.conf;
 
     location / {
         root <%= @app_path %>/code/;
