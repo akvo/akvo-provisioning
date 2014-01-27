@@ -5,12 +5,14 @@ class consortia {
     $db_password = hiera('consortia_database_password')
 
     $consortia_hostnames = hiera('consortia_hostnames')
+    $app_path = '/var/akvo/consortia'
 
     php::app { 'consortia':
-        app_hostnames  => $consortia_hostnames,
-        group          => 'www-edit',
-        wordpress      => true,
-        nginx_writable => true,
+        app_hostnames        => $consortia_hostnames,
+        group                => 'www-edit',
+        wordpress            => true,
+        nginx_writable       => true,
+        config_file_contents => template('consortia/consortia-nginx.conf.erb')
     }
 
     file { "/var/akvo/consortia/code/wp-config.php":
@@ -23,7 +25,12 @@ class consortia {
     }
 
     database::my_sql::db { 'consortia':
-        password => $db_password
+        password   => $db_password,
+        reportable => true
+    }
+
+    named::service_location { 'consortia':
+        ip => hiera('external_ip')
     }
 
 }
