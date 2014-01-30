@@ -23,8 +23,8 @@ class butler::config {
         access_log => "${approot}/logs/butler-nginx-access.log",
         error_log  => "${approot}/logs/butler-nginx-error.log",
         static_dirs        => {
-            "/static/"     => "${media_root}/static",
-            "/media/"      => "${media_root}/media",
+            "/static/"     => "${media_root}/static/",
+            "/media/"      => "${media_root}/media/",
         }
     }
 
