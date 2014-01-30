@@ -3,6 +3,7 @@ class butler::config {
 
     include butler::params
     $approot = $butler::params::approot
+    $media_root = $butler::params::media_root
 
     # create an butler database on the database server
     database::my_sql::db { $butler::params::dbname:
