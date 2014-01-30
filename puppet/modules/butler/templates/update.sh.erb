@@ -5,25 +5,22 @@ ORIG_DIR=`pwd`
 HERE="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 VENV=<%= @approot %>/venv
+CODE=<%= @approot %>/code
 
 if [ ! -d $VENV ]
 then
   virtualenv $VENV
 fi
 
-if [ -d <%= @approot %>/code ]
+if [ ! -d <%= @approot %>/code ]
 then
-  echo 'already have a checkout'
-  cd $HERE/code/
-  git checkout $BRANCH
-  git pull origin $BRANCH
-  cd $ORIG_DIR
-
-  PIP=$VENV/bin/pip
-  $PIP install -e <%= @approot $>/code
-else
-
-  echo 'no checkout, will create'
-  $HERE/make_app.sh inplace $BRANCH
-  $HERE/make_current.sh $HERE/versions/inplace
+  git clone https://github.com/akvo/butler.git $CODE
 fi
+
+cd $CODE
+git checkout $BRANCH
+git pull origin $BRANCH
+cd $ORIG_DIR
+
+PIP=$VENV/bin/pip
+$PIP install -e $CODE
