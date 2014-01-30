@@ -1,2 +1,3 @@
 #!/bin/bash
-<%= @approot %>/venv/bin/python <%= @approot %>/code/akvo/manage.py $@
+export DJANGO_SETTINGS='butler.settings'
+<%= @approot %>/venv/bin/python <%= @approot %>/venv/bin/django-admin.py $@
