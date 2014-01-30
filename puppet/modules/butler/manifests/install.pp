@@ -66,7 +66,7 @@ class butler::install {
         content => hiera('butler_puppetdb_key'),
         owner   => $username,
         group   => $username,
-        mode    => '0500',
+        mode    => '0400',
         require => File[$approot]
     }
 
@@ -75,7 +75,7 @@ class butler::install {
         content => hiera('butler_puppetdb_cert'),
         owner   => $username,
         group   => $username,
-        mode    => '0500',
+        mode    => '0400',
         require => File[$approot]
     }
 
