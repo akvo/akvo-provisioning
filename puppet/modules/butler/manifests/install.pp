@@ -52,5 +52,31 @@ class butler::install {
         mode    => '0744',
         require => File[$approot]
     }
-    
+
+    file { "${approot}/ssl":
+        ensure  => directory,
+        owner   => $username,
+        group   => $username,
+        mode    => '0500',
+        require => File[$approot]
+    }
+
+    file { "${approot}/ssl/puppetdb_key":
+        ensure  => present,
+        content => hiera('butler_puppetdb_key'),
+        owner   => $username,
+        group   => $username,
+        mode    => '0500',
+        require => File[$approot]
+    }
+
+    file { "${approot}/ssl/puppetdb_cert":
+        ensure  => present,
+        content => hiera('butler_puppetdb_cert'),
+        owner   => $username,
+        group   => $username,
+        mode    => '0500',
+        require => File[$approot]
+    }
+
 }
