@@ -19,6 +19,7 @@ class butler::install {
     # create all of the directories
     $approot = $butler::params::approot
     $username = $butler::params::username
+    $env_vars = $butler::params::env_vars
     $media_root = $butler::params::media_root
 
 
