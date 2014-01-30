@@ -33,6 +33,7 @@ sudo /usr/bin/supervisorctl stop butler_worker
 
 $MANAGE syncdb --noinput
 $MANAGE migrate
+$MANAGE collectstatic --noinput
 
 sudo /usr/bin/supervisorctl start butler_web
 sudo /usr/bin/supervisorctl start butler_worker
