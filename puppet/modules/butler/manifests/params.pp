@@ -25,7 +25,9 @@ class butler::params {
         'PUPPETDB_URL'           => $puppetdb_url,
         'DATABASE_URL'           => $butler::params::database_url,
         'BUTLER_PUPPETDB_KEY'    => "${approot}/ssl/puppetdb_key",
-        'BUTLER_PUPPETDB_CERT'    => "${approot}/ssl/puppetdb_cert",
+        'BUTLER_PUPPETDB_CERT'   => "${approot}/ssl/puppetdb_cert",
+        'STATIC_ROOT'            => "${media_root}/static",
+        'MEDIA_ROOT'             => "${media_root}/media",
     }
 
 }
