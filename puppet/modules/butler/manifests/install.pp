@@ -21,24 +21,7 @@ class butler::install {
     $username = $butler::params::username
     $media_root = $butler::params::media_root
 
-    
-    # make the directory that we'll use as the 'base'
-    file { $approot:
-        ensure  => directory,
-        owner   => $username,
-        group   => $username,
-        mode    => '0755',
-        require => [ User[$username], Group[$username], File['/var/akvo/'] ],
-    }
-    
-    file { "${approot}/logs":
-        ensure  => directory,
-        owner   => $username,
-        group   => 'www-data',
-        mode    => '0775',
-        require => [ Package['nginx'], File[$approot] ],
-    }
-    
+
     # make sure the mediaroot exists
     file { $media_root:
         ensure  => directory,
