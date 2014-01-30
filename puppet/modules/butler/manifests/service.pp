@@ -16,7 +16,7 @@ class butler::service {
 
     supervisord::service { "butler_worker":
         user      => $butler::params::username,
-        command   => "${approot}/venv/bin/django-admin.py celeryd -BEl info",
+        command   => "${approot}/venv/bin/celery worker --config butler.settings --beat --events --loglevel info",
         directory => $butler::params::approot,
         env_vars  => $butler::params::env_vars
     }
