@@ -17,9 +17,11 @@ class butler::params {
     $debug = hiera('butler_debug', false)
 
     $env_vars = {
-        'SECRET_KEY'   => hiera('butler_secret_key'),
-        'PUPPETDB_URL' => hiera('puppetdb_server'),
-        'DATABASE_URL' => $butler::params::database_url
+        'DEBUG'                  => $debug,
+        'DJANGO_SETTINGS_MODULE' => 'butler.settings',
+        'SECRET_KEY'             => hiera('butler_secret_key'),
+        'PUPPETDB_URL'           => hiera('puppetdb_server'),
+        'DATABASE_URL'           => $butler::params::database_url
     }
 
 }
