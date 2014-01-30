@@ -28,7 +28,7 @@ class butler::install {
         owner   => $username,
         group   => $username,
         mode    => '0755',
-        require => Class['Akvoapp']
+        require => Akvoapp['butler']
     }
     
     
