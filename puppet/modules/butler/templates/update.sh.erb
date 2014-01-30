@@ -26,7 +26,7 @@ git pull origin $BRANCH
 cd $ORIG_DIR
 
 PIP=$VENV/bin/pip
-$PIP install -e $CODE --upgrade --pre
+$PIP install -e $CODE[mysql] --upgrade --pre
 
 sudo /usr/bin/supervisorctl stop butler_web
 sudo /usr/bin/supervisorctl stop butler_worker
