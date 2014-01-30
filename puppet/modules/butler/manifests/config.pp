@@ -21,6 +21,10 @@ class butler::config {
         proxy_url  => "http://localhost:${butler::params::port}",
         access_log => "${approot}/logs/butler-nginx-access.log",
         error_log  => "${approot}/logs/butler-nginx-error.log",
+        static_dirs        => {
+            "/static/"     => "${media_root}/static",
+            "/media/"      => "${media_root}/media",
+        }
     }
 
 
