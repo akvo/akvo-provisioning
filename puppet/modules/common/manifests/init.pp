@@ -23,7 +23,8 @@ class common {
         'finger',
         'members',
         'zip',
-        'rkhunter'
+        'rkhunter',
+        'zsh'
     ]
 
     package { $useful_packages:
