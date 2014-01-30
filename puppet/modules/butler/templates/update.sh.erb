@@ -1,11 +1,14 @@
 #!/bin/bash
 
+set -e
+
 BRANCH=$1
 ORIG_DIR=`pwd`
 HERE="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 VENV=<%= @approot %>/venv
 CODE=<%= @approot %>/code
+MANAGE=<%= @approot %>/manage.sh
 
 if [ ! -d $VENV ]
 then
@@ -24,3 +27,12 @@ cd $ORIG_DIR
 
 PIP=$VENV/bin/pip
 $PIP install -e $CODE
+
+/usr/bin/supervisorctl stop butler_web
+/usr/bin/supervisorctl stop butler_worker
+
+$MANAGE syncdb
+$MANAGE migrate
+
+/usr/bin/supervisorctl start butler_web
+/usr/bin/supervisorctl start butler_worker
