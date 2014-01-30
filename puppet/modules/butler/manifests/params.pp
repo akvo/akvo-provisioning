@@ -14,6 +14,7 @@ class butler::params {
     $port = 8010
     $butler_debug = hiera('butler_debug', false)
     $butler_secret_key = hiera('butler_secret_key')
+    $debug = hiera('butler_debug', false)
 
     $env_vars = {
         'SECRET_KEY'   => hiera('butler_secret_key'),
