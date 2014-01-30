@@ -7,7 +7,7 @@ class butler::install {
     # make sure we also include the Akvoapp stuff, and that it is loaded
     # before this module
     akvoapp { $butler::params::username:
-        deploy_key => hiera('butler-deploy_private_key')
+        deploy_key => hiera('butler-deploy_public_key')
     }
 
     
