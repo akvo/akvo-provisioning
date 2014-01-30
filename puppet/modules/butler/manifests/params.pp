@@ -16,7 +16,7 @@ class butler::params {
     $butler_secret_key = hiera('butler_secret_key')
 
     $env_vars = {
-        'SECRET_KEY' => hiera('butler_secret_key'),
+        'SECRET_KEY'   => hiera('butler_secret_key'),
         'PUPPETDB_URL' => hiera('puppetdb_server'),
         'DATABASE_URL' => $butler::params::database_url
     }
