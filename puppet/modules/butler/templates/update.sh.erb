@@ -28,11 +28,11 @@ cd $ORIG_DIR
 PIP=$VENV/bin/pip
 $PIP install -e $CODE --upgrade --pre
 
-/usr/bin/supervisorctl stop butler_web
-/usr/bin/supervisorctl stop butler_worker
+sudo /usr/bin/supervisorctl stop butler_web
+sudo /usr/bin/supervisorctl stop butler_worker
 
 $MANAGE syncdb
 $MANAGE migrate
 
-/usr/bin/supervisorctl start butler_web
-/usr/bin/supervisorctl start butler_worker
+sudo /usr/bin/supervisorctl start butler_web
+sudo /usr/bin/supervisorctl start butler_worker
