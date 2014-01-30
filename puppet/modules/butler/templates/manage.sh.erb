@@ -1,6 +1,4 @@
 #!/bin/bash
-export DJANGO_SETTINGS_MODULE='butler.settings'
-
 <% @env_vars.each_pair do |key, value| -%>
 <%= "export #{key}='#{value}'" %>
 <% end -%>

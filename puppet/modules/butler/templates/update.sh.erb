@@ -31,7 +31,7 @@ $PIP install -e $CODE[mysql] --upgrade --pre
 sudo /usr/bin/supervisorctl stop butler_web
 sudo /usr/bin/supervisorctl stop butler_worker
 
-$MANAGE syncdb
+$MANAGE syncdb --noinput
 $MANAGE migrate
 
 sudo /usr/bin/supervisorctl start butler_web
