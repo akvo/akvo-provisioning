@@ -5,6 +5,8 @@ server {
         <%= site_hostname %>
         <%- end %>;
 
+    server_tokens off;
+
     access_log <%= @app_path %>/logs/nginx-access.log;
     error_log <%= @app_path %>/logs/nginx-error.log;
 

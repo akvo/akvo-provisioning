@@ -1,5 +1,6 @@
 <% if @ssl %>
 server {
+    server_tokens off;
     listen 80;
     server_name <%= @hostname %>;
     rewrite ^(.*) https://<%= @hostname %>$1;
@@ -7,6 +8,8 @@ server {
 <% end -%>
 
 server {
+
+    server_tokens off;
 
     <% if @ssl %>
         listen 443;
