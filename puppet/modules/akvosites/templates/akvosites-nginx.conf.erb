@@ -28,6 +28,7 @@ server {
     }
 
     location ~ .php$ {
+        root <%= @app_path %>/code/;
         include /etc/nginx/fastcgi_params;
         fastcgi_pass    localhost:9000;
         fastcgi_index   index.php;
