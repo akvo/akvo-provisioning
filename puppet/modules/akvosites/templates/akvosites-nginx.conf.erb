@@ -22,11 +22,9 @@ server {
             break;
         }
 
-        <% if @wordpress %>
         if (!-e $request_filename) {
             rewrite ^(.+)$ /index.php?q=$1 last;
         }
-        <%- end %>
     }
 
     location ~ .php$ {
