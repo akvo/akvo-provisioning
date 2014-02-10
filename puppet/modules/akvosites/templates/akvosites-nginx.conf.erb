@@ -3,6 +3,7 @@ server {
     server_name
         <% @akvosites_hostnames.each do |site_hostname| %>
         <%= site_hostname %>
+        www.<%= site_hostname %>
         <%- end %>;
 
     server_tokens off;
