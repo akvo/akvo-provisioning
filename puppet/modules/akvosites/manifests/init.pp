@@ -7,7 +7,7 @@ class akvosites {
     $akvosites_hostnames = hiera('akvosites_hostnames')
     $app_path = '/var/akvo/akvosites'
 
-    package { 'php5-gd':
+    package { ['php5-gd', 'php5-curl']:
         ensure  => installed,
         require => Package['php5-fpm'],
         notify  => Service['php5-fpm']
