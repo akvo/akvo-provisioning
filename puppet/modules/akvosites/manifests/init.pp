@@ -5,7 +5,7 @@ class akvosites {
     $db_password = hiera('akvosites_database_password')
 
     $akvosites_hostnames = hiera('akvosites_hostnames')
-    $app_path = '/var/akvo/akvosites/code'
+    $app_path = '/var/akvo/akvosites'
 
     php::app { 'akvosites':
         app_hostnames        => $akvosites_hostnames,
