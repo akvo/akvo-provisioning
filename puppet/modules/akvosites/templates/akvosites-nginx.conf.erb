@@ -1,7 +1,7 @@
 server {
     listen 80;
     server_name
-        <% @consortia_hostnames.each do |site_hostname| %>
+        <% @akvosites_hostnames.each do |site_hostname| %>
         <%= site_hostname %>
         <%- end %>;
 
