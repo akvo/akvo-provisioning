@@ -8,7 +8,7 @@ server {
 
     server_tokens off;
 
-    access_log <%= @app_path %>/logs/nginx-access.log;
+    access_log <%= @app_path %>/logs/$host.access.log;
     error_log <%= @app_path %>/logs/nginx-error.log;
 
     include <%= @app_path %>/conf/*.conf;
