@@ -29,10 +29,13 @@ server {
 
     location ~ .php$ {
         root <%= @app_path %>/code/;
+
         include /etc/nginx/fastcgi_params;
         fastcgi_pass    localhost:9000;
         fastcgi_index   index.php;
         fastcgi_param   SCRIPT_FILENAME     <%= @app_path %>/code/$fastcgi_script_name;
         fastcgi_param   PATH_INFO           $fastcgi_script_name;
+
+        client_max_body_size 30m;
     }
 }
