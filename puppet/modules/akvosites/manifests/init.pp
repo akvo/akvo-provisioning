@@ -21,6 +21,10 @@ class akvosites {
         config_file_contents => template('akvosites/akvosites-nginx.conf.erb')
     }
 
+    backups::dir { "akvosites_code":
+        path => "${app_path}/code"
+    }
+
     file { "/var/akvo/akvosites/code/wp-config.php":
         ensure  => present,
         owner   => 'akvosites',

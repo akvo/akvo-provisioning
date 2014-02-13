@@ -18,13 +18,13 @@ class homepage {
         config_file_contents => template('homepage/homepage-nginx.conf.erb')
     }
 
-    file { "/var/akvo/homepage/code/wp-config.php":
+    file { '/var/akvo/homepage/code/wp-config.php':
         ensure  => present,
         owner   => 'homepage',
         group   => 'homepage',
         mode    => '0444',
         content => template('homepage/wp-config.php.erb'),
-        require => File["/var/akvo/homepage/code"]
+        require => File['/var/akvo/homepage/code']
     }
 
     database::my_sql::db { 'homepage':
@@ -34,6 +34,10 @@ class homepage {
 
     named::service_location { 'homepage':
         ip => hiera('external_ip')
+    }
+
+    backups::dir { 'homepage_code':
+        path => '/var/akvo/homepage/code'
     }
 
 }
