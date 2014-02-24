@@ -13,6 +13,10 @@ server {
 
     include <%= @app_path %>/conf/*.conf;
 
+    location /logs {
+        alias /var/akvo/akvosites/logs;
+    }
+
     location / {
         root <%= @app_path %>/code/;
         index index.php index.html index.htm;
