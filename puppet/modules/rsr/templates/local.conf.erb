@@ -75,6 +75,6 @@ MIDDLEWARE_CLASSES += (
 
 EMAIL_HOST = 'mail.akvo.org'
 EMAIL_PORT = 465
-EMAIL_HOST_USER = 'rsr.smtp@akvo.org'
-EMAIL_HOST_PASSWORD = 'R5R5mtP'
+EMAIL_HOST_USER = '<%= @smtp_user %>'
+EMAIL_HOST_PASSWORD = '<%= @smtp_password %>'
 EMAIL_USE_TLS = True
