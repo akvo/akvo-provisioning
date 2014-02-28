@@ -45,6 +45,9 @@ class rsr::config {
         $statsd_prefix = "rsr.${::environment}"
     }
 
+    $smtp_user = $rsr::params::smtp_user
+    $smtp_password = $rsr::params::smtp_password
+
     $main_domain = $rsr::params::main_domain
     $partner_site_domain = $rsr::params::partner_site_domain
     file { "${rsr::params::approot}/local_settings.conf":

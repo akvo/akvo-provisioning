@@ -72,3 +72,10 @@ MIDDLEWARE_CLASSES += (
 )
 
 <% end %>
+
+EMAIL_BACKEND = 'django_smtp_ssl.SSLEmailBackend'
+EMAIL_HOST = 'mail.akvo.org'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = '<%= @smtp_user %>'
+EMAIL_HOST_PASSWORD = '<%= @smtp_password %>'
+EMAIL_USE_TLS = True
