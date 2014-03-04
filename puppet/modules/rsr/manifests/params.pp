@@ -13,6 +13,8 @@ class rsr::params {
     $site_id = hiera('rsr_site_id')
     $rsr_debug = hiera('rsr_debug', false)
     $main_domain = hiera('rsr_main_domain', "rsr.${base_domain}")
+    $smtp_user = hiera('rsr_smtp_user')
+    $smtp_password = hiera('rsr_smtp_password')
 
     $rsr_secret_key = hiera('rsr_secret_key')
     $additional_rsr_domains = hiera_array('rsr_additional_rsr_domains', [])
