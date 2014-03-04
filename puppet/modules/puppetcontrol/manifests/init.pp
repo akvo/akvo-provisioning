@@ -42,6 +42,13 @@ class puppetcontrol {
         require => File['/puppet/.ssh']
     }
 
+    ssh_authorized_key { "puppet_key":
+        ensure  => present,
+        key     => hiera('puppet_public_key'),
+        type    => 'ssh-rsa',
+        user    => 'puppet',
+        require => File['/puppet/.ssh/authorized_keys']
+    }
 
     # add some additional helper scripts
     file { '/puppet/bin/':
