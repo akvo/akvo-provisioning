@@ -34,9 +34,11 @@ def _get_config_file(filename):
     return os.path.join(env.config_dir, filename)
 
 
-def _get_config_file_path(config_key, default_path):
+def _get_config_file_path(config_key, default_path=None):
     path = env.config.get(config_key)
     if path is None:
+        if default_path is None:
+            return None
         # not specified, so fall back on the default path, which might be relative to the config dir
         return os.path.join(env.config_dir, default_path)
 
@@ -53,6 +55,8 @@ def _get_config_file_path(config_key, default_path):
         return os.path.join(base_dir, env_name, relpath)
     else:
         # we will assume that the path is absolute, or relative to our config dir
+        if default_path is None:
+            return None
         return os.path.join(env.config_dir, default_path)
 
 
@@ -133,8 +137,8 @@ def create_client_cert():
     sudo('mkdir -p /var/lib/puppet/ssl/{private_keys,certs}')
     sudo('chown -R puppet.puppet /var/lib/puppet/ssl')
 
-    cacrt = env.config.get('puppetdb_ca_cert', _get_key_file_path('puppetdb-ca.crt'))
-    cakey = env.config.get('puppetdb_ca_key', _get_key_file_path('puppetdb-ca.key'))
+    cacrt = _get_config_file_path('puppetdb_ca_cert') or _get_key_file_path('puppetdb-ca.crt')
+    cakey = _get_config_file_path('puppetdb_ca_key') or _get_key_file_path('puppetdb-ca.key')
 
     put(cacrt, '/var/lib/puppet/ssl/certs/ca.pem', use_sudo=True)
     hostname = run('hostname -f').strip()
@@ -347,7 +351,7 @@ def firstclone():
     """
     with cd('/puppet'):
         if not files.exists('/puppet/checkout'):
-            sudo('git clone https://github.com:akvo/akvo-provisioning.git checkout', user='puppet')
+            sudo('git clone https://github.com/akvo/akvo-provisioning.git checkout', user='puppet')
             sudo('chown -R puppet.puppet /puppet/checkout')
             with cd('/puppet/checkout'):
                 puppet_branch = env.config.get('puppet_branch', 'master')
@@ -437,6 +441,10 @@ def uat():
 
 def live():
     on_environment('live')
+
+
+def sup():
+    on_environment('support')
 
 
 def up():
