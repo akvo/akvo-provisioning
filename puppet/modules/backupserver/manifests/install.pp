@@ -41,6 +41,11 @@ class backupserver::install {
         require => File['/backupserver/.ssh'],
     }
 
+    # let everyone know where we are
+    named::service_location { 'backupserver':
+        ip => hiera('external_ip')
+    }
+
     # collect any exported keys
     Ssh_authorized_key <<| tag == 'backupserver' |>>
 
