@@ -1,7 +1,8 @@
 
 define backups::server (
     $username,
-    $remote_host, $dest_dir, $host_key,
+    $remote_host, $dest_dir,
+    $host_key = undef,
     $password = undef,
     $host_key_type = 'rsa', $port = 22, $use_sftp = false
 ) {
@@ -24,11 +25,13 @@ define backups::server (
         require => File['/backups/bin']
     }
 
-    sshkey { "backup-server-${name}":
-        ensure => present,
-        name   => $remote_host,
-        type   => $host_key_type,
-        key    => $host_key
+    if $host_key {
+        sshkey { "backup-server-${name}":
+            ensure => present,
+            name   => $remote_host,
+            type   => $host_key_type,
+            key    => $host_key
+        }
     }
 
 }
