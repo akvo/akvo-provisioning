@@ -420,6 +420,18 @@ def bootstrap(verbose=False):
 
 
 # --------------------
+# management
+# --------------------
+
+def upgrade_packages():
+    # not sure why, but using fabric's sudo method
+    # will not work here with the sudoers.d config which
+    # allows puppet to run apt-get...
+    run('sudo apt-get update')
+    run('sudo apt-get upgrade')
+
+
+# --------------------
 # shortcuts
 # --------------------
 
@@ -443,7 +455,7 @@ def live():
     on_environment('live')
 
 
-def sup():
+def support():
     on_environment('support')
 
 
