@@ -28,7 +28,7 @@ class butler::params {
         'BUTLER_PUPPETDB_CERT'   => "${approot}/ssl/puppetdb_cert",
         'STATIC_ROOT'            => "${media_root}/static",
         'MEDIA_ROOT'             => "${media_root}/media",
-        'ALLOWED_HOSTS'          => hiera_array('butler_hosts', ["butler.${base_domain}"])
+        'ALLOWED_HOSTS'          => hiera('butler_hosts', ["butler.${base_domain}"])
     }
 
 }
