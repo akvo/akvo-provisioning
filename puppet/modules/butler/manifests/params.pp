@@ -17,6 +17,8 @@ class butler::params {
     $butler_debug = hiera('butler_debug', false)
     $butler_secret_key = hiera('butler_secret_key')
     $debug = hiera('butler_debug', false)
+    $butler_hosts = hiera('butler_hosts', ["butler.${base_domain}"])
+
 
     $env_vars = {
         'DEBUG'                  => $debug,
@@ -28,7 +30,7 @@ class butler::params {
         'BUTLER_PUPPETDB_CERT'   => "${approot}/ssl/puppetdb_cert",
         'STATIC_ROOT'            => "${media_root}/static",
         'MEDIA_ROOT'             => "${media_root}/media",
-        'ALLOWED_HOSTS'          => hiera('butler_hosts', ["butler.${base_domain}"])
+        'ALLOWED_HOSTS'          => join($butler_hosts, ',')
     }
 
 }
