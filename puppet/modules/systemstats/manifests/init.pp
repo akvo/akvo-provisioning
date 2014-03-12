@@ -30,7 +30,7 @@ class systemstats {
         'packages_available',
         'restart_required',
     ]:
-        user    => 'root',
+        user    => 'stats',
         require => File['/usr/local/bin/sendstat']
     }
 
