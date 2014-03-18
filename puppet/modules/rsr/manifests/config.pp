@@ -40,7 +40,7 @@ class rsr::config {
     # RSR env-specific config
     $use_graphite = hiera('rsr_use_graphite')
     if $use_graphite {
-        $statsd_host = hiera('statsd_host', "statsd.${base_domain}")
+        $statsd_host = '127.0.0.1'
         $statsd_port = 8125
         $statsd_prefix = "rsr.${::environment}"
     }

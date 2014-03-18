@@ -20,7 +20,7 @@
     "graphite_database_host": "mysql",
     "graphite_database_user": "graphite",
     "graphite_database_name": "graphite",
-    "statsd_host": "local",
+    "graphite_host": "127.0.0.1",
 
     "homepage_wordpress_database_password": "password",
     "homepage_hostnames": [],

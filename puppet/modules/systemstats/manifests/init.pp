@@ -18,7 +18,7 @@ class systemstats {
         require => User['stats'],
     }
 
-    $statsd_host = hiera('statsd_host')
+    $statsd_host = '127.0.0.1'
     file { '/usr/local/bin/sendstat':
         ensure  => present,
         owner   => 'root',
