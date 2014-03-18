@@ -7,13 +7,8 @@ class pythonsupport::standard {
 
     ensure_packages($required_packages)
 
-    # we install distribute and virtualenv with pip to get a newer version than the one
+    # we install virtualenv with pip to get a newer version than the one
     # packaged by ubuntu 12.04
-    package { 'distribute':
-        ensure   => latest,
-        provider => 'pip',
-        require  => Package['python-pip'],
-    }
 
     package { 'virtualenv':
         ensure => 'latest',
