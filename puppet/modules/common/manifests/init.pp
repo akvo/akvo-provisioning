@@ -63,5 +63,6 @@ class common {
     include common::resolv
     include systemstats
     include mta
+    include statsd
 }
 
