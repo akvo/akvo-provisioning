@@ -13,7 +13,7 @@ define systemstats::stat ( $user = 'stats' ) {
         command => "bash -c /var/stats/bin/${name}.sh",
         user    => $user,
         hour    => '*',
-        minute  => '*/15'
+        minute  => '*/2'
     }
 
 }
