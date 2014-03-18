@@ -41,8 +41,12 @@ class munin::master {
     }
 
     # let the munin nodes know where we are
-    @@munin::masterinfo { "munin":
-        ip => hiera('internal_ip')
+    #@@munin::masterinfo { "munin":
+    #    ip => hiera('internal_ip')
+    #}
+
+    resources { 'munin::masterinfo':
+        purge => true
     }
 
 }
