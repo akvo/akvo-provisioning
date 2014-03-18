@@ -432,6 +432,7 @@ def upgrade_packages():
 
 
 def reboot():
+    run('hostname -f')
     run('sudo reboot')
 
 
