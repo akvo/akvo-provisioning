@@ -93,6 +93,13 @@ class puppetcontrol {
         require => User['puppet'],
     }
 
+    # let the puppet user do restart the server
+    sudo::allow_command { 'puppet_reboot':
+        user    => 'puppet',
+        command => '/usr/sbin/reboot',
+        require => User['puppet'],
+    }
+
 
     # configure puppet
     file { '/etc/puppet/puppet.conf':
