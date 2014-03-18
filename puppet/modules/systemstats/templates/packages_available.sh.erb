@@ -4,8 +4,7 @@ COUNTS=`/usr/lib/update-notifier/update-motd-updates-available | sed '/^$/d' | s
 
 if [[ -z $COUNTS ]]
 then
-    TOTAL=0
-    SECURITY=0
+    exit 0
 else
     read -ra AVAILABLE <<< $COUNTS
     TOTAL="${AVAILABLE[0]}"
