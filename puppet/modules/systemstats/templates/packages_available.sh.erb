@@ -2,7 +2,7 @@
 
 COUNTS=`/usr/lib/update-notifier/update-motd-updates-available | sed '/^$/d' | sed 's/[^0-9]//g'`
 
-if [ -z $COUNTS ]
+if [[ -z $COUNTS ]]
 then
     TOTAL=0
     SECURITY=0
@@ -12,5 +12,5 @@ else
     SECURITY="${AVAILABLE[1]}"
 fi
 
-sendstat packages.total $TOTAL g
-sendstat packages.security $SECURITY g
+/usr/local/bin/sendstat packages.total $TOTAL g
+/usr/local/bin/sendstat packages.security $SECURITY g
