@@ -431,6 +431,10 @@ def upgrade_packages():
     run('sudo apt-get upgrade')
 
 
+def reboot():
+    run('sudo reboot')
+
+
 # --------------------
 # shortcuts
 # --------------------
