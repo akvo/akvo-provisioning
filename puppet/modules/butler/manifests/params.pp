@@ -19,7 +19,6 @@ class butler::params {
     $debug = hiera('butler_debug', false)
     $butler_hosts = hiera('butler_hosts', ["butler.${base_domain}"])
 
-
     $env_vars = {
         'DEBUG'                  => $debug,
         'DJANGO_SETTINGS_MODULE' => 'butler.settings',
