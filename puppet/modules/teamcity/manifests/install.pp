@@ -1,5 +1,5 @@
 class teamcity::install {
-    $version = '8.0.2'
+    $version = '8.1.1'
     $unpackdir = "/opt/teamcity/versions/${version}/"
 
     file { ['/opt/teamcity/tarballs/', '/opt/teamcity/versions', $unpackdir]:

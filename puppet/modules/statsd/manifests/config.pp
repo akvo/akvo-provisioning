@@ -12,9 +12,4 @@ class statsd::config {
         require => Exec['clone_statsd'],
     }
 
-    $base_domain = hiera('base_domain')
-    nginx::proxy { "statsd.${base_domain}":
-        proxy_url          => "http://localhost:8126",
-    }
-
 }
