@@ -12,6 +12,7 @@ class common {
         'screen',
         'rsync',
         'iotop',
+        'htop',
         'man',
         'manpages',
         'dnsutils',
