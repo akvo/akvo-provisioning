@@ -1,7 +1,7 @@
 #!/bin/bash
 
 WORKDIR=/tmp/rsr-test-db/
-DBZIP='http://files.admin.akvo-ops.org/devdbs/rsr-test-db-small.zip'
+DBZIP='http://files.support.akvo-ops.org/devdbs/rsr-test-db-small.zip'
 
 rm -rfv $WORKDIR
 mkdir $WORKDIR
