@@ -29,7 +29,9 @@ class butler::params {
         'BUTLER_PUPPETDB_CERT'   => "${approot}/ssl/puppetdb_cert",
         'STATIC_ROOT'            => "${media_root}/static",
         'MEDIA_ROOT'             => "${media_root}/media",
-        'ALLOWED_HOSTS'          => join($butler_hosts, ',')
+        'ALLOWED_HOSTS'          => join($butler_hosts, ','),
+        'CACHE_BACKEND'          =>'django.core.cache.backends.memcached.MemcachedCache',
+        'CACHE_LOCATION'         => '127.0.0.1:11211'
     }
 
 }
