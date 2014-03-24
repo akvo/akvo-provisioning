@@ -15,7 +15,11 @@ class butler::install {
     include pythonsupport::mysql
     include pythonsupport::standard
 
-    
+
+    # we want memcached for caching the dashboard values
+    include memcached
+
+
     # create all of the directories
     $approot = $butler::params::approot
     $username = $butler::params::username
