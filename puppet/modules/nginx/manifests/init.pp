@@ -27,7 +27,10 @@ class nginx {
     }
 
     file { '/etc/nginx/sites-enabled/default':
-        ensure  => absent,
+        ensure  => present,
+        owner   => 'www-data',
+        mode    => 444,
+        source  => 'puppet:///modules/nginx/default',
         require => Package['nginx'],
     }
 
