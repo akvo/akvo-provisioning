@@ -19,6 +19,7 @@ class rsr::install {
     include pythonsupport::pil
     include pythonsupport::lxml
     include pythonsupport::standard
+
     include memcached
 
     file { "${approot}/versions":
