@@ -19,3 +19,6 @@
 [submodule "puppet/ext/puppetdb"]
 	path = puppet/ext/puppetdb
 	url = https://github.com/puppetlabs/puppetdb.git
+[submodule "puppet/ext/collectd"]
+	path = puppet/ext/collectd
+	url = https://github.com/pdxcat/puppet-module-collectd

@@ -62,6 +62,7 @@ class common {
     include sshd
     include common::repos
     include common::resolv
+    include common::collectd
     include systemstats
     include mta
     include statsd
