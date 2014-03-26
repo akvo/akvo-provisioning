@@ -7,7 +7,8 @@ class common::repos {
   # add extra repos
   $repos = [
       'ppa:chris-lea/node.js',
-      'ppa:nginx/stable'
+      'ppa:nginx/stable',
+      'ppa:gds/govuk'
   ]
   apt::ppa { $repos: }
 
