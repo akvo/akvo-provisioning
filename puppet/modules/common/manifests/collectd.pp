@@ -31,7 +31,7 @@ class common::collectd {
     }
 
     class { 'collectd::plugin::write_graphite':
-        graphitehost => 'graphite',
+        graphitehost => hiera('graphite_host'),
         protocol     => 'tcp',
     }
 
