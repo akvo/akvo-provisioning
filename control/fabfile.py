@@ -432,6 +432,11 @@ def upgrade_packages():
     run('sudo apt-get upgrade')
 
 
+def upgrade_packages_dist():
+    upgrade_packages()
+    run('sudo apt-get dist-upgrade')
+
+
 def reboot():
     run('hostname -f')
     run('sudo reboot')
