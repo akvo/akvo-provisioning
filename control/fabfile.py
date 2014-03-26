@@ -236,6 +236,7 @@ def get_latest_config():
         return
     with cd('/puppet/checkout'):
         run('git pull')
+        run('git submodule init')
         run('git submodule update --recursive')
 
 
