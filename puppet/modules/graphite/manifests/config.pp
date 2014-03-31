@@ -47,4 +47,6 @@ class graphite::config {
         proxy_url          => 'http://localhost:5115',
     }
 
+    Graphite::Client<<||>>
+
 }
