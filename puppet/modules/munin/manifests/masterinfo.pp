@@ -1,7 +1,7 @@
 
 define munin::masterinfo( $ip ) {
 
-    firewall { "munin master ${::ip}":
+    firewall { "200 munin master ${::ip}":
         action => accept,
         proto  => tcp,
         port   => 4949,
