@@ -25,6 +25,11 @@ class users {
         htpasswd => '$apr1$DPt9tUH8$tAcbjLu6KBUw5WshJzHr91'
     }
 
+    users::basic { 'kasper':
+        roles    => ['developer'],
+        ssh_key  => 'AAAAB3NzaC1yc2EAAAADAQABAAABAQCzPRJyKx7qYys96r77xP+J3rrIAXzu3xeYzRu3oxgXfLrJY55njIiWHzs824yBDjLFz5RglQ+6DoGmmmIIpxdGXwDH63M8QylUB7VU0xxKfw0+Nzsk5C6o1u43ouvmBYBmxSVDkd8HArJdAm2963Sh+Jqpw8HHKIap4jcM4kXlMOsB0Zd3JDBANWvrBvxJ7+xDDjkX4rI1HowKHiZTgkzhmVuA5suODNj9mpCuhUFLkfkNRWg6D55OyPX+3ZLiratr5sq5EtS3AjQ0WJ7AY7uatMmk0mBEiorKAfDJOoHpEuqtw4pd0Mc8MBskUkRjSNPQ2lNtm1P3NbZtg9oNOQdR',
+    }
+
     users::basic { 'stellan':
         roles    => ['developer'],
         allow    => ['munin'],
