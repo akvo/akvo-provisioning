@@ -12,7 +12,7 @@ class database::my_sql::server {
                 'default-character-set' => 'utf8'
             },
             mysqld => {
-                bind_address           => hiera('external_ip'),
+                bind_address           => '0.0.0.0',
                 default_storage_engine => 'MyISAM',
                 'collation-server'     => 'utf8_unicode_ci',
                 'character-set-server' => 'utf8',
