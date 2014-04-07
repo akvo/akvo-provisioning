@@ -19,6 +19,15 @@ define database::my_sql::db_exported (
     # there is no easy way to specify multiple hosts for the same user/DB, and we need both '%' access
     # (for applications on other services) and 'localhost' access (for people creating ssh tunnels to
     # access the DBs)
+
+    $user_resource = {
+        ensure        => present,
+        password_hash => mysql_password($password),
+        provider      => 'mysql',
+        require       => Class['mysql::server'],
+    }
+    ensure_resource('mysql_user', "${username}@localhost", $user_resource)
+
     mysql_grant { "${username}@localhost/${dbname}.*":
         ensure     => present,
         user       => "${username}@localhost",
