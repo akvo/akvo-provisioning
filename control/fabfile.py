@@ -424,12 +424,13 @@ def bootstrap(verbose=False):
 # management
 # --------------------
 
-def upgrade_packages():
+def upgrade_packages(y=None):
     # not sure why, but using fabric's sudo method
     # will not work here with the sudoers.d config which
     # allows puppet to run apt-get...
+    y = '-y' if y is not None else ''
     run('sudo apt-get update')
-    run('sudo apt-get upgrade')
+    run('sudo apt-get upgrade %s' % y)
 
 
 def upgrade_packages_dist():
