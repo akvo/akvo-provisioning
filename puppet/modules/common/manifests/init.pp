@@ -30,7 +30,6 @@ class common {
         ensure => 'latest',
     }
 
-
     # make sure pip is installed before anything tries to use it as a package provider
     package { 'python-pip':
         ensure => 'latest',
@@ -49,6 +48,7 @@ class common {
     include sshd
     include common::repos
     include common::resolv
+    include fw
 
     # the "lite" config flag turns off some monitoring processes; this helps reduce the load on
     # machines which don't need it, primarily vagrant development machines and temporary test VMs
@@ -57,6 +57,7 @@ class common {
             'rkhunter',
             'update-notifier-common'
         ] : ensure => latest
+
         }
 
         $rkrun = "/usr/bin/rkhunter --update --rwo --nocolors --skip-keypress --check"
@@ -67,7 +68,6 @@ class common {
             hour    => 2,
             minute  => 0
         }
-
         include backups
         include common::collectd
         include systemstats

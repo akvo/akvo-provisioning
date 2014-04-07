@@ -43,4 +43,10 @@ class nginx {
         require => Package['nginx'],
     }
 
+    firewall { '200 allow httpd access':
+        port   => [80, 443],
+        proto  => tcp,
+        action => accept,
+    }
+
 }
