@@ -58,4 +58,9 @@ class named {
     # Collect all exported dns record file lines
     Named::Exported_location <<| tag == $::environment |>>
 
+    firewall { '100 named':
+        port   => 53,
+        action => accept,
+        proto  => 'udp'
+    }
 }

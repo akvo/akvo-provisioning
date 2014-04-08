@@ -36,6 +36,8 @@ server {
         if (!-e $request_filename) {
             rewrite ^(.+)$ /index.php?q=$1 last;
         }
+
+        gzip_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript;
     }
 
     location ~ .php$ {
