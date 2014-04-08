@@ -20,18 +20,15 @@ class common {
         'wget',
         'curl',
         'molly-guard',
-        'update-notifier-common',
         'finger',
         'members',
         'zip',
-        'rkhunter',
         'zsh'
     ]
 
     package { $useful_packages:
         ensure => 'latest',
     }
-
 
     # make sure pip is installed before anything tries to use it as a package provider
     package { 'python-pip':
@@ -46,25 +43,37 @@ class common {
         ip => hiera('external_ip')
     }
 
-    $rkrun = "/usr/bin/rkhunter --update --rwo --nocolors --skip-keypress --check"
-    $rkmail = "/usr/bin/mail -s '[`hostname -f`] RKHunter run for `date +\"%d-%m-%Y\"' devops-reports@akvo.org"
-    cron { 'rkhunter':
-        command => "${rkrun} | ${rkmail}",
-        user    => root,
-        hour    => 2,
-        minute  => 0
-    }
-
-
-    include backups
     include locales
     include users
     include sshd
     include common::repos
     include common::resolv
-    include common::collectd
-    include systemstats
-    include mta
-    include statsd
+    include fw
+
+    # the "lite" config flag turns off some monitoring processes; this helps reduce the load on
+    # machines which don't need it, primarily vagrant development machines and temporary test VMs
+    if ( !hiera('lite', false) ) {
+        package { [
+            'rkhunter',
+            'update-notifier-common'
+        ] : ensure => latest
+
+        }
+
+        $rkrun = "/usr/bin/rkhunter --update --rwo --nocolors --skip-keypress --check"
+        $rkmail = "/usr/bin/mail -s '[`hostname -f`] RKHunter run for `date +\"%d-%m-%Y\"' devops-reports@akvo.org"
+        cron { 'rkhunter':
+            command => "${rkrun} | ${rkmail}",
+            user    => root,
+            hour    => 2,
+            minute  => 0
+        }
+        include backups
+        include common::collectd
+        include systemstats
+        include mta
+        include statsd
+    }
+
 }
 

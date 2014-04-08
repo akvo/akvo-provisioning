@@ -12,7 +12,7 @@ class database::my_sql::server {
                 'default-character-set' => 'utf8'
             },
             mysqld => {
-                bind_address           => hiera('external_ip'),
+                bind_address           => '0.0.0.0',
                 default_storage_engine => 'MyISAM',
                 'collation-server'     => 'utf8_unicode_ci',
                 'character-set-server' => 'utf8',
@@ -28,6 +28,9 @@ class database::my_sql::server {
 
     # collect any databases that services want
     Database::My_sql::Db_exported <<| tag == $::environment |>>
+
+    # and allow access to clients
+    Database::My_sql::Client <<| tag == $::environment |>>
 
     # we want to keep our data!
     include database::my_sql::backup_support

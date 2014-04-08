@@ -35,4 +35,8 @@ class common::collectd {
         protocol     => 'tcp',
     }
 
+    @@graphite::client { "collectd_${::fqdn}":
+        ip => hiera('external_ip')
+    }
+
 }

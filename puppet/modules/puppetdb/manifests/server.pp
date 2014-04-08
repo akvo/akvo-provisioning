@@ -5,7 +5,13 @@ class puppetdb::server {
     $base_domain = hiera('base_domain')
     $puppet_domain = "puppetdb.${base_domain}"
 
-    # make sure the package is installed and up to date
+    # make sure the package is installed and up to date;
+    # we have to ensure that the openjdk package is installed as there
+    # seems to be an issue with the oracle java installer which the
+    # puppetdb will install by default
+    package { 'openjdk-7-jre-headless':
+        ensure => 'latest'
+    } ->
     package { 'puppetdb':
         ensure => 'latest',
     }
