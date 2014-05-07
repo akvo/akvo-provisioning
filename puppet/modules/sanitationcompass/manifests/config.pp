@@ -21,4 +21,11 @@ class sanitationcompass::config {
         access_log          => "${approot}/logs/nginx-access.log",
         error_log           => "${approot}/logs/nginx-error.log",
     }
+
+
+    @@teamcity::deploykey { "sanitationcompass-${::environment}":
+        service     => 'sanitationcompass',
+        environment => $::environment,
+        key         => hiera('sanitationcompass-deploy_private_key'),
+    }
 }
