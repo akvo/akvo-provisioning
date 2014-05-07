@@ -16,10 +16,10 @@ class sanitationcompass::config {
     nginx::proxy { ["sanitationcompass.${base_domain}", 'sanitationcompass.info']:
         proxy_url          => "http://localhost:${sanitationcompass::port}",
         static_dirs        => {
-            "/media/admin/" => "${approot}/venv/lib/python2.7/site-packages/django/contrib/admin/static/admin/",
+            "/media/admin/" => "${sanitationcompass::approot}/venv/lib/python2.7/site-packages/django/contrib/admin/static/admin/",
         },
-        access_log          => "${approot}/logs/nginx-access.log",
-        error_log           => "${approot}/logs/nginx-error.log",
+        access_log          => "${sanitationcompass::approot}/logs/nginx-access.log",
+        error_log           => "${sanitationcompass::approot}/logs/nginx-error.log",
     }
 
 
