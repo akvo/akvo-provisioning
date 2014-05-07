@@ -17,7 +17,6 @@ class sanitationcompass::config {
         proxy_url          => "http://localhost:${sanitationcompass::port}",
         static_dirs        => {
             "/media/admin/" => "${approot}/venv/lib/python2.7/site-packages/django/contrib/admin/static/admin/",
-            "/media/"       => $rsr::params::media_root
         },
         access_log          => "${approot}/logs/nginx-access.log",
         error_log           => "${approot}/logs/nginx-error.log",
