@@ -1,7 +1,7 @@
 
 class sanitationcompass::config {
 
-    database::my_sql::db { 'sanitationcompass':
+    database::my_sql::db { 'sanitcompass':
         password   => $sanitationcompass::database_password,
         reportable => false
     }
