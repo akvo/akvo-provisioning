@@ -1,0 +1,23 @@
+#!/bin/bash
+
+ORIG_DIR=`pwd`
+
+NAME=$1
+BRANCH=$2
+
+ROOT=<%= @approot %>/versions/$NAME
+
+mkdir -p $ROOT
+virtualenv $ROOT/venv
+
+git clone https://github.com/akvo/akvo-sanitationcompass.git $ROOT/code
+cd $ROOT/code
+git checkout $BRANCH
+cd $ORIG_DIR
+
+PIP=$ROOT/venv/bin/pip
+
+# Unfortunately pyPdf is not hosted properly on PyPI. This may be removed once
+# the akvo-hosted devpi server is in place.
+$PIP install --allow-external pyPdf --allow-unverified pyPdf -r $ROOT/code/scripts/requirements.txt
+$PIP install -r $ROOT/code/scripts/requirements-live.txt
