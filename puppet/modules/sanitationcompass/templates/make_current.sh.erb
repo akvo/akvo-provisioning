@@ -1,0 +1,12 @@
+#!/bin/bash
+
+APP_DIR=<%= @approot %>/versions/$1
+
+sudo supervisorctl stop sanitationcompass
+
+rm -f <%= @approot %>/code
+rm -f <%= @approot %>/venv
+ln -s $APP_DIR/code <%= @approot %>/code
+ln -s $APP_DIR/venv <%= @approot %>/venv
+
+sudo supervisorctl start sanitationcompass

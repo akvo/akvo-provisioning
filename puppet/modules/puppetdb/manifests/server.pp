@@ -13,7 +13,7 @@ class puppetdb::server {
         ensure => 'latest'
     } ->
     package { 'puppetdb':
-        ensure => 'latest',
+        ensure => '1.6.3-1puppetlabs1'  # version 2.0.0 refuses to start due to some obscure XML parsing issue
     }
 
     service { 'puppetdb':
