@@ -79,3 +79,16 @@ EMAIL_PORT = 465
 EMAIL_HOST_USER = '<%= @smtp_user %>'
 EMAIL_HOST_PASSWORD = '<%= @smtp_password %>'
 EMAIL_USE_TLS = True
+
+
+<% if @use_sentry %>
+# Set your DSN value
+RAVEN_CONFIG = {
+    'dsn': '<%= @sentry_dsn %>',
+}
+
+# Add raven to the list of installed apps
+INSTALLED_APPS = INSTALLED_APPS + (
+    'raven.contrib.django.raven_compat',
+)
+<% -end %>
