@@ -19,7 +19,7 @@ class sentry::config {
         require => File['/opt/sentry']
     }
 
-    database::my_sql::db { $db_username:
+    database::psql::db { $db_username:
         password => $db_password
     }
 
