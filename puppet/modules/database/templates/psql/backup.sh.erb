@@ -1,0 +1,26 @@
+#!/bin/bash
+#
+# Postgresql Backup Script
+#  Dumps psql databases to a file for another backup tool to pick up.
+#
+##### START CONFIG ###################################################
+
+USER='backup'
+DBNAME='<%= @dbname %>'
+PASS='<%= @backuppassword %>'
+PERIODICITY=$1
+DIR=/backups/data/psql/$PERIODICITY/
+
+##### STOP CONFIG ####################################################
+PATH=/usr/bin:/usr/sbin:/bin:/sbin
+
+TIMESTAMP=`date +%Y%m%d-%H%M%S`
+FILENAME="${DIR}/${DBNAME}-backup-${TIMESTAMP}.sql.gz"
+
+set -o pipefail
+
+mkdir -p $DIR
+find "${DIR}/" -type f -name "${DBNAME}-backup-*.sql.gz" -mtime +7 -delete
+
+PGPASSWORD=${PASS} pg_dump --host=psql --username=${USER} ${DBNAME} | gzip > $FILENAME
+

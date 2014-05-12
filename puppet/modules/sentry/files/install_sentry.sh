@@ -4,7 +4,7 @@
 
 PIP=/opt/sentry/venv/bin/pip
 
-$PIP install sentry[mysql]
+$PIP install sentry[postgres]
 
 /opt/sentry/venv/bin/sentry init /opt/sentry/conf.py --noinput
 

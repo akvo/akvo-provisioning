@@ -1,4 +1,4 @@
-define database::psql::db ( $password ) {
+define database::psql::db ( $password, $include_fw_rule = true ) {
 
     notice("postgresql database ${name}")
 
@@ -7,4 +7,10 @@ define database::psql::db ( $password ) {
         tag      => $::environment
     }
 
+    if ($include_fw_rule) {
+        @@database::psql::client { $name:
+            ip  => hiera('external_ip'),
+            tag => $::environment
+        }
+    }
 }

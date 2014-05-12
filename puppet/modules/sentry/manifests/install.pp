@@ -2,7 +2,7 @@
 class sentry::install {
 
     include pythonsupport::standard
-    include pythonsupport::mysql
+    include pythonsupport::psql
     
     user { 'sentry':
         ensure => present,
