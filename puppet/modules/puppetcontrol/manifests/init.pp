@@ -25,6 +25,9 @@ class puppetcontrol {
         require => [ User['puppet'], Group['puppet'] ]
     }
 
+    package { 'puppetdb-terminus':
+        ensure => '1.6.3-1puppetlabs1'
+    }
 
     # insert the ssh info
     file { '/puppet/.ssh':
