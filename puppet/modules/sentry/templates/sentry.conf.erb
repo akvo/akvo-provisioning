@@ -1,0 +1,23 @@
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': '<%= @db_name %>',
+        'USER': '<%= @db_username %>',
+        'PASSWORD': '<%= @db_password %>',
+        'HOST': 'psql',
+        'PORT': '',
+        'OPTIONS': {
+            'autocommit': True,
+        }
+    }
+}
+
+SENTRY_URL_PREFIX = '<%= @url_prefix %>'
+SENTRY_KEY = '<%= @secret_key %>'
+
+SENTRY_WEB_HOST = '127.0.0.1'
+SENTRY_WEB_PORT = <%= @port %>
+SENTRY_WEB_OPTIONS = {
+    'workers': 3,  # the number of gunicorn workers
+    'secure_scheme_headers': {'X-FORWARDED-PROTO': 'https'},  # detect HTTPS mode from X-Forwarded-Proto header
+}
