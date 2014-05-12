@@ -45,6 +45,11 @@ class rsr::config {
         $statsd_prefix = "rsr.${::environment}"
     }
 
+    $use_sentry = hiera('rsr_use_sentry', false)
+    if $use_sentry {
+        $sentry_dsn = hiera('rsr_sentry_dsn')
+    }
+
     $smtp_user = $rsr::params::smtp_user
     $smtp_password = $rsr::params::smtp_password
 
