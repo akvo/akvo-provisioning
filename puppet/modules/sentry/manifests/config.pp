@@ -29,7 +29,7 @@ class sentry::config {
 
     nginx::proxy { "sentry.${base_domain}":
         proxy_url => "http://localhost:${port}",
-        password_protected => false
+        htpasswd => false
     }
 
 }
