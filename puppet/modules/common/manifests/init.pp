@@ -49,6 +49,7 @@ class common {
     include common::repos
     include common::resolv
     include fw
+    include backups
 
     # the "lite" config flag turns off some monitoring processes; this helps reduce the load on
     # machines which don't need it, primarily vagrant development machines and temporary test VMs
@@ -68,7 +69,6 @@ class common {
             hour    => 2,
             minute  => 0
         }
-        include backups
         include common::collectd
         include systemstats
         include mta

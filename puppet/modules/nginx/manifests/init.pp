@@ -12,8 +12,10 @@ class nginx {
         hasrestart => true,
     }
 
-    class { 'collectd::plugin::nginx':
-        url => 'http://localhost:8181/status'
+    common::collectd_plugin { 'nginx':
+        args => {
+            url => 'http://localhost:8181/status'
+        }
     }
 
     file { '/etc/nginx/certs':

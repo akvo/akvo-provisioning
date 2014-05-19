@@ -29,8 +29,10 @@ class named {
     }
 
     # collectd stats
-    class { 'collectd::plugin::bind':
-        url => 'http://localhost:8053'
+    common::collectd_plugin { 'bind':
+        args => {
+            url => 'http://localhost:8053'
+        }
     }
 
     # configure the list of zones we will manage
