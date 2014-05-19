@@ -26,7 +26,7 @@ class puppetcontrol {
     }
 
     package { 'puppetdb-terminus':
-        ensure => '1.6.3-1puppetlabs1'
+        ensure => 'latest' #'1.6.3-1puppetlabs1'
     }
 
     # insert the ssh info
