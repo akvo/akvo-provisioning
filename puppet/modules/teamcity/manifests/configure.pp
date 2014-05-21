@@ -27,4 +27,7 @@ class teamcity::configure {
         require => File['/opt/teamcity/.BuildServer/config'],
     }
 
+    named::service_location { 'ci':
+        ip => hiera('external_ip')
+    }
 }

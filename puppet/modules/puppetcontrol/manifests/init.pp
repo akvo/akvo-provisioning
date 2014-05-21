@@ -25,6 +25,9 @@ class puppetcontrol {
         require => [ User['puppet'], Group['puppet'] ]
     }
 
+    package { 'puppetdb-terminus':
+        ensure => 'latest' #'1.6.3-1puppetlabs1'
+    }
 
     # insert the ssh info
     file { '/puppet/.ssh':
@@ -42,6 +45,13 @@ class puppetcontrol {
         require => File['/puppet/.ssh']
     }
 
+    ssh_authorized_key { "puppet_key":
+        ensure  => present,
+        key     => hiera('puppet_public_key'),
+        type    => 'ssh-rsa',
+        user    => 'puppet',
+        require => File['/puppet/.ssh/authorized_keys']
+    }
 
     # add some additional helper scripts
     file { '/puppet/bin/':
@@ -83,6 +93,13 @@ class puppetcontrol {
     sudo::allow_command { 'puppet_apt-get':
         user    => 'puppet',
         command => '/usr/bin/apt-get',
+        require => User['puppet'],
+    }
+
+    # let the puppet user do restart the server
+    sudo::allow_command { 'puppet_reboot':
+        user    => 'puppet',
+        command => '/usr/sbin/reboot',
         require => User['puppet'],
     }
 

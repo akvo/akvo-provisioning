@@ -1,0 +1,6 @@
+#!/bin/bash
+<% @env_vars.each_pair do |key, value| -%>
+<%= "export #{key}='#{value}'" %>
+<% end -%>
+
+<%= @approot %>/venv/bin/python <%= @approot %>/venv/bin/django-admin.py $@

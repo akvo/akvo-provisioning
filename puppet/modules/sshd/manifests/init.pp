@@ -40,4 +40,11 @@ class sshd {
     # Import hostkeys to all hosts.
     Sshkey <<| |>>
 
+    # allow ssh from anywhere
+    firewall { '100 allow ssh access':
+        port   => 22,
+        proto  => tcp,
+        action => accept,
+    }
+
 }

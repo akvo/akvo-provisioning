@@ -8,6 +8,8 @@ server {
     access_log <%= @app_path %>/logs/nginx-access.log;
     error_log <%= @app_path %>/logs/nginx-error.log;
 
+    server_tokens off;
+
     location / {
         root <%= @app_path %>/code/;
         index index.php index.html index.htm;

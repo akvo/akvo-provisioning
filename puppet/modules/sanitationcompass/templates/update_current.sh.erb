@@ -1,0 +1,20 @@
+#!/bin/bash
+
+BRANCH=$1
+ORIG_DIR=`pwd`
+HERE="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+if [ -e <%= @approot %>/code ]
+then
+  echo 'already have a checkout'
+  cd $HERE/code/
+  git checkout $BRANCH
+  git pull origin $BRANCH
+  cd $ORIG_DIR
+  PIP=<%= @approot %>/venv/bin/pip
+  $PIP install -r <%= @approot %>/scripts/requirements.txt
+else
+  echo 'no checkout, will create'
+  $HERE/make_app.sh inplace $BRANCH
+  $HERE/make_current.sh $HERE/versions/inplace
+fi
