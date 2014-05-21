@@ -8,6 +8,7 @@ STAT_TYPE=$3
 
 STAT="${STAT_NAME}:${STAT_VALUE}|${STAT_TYPE}"
 
-SEND='nc -q 0 -w 1 -u <%=@statsd_host%> 8125'
+TIMEOUT='timeout -k 5 -s 9 2'
+SEND='nc -q 0 -w 1 -u 127.0.0.1 8125'
 
-echo $STAT | $SEND
+echo $STAT | $TIMEOUT $SEND

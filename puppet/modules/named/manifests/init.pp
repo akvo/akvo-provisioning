@@ -18,6 +18,23 @@ class named {
         subscribe  => File['/etc/bind/named.conf.local'],
     }
 
+    file { '/etc/bind/named.conf':
+        ensure  => present,
+        owner   => 'bind',
+        group   => 'bind',
+        mode    => 440,
+        require => Package['bind9'],
+        notify  => Service['bind9'],
+        source  => 'puppet:///modules/named/named.conf',
+    }
+
+    # collectd stats
+    common::collectd_plugin { 'bind':
+        args => {
+            url => 'http://localhost:8053'
+        }
+    }
+
     # configure the list of zones we will manage
     file { '/etc/bind/named.conf.local':
         ensure  => present,
@@ -43,4 +60,9 @@ class named {
     # Collect all exported dns record file lines
     Named::Exported_location <<| tag == $::environment |>>
 
+    firewall { '100 named':
+        port   => 53,
+        action => accept,
+        proto  => 'udp'
+    }
 }

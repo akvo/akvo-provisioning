@@ -9,7 +9,7 @@ class rsr::service {
     # add custom configuration
     $use_graphite = hiera("rsr_use_graphite", false)
     if $use_graphite {
-        $statsd_host = hiera('statsd_host', "statsd.${base_domain}")
+        $statsd_host = 'localhost'
         $statsd_port = 8125
         $statsd_prefix = "rsr.${::environment}"
     }

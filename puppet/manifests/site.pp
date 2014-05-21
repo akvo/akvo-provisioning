@@ -7,6 +7,12 @@ exec { "apt-update":
 Exec["apt-update"] -> Package <| |>
 
 
+# nuke any stale firewall rules
+resources { "firewall":
+    purge => true
+}
+
+
 node default {
     # the default node simply switches based on the provided list of roles
     notice("Using environment ${::environment}")

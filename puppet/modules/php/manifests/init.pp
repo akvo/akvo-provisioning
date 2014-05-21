@@ -7,10 +7,11 @@ class php {
 
     file { '/etc/php5/fpm/php.ini':
         ensure  => present,
-        source  => 'puppet:///modules/homepage/php.ini',
+        source  => 'puppet:///modules/php/php.ini',
         owner   => root,
         mode    => '0444',
-        require => Package['php5-fpm']
+        require => Package['php5-fpm'],
+        notify  => Service['php5-fpm']
     }
 
     service { 'php5-fpm':

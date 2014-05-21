@@ -1,9 +1,13 @@
 
-define database::psql::db_exported( $password ) {
+define database::psql::db_exported( $password, $backup = true ) {
 
-    postgresql::db { $name:
+    postgresql::server::db { $name:
         user          => $name,
         password      => $password,
         grant         => 'all',
+    }
+
+    if ($backup) {
+        database::psql::backup_db { $name: }
     }
 }

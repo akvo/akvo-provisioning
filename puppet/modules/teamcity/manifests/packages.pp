@@ -1,11 +1,7 @@
 
 class teamcity::packages {
 
-    $packages = [
-        "openjdk-7-jdk",
-    ]
-
-    package { $packages:
+    package { ['ant', 'openjdk-7-jdk']:
         ensure => latest
     }
 
