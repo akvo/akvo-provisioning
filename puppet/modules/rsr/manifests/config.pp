@@ -21,7 +21,7 @@ class rsr::config {
         proxy_url          => "http://localhost:${rsr::params::port}",
         static_dirs        => {
             # "/media/admin/" => "${approot}/venv/lib/python2.7/site-packages/django/contrib/admin/static/admin/",
-            "/media/"       => $rsr::params::media_root
+            "/media/"       => $rsr::params::media_root,
             "/static/"      => $rsr::params::static_root
         },
         extra_nginx_config  => "client_max_body_size 3m;",
