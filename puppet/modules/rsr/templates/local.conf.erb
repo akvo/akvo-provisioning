@@ -33,7 +33,8 @@ DATABASES = {
     }
 }
 
-MEDIA_ROOT='<%= @media_root %>'
+MEDIA_ROOT = '<%= @media_root %>'
+STATIC_ROOT = '<%= @static_root %>'
 
 RSR_SITE_REGEXPS = [
     <% @rsr_hostnames.each do |rsr_hostname| -%>
