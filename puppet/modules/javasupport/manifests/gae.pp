@@ -1,6 +1,6 @@
 class javasupport::gae {
 
-    $gae_version = 'appengine-java-sdk-1.9.5.zip'
+    $gae_version = 'appengine-java-sdk-1.8.9.zip'
     $gae_sdk = "https://storage.googleapis.com/appengine-sdks/featured/${gae_version}"
 
     file { '/opt/gae':

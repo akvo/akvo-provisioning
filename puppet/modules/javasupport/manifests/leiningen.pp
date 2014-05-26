@@ -11,7 +11,7 @@ class javasupport::leiningen {
         ensure  => file,
         owner   => root,
         mode    => '0755',
-        source  => 'puppet:///modules/clojuresupport/lein',
+        source  => 'puppet:///modules/javasupport/lein',
         require => File['/opt/leiningen']
     }
 
