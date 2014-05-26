@@ -1,5 +1,5 @@
 
-class java::leiningen {
+class javasupport::leiningen {
 
     file { '/opt/leiningen':
         ensure => directory,
