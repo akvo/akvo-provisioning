@@ -2,7 +2,7 @@ class javasupport::gae {
 
     $gae_version = '1.8.9'
     $gae_file = "appengine-java-sdk-${gae_version}.zip"
-    $gae_sdk = "https://console.developers.google.com/m/cloudstorage/b/appengine-sdks/o/deprecated/189/${gae_file}"
+    $gae_sdk = "http://files.support.akvo-ops.org/${gae_file}"
 
     file { '/opt/gae':
         ensure => directory,
