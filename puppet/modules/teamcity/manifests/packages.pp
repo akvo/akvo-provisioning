@@ -5,6 +5,7 @@ class teamcity::packages {
         ensure => latest
     }
 
-    include clojuresupport::leiningen
+    include javasupport::leiningen
+    include javasupport::gae
 
 }

@@ -1,5 +1,5 @@
 
-class clojuresupport::leiningen {
+class java::leiningen {
 
     file { '/opt/leiningen':
         ensure => directory,
