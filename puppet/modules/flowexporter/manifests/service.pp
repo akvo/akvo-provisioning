@@ -1,15 +1,18 @@
 
 class flowexporter::service {
 
-    include flowexporter::params
-    
-    $approot = $flowexporter::params::approot
-    
+    $approot = $flowexporter::approot
+    $jardir = $flowexporter::jardir
+    $logdir = $flowexporter::logdir
+
+    $javaopts = "-verbose:gc -Xloggc:${logdir}/flowexporter-gc.log -XX:+PrintGCDetails -XX:+PrintTenuringDistribution -Xmx1024m -d64 -Djava.awt.headless=true"
+
     # configure a service so we can start and restart flowexporter
     supervisord::service { "flowexporter":
         user      => $flowexporter::params::username,
-        command   => "java -jar ${approot}/jars/current.jar",
+        command   => "java ${javaopts} -jar ${jardir}/current.jar ${approot}/config.edn",
         directory => $flowexporter::params::approot,
+        logdir    => $logdir,
         env_vars  => {}
     }
     
