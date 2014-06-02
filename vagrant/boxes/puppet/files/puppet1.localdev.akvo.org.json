@@ -2,6 +2,7 @@
     "roles": [
         "puppetdb",
         "management",
-        "database"
+        "database",
+        "flowexporter"
     ]
 }
