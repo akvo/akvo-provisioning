@@ -11,7 +11,7 @@ class javasupport::gae {
     }
 
     exec { 'install_gae_sdk':
-        command => "/usr/bin/wget ${gae_sdk} && /usr/bin/unzip ${gae_file}",
+        command => "/usr/bin/wget ${gae_sdk} && /usr/bin/unzip ${gae_file} -d /opt/gae",
         cwd     => '/opt/gae',
         creates => "/opt/gae/${gae_version}",
         require => File['/opt/gae']
