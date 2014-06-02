@@ -10,6 +10,8 @@ class flowexporter::params {
     $logdir = "${approot}/logs"
     $gitconfdir = "${approot}/akvo-flow-services-config"
 
+    $google_password = hiera('flowexporter_google_password')
+
     $port = 8020
 
 }
