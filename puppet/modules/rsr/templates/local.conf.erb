@@ -36,6 +36,13 @@ DATABASES = {
 MEDIA_ROOT = '<%= @media_root %>'
 STATIC_ROOT = '<%= @static_root %>'
 
+<% if @develop_mode -%>
+# When developing on the Vagrant box, the static URL is changed slightly to bypass the
+# nginx routing. To test collectstatic behaviour, override this in '66_local.conf' (for
+# example) to be '/static/'.
+STATIC_URL = '/static-dev/'
+<% end -%>
+
 RSR_SITE_REGEXPS = [
     <% @rsr_hostnames.each do |rsr_hostname| -%>
         '^<%= rsr_hostname.gsub('.', '\\.') %>$',
