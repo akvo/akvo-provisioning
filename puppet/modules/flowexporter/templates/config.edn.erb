@@ -1,0 +1,32 @@
+{
+ ;; path to akvo-flow-server-config
+ :config-folder "<%= @gitconfdir %>"
+
+ ;; port to run the HTTP service
+ :http-port <%= @port %>
+
+ ;; List of kinds interesting for stats
+ :stats-kinds ["User" "Device" "SurveyInstance" "Survey"]
+
+ ;; Base path for reports and uploads
+ :base-path "<%= @workdir %>"
+
+ ;; Output directory where the statistics file will be written
+ :stats-path "<%= @workdir %>/reports/stats"
+
+ ;; Scheduling time for the daily stats job [HH mm ss]
+ :stats-schedule-time [01 00 00]
+
+ ;; Google account username used for making remote api calls (needs to be developer in all instances)
+ :username "reports@akvoflow.org"
+
+ ;; Google account password used for making remote api calls
+ :password "<%= @google_password %>"
+
+ ;; List of instances to be excluded from the stats report
+ :dev-instances ["akvoflowsandbox.appspot.com" "watermappingmonitoring-hrd.appspot.com"
+                 "flowaglimmerofhope-hrd.appspot.com" "akvoflow-uat1.appspot.com"
+                 "akvoflow-dev1.appspot.com" "akvoflow-dev2.appspot.com" "wfp-161.appspot.com"
+                 "flowdemoenvironment-hrd.appspot.com" "akvoflow-beta1.appspot.com"
+                 "akvoflow-beta2.appspot.com"]
+}

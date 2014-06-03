@@ -361,6 +361,16 @@ def firstclone():
                 sudo('git submodule update --recursive')
 
 
+def reset_checkout(branch_name=None):
+    run('rm -rvf /puppet/checkout /puppet/checkout.old')
+    run('git clone https://github.com/akvo/akvo-provisioning.git /puppet/checkout')
+    with cd('/puppet/checkout'):
+        puppet_branch = branch_name or env.config.get('puppet_branch', 'master')
+        run('git checkout %s' % puppet_branch)
+        run('git submodule init')
+        run('git submodule update --recursive')
+
+
 def include_apply_script():
     sudo('mkdir -p /puppet/bin/')
     put('files/apply.sh', '/puppet/bin/apply.sh', use_sudo=True)
