@@ -22,3 +22,6 @@
 [submodule "puppet/ext/collectd"]
 	path = puppet/ext/collectd
 	url = https://github.com/pdxcat/puppet-module-collectd
+[submodule "puppet/ext/nodejs"]
+	path = puppet/ext/nodejs
+	url = https://github.com/puppetlabs/puppetlabs-nodejs.git

@@ -22,6 +22,12 @@ class rsr::install {
     include pythonsupport::standard
 
     include memcached
+    include nodejs
+
+    package { ['less', 'yuglify']:
+        ensure   => 'installed',
+        provider => 'npm'
+    }
 
     file { "${approot}/versions":
         ensure  => directory,
