@@ -20,7 +20,6 @@ class common {
         'wget',
         'curl',
         'molly-guard',
-        'finger',
         'members',
         'zip',
         'zsh'
