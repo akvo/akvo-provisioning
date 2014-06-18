@@ -14,6 +14,9 @@
     "rsr_site_id": "1004",
     "rsr_main_domain": "rsr.localdev.akvo.org",
     "rsr_use_graphite": false,
+    "rsr_use_sentry": false,
+    "rsr_smtp_user": "",
+    "rsr_smtp_password": "",
 
     "butler_database_password": "5qLc7JfchEUzGBZpszCsmHDIUij9FUfKXxrkFUsh",
     "butler_secret_key": "uzrPik6gDgruluUWjBSSB5LN9pcnHCuow51oQqM7",

@@ -8,6 +8,7 @@ class rsr::params {
     $base_domain = hiera('base_domain')
     $database_host = "mysql.${base_domain}"
     $media_root = "${approot}/mediaroot/"
+    $static_root = "${approot}/staticroot/"
     $logdir = "${approot}/logs/"
     $port = 8000
     $site_id = hiera('rsr_site_id')

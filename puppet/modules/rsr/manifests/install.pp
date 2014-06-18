@@ -7,6 +7,7 @@ class rsr::install {
     $approot = $rsr::params::approot
     $username = $rsr::params::username
     $media_root = $rsr::params::media_root
+    $static_root = $rsr::params::static_root
 
     # make sure we also include the Akvoapp stuff, and that it is loaded
     # before this module
@@ -21,6 +22,12 @@ class rsr::install {
     include pythonsupport::standard
 
     include memcached
+    include nodejs
+
+    package { ['less', 'yuglify']:
+        ensure   => 'installed',
+        provider => 'npm'
+    }
 
     file { "${approot}/versions":
         ensure  => directory,
@@ -30,8 +37,8 @@ class rsr::install {
         require => [ User[$username], Group[$username], File[$approot] ],
     }
 
-    # make sure the mediaroot exists
-    file { $media_root:
+    # make sure the mediaroot and staticroot exists
+    file { [$media_root, $static_root]:
         ensure  => directory,
         owner   => $username,
         group   => $username,
