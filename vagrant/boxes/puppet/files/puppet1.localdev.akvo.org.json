@@ -3,6 +3,6 @@
         "puppetdb",
         "management",
         "database",
-        "flowexporter"
+        "rundeck"
     ]
 }
