@@ -3,7 +3,7 @@ class sanitationcompass::params {
 
     $username = 'sanitationcompass'
     $approot = '/var/akvo/sanitationcompass'
-    $port = 8100
+    $port = 8200
 
     $database_name = 'sanitcompass'
     $database_password = hiera('sanitationcompass_database_password')
