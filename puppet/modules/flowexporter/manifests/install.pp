@@ -17,7 +17,7 @@ class flowexporter::install {
     $jardir = $flowexporter::params::jardir
     file { "${approot}/cleanup_old.sh":
         ensure  => present,
-        content => template('rsr/cleanup_old.sh.erb'),
+        content => template('flowexporter/cleanup_old.sh.erb'),
         owner   => $username,
         group   => $username,
         mode    => '0744',
