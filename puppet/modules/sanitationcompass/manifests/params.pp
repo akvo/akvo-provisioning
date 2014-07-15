@@ -13,7 +13,7 @@ class sanitationcompass::params {
     # mysql://${database_name}:${database_password}@mysql/${database_name}",
     $env_vars = {
         'PYTHONPATH'    => "${approot}/code/dsp",
-        'DATABASE_URL'  => "sqlite:///${approot}/db/sanitationcompass.sqlite3",
+        'DATABASE_URL'  => "sqlite:////${approot}/db/sanitationcompass.sqlite3",
         'SECRET_KEY'    => hiera('sanitationcompass_secret_key'),
         'ALLOWED_HOSTS' => "sanitationcompass.info,sanitationcompass.${base_domain}",
     }
