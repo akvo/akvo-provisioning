@@ -30,7 +30,7 @@ class mta {
         require => Package['postfix']
     } ~>
 
-    exec { '/usr/sbin/postmap /etc/postfix/sasl_password':
+    exec { '/usr/sbin/postmap /etc/postfix/sasl_passwd':
         user => 'root'
     } ~>
 
