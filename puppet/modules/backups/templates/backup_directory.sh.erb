@@ -42,4 +42,11 @@ echo "Backup script: ${BACKUP_TO_DEST}" >> $LOGFILE
 echo >> $LOGFILE
 
 $BACKUP_TO_DEST $SCRIPT_ARGS >> $LOGFILE 2>&1
+
 <% end %>
+
+HOST=$(hostname -f)
+EXIT_CODE=$?
+LINE_COUNT=$(wc -l $LOGFILE)
+SUBJ="Backup of ${SOURCE} on ${HOST} complete : exit ${EXIT_CODE} : lc ${LINE_COUNT}"
+cat $LOGFILE | mail -s "${SUBJ}" -t devops@akvo.org
