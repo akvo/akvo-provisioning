@@ -18,8 +18,8 @@ class flowexporter::install {
     file { "${approot}/cleanup_old.sh":
         ensure  => present,
         content => template('flowexporter/cleanup_old.sh.erb'),
-        owner   => $username,
-        group   => $username,
+        owner   => 'flowexporter',
+        group   => 'flowexporter',
         mode    => '0744',
         require => File[$approot]
     }
