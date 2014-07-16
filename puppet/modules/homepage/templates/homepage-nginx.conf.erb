@@ -18,6 +18,11 @@ server {
     rewrite ^/media         http://<%=@rsr_domain %>$request_uri?;
     rewrite ^/wiki          http://akvopedia.org$request_uri?;
 
+    # New redirects, see https://github.com/akvo/akvo-provisioning/issues/87
+    rewrite ^/help/rsr-help$ /help/help-support/rsr-help/
+    rewrite ^/help/flow-help$ /help/help-support/flow-help/
+    rewrite ^/help/akvopedia-help$ /help/help-support/akvopedia-help/
+
     # Logging:
     access_log /var/akvo/homepage/logs/nginx-access.log;
     error_log /var/akvo/homepage/logs/nginx-error.log;
