@@ -4,7 +4,10 @@ class akvosites {
     $db_host = 'mysql'
     $db_password = hiera('akvosites_database_password')
 
+    $base_domain = hiera('base_domain')
+    $default_domain = "akvosites.${base_domain}"
     $akvosites_hostnames = hiera('akvosites_hostnames')
+    $all_hostnames = concat($akvosites_hostnames, [$default_domain])
     $app_path = '/var/akvo/akvosites'
 
     package { ['php5-gd', 'php5-curl']:
@@ -14,7 +17,7 @@ class akvosites {
     }
 
     php::app { 'akvosites':
-        app_hostnames        => $akvosites_hostnames,
+        app_hostnames        => $all_hostnames,
         group                => 'www-edit',
         wordpress            => true,
         nginx_writable       => true,
