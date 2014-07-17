@@ -33,10 +33,17 @@ class tessera::install {
         require => File[$approot]
     }
 
+    include nodejs
+
+    package { 'grunt-cli':
+        ensure   => 'installed',
+        provider => 'npm'
+    }
+
     exec { "${approot}/install.sh":
         user    => 'tessera',
         creates => "${approot}/.installed",
-        require => File["${approot}/install.sh"]
+        require => [File["${approot}/install.sh"], Package['grunt-cli']]
     }
 
 
