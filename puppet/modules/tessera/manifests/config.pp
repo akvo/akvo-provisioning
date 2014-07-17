@@ -14,7 +14,7 @@ class tessera::config inherits tessera::params {
 
     # nginx sits in front of butler
     $base_domain = hiera('base_domain')
-        nginx::proxy { "tessera.${base_domain}":
+    nginx::proxy { ["tessera.${base_domain}", 'tessera.akvo.org']:
         proxy_url  => "http://localhost:${port}",
         access_log => "${approot}/logs/tessera-nginx-access.log",
         error_log  => "${approot}/logs/tessera-nginx-error.log",
