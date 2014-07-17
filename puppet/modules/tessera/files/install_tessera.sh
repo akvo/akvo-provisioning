@@ -13,6 +13,7 @@ pip install -r /opt/tessera/code/dev-requirements.txt
 pip install gunicorn mysql-python
 
 inv initdb
+npm install
 grunt
 
 touch /opt/tessera/.installed
