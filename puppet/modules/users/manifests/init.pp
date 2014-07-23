@@ -47,6 +47,12 @@ class users {
         ssh_key  => 'AAAAB3NzaC1yc2EAAAADAQABAAABAQDCryjqHYO3dyI0uQn1jEioe/e/OM9SeOkaTXGgQJKA8OVn5CIyuXUf2PYpShU54VZ1zwJEKWcNHDCxzwdqU7z8rTHRxzcTUAlsz2R/HTkHtg9hsUbu5IuO8xUYt7G8yuAVyVOAgOIM29Vj9MbbAgz/es8cAAfQaQ5G/EHkKvZAd/ZwQYsX6n6yG9SI+hXUH7DmNefEEzaJdLtpQ/iySNuKEwdPgC31w31HNiz/ByJXy32S1hXzo+kXdvp5LzTQka+VUkkcPliT+yGH7XInEiFQZKzyrtc71YmO0dcJyUYb6IwOc7KGaFvZVty0oPcu5Elu7XOWtMbHkfRcEauURu71',
     }
 
+    users::basic { 'dan':
+        roles    => ['content', 'www-edit'],
+        allow    => [],
+        ssh_key  => 'AAAAB3NzaC1yc2EAAAADAQABAAABAQC3tQYpbc1rPvApT6wNMwXG/fJDcUAoXGlbH4OqxkUtxS6Q/ZjDCQjEIUFjA1UtLRkVzulbVZEEZ7xWKY4dMNBuoyGbYOYhTPwA4TndRdpR30CdNMJ74H+RTyXEvZWAIy03WxqLbCp6n+ltKkdDNN1+sobqbrLROSidFvJX2XzfaTSAod8M9X99Rkqal30gay1kOzWlQ4FF0l3o5nX+vy7okX102frPDiXPAN3xG4bGqFWmQgkAV0dq6HaWi2KCRPDjQQaYX9eNZ4TmkdmgeGFJrqbShXCVNoIF2jMTOz9bP/wc/j5T3F4D5NKQX//ySXZqXPj2VCUptCFA7qjB7oqJ',
+    }
+
     users::basic { 'ivan':
         roles    => ['developer'],
         allow    => ['munin'],
