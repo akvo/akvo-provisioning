@@ -12,7 +12,7 @@ class users {
         htpasswd => '$apr1$WdYFnpfb$nE14MA.Yra5q6K5MILDOO.'
     }
 
-   users::basic { 'emmanuel': 
+   users::basic { 'emmanuel':
       roles => ['developer'],
       ssh_key => 'AAAAB3NzaC1yc2EAAAADAQABAAABAQCltUhaWuIsw/ejItlKyCb/8fFA0g6Age19fX5y51WFFz2psgf3vcPvmw90TCEh4gH+Sz4c2AZ9c+lq60kFX5mgs1yS+jLCAYXvvhE8vGPR7il8f/AVbsDtv5o5pwFYq4MdMI9tpPwz60vrlu61mqpBRBmWNrlI7aiHwSnKRrLGCNPkvj6t4jA5WPdozv5DThjrEF0j8pu2bPzyz1nXIcijZWU4jVQtqfVxZ+gSIxpCiPwF9IQQnwPk+tRns6/DY+oo11Ug3csBDbyvlUgZg8Wj4O1ng/5x9b0xAeVzCY2+hP5f13Bhuy5CNlgl3YPYxIz78b5QnCCUjwjZKMl9u183'
    }
@@ -83,6 +83,7 @@ class users {
 
     # removed users
     users::remove_user { ['paul']: }
+    users::remove_user { ['neha']: }
     users::remove_user { ['lauri']: }
 
     Class['Users::Groups'] -> Users::Basic<||>
