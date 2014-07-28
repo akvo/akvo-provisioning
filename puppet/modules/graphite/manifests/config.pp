@@ -12,9 +12,9 @@ class graphite::config {
     }
 
 
-    file { '/opt/graphite/conf/storage-aggregations.conf':
+    file { '/opt/graphite/conf/storage-aggregation.conf':
         ensure  => present,
-        source  => 'puppet:///modules/graphite/storage-aggregations.conf',
+        source  => 'puppet:///modules/graphite/storage-aggregation.conf',
         owner   => 'graphite',
         group   => 'graphite',
         mode    => '0444',
