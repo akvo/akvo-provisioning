@@ -11,6 +11,15 @@ class graphite::config {
         mode    => '0444',
     }
 
+
+    file { '/opt/graphite/conf/storage-aggregations.conf':
+        ensure  => present,
+        source  => 'puppet:///modules/graphite/storage-aggregations.conf',
+        owner   => 'graphite',
+        group   => 'graphite',
+        mode    => '0444',
+    }
+
     file { '/opt/graphite/conf/carbon.conf':
         ensure  => present,
         source  => 'puppet:///modules/graphite/carbon.conf',
