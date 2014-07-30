@@ -2,6 +2,7 @@
 # this is to get live data onto test environments
 
 class rsr::leech {
+    $approot = $rsr::params::approot
 
     # if we are not a source, then we are a leech, and so we need the private
     # key in order to log in to the source machine(s) to fetch media

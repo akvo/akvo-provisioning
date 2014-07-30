@@ -4,6 +4,7 @@
 # will allow *read-only* access to our media store and db from other machines
 
 class rsr::datasource {
+    $approot = $rsr::params::approot
 
     # various fs structure required for a remote leech to log in
     user { 'rsrleech':
