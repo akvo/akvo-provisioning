@@ -121,6 +121,14 @@ class rsr::install {
     }
 
 
+    # support for copying data between machines
+    if hiera('rsr_data_source') {
+        class { 'rsr::datasource': }
+    } else {
+        class { 'rsr::leech': }
+    }
+
+
     # make sure that we back up the media!
     backups::dir { "rsr_media":
         path => "${media_root}/db"
