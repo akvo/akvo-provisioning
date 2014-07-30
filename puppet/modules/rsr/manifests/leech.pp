@@ -4,7 +4,7 @@
 class rsr::leech {
     $username = $rsr::params::username
     $approot = $rsr::params::approot
-    $mediaroot = $rsr::params::mediaroot
+    $mediaroot = $rsr::params::media_root
     $data_source_host = hiera('rsr_data_source_host')
 
     # if we are not a source, then we are a leech, and so we need the private
