@@ -10,7 +10,7 @@ class rsr::leech {
         owner   => $username,
         group   => $username,
         mode    => '0600',
-        content => hiera('rsr_media_leech_private_key'),
+        content => hiera('rsr_leech_private_key'),
         require => File["${approot}/.ssh"]
     }
 

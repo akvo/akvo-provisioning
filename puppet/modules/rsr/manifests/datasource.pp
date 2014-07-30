@@ -27,9 +27,9 @@ class rsr::datasource {
         require => File["${approot}/leech/.ssh"]
     }
 
-    ssh_authorized_key { 'medialeech-authorized-key':
+    ssh_authorized_key { 'leech-authorized-key':
         ensure  => present,
-        key     => hiera('rsr_media_leech_public_key'),
+        key     => hiera('rsr_leech_public_key'),
         type    => 'ssh-rsa',
         user    => 'rsrleech',
         require => File["${approot}/leech/.ssh"]
