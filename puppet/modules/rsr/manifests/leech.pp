@@ -1,10 +1,7 @@
 # a leech is a machine which wants to copy data from a data source - typically,
 # this is to get live data onto test environments
 
-class rsr::leech {
-    $username = $rsr::params::username
-    $approot = $rsr::params::approot
-    $mediaroot = $rsr::params::media_root
+class rsr::leech inherits rsr::params  {
     $data_source_host = hiera('rsr_data_source_host')
 
     # if we are not a source, then we are a leech, and so we need the private
@@ -26,6 +23,15 @@ class rsr::leech {
         group   => $username,
         mode    => '0744',
         content => template('rsr/leech_media.sh.erb'),
+        require => File[$approot]
+    }
+
+    file { "${approot}/leech_db.sh":
+        ensure  => present,
+        owner   => $username,
+        group   => $username,
+        mode    => '0744',
+        content => template('rsr/leech_db.sh.erb'),
         require => File[$approot]
     }
 
