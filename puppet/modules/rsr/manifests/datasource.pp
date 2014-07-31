@@ -3,8 +3,7 @@
 # basically means the live site) then we have an 'rsrleech' user which
 # will allow *read-only* access to our media store and db from other machines
 
-class rsr::datasource {
-    $approot = $rsr::params::approot
+class rsr::datasource inherits rsr::params {
 
     # various fs structure required for a remote leech to log in
     user { 'rsrleech':
@@ -37,4 +36,12 @@ class rsr::datasource {
     }
 
     # helpers to run the export tools
+    file { "${approot}/leech/dumpdb.sh":
+        ensure  => present,
+        owner   => 'rsrleech',
+        group   => 'rsrleech',
+        mode    => '0700',
+        content => template('rsr/leech_dump_db.sh.erb'),
+        require => File["${approot}/leech"]
+    }
 }

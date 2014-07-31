@@ -1,0 +1,9 @@
+#!/bin/bash
+
+USERNAME=<%= @username %>
+PASS=<%= @database_password %>
+HOST=<%= @database_host %>
+DATABASE=<%= @username %>
+OUTFILE=$1
+
+mysqldump -u $USERNAME --password=$PASS -h $HOST $DATABASE | gzip > $OUTFILE
