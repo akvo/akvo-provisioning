@@ -26,5 +26,6 @@ echo 'step 4: load the dump'
 zcat /tmp/$FILENAME | mysql -u $DBUSER -h $DBHOST --password=$DBPASS -D $DBNAME
 
 echo 'step 5: clean up leech'
-rm -v $FILENAME
+rm -v /tmp/$FILENAME
 
+echo 'done!'
