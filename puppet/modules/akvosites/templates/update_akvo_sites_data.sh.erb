@@ -27,6 +27,6 @@ else
     SUBJ='[sites.akvo.org] [FAILURE] Akvo Sites project updates refreshed'
 fi
 
-echo $LOG_FILE_URL | mail -s $SUBJ devops@akvo.org
+echo $LOG_FILE_URL | mail -s "${SUBJ}" devops@akvo.org
 
 exit $EXIT
