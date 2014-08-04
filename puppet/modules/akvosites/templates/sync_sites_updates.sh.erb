@@ -10,7 +10,16 @@ LOG_FILE_URL="http://<%= @default_domain %>/logs/cron/$LOG_FILE_NAME"
 
 printf "<br />[`date --rfc-3339=seconds`]<br />" >> $LOG_FILE
 curl $SYNC_SITES_UPDATES_SCRIPT 2>&1 >> $LOG_FILE
+EXIT=$?
 printf "<br />" >> $LOG_FILE
 
-echo $LOG_FILE_URL | mail -s '[sites.akvo.org] Akvo Sites project update deletions synchronised' devops@akvo.org
+if [ $EXIT -eq 0 ]
+then
+    SUBJ='[sites.akvo.org] [SUCCESS] Akvo Sites project update deletions synchronised'
+else
+    SUBJ='[sites.akvo.org] [FAILURE] Akvo Sites project update deletions synchronised'
+fi
 
+echo $LOG_FILE_URL | mail -s SUBJ devops@akvo.org
+
+exit $EXIT
