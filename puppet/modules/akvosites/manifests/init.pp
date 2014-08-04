@@ -5,7 +5,7 @@ class akvosites {
     $db_password = hiera('akvosites_database_password')
 
     $base_domain = hiera('base_domain')
-    $default_domain = "akvosites.${base_domain}"
+    $default_domain = hiera('akvosites_default_domain', "akvosites.${base_domain}")
     $akvosites_hostnames = hiera('akvosites_hostnames')
     $all_hostnames = concat($akvosites_hostnames, [$default_domain])
     $app_path = '/var/akvo/akvosites'
