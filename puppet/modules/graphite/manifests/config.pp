@@ -54,7 +54,6 @@ class graphite::config {
         ip => hiera('external_ip')
     }
 
-    $base_domain = hiera('base_domain')
     nginx::proxy { "graphite.${base_domain}":
         proxy_url          => 'http://localhost:5115',
     }
