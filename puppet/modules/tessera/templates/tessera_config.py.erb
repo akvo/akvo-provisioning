@@ -3,7 +3,7 @@ SECRET_KEY                 = '<%= @secret_key %>'
 DEFAULT_FROM_TIME          = '-3h'
 DEFAULT_THEME              = 'light'
 DASHBOARD_APPNAME          = 'Akvo'
-SQLALCHEMY_DATABASE_URI    = 'mysql://tessera:<%= @database_password %>@mysql/<%= @dbname %>'
+SQLALCHEMY_DATABASE_URI    = 'mysql://tessera:<%= @database_password %>@<%= @dbhost %>/<%= @dbname %>'
 GRAPHITE_URL               = 'http://<%= @graphite_host %>'
 SERVER_ADDRESS             = '127.0.0.1'
 SERVER_PORT                = <%= @port %>

@@ -7,6 +7,7 @@ class butler::config {
 
     # create an butler database on the database server
     database::my_sql::db { $butler::params::dbname:
+        mysql_name => $butler::params::mysql_name,
         password   => $butler::params::database_password,
         reportable => false
     }

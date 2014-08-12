@@ -1,7 +1,7 @@
 
 class akvosites {
 
-    $db_host = 'mysql'
+    $mysql_name = hiera('akvosites_database_mysql_name', 'mysql')
     $db_password = hiera('akvosites_database_password')
 
     $base_domain = hiera('base_domain')
@@ -9,6 +9,8 @@ class akvosites {
     $akvosites_hostnames = hiera('akvosites_hostnames')
     $all_hostnames = concat($akvosites_hostnames, [$default_domain])
     $app_path = '/var/akvo/akvosites'
+
+    $db_host = "${mysql_name}.${base_domain}"
 
     package { ['php5-gd', 'php5-curl']:
         ensure  => installed,
@@ -84,6 +86,7 @@ class akvosites {
     }
 
     database::my_sql::db { 'akvosites':
+        mysql_name => $mysql_name,
         password   => $db_password,
         reportable => true
     }

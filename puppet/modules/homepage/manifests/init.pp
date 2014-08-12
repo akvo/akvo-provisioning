@@ -1,7 +1,7 @@
 
 class homepage {
 
-    $db_host = 'mysql'
+    $mysql_name = hiera('homepage_wordpress_database_mysql_name', 'mysql')
     $db_password = hiera('homepage_wordpress_database_password')
 
     $specified_hostnames = hiera('homepage_hostnames')
@@ -9,6 +9,8 @@ class homepage {
     $default_hostname = ["homepage.${base_domain}"]
     $homepage_hostnames = concat($default_hostname, $specified_hostnames)
     $rsr_domain = hiera('rsr_main_domain') # for legacy redirects
+
+    $db_host = "${mysql_name}.${base_domain}"
 
     php::app { 'homepage':
         app_hostnames        => $homepage_hostnames,
@@ -28,6 +30,7 @@ class homepage {
     }
 
     database::my_sql::db { 'homepage':
+        mysql_name => $mysql_name,
         password   => $db_password,
         reportable => true
     }

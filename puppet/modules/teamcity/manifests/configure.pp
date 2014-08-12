@@ -17,6 +17,9 @@ class teamcity::configure {
         mode   => '0755',
     }
 
+    $mysql_name = hiera('teamcity_mysql_name', 'mysql')
+    $base_domain = hiera('base_domain')
+    $teamcity_database_host = "${mysql_name}.${base_domain}"
     $teamcity_database_password = hiera('teamcity_database_password')
     file { '/opt/teamcity/.BuildServer/config/database.properties':
         ensure  => present,
