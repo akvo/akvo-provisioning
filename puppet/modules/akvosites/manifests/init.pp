@@ -26,6 +26,14 @@ class akvosites {
         config_file_contents => template('akvosites/akvosites-nginx.conf.erb')
     }
 
+    file { ["${app_path}/code", "${app_path}/conf"]:
+        ensure  => directory,
+        owner   => $app_user,
+        group   => $app_group,
+        mode    => '2775',
+        require => File[$app_path]
+    }
+
     backups::dir { "akvosites_code":
         path => "${app_path}/code"
     }

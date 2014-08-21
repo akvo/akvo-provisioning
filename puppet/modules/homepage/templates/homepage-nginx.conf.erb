@@ -45,6 +45,14 @@ server {
         gzip_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript;
     }
 
+    location /uploads {
+        alias /var/akvo/homepage/uploads;
+        if (-f $request_filename) {
+            expires 30d;
+            break;
+        }
+    }
+
     location ~ .php$ {
         include /etc/nginx/fastcgi_params;
         fastcgi_pass    localhost:9000;

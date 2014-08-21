@@ -36,14 +36,6 @@ define php::app (
 
     $app_path = "/var/akvo/${name}"
 
-    file { ["${app_path}/code", "${app_path}/conf"]:
-        ensure  => directory,
-        owner   => $app_user,
-        group   => $app_group,
-        mode    => '2775',
-        require => File[$app_path]
-    }
-
     if ($config_file_contents) {
         $config_val = $config_file_contents
     } else {
@@ -52,10 +44,6 @@ define php::app (
 
     nginx::configfile { $name:
         content => $config_val
-    }
-
-    backups::dir { $name:
-        path => $app_path
     }
 
 }

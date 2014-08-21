@@ -1,0 +1,18 @@
+#!/bin/bash
+
+ORIG_DIR=$(pwd)
+NAME=$1
+BRANCH=$2
+ROOT=<%= @appdir %>/versions/$NAME
+
+git clone https://github.com/akvo/akvo-web $ROOT
+cd $ROOT
+git checkout $BRANCH
+cd $ORIG_DIR
+
+chown -Rv homepage.www-data $ROOT/code
+
+rm -vf code
+ln -vs $ROOT/code code
+ln -vs <%= @appdir %>/wp-config.php $ROOT/code/wp-config.php
+
