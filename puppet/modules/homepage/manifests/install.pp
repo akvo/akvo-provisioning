@@ -5,7 +5,8 @@ class homepage::install inherits homepage::params {
         app_hostnames        => $homepage_hostnames,
         group                => 'www-edit',
         pool_port            => $pool_port,
-        config_file_contents => template('homepage/homepage-nginx.conf.erb')
+        config_file_contents => template('homepage/homepage-nginx.conf.erb'),
+        deploy_key           => hiera('homepage-deploy_public_key')
     }
 
     file { ["${appdir}/versions", "${appdir}/conf", "${appdir}/uploads"]:

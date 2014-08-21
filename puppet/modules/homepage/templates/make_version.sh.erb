@@ -10,8 +10,6 @@ cd $ROOT
 git checkout $BRANCH
 cd $ORIG_DIR
 
-chown -Rv www-data.homepage $ROOT/code
-
 rm -vf code
 ln -vs $ROOT/code code
 ln -vs <%= @appdir %>/wp-config.php $ROOT/code/wp-config.php

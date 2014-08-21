@@ -10,6 +10,12 @@ class homepage::config inherits homepage::params {
         require => File[$appdir]
     }
 
+    @@teamcity::deploykey { "homepage-${::environment}":
+        service     => 'homepage',
+        environment => $::environment,
+        key         => hiera('homepage-deploy_private_key'),
+    }
+
     database::my_sql::db { 'homepage':
         mysql_name => $mysql_name,
         password   => $db_password,

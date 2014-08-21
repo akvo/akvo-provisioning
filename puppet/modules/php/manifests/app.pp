@@ -4,7 +4,8 @@ define php::app (
   $pool_port,
   $username = undef,
   $group = undef,
-  $config_file_contents = undef
+  $config_file_contents = undef,
+  $deploy_key = undef,
 ) {
 
     include php
@@ -22,6 +23,7 @@ define php::app (
     }
 
     akvoapp { $app_user:
+        deploy_key => $deploy_key
     }
 
     ensure_resource('group', $app_group, { ensure => present })
