@@ -85,14 +85,15 @@ define('WP_DEBUG', false);
 define('WP_PLUGIN_DIR', '<%= @plugin_dir %>');
 
 /** The media lives outside of the code root to enable continuous
-    deployment */
-define( 'UPLOADS', '<%= @appdir %>/uploads' );
+    deployment. This setting can only be relative to ABSPATH however,
+    because WordPress is a nonsense of nonsenses. */
+define( 'UPLOADS', '../../../uploads' );
 
 /* That's all, stop editing! Happy blogging. */
 
 /** Absolute path to the WordPress directory. */
 if ( !defined('ABSPATH') )
-    define('ABSPATH', dirname(__FILE__) . '/');
+    define('ABSPATH', '<%= @appdir %>/code/');
 
 /** Sets up WordPress vars and included files. */
 require_once(ABSPATH . 'wp-settings.php');

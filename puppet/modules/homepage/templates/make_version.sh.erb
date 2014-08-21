@@ -10,7 +10,7 @@ cd $ROOT
 git checkout $BRANCH
 cd $ORIG_DIR
 
-chown -Rv homepage.www-data $ROOT/code
+chown -Rv www-data.homepage $ROOT/code
 
 rm -vf code
 ln -vs $ROOT/code code

@@ -1,10 +1,9 @@
 
 define php::app (
   $app_hostnames,
+  $pool_port,
   $username = undef,
   $group = undef,
-  $wordpress = false,
-  $nginx_writable = false,
   $config_file_contents = undef
 ) {
 
@@ -27,14 +26,16 @@ define php::app (
 
     ensure_resource('group', $app_group, { ensure => present })
 
-    if ($nginx_writable) {
-        exec { "${name}_add_nginx_to_${app_group}":
-            command => "/usr/sbin/adduser www-data ${app_group} --quiet",
-            require => Group['www-edit']
-        }
-    }
-
     $app_path = "/var/akvo/${name}"
+
+    php::pool { $name:
+        poolname  => $name,
+        pooluser  => $app_user,
+        poolgroup => $app_group,
+        poolport  => $pool_port,
+        rootdir   => $app_path,
+        notify    => Service['php5-fpm']
+    }
 
     if ($config_file_contents) {
         $config_val = $config_file_contents

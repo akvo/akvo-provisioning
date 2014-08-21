@@ -11,6 +11,7 @@ class homepage::params {
     $default_hostname = ["homepage.${base_domain}"]
     $homepage_hostnames = concat($default_hostname, $specified_hostnames)
     $rsr_domain = hiera('rsr_main_domain') # for legacy redirects
+    $pool_port = 9010
 
     $plugins_from_repo = hiera('homepage_plugins_from_repository', true)
     if ($plugins_from_repo) {
