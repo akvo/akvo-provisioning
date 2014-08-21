@@ -1,7 +1,7 @@
 
 class akvosites {
 
-    $db_host = 'mysql'
+    $mysql_name = hiera('akvosites_database_mysql_name', 'mysql')
     $db_password = hiera('akvosites_database_password')
 
     $base_domain = hiera('base_domain')
@@ -9,6 +9,9 @@ class akvosites {
     $akvosites_hostnames = hiera('akvosites_hostnames')
     $all_hostnames = concat($akvosites_hostnames, [$default_domain])
     $app_path = '/var/akvo/akvosites'
+    $pool_port = 9020
+
+    $db_host = "${mysql_name}.${base_domain}"
 
     package { ['php5-gd', 'php5-curl']:
         ensure  => installed,
@@ -19,9 +22,16 @@ class akvosites {
     php::app { 'akvosites':
         app_hostnames        => $all_hostnames,
         group                => 'www-edit',
-        wordpress            => true,
-        nginx_writable       => true,
+        pool_port            => $pool_port,
         config_file_contents => template('akvosites/akvosites-nginx.conf.erb')
+    }
+
+    file { ["${app_path}/code", "${app_path}/conf"]:
+        ensure  => directory,
+        owner   => $app_user,
+        group   => $app_group,
+        mode    => '2775',
+        require => File[$app_path]
     }
 
     backups::dir { "akvosites_code":
@@ -84,6 +94,7 @@ class akvosites {
     }
 
     database::my_sql::db { 'akvosites':
+        mysql_name => $mysql_name,
         password   => $db_password,
         reportable => true
     }

@@ -12,6 +12,12 @@ then
     exit 0
 fi
 
+export LANGUAGE=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+locale-gen en_US.UTF-8
+dpkg-reconfigure locales
+
 sudo apt-get install -y -q fabric
 
 environment=$1
@@ -20,7 +26,7 @@ orig_dir=`pwd`
 ohno=0
 cd /vagrant/bootstrap/
 ip=`ifconfig eth1 | grep 'inet addr' | awk -F: '{print $2}' | awk '{print $1}'`
-fab --linewise --hosts=$ip on_environment:$environment bootstrap || ohno=1
+fab -a -k --linewise --hosts=$ip on_environment:$environment bootstrap || ohno=1
 cd $orig_dir
 
 if [ $ohno -eq 1 ]

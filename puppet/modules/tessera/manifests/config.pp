@@ -3,6 +3,7 @@ class tessera::config inherits tessera::params {
 
     # create an butler database on the database server
     database::my_sql::db { $dbname:
+        mysql_name => $mysql_name,
         password   => $database_password,
         reportable => false
     }

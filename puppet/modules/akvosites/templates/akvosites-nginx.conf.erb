@@ -37,7 +37,7 @@ server {
         root <%= @app_path %>/code/;
 
         include /etc/nginx/fastcgi_params;
-        fastcgi_pass    localhost:9000;
+        fastcgi_pass    localhost:<%= @pool_port %>;
         fastcgi_index   index.php;
         fastcgi_param   SCRIPT_FILENAME     <%= @app_path %>/code/$fastcgi_script_name;
         fastcgi_param   PATH_INFO           $fastcgi_script_name;
