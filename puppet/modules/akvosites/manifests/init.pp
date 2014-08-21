@@ -9,6 +9,7 @@ class akvosites {
     $akvosites_hostnames = hiera('akvosites_hostnames')
     $all_hostnames = concat($akvosites_hostnames, [$default_domain])
     $app_path = '/var/akvo/akvosites'
+    $pool_port = 9020
 
     $db_host = "${mysql_name}.${base_domain}"
 
@@ -21,8 +22,7 @@ class akvosites {
     php::app { 'akvosites':
         app_hostnames        => $all_hostnames,
         group                => 'www-edit',
-        wordpress            => true,
-        nginx_writable       => true,
+        pool_port            => $pool_port,
         config_file_contents => template('akvosites/akvosites-nginx.conf.erb')
     }
 
