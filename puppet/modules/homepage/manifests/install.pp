@@ -26,14 +26,4 @@ class homepage::install inherits homepage::params {
         require => File[$appdir]
     }
 
-    if (!$plugins_from_repo) {
-        file { "${appdir}/plugins":
-            ensure  => directory,
-            owner   => 'homepage',
-            group   => 'homepage',
-            mode    => '0775',
-            require => File[$appdir]
-        }
-    }
-
 }
