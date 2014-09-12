@@ -13,13 +13,6 @@ class homepage::params {
     $rsr_domain = hiera('rsr_main_domain') # for legacy redirects
     $pool_port = 9010
 
-    $plugins_from_repo = hiera('homepage_plugins_from_repository', true)
-    if ($plugins_from_repo) {
-        $plugin_dir = "${appdir}/code/wp-content/plugins"
-    } else {
-        $plugin_dir = "${appdir}/plugins"
-    }
-
     $db_host = "${mysql_name}.${base_domain}"
 
 }
