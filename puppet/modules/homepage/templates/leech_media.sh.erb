@@ -1,0 +1,8 @@
+#!/bin/bash
+
+SSH_COMMAND='ssh -i <%= @appdir %>/.ssh/homepageleech'
+SOURCE_DIR='<%= @appdir %>/uploads'
+DEST_DIR='<%= @appdir %>'
+HOST='<%= @data_source_host %>'
+
+rsync --verbose --archive --rsh "${SSH_COMMAND}" homepageleech@${HOST}:${SOURCE_DIR} ${DEST_DIR}

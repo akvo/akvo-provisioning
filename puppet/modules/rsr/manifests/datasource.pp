@@ -32,7 +32,7 @@ class rsr::datasource inherits rsr::params {
         key     => hiera('rsr_leech_public_key'),
         type    => 'ssh-rsa',
         user    => 'rsrleech',
-        require => File["${approot}/leech/.ssh"]
+        require => File["${approot}/leech/.ssh/authorized_keys"]
     }
 
     # helpers to run the export tools
