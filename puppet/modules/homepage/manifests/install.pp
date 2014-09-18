@@ -26,4 +26,12 @@ class homepage::install inherits homepage::params {
         require => File[$appdir]
     }
 
+    if hiera('homepage_leech') {
+        class { 'homepage::leech': }
+    }
+
+    if hiera('homepage_data_source') {
+        class { 'homepage::datasource': }
+    }
+
 }
