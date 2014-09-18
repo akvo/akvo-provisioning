@@ -124,7 +124,9 @@ class rsr::install {
     # support for copying data between machines
     if hiera('rsr_data_source') {
         class { 'rsr::datasource': }
-    } else {
+    }
+
+    if hiera('rsr_leech') {
         class { 'rsr::leech': }
     }
 
