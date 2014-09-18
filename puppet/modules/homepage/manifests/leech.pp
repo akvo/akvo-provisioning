@@ -8,8 +8,8 @@ class homepage::leech inherits homepage::params  {
     # key in order to log in to the source machine(s) to fetch media
     file { "${appdir}/.ssh/homepageleech":
         ensure  => present,
-        owner   => $username,
-        group   => $username,
+        owner   => 'homepage',
+        group   => 'homepage',
         mode    => '0600',
         content => hiera('homepage_leech_private_key'),
         require => File["${appdir}/.ssh"]
@@ -19,8 +19,8 @@ class homepage::leech inherits homepage::params  {
     # copying and import process easily
     file { "${appdir}/leech_media.sh":
         ensure  => present,
-        owner   => $username,
-        group   => $username,
+        owner   => 'homepage',
+        group   => 'homepage',
         mode    => '0744',
         content => template('homepage/leech_media.sh.erb'),
         require => File[$appdir]
@@ -28,8 +28,8 @@ class homepage::leech inherits homepage::params  {
 
     file { "${appdir}/leech_db.sh":
         ensure  => present,
-        owner   => $username,
-        group   => $username,
+        owner   => 'homepage',
+        group   => 'homepage',
         mode    => '0744',
         content => template('homepage/leech_db.sh.erb'),
         require => File[$appdir]
