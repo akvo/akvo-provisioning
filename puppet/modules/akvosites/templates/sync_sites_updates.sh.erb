@@ -15,9 +15,9 @@ printf "<br />" >> $LOG_FILE
 
 if [ $EXIT -eq 0 ]
 then
-    SUBJ='[sites.akvo.org] [SUCCESS] Akvo Sites project update deletions synchronised'
+    SUBJ='[SUCCESS] [<%= @environment %>] [akvosites-sync] [<%= @hostname %>] Project update deletions synchronised'
 else
-    SUBJ='[sites.akvo.org] [FAILURE] Akvo Sites project update deletions synchronised'
+    SUBJ='[FAILURE] [<%= @environment %>] [akvosites-sync] [<%= @hostname %>] Project update deletions synchronised'
 fi
 
 echo $LOG_FILE_URL | mail -s "${SUBJ}" devops@akvo.org
