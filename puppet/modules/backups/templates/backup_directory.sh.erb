@@ -48,5 +48,13 @@ $BACKUP_TO_DEST $SCRIPT_ARGS >> $LOGFILE 2>&1
 HOST=$(hostname -f)
 EXIT_CODE=$?
 LINE_COUNT=$(wc -l $LOGFILE)
-SUBJ="Backup of ${SOURCE} on ${HOST} complete : exit ${EXIT_CODE} : lc ${LINE_COUNT}"
+
+if [ $EXIT -eq 0 ]
+then
+    STATUS='SUCCESS'
+else
+    STATUS='FAILURE'
+fi
+
+SUBJ='[${STATUS}] [<%= @environment %>] [backup] [<%= @hostname %>] Backup of ${SOURCE} complete : lc ${LINE_COUNT}'
 cat $LOGFILE | mail -s "${SUBJ}" -t devops@akvo.org
