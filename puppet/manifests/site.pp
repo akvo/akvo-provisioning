@@ -11,6 +11,10 @@ Exec["apt-update"] -> Package <| |>
 resources { "firewall":
     purge => true
 }
+# nuke any unwanted cronjobs
+resources { "cron":
+    purge => true
+}
 
 
 node default {

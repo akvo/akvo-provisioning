@@ -35,7 +35,8 @@ class akvosites {
     }
 
     backups::dir { "akvosites_code":
-        path => "${app_path}/code"
+        path => "${app_path}/code",
+        user => 'root',
     }
 
     file { "${app_path}/code/wp-config.php":

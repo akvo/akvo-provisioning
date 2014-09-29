@@ -28,6 +28,7 @@ define backups::dir (
     $monthly = true,
     $retain_count = 4,
     $plain_copy = false,
+    $user = 'backup',
 ) {
 
     $backup_servers = hiera_hash('backup_servers')
@@ -51,7 +52,7 @@ define backups::dir (
     if $hourly {
         cron { "backup-dir-${name}-hourly":
             ensure  => present,
-            user    => 'backup',
+            user    => $user,
             weekday => '*',
             hour    => '*',
             minute  => '30',
@@ -63,7 +64,7 @@ define backups::dir (
     if $daily {
         cron { "backup-dir-${name}-daily":
             ensure  => present,
-            user    => 'backup',
+            user    => $user,
             weekday => '*',
             hour    => '3',
             minute  => '0',
@@ -75,7 +76,7 @@ define backups::dir (
     if $weekly {
         cron { "backup-dir-${name}-weekly":
             ensure  => present,
-            user    => 'backup',
+            user    => $user,
             weekday => '2',
             hour    => '4',
             minute  => '0',
@@ -87,7 +88,7 @@ define backups::dir (
     if $monthly {
         cron { "backup-dir-${name}-monthly":
             ensure   => present,
-            user     => 'backup',
+            user     => $user,
             monthday => '4',
             hour     => '5',
             minute   => '0',
