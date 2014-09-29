@@ -1,7 +1,8 @@
 
 class statsd::install {
 
-    ensure_resource('package', ['git', 'nodejs'], { ensure => installed })
+    include nodejs
+    ensure_resource('package', ['git'], { ensure => installed })
 
     user { 'statsd':
         ensure => present,
