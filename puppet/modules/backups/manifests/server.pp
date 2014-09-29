@@ -14,7 +14,7 @@ define backups::server (
         owner   => 'backup',
         mode    => '0740',
         content => template('backups/diff_copy.sh.erb'),
-        require => File['/backups/bin']
+        require => [Exec['clean_up_backup_config'], File['/backups/bin']]
     }
 
     file { "/backups/bin/plain_backup_to_${name}.sh":
@@ -22,7 +22,7 @@ define backups::server (
         owner   => 'backup',
         mode    => '0740',
         content => template('backups/plain_copy.sh.erb'),
-        require => File['/backups/bin']
+        require => [Exec['clean_up_backup_config'], File['/backups/bin']]
     }
 
     if $host_key {
