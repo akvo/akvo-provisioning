@@ -28,4 +28,9 @@ zcat /tmp/$FILENAME | mysql -u $DBUSER -h $DBHOST --password=$DBPASS -D $DBNAME
 echo 'step 5: clean up leech'
 rm -v /tmp/$FILENAME
 
+echo 'step 6: hack wordpress config values'
+
+CMD="update wi1_options set option_value = '<%= @homepage_url %>' where option_name = 'home' or option_name = 'siteurl'"
+echo $CMD | mysql -u $DBUSER -h $DBHOST --password=$DBPASS -D $DBNAME
+
 echo 'done!'

@@ -10,6 +10,7 @@ class homepage::params {
     $base_domain = hiera('base_domain')
     $default_hostname = ["homepage.${base_domain}"]
     $homepage_hostnames = concat($default_hostname, $specified_hostnames)
+    $homepage_url = hiera('homepage_url')
     $rsr_domain = hiera('rsr_main_domain') # for legacy redirects
     $pool_port = 9010
 

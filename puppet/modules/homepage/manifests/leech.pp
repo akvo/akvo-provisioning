@@ -2,6 +2,8 @@
 # this is to get live data onto test environments
 
 class homepage::leech inherits homepage::params  {
+    include mysql::client::install
+
     $data_source_host = hiera('homepage_data_source_host')
 
     # if we are not a source, then we are a leech, and so we need the private

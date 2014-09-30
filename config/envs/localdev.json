@@ -34,6 +34,7 @@
     "homepage_wordpress_database_mysql_name": "mysql-localdev",
     "homepage_wordpress_database_password": "password",
     "homepage_hostnames": [],
+    "homepage_url": "http://homepage.localdev.akvo.org",
     "homepage_plugins_from_repository": false,
     "homepage_leech": false,
     "homepage_data_source": false,
