@@ -12,6 +12,7 @@ server {
     # Legacy redirects, see https://github.com/akvo/akvo-provisioning/issues/37
     # TODO: move these into the akvo-web repository
     rewrite ^/blog/wp-content(.*)$ /wp-content$1 last;
+    rewrite ^/wp-content/uploads(.*)$ /uploads$1 last;
     rewrite ^/rsr(/.*|$)$   http://<%=@rsr_domain %>/$1;
     rewrite ^/web(.*)$      $1 last;
     rewrite ^/api           http://<%=@rsr_domain %>$request_uri?;
