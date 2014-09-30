@@ -54,8 +54,9 @@ class graphite::config {
         ip => hiera('external_ip')
     }
 
-    nginx::proxy { "graphite.${base_domain}":
-        proxy_url          => 'http://localhost:5115',
+    $proxy_url = 'http://localhost:5115',
+    nginx::configfile { 'graphite-nginx':
+        content => template('graphite/graphite-nginx.conf.erb')
     }
 
     Graphite::Client<<||>>
