@@ -22,9 +22,9 @@ done
 
 if [ $EXIT -eq 0 ]
 then
-    SUBJ='[SUCCESS] [<%= @environment %>] [akvosites-sync] [<%= @hostname %>] Akvo Sites project updates refreshed'
+    SUBJ="[SUCCESS] [<%= @environment %>] [akvosites-sync] [<%= @hostname %>] Akvo Sites project updates refreshed"
 else
-    SUBJ='[FAILURE] [<%= @environment %>] [akvosites-sync] [<%= @hostname %>] Akvo Sites project updates refreshed'
+    SUBJ="[FAILURE] [<%= @environment %>] [akvosites-sync] [<%= @hostname %>] Akvo Sites project updates refreshed"
 fi
 
 echo $LOG_FILE_URL | mail -s "${SUBJ}" devops@akvo.org

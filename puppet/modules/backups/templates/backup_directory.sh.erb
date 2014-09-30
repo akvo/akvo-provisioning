@@ -56,5 +56,5 @@ else
     STATUS='FAILURE'
 fi
 
-SUBJ='[${STATUS}] [<%= @environment %>] [backup] [<%= @hostname %>] Backup of ${SOURCE} complete : lc ${LINE_COUNT}'
+SUBJ="[${STATUS}] [<%= @environment %>] [backup] [<%= @hostname %>] Backup of ${SOURCE} complete : lc ${LINE_COUNT}"
 cat $LOGFILE | mail -s "${SUBJ}" -t devops@akvo.org
