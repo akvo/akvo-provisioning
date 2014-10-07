@@ -51,7 +51,7 @@ EXIT_CODE=$((EXIT_CODE + CUR_EXIT_CODE))
 HOST=$(hostname -f)
 LINE_COUNT=$(wc -l $LOGFILE)
 
-if [ $EXIT -eq 0 ]
+if [ $EXIT_CODE -eq 0 ]
 then
     STATUS='SUCCESS'
 else
