@@ -30,4 +30,8 @@ class homepage::config inherits homepage::params {
         path => "${appdir}/uploads"
     }
 
+    backups::dir { 'homepage_data':
+        path => "${appdir}/data"
+    }
+
 }

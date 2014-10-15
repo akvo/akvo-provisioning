@@ -9,7 +9,7 @@ class homepage::install inherits homepage::params {
         deploy_key           => hiera('homepage-deploy_public_key')
     }
 
-    file { ["${appdir}/versions", "${appdir}/conf", "${appdir}/uploads"]:
+    file { ["${appdir}/versions", "${appdir}/conf", "${appdir}/uploads", "${appdir}/data"]:
         ensure  => directory,
         owner   => 'homepage',
         group   => 'homepage',
