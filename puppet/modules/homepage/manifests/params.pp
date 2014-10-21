@@ -14,6 +14,7 @@ class homepage::params {
     $rsr_domain = hiera('rsr_main_domain') # for legacy redirects
     $pool_port = 9010
     $piwik_id = hiera('homepage_piwik_id')
+    $piwik_domain = hiera('homepage_piwik_domain')
 
     $db_host = "${mysql_name}.${base_domain}"
 
