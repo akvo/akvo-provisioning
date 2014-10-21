@@ -20,6 +20,7 @@
     "rsr_smtp_password": "",
     "rsr_data_source": false,
     "rsr_data_source_host": "localhost",
+    "rsr_leech": false,
 
     "butler_mysql_name": "mysql-localdev",
     "butler_database_password": "5qLc7JfchEUzGBZpszCsmHDIUij9FUfKXxrkFUsh",
@@ -49,6 +50,11 @@
     "mysql_root_password": "password",
     "mysql_backup_password": "password",
     "mysql_reports_password": "password",
+
+    "psql_name": "psql-localdev",
+    "psql_root_password": "password",
+    "psql_backup_password": "password",
+    "psql_reports_password": "password",
 
     "watercompass_secret_key": "password",
     "watercompass_database_password": "password",
