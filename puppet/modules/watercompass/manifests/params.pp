@@ -16,6 +16,7 @@ class watercompass::params {
         'DATABASE_URL'  => "sqlite:////${approot}/db/watercompass.sqlite3",
         'SECRET_KEY'    => hiera('watercompass_secret_key'),
         'ALLOWED_HOSTS' => "watercompass.info,watercompass.${base_domain}",
+        'DEBUG'         => hiera('watercompass_debug', 'false'),
     }
 
 }

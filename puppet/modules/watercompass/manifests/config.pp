@@ -1,12 +1,6 @@
 
 class watercompass::config {
 
-    /*database::my_sql::db { $watercompass::database_name:
-        password   => $watercompass::database_password,
-        reportable => false
-    }*/
-
-
     named::service_location { 'watercompass':
         ip => hiera('external_ip')
     }

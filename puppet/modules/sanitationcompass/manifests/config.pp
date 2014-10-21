@@ -1,12 +1,6 @@
 
 class sanitationcompass::config {
 
-    /*database::my_sql::db { $sanitationcompass::database_name:
-        password   => $sanitationcompass::database_password,
-        reportable => false
-    }*/
-
-
     named::service_location { 'sanitationcompass':
         ip => hiera('external_ip')
     }

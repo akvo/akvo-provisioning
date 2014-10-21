@@ -16,6 +16,7 @@ class sanitationcompass::params {
         'DATABASE_URL'  => "sqlite:////${approot}/db/sanitationcompass.sqlite3",
         'SECRET_KEY'    => hiera('sanitationcompass_secret_key'),
         'ALLOWED_HOSTS' => "sanitationcompass.info,sanitationcompass.${base_domain}",
+        'DEBUG'         => hiera('sanitationcompass_debug', 'false'),
     }
 
 }
