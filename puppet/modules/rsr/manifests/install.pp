@@ -17,6 +17,7 @@ class rsr::install {
 
     # install all of the support packages
     include pythonsupport::mysql
+    include pythonsupport::psql
     include pythonsupport::pil
     include pythonsupport::lxml
     include pythonsupport::standard
