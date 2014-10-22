@@ -1,4 +1,6 @@
-define database::psql::db ($psql_name, $password, $include_fw_rule = true ) {
+define database::psql::db ($psql_name, $password,
+                           $include_fw_rule = true,
+                           $reportable = false ) {
 
     $base_domain = hiera('base_domain')
     $psql_host = "${psql_name}.${base_domain}"
