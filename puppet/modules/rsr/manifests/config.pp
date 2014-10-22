@@ -12,7 +12,7 @@ class rsr::config {
     }
 
     database::psql::db { 'rsr':
-        mysql_name => $rsr::params::psql_name,
+        psql_name  => $rsr::params::psql_name,
         password   => $rsr::params::database_password,
         reportable => true
     }
