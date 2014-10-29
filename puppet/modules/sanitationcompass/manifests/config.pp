@@ -7,7 +7,7 @@ class sanitationcompass::config {
 
 
     $base_domain = hiera('base_domain')
-    nginx::proxy { ["sanitationcompass.${base_domain}", 'sanitationcompass.info']:
+    nginx::proxy { ["sanitationcompass.${base_domain}", 'sanitationcompass.info', 'www.sanitationcompass.info']:
         proxy_url          => "http://localhost:${sanitationcompass::port}",
         static_dirs        => {
             "/static/" => "${sanitationcompass::approot}/code/dsp/dsp/dsp-static/",
