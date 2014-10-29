@@ -15,7 +15,7 @@ class sanitationcompass::params {
         'PYTHONPATH'    => "${approot}/code/dsp",
         'DATABASE_URL'  => "sqlite:////${approot}/db/sanitationcompass.sqlite3",
         'SECRET_KEY'    => hiera('sanitationcompass_secret_key'),
-        'ALLOWED_HOSTS' => "sanitationcompass.info,sanitationcompass.${base_domain}",
+        'ALLOWED_HOSTS' => "www.sanitationcompass.info,sanitationcompass.info,sanitationcompass.${base_domain}",
         'DEBUG'         => hiera('sanitationcompass_debug', 'false'),
     }
 

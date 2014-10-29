@@ -15,7 +15,7 @@ class watercompass::params {
         'PYTHONPATH'    => "${approot}/code/dst:${approot}/code/dsp",
         'DATABASE_URL'  => "sqlite:////${approot}/db/watercompass.sqlite3",
         'SECRET_KEY'    => hiera('watercompass_secret_key'),
-        'ALLOWED_HOSTS' => "watercompass.info,watercompass.nl,watercompass.org,watercompass.${base_domain}",
+        'ALLOWED_HOSTS' => "www.watercompass.info,watercompass.info,www.watercompass.nl,www.watercompass.org,watercompass.nl,watercompass.org,watercompass.${base_domain}",
         'DEBUG'         => hiera('watercompass_debug', 'false'),
     }
 
