@@ -7,7 +7,9 @@ class watercompass::config {
 
 
     $base_domain = hiera('base_domain')
-    nginx::proxy { ["watercompass.${base_domain}", 'watercompass.info', 'watercompass.nl', 'watercompass.org']:
+    nginx::proxy { ["watercompass.${base_domain}",
+                    'watercompass.info', 'watercompass.nl', 'watercompass.org',
+                    'www.watercompass.info', 'www.watercompass.nl', 'www.watercompass.org']:
         proxy_url          => "http://localhost:${watercompass::port}",
         static_dirs        => {
             "/static/" => "${watercompass::approot}/code/dsp/dst/static/",
