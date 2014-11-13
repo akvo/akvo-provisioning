@@ -30,6 +30,14 @@ DATABASES = {
         'PASSWORD': '<%= @database_password %>',
         'HOST': '<%= @database_host %>',
         'PORT': '',
+    },
+    'postgres': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'rsr',
+        'USER': 'rsr',
+        'PASSWORD': '<%= @database_password %>',
+        'HOST': '<%= @postgres_database_host %>',
+        'PORT': '',
     }
 }
 

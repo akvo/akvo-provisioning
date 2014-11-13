@@ -24,4 +24,7 @@ class rsr::params {
 
     $rsr_hostnames = concat($additional_rsr_domains, ["rsr.${base_domain}"])
 
+    $postgres_name = hiera('rsr_psql_name', 'psql')
+    $postgres_database_host = "${postgres_name}.${base_domain}"
+
 }
