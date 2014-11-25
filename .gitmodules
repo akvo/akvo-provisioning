@@ -25,3 +25,6 @@
 [submodule "puppet/ext/nodejs"]
 	path = puppet/ext/nodejs
 	url = https://github.com/puppetlabs/puppetlabs-nodejs.git
+[submodule "puppet/ext/sysctl"]
+	path = puppet/ext/sysctl
+	url = https://github.com/thias/puppet-sysctl
