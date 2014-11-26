@@ -29,6 +29,9 @@ server {
     error_log /var/akvo/homepage/logs/nginx-error.log;
     rewrite_log on;
 
+    # allow larger uploads
+    client_max_body_size 100m;
+
     # Serve stuff!
     location / {
         root /var/akvo/homepage/code/;

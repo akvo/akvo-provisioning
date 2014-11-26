@@ -1,4 +1,6 @@
-define database::psql::db ($psql_name, $password, $include_fw_rule = true ) {
+define database::psql::db ($psql_name, $password,
+                           $include_fw_rule = true,
+                           $reportable = false ) {
 
     $base_domain = hiera('base_domain')
     $psql_host = "${psql_name}.${base_domain}"
@@ -7,13 +9,13 @@ define database::psql::db ($psql_name, $password, $include_fw_rule = true ) {
 
     @@database::psql::db_exported { $name:
         password => $password,
-        tag        => "psql-db-${psql_host}"
+        tag      => "psql-db-${psql_host}"
     }
 
     if ($include_fw_rule) {
         @@database::psql::client { $name:
             ip  => hiera('external_ip'),
-            tag        => "psql-client-${psql_host}"
+            tag => "psql-client-${psql_host}"
         }
     }
 }

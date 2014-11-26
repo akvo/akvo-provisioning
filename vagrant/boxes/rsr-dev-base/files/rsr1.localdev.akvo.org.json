@@ -3,6 +3,7 @@
         "puppetdb",
         "management",
         "rsr",
-        "database"
+        "psqldb",
+        "mysqldb"
     ]
 }

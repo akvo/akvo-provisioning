@@ -11,6 +11,12 @@ class rsr::config {
         reportable => true
     }
 
+    database::psql::db { 'rsr':
+        psql_name  => $rsr::params::psql_name,
+        password   => $rsr::params::database_password,
+        reportable => true
+    }
+
     # we want a service address
     named::service_location { ["rsr", "*"]:
         ip => hiera('external_ip')
