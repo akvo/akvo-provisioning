@@ -10,7 +10,7 @@ LOG_FILE_URL="http://<%= @default_domain %>/logs/cron/$LOG_FILE_NAME"
 
 EXIT=0
 
-for organisation_id in 272 275 539 815 912 1060 1061 1093 1151 2121
+for organisation_id in 272 275 539 815 912 1060 1061 1093 1151 2121 2151
 do
     echo "Updating organisation $organisation_id"
     printf "<br />[`date --rfc-3339=seconds`]<br />" >> $LOG_FILE
