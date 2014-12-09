@@ -1,0 +1,42 @@
+# virtual disks will live here
+dir = /xen
+
+install-method = debootstrap
+
+# these are the default settings for guests which you'll probably
+# override when you actually create it
+size    = 20Gb
+memory  = 512Mb
+swap    = 512Mb
+fs      = ext3
+
+# this sets all guests up to use Ubuntu 12.04
+dist    = precise
+image   = sparse
+
+# the gateway IP here MUST be the IP address of the host machine
+gateway   = <%= @gateway_address %>
+# the netmask should be the netmask of the subnet assigned by
+# Hetzner - this may be different from that of the dom0!
+netmask   = <%= @netmask %>
+# Same as above - this is the broadcast of the additional subnet
+broadcast = <%= @broadcast_address %>
+
+kernel = /boot/vmlinuz-`uname -r`
+initrd = /boot/initrd.img-`uname -r`
+arch = amd64
+
+# german mirror to download ubuntu, as this server is in germany
+mirror = http://de.archive.ubuntu.com/ubuntu
+
+ext3_options     = noatime,nodiratime,errors=remount-ro
+ext2_options     = noatime,nodiratime,errors=remount-ro
+xfs_options      = defaults
+reiserfs_options = defaults
+btrfs_options    = defaults
+
+# auto boot new guests
+boot = 1
+
+serial_device = hvc0
+disk_device = xvda

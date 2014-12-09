@@ -25,6 +25,7 @@ class xen {
         ],
     }
 
+    # we are routing not bridging traffic:
     file_line { 'xend-config-network-route':
         path => '/etc/xen/xend-config.sxp',
         line => '(network-script network-route)'
@@ -32,7 +33,23 @@ class xen {
 
     file_line { 'xend-config-vif-route':
         path => '/etc/xen/xend-config.sxp',
-        line => '(vif-script     vif-route)'
+        line => '(vif-script vif-route)'
     }
+
+    file_line { 'xend-config-network-bridge':
+        path  => '/etc/xen/xend-config.sxp',
+        line  => '# (network-script network-bridge)'
+        match => '^.*network-bridge.*$'
+    }
+
+    file_line { 'xend-config-vif-bridge':
+        path  => '/etc/xen/xend-config.sxp',
+        line  => '# (vif-script vif-bridge)'
+        match => '^.*vif-bridge.*$'
+    }
+
+    # configure the defaults for xen tools to use when creating domU's
+    $gateway_address = hiera('external_ip')
+    $netmask = hiera('
 
 }
