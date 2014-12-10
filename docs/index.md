@@ -1,2 +1,0 @@
-
-# Akvo Provisioning Documentation
