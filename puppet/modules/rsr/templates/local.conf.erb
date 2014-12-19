@@ -24,6 +24,14 @@ PARTNER_SITES_MARKETING_SITE = 'http://www.akvoapp.org/'
 
 DATABASES = {
     'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'rsr',
+        'USER': 'rsr',
+        'PASSWORD': '<%= @database_password %>',
+        'HOST': '<%= @postgres_database_host %>',
+        'PORT': '',
+    },
+    'mysql': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'rsr',
         'USER': 'rsr',
@@ -31,14 +39,6 @@ DATABASES = {
         'HOST': '<%= @database_host %>',
         'PORT': '',
     },
-    'postgres': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'rsr',
-        'USER': 'rsr',
-        'PASSWORD': '<%= @database_password %>',
-        'HOST': '<%= @postgres_database_host %>',
-        'PORT': '',
-    }
 }
 
 MEDIA_ROOT = '<%= @media_root %>'
