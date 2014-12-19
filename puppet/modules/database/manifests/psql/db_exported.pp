@@ -5,6 +5,7 @@ define database::psql::db_exported( $password, $backup = true ) {
         user          => $name,
         password      => $password,
         grant         => 'all',
+        encoding      => 'utf-8',
     }
 
     if ($backup) {
