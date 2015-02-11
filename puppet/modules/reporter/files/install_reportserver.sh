@@ -1,12 +1,12 @@
 #!/bin/bash
 
-#fetch release zipfile
+#fetch release zipfile (Approx 200MB)
 wget http://files.support.akvo-ops.org/reportserver/RS2.2.1-5602-reportserver.zip
 
 #unpack release zipfile
 unzip RS2.2.1-5602-reportserver.zip
 
-#configure DB connection
+#configure DB connection. This file is unfortunately version-specific.
 cp persistence.xml WEB-INF/classes/META-INF/persistence.xml
 
 #overwrite patched jar files
