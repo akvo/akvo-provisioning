@@ -38,14 +38,15 @@ class reporter::install {
         require => File[$approot]
     }
 
-    file { "${approot}/RS2.2.1-5602-reportserver.zip":
-        ensure  => present,
-        owner   => 'tomcat7',
-        group   => 'tomcat7',
-        mode    => '0600',
-        source  => 'puppet:///modules/reporter/RS2.2.1-5602-reportserver.zip',
-        require => File[$approot]
-    }
+#Too big for Github...
+#    file { "${approot}/RS2.2.1-5602-reportserver.zip":
+#        ensure  => present,
+#        owner   => 'tomcat7',
+#        group   => 'tomcat7',
+#        mode    => '0600',
+#        source  => 'puppet:///modules/reporter/RS2.2.1-5602-reportserver.zip',
+#        require => File[$approot]
+#    }
 
     file { "${approot}/persistence.xml":
         ensure  => present,
@@ -79,7 +80,6 @@ class reporter::install {
         cwd     => "${approot}",
         creates => "${approot}/.installed",
         require => [File["${approot}/install_reportserver.sh"],
-                    File["${approot}/RS2.2.1-5602-reportserver.zip"],
                     File["${approot}/persistence.xml"],
                     File["${approot}/rsbirt.jar.patch2"],
                     File["${approot}/rsbase.jar.patch2"],
