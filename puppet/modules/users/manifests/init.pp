@@ -12,10 +12,10 @@ class users {
         htpasswd => '$apr1$WdYFnpfb$nE14MA.Yra5q6K5MILDOO.'
     }
 
-   users::basic { 'emmanuel':
-      roles => ['developer'],
-      ssh_key => 'AAAAB3NzaC1yc2EAAAADAQABAAABAQCltUhaWuIsw/ejItlKyCb/8fFA0g6Age19fX5y51WFFz2psgf3vcPvmw90TCEh4gH+Sz4c2AZ9c+lq60kFX5mgs1yS+jLCAYXvvhE8vGPR7il8f/AVbsDtv5o5pwFYq4MdMI9tpPwz60vrlu61mqpBRBmWNrlI7aiHwSnKRrLGCNPkvj6t4jA5WPdozv5DThjrEF0j8pu2bPzyz1nXIcijZWU4jVQtqfVxZ+gSIxpCiPwF9IQQnwPk+tRns6/DY+oo11Ug3csBDbyvlUgZg8Wj4O1ng/5x9b0xAeVzCY2+hP5f13Bhuy5CNlgl3YPYxIz78b5QnCCUjwjZKMl9u183'
-   }
+    users::basic { 'emmanuel':
+        roles => ['developer'],
+        ssh_key => 'AAAAB3NzaC1yc2EAAAADAQABAAABAQCltUhaWuIsw/ejItlKyCb/8fFA0g6Age19fX5y51WFFz2psgf3vcPvmw90TCEh4gH+Sz4c2AZ9c+lq60kFX5mgs1yS+jLCAYXvvhE8vGPR7il8f/AVbsDtv5o5pwFYq4MdMI9tpPwz60vrlu61mqpBRBmWNrlI7aiHwSnKRrLGCNPkvj6t4jA5WPdozv5DThjrEF0j8pu2bPzyz1nXIcijZWU4jVQtqfVxZ+gSIxpCiPwF9IQQnwPk+tRns6/DY+oo11Ug3csBDbyvlUgZg8Wj4O1ng/5x9b0xAeVzCY2+hP5f13Bhuy5CNlgl3YPYxIz78b5QnCCUjwjZKMl9u183'
+    }
 
     users::basic { 'mark':
         roles    => ['developer'],
@@ -38,7 +38,7 @@ class users {
     users::basic { 'stellan':
         roles    => ['developer'],
         allow    => ['munin'],
-        ssh_key  => 'AAAAB3NzaC1yc2EAAAADAQABAAAAgQDE+s/CSGkvynr/7nWe7/9Vkv2Nv6m84HTruEo9yN5vpvDp5j6XpsNklq9NgLYQs8/C46iKvbFTF/apIauHCr1lC27PI0m2n5coUNbNGoJZMhWoq4LmHdbhu4vhDgz+Vqx0hbQrNHiG7XIhsaqFnCJua8faKJUn6RKTantQr5aQDQ==',
+        ssh_key  => 'AAAAB3NzaC1yc2EAAAADAQABAAAAgQD3+y/TMl24bz82lv25fpthS0afiFYqysYc8PqsYoTWLtkQn7WTfyRkSClMNKbaM6KkwP9OOnnzduJyF03sWGnZSHIV8zUEfPnuPKxqJrwltiXhcIwo4Ongh78L8h18fKRJUAQQe+uc3LAoh6khboVpdHtErQ60GbjMkWlQcKJ3Kw==',
     }
 
     users::basic { 'loic':
@@ -47,10 +47,10 @@ class users {
         ssh_key  => 'AAAAB3NzaC1yc2EAAAADAQABAAABAQDCryjqHYO3dyI0uQn1jEioe/e/OM9SeOkaTXGgQJKA8OVn5CIyuXUf2PYpShU54VZ1zwJEKWcNHDCxzwdqU7z8rTHRxzcTUAlsz2R/HTkHtg9hsUbu5IuO8xUYt7G8yuAVyVOAgOIM29Vj9MbbAgz/es8cAAfQaQ5G/EHkKvZAd/ZwQYsX6n6yG9SI+hXUH7DmNefEEzaJdLtpQ/iySNuKEwdPgC31w31HNiz/ByJXy32S1hXzo+kXdvp5LzTQka+VUkkcPliT+yGH7XInEiFQZKzyrtc71YmO0dcJyUYb6IwOc7KGaFvZVty0oPcu5Elu7XOWtMbHkfRcEauURu71',
     }
 
-    users::basic { 'dan':
-        roles    => ['content', 'www-edit'],
-        allow    => [],
-        ssh_key  => 'AAAAB3NzaC1yc2EAAAADAQABAAABAQC3tQYpbc1rPvApT6wNMwXG/fJDcUAoXGlbH4OqxkUtxS6Q/ZjDCQjEIUFjA1UtLRkVzulbVZEEZ7xWKY4dMNBuoyGbYOYhTPwA4TndRdpR30CdNMJ74H+RTyXEvZWAIy03WxqLbCp6n+ltKkdDNN1+sobqbrLROSidFvJX2XzfaTSAod8M9X99Rkqal30gay1kOzWlQ4FF0l3o5nX+vy7okX102frPDiXPAN3xG4bGqFWmQgkAV0dq6HaWi2KCRPDjQQaYX9eNZ4TmkdmgeGFJrqbShXCVNoIF2jMTOz9bP/wc/j5T3F4D5NKQX//ySXZqXPj2VCUptCFA7qjB7oqJ',
+    users::basic { 'gabe':
+        roles    => ['content', 'developer', 'www-edit'],
+        allow    => ['munin'],
+        ssh_key  => 'AAAAB3NzaC1yc2EAAAABJQAAAQEApKMrguIMU42MV6Ia6s7658348kEDqKAUV84u/d4o+hwkIXX07JE/Z8+3Pvno7tsBGqCzmI6P5WbCn3e14g65paXctWCq8MrQIOdc3UsDeiDd9o9SSp1Z/1y2nYKV77ZAtB7sBH+ht95u9JoTpgS1ghkBVlY1PIzjaqfRPIF/JjxEszjxtSztMDvmENpEAlvz9upvwML7SgPOIkjGlq3FHcXuIz4tSL0iMWdJ/0GP7LuiaXXdnpS48qOLnE6KhZBEMTTHJWR4T/U0XGtESZxe41/fBRBcuesoacJh+eKxhZ5tfmeFmYA4L39pQUjNd8lo2rFmiaSEdo2h5DZ1+DCRNQ==',
     }
 
     users::basic { 'ivan':
@@ -91,6 +91,7 @@ class users {
     users::remove_user { ['paul']: }
     users::remove_user { ['neha']: }
     users::remove_user { ['lauri']: }
+    users::remove_user { ['dan']: }
 
     Class['Users::Groups'] -> Users::Basic<||>
 }
