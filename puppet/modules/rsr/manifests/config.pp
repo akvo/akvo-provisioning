@@ -1,16 +1,9 @@
-
 class rsr::config {
 
     include rsr::params
     $approot = $rsr::params::approot
 
     # create an RSR database on the database server
-    database::my_sql::db { 'rsr':
-        mysql_name => $rsr::params::mysql_name,
-        password   => $rsr::params::database_password,
-        reportable => true
-    }
-
     database::psql::db { 'rsr':
         psql_name  => $rsr::params::postgres_name,
         password   => $rsr::params::database_password,
@@ -31,7 +24,7 @@ class rsr::config {
             "/media/"       => $rsr::params::media_root,
             "/static/"      => $rsr::params::static_root
         },
-        extra_nginx_config  => "client_max_body_size 3m;",
+        extra_nginx_config  => "client_max_body_size 8m;",
         access_log          => "${approot}/logs/rsr-nginx-access.log",
         error_log           => "${approot}/logs/rsr-nginx-error.log",
     }

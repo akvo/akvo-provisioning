@@ -18,7 +18,7 @@ export LC_ALL=en_US.UTF-8
 locale-gen en_US.UTF-8
 dpkg-reconfigure locales
 
-sudo apt-get install -y -q fabric
+sudo apt-get install -yq fabric
 
 environment=$1
 
