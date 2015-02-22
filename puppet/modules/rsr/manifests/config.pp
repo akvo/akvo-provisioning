@@ -1,4 +1,3 @@
-
 class rsr::config {
 
     include rsr::params
@@ -31,7 +30,7 @@ class rsr::config {
             "/media/"       => $rsr::params::media_root,
             "/static/"      => $rsr::params::static_root
         },
-        extra_nginx_config  => "client_max_body_size 3m;",
+        extra_nginx_config  => "client_max_body_size 8m;",
         access_log          => "${approot}/logs/rsr-nginx-access.log",
         error_log           => "${approot}/logs/rsr-nginx-error.log",
     }
