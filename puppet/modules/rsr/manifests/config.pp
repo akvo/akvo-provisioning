@@ -17,7 +17,7 @@ class rsr::config {
 
     # nginx sits in front of RSR
     $base_domain = hiera('base_domain')
-    nginx::proxy { [$rsr::params::rsr_hostnames, "*.${base_domain}", "*.${rsr::params::partner_site_domain}"]:
+    nginx::proxy { [$rsr::params::rsr_hostnames, "*.${base_domain}", "*.${rsr::params::partner_site_domain}", "_"]:
         proxy_url          => "http://localhost:${rsr::params::port}",
         static_dirs        => {
             # "/media/admin/" => "${approot}/venv/lib/python2.7/site-packages/django/contrib/admin/static/admin/",
