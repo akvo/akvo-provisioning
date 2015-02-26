@@ -24,7 +24,7 @@ class rsr::config {
             "/media/"       => $rsr::params::media_root,
             "/static/"      => $rsr::params::static_root
         },
-        extra_nginx_config  => "client_max_body_size 8m;",
+        extra_nginx_config  => template('rsr/nginx-extra.conf.erb'),
         access_log          => "${approot}/logs/rsr-nginx-access.log",
         error_log           => "${approot}/logs/rsr-nginx-error.log",
     }
