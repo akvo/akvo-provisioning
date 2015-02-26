@@ -23,7 +23,7 @@ echo 'step 3: remove dump on data source'
 ssh -i $KEY $HOST rm -v $FILENAME
 
 echo 'step 4: load the dump'
-zcat /tmp/$FILENAME | mysql -u $DBUSER -h $DBHOST --password=$DBPASS -D $DBNAME
+PGPASSWORD=${DBPASS} zcat /tmp/$FILENAME | psql --username=${DBUSER} --host=${DBHOST} $DBNAME
 
 echo 'step 5: clean up leech'
 rm -v /tmp/$FILENAME

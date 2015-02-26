@@ -6,4 +6,4 @@ HOST=<%= @database_host %>
 DATABASE=<%= @username %>
 OUTFILE=$1
 
-mysqldump -u $USERNAME --password=$PASS -h $HOST $DATABASE | gzip > $OUTFILE
+PGPASSWORD=${PASS} pg_dump --host=${HOST} --username=${USERNAME} $DATABASE | gzip > $OUTFILE
