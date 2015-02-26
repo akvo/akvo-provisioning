@@ -1,16 +1,9 @@
-
 class rsr::config {
 
     include rsr::params
     $approot = $rsr::params::approot
 
     # create an RSR database on the database server
-    database::my_sql::db { 'rsr':
-        mysql_name => $rsr::params::mysql_name,
-        password   => $rsr::params::database_password,
-        reportable => true
-    }
-
     database::psql::db { 'rsr':
         psql_name  => $rsr::params::postgres_name,
         password   => $rsr::params::database_password,
@@ -24,14 +17,14 @@ class rsr::config {
 
     # nginx sits in front of RSR
     $base_domain = hiera('base_domain')
-    nginx::proxy { [$rsr::params::rsr_hostnames, "*.${base_domain}", "*.${rsr::params::partner_site_domain}"]:
+    nginx::proxy { [$rsr::params::rsr_hostnames, "*.${base_domain}", "*.${rsr::params::partner_site_domain}", "_"]:
         proxy_url          => "http://localhost:${rsr::params::port}",
         static_dirs        => {
             # "/media/admin/" => "${approot}/venv/lib/python2.7/site-packages/django/contrib/admin/static/admin/",
             "/media/"       => $rsr::params::media_root,
             "/static/"      => $rsr::params::static_root
         },
-        extra_nginx_config  => "client_max_body_size 3m;",
+        extra_nginx_config  => "client_max_body_size 8m;",
         access_log          => "${approot}/logs/rsr-nginx-access.log",
         error_log           => "${approot}/logs/rsr-nginx-error.log",
     }

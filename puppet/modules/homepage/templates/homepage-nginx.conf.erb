@@ -1,9 +1,9 @@
 server {
     listen 80;
     server_name
-        <% @homepage_hostnames.each do |homepage_hostname| %>
-        <%= homepage_hostname %>
-        <%- end %>;
+    <%- @homepage_hostnames.each do |homepage_hostname| -%>
+    <%= homepage_hostname %>
+    <% end %>;
 
     server_tokens off;
 
