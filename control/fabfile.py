@@ -134,6 +134,9 @@ def on_environment(env_name_or_path):
 # --------------------
 
 def create_client_cert():
+    """
+    Generates a certificate and a private key to be used by the puppet client
+    """
     sudo('mkdir -p /var/lib/puppet/ssl/{private_keys,certs}')
     sudo('chown -R puppet.puppet /var/lib/puppet/ssl')
 
@@ -157,11 +160,17 @@ def create_client_cert():
 
 
 def set_facts():
+    """
+    Sets default location for facter and adds the 'environment' fact
+    """
     sudo('mkdir -p /etc/facter/facts.d')
     sudo('echo environment=%s >  /etc/facter/facts.d/akvo.txt' % env.environment)
 
 
 def setup_hiera():
+    """
+    Sets default location and config file for hiera
+    """
     sudo('mkdir -p /puppet/hiera/')
     sudo('chown -R puppet.puppet /puppet/hiera')
     put('files/hiera.yaml', '/etc/puppet/hiera.yaml', use_sudo=True)
@@ -171,6 +180,9 @@ def setup_hiera():
 
 
 def create_hiera_facts(use_sudo=False):
+    """
+    Creates hiera facts based on server and environment JSON configuration files
+    """
     run_method = sudo if use_sudo else run
 
     if env.environment == 'localdev':
@@ -189,6 +201,9 @@ def create_hiera_facts(use_sudo=False):
 
 
 def hiera_add_external_ip():
+    """
+    Adds hiera facts for external and internal IP addresses
+    """
     links = sudo("ip -o link | sed 's/[0-9]\+:\s\+//' | sed 's/:.*$//' | grep eth")
     links = links.split('\n')
     external_ip_addr = None
@@ -231,6 +246,9 @@ def hiera_add_external_ip():
 
 
 def get_latest_config():
+    """
+    Pulls latest provisioning configuration (not applicable to vagrant boxes, i.e. 'localdev' environments)
+    """
     if env.environment == 'localdev':
         print "Refusing to pull puppet, as this is a vagrant box and the checkout is linked to your host machine"
         return
@@ -241,10 +259,16 @@ def get_latest_config():
 
 
 def apply_puppet():
+    """
+    Executes `puppet apply` script as root user
+    """
     run('sudo /puppet/bin/apply.sh')
 
 
 def update_config():
+    """
+    Pulls latest provisioning configuration, creates hiera facts and applies puppet configuration
+    """
     get_latest_config()
     create_hiera_facts()
     apply_puppet()
@@ -255,6 +279,9 @@ def update_config():
 # --------------------
 
 def set_hostname():
+    """
+    Sets hostname everywhere
+    """
     nodename = _get_node_config('nodename', None)
     if nodename is None:
         print "Not setting hostname as no nodename was set"
@@ -327,11 +354,17 @@ def update_puppet_version():
 
 
 def install_git():
+    """
+    Installs 'git' package
+    """
     flags = '-q' if env.verbose else '-qq'
     sudo('apt-get install -y %s git' % flags)
 
 
 def install_puppet_module(module_name):
+    """
+    Installs a given puppet module
+    """
     sudo('puppet module install %s' % module_name)
 
 
@@ -362,6 +395,9 @@ def firstclone():
 
 
 def reset_checkout(branch_name=None):
+    """
+    Resets puppet checkout to the HEAD of a given git branch
+    """
     run('rm -rvf /puppet/checkout /puppet/checkout.old')
     run('git clone https://github.com/akvo/akvo-provisioning.git /puppet/checkout')
     with cd('/puppet/checkout'):
@@ -372,6 +408,9 @@ def reset_checkout(branch_name=None):
 
 
 def include_apply_script():
+    """
+    Adds `puppet apply` bash script for provisioning
+    """
     sudo('mkdir -p /puppet/bin/')
     put('files/apply.sh', '/puppet/bin/apply.sh', use_sudo=True)
     sudo('chown -R puppet.puppet /puppet/bin/')
@@ -379,12 +418,18 @@ def include_apply_script():
 
 
 def use_bootstrap_credentials():
+    """
+    Sets bootstrap credentials to environment configuration
+    """
     env.user = env.config.get('bootstrap_username', 'root')
     env.password = env.config.get('bootstrap_password')
     env.key_filename = env.config.get('bootstrap_key_filename')
 
 
 def is_puppetdb_ready():
+    """
+    Check if puppetdb service is ready
+    """
     hostname = run('hostname -f').strip()
     key = "--private-key=/var/lib/puppet/ssl/private_keys/%s.pem" % hostname
     cert = "--certificate=/var/lib/puppet/ssl/certs/%s.pem" % hostname
@@ -397,6 +442,10 @@ def is_puppetdb_ready():
 
 
 def bootstrap(verbose=False):
+    """
+    Performs all tasks needed to bootstrap the environment.
+    It includes basic steps to setup the server by means of puppet configuration
+    """
     use_bootstrap_credentials()
 
     env.verbose = verbose == '1'
@@ -435,6 +484,9 @@ def bootstrap(verbose=False):
 # --------------------
 
 def upgrade_packages(y=None):
+    """
+    Upgrades a given package
+    """
     # not sure why, but using fabric's sudo method
     # will not work here with the sudoers.d config which
     # allows puppet to run apt-get...
@@ -444,11 +496,17 @@ def upgrade_packages(y=None):
 
 
 def upgrade_packages_dist():
+    """
+    Performs a distribution upgrade
+    """
     upgrade_packages()
     run('sudo apt-get dist-upgrade')
 
 
 def reboot():
+    """
+    Reboots the host
+    """
     run('hostname -f')
     run('sudo reboot')
 
@@ -458,28 +516,49 @@ def reboot():
 # --------------------
 
 def admin():
+    """
+    Sets the 'admin' environment up
+    """
     on_environment('admin')
 
 
 def test():
+    """
+    Sets the 'test' environment up
+    """
     on_environment('test')
 
 
 def opstest():
+    """
+    Sets the 'opstest' environment up
+    """
     on_environment('opstest')
 
 
 def uat():
+    """
+    Sets the 'uat' environment up
+    """
     on_environment('uat')
 
 
 def live():
+    """
+    Sets the 'live' environment up
+    """
     on_environment('live')
 
 
 def support():
+    """
+    Sets the 'support' environment up
+    """
     on_environment('support')
 
 
 def up():
+    """
+    Sets the 'up' environment up
+    """
     update_config()
