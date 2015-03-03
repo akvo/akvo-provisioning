@@ -20,7 +20,8 @@ class sentry::config {
     }
 
     database::psql::db { $db_username:
-        password => $db_password
+        psql_name => $sentry::psql_name,
+        password  => $db_password
     }
 
     named::service_location { 'sentry':

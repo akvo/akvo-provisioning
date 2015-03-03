@@ -1,11 +1,11 @@
 
 define php::app (
   $app_hostnames,
+  $pool_port,
   $username = undef,
   $group = undef,
-  $wordpress = false,
-  $nginx_writable = false,
-  $config_file_contents = undef
+  $config_file_contents = undef,
+  $deploy_key = undef,
 ) {
 
     include php
@@ -23,25 +23,20 @@ define php::app (
     }
 
     akvoapp { $app_user:
+        deploy_key => $deploy_key
     }
 
     ensure_resource('group', $app_group, { ensure => present })
 
-    if ($nginx_writable) {
-        exec { "${name}_add_nginx_to_${app_group}":
-            command => "/usr/sbin/adduser www-data ${app_group} --quiet",
-            require => Group['www-edit']
-        }
-    }
-
     $app_path = "/var/akvo/${name}"
 
-    file { ["${app_path}/code", "${app_path}/conf"]:
-        ensure  => directory,
-        owner   => $app_user,
-        group   => $app_group,
-        mode    => '2775',
-        require => File[$app_path]
+    php::pool { $name:
+        poolname  => $name,
+        pooluser  => $app_user,
+        poolgroup => $app_group,
+        poolport  => $pool_port,
+        rootdir   => $app_path,
+        notify    => Service['php5-fpm']
     }
 
     if ($config_file_contents) {
@@ -52,10 +47,6 @@ define php::app (
 
     nginx::configfile { $name:
         content => $config_val
-    }
-
-    backups::dir { $name:
-        path => $app_path
     }
 
 }

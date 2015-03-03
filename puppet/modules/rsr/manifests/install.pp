@@ -17,6 +17,7 @@ class rsr::install {
 
     # install all of the support packages
     include pythonsupport::mysql
+    include pythonsupport::psql
     include pythonsupport::pil
     include pythonsupport::lxml
     include pythonsupport::standard
@@ -118,6 +119,16 @@ class rsr::install {
     rsr::staticcontent { [ 'akvo', 'core', 'widgets', 'ps_widgets', 'ps_widgets_old', 'partner_sites' ]:
         media_root => $media_root,
         approot    => $approot
+    }
+
+
+    # support for copying data between machines
+    if hiera('rsr_data_source') {
+        class { 'rsr::datasource': }
+    }
+
+    if hiera('rsr_leech') {
+        class { 'rsr::leech': }
     }
 
 

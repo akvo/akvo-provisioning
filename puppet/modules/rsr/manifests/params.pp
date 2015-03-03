@@ -6,7 +6,6 @@ class rsr::params {
     $approot = '/var/akvo/rsr'
     $database_password = hiera('rsr_database_password')
     $base_domain = hiera('base_domain')
-    $database_host = "mysql.${base_domain}"
     $media_root = "${approot}/mediaroot/"
     $static_root = "${approot}/staticroot/"
     $logdir = "${approot}/logs/"
@@ -22,5 +21,8 @@ class rsr::params {
     $partner_site_domain = hiera('rsr_partner_site_domain')
 
     $rsr_hostnames = concat($additional_rsr_domains, ["rsr.${base_domain}"])
+
+    $postgres_name = hiera('rsr_psql_name', 'psql')
+    $postgres_database_host = "${postgres_name}.${base_domain}"
 
 }

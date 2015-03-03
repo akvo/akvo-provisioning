@@ -13,11 +13,7 @@ then
   cd $ORIG_DIR
   PIP=<%= @approot %>/venv/bin/pip
 
-  $PIP install -r <%= @approot %>/code/scripts/deployment/pip/requirements/2_rsr.txt
-  # due to a stupid dependency of django-counter, both PIL and Pillow will be installed, so we'll remove them
-  # here and reinstall
-  $PIP uninstall --yes PIL Pillow
-  $PIP install Pillow==2.0.0
+  $PIP install -r <%= @approot %>/code/requirements.txt
 else
   echo 'no checkout, will create'
   $HERE/make_app.sh inplace $BRANCH

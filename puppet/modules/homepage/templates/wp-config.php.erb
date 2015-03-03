@@ -80,11 +80,27 @@ define('WPLANG', '');
  */
 define('WP_DEBUG', false);
 
+/** The media lives outside of the code root to enable continuous
+    deployment. This setting can only be relative to ABSPATH however,
+    because WordPress is a nonsense of nonsenses. */
+define( 'UPLOADS', '../../../uploads' );
+
+/** Data which should be persisted across deploys - for example, plugin
+    configuration which is not stored in the database - should be stored
+    in the following path. */
+define( 'DATA_DIR', '<%= @appdir %>/data/' );
+
+/** The PiWik site ID to use for sending analytics data */
+define( 'PIWIK_ID', <%= @piwik_id %> );
+
+/** The main site URL - akvo.org, akvotest.org etc */
+define( 'PIWIK_DOMAIN', '<%= @piwik_domain %>' );
+
 /* That's all, stop editing! Happy blogging. */
 
 /** Absolute path to the WordPress directory. */
 if ( !defined('ABSPATH') )
-    define('ABSPATH', dirname(__FILE__) . '/');
+    define('ABSPATH', '<%= @appdir %>/code/');
 
 /** Sets up WordPress vars and included files. */
 require_once(ABSPATH . 'wp-settings.php');

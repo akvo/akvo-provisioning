@@ -2,15 +2,24 @@
 
 mkdir -p <%= @app_path %>/logs/cron/
 
-SYNC_SITES_UPDATES_SCRIPT="http://akvofoundation.org/wp-content/plugins/akvo-partner-communication/SyncController.php"
+SYNC_SITES_UPDATES_SCRIPT="http://<%= @default_domain %>/wp-content/plugins/akvo-partner-communication/SyncController.php"
 LOG_TIME_STAMP=`date +%Y%m%d_%H%M%S`
 LOG_FILE_NAME="sync_updates_log_$LOG_TIME_STAMP.html"
 LOG_FILE="<%= @app_path %>/logs/cron/$LOG_FILE_NAME"
-LOG_FILE_URL="http://akvofoundation.org/logs/cron/$LOG_FILE_NAME"
+LOG_FILE_URL="http://<%= @default_domain %>/logs/cron/$LOG_FILE_NAME"
 
 printf "<br />[`date --rfc-3339=seconds`]<br />" >> $LOG_FILE
 curl $SYNC_SITES_UPDATES_SCRIPT 2>&1 >> $LOG_FILE
+EXIT=$?
 printf "<br />" >> $LOG_FILE
 
-echo $LOG_FILE_URL | mail -s '[sites.akvo.org] Akvo Sites project update deletions synchronised' devops@akvo.org
+if [ $EXIT -eq 0 ]
+then
+    SUBJ="[SUCCESS] [<%= @environment %>] [akvosites-sync] [<%= @hostname %>] Project update deletions synchronised"
+else
+    SUBJ="[FAILURE] [<%= @environment %>] [akvosites-sync] [<%= @hostname %>] Project update deletions synchronised"
+fi
 
+echo $LOG_FILE_URL | mail -s "${SUBJ}" devops@akvo.org
+
+exit $EXIT

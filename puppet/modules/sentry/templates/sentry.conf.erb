@@ -1,10 +1,12 @@
+SERVER_EMAIL = 'sentry@akvo.org'
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': '<%= @db_name %>',
         'USER': '<%= @db_username %>',
         'PASSWORD': '<%= @db_password %>',
-        'HOST': 'psql',
+        'HOST': '<%= @db_host %>',
         'PORT': '',
         'OPTIONS': {
             'autocommit': True,

@@ -2,7 +2,7 @@
     "roles": [
         "puppetdb",
         "management",
-        "database",
+        "psqldb",
         "rundeck"
     ]
 }

@@ -1,4 +1,3 @@
-
 <% if @rsr_debug %>
 DEBUG = True
 DONATION_TEST = True
@@ -24,11 +23,11 @@ PARTNER_SITES_MARKETING_SITE = 'http://www.akvoapp.org/'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'rsr',
         'USER': 'rsr',
         'PASSWORD': '<%= @database_password %>',
-        'HOST': '<%= @database_host %>',
+        'HOST': '<%= @postgres_database_host %>',
         'PORT': '',
     }
 }

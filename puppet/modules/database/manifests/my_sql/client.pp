@@ -1,5 +1,5 @@
 
-define database::my_sql::client ($ip) {
+define database::my_sql::client($ip) {
 
     firewall { "200 mysql client ${name}":
         source => $ip,

@@ -1,9 +1,9 @@
 server {
     listen 80;
     server_name
-        <% @homepage_hostnames.each do |homepage_hostname| %>
-        <%= homepage_hostname %>
-        <%- end %>;
+    <%- @homepage_hostnames.each do |homepage_hostname| -%>
+    <%= homepage_hostname %>
+    <% end %>;
 
     server_tokens off;
 
@@ -12,16 +12,25 @@ server {
     # Legacy redirects, see https://github.com/akvo/akvo-provisioning/issues/37
     # TODO: move these into the akvo-web repository
     rewrite ^/blog/wp-content(.*)$ /wp-content$1 last;
+    rewrite ^/wp-content/uploads(.*)$ /uploads$1 last;
     rewrite ^/rsr(/.*|$)$   http://<%=@rsr_domain %>/$1;
     rewrite ^/web(.*)$      $1 last;
     rewrite ^/api           http://<%=@rsr_domain %>$request_uri?;
     rewrite ^/media         http://<%=@rsr_domain %>$request_uri?;
     rewrite ^/wiki          http://akvopedia.org$request_uri?;
 
+    # New redirects, see https://github.com/akvo/akvo-provisioning/issues/87
+    rewrite ^/help/rsr-help$ /help/help-support/rsr-help/ redirect;
+    rewrite ^/help/flow-help$ /help/help-support/flow-help/ redirect;
+    rewrite ^/help/akvopedia-help$ /help/help-support/akvopedia-help/ redirect;
+
     # Logging:
     access_log /var/akvo/homepage/logs/nginx-access.log;
     error_log /var/akvo/homepage/logs/nginx-error.log;
     rewrite_log on;
+
+    # allow larger uploads
+    client_max_body_size 100m;
 
     # Serve stuff!
     location / {
@@ -40,9 +49,17 @@ server {
         gzip_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript;
     }
 
+    location /uploads {
+        alias /var/akvo/homepage/uploads;
+        if (-f $request_filename) {
+            expires 30d;
+            break;
+        }
+    }
+
     location ~ .php$ {
         include /etc/nginx/fastcgi_params;
-        fastcgi_pass    localhost:9000;
+        fastcgi_pass    localhost:<%= @pool_port %>;
         fastcgi_index   index.php;
         fastcgi_param   SCRIPT_FILENAME     /var/akvo/homepage/code/$fastcgi_script_name;
         fastcgi_param   PATH_INFO           $fastcgi_script_name;

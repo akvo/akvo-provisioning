@@ -41,6 +41,11 @@ class backups {
         tag     => 'backupserver'
     }
 
+    # purge old config to avoid backing up to servers which no longer exist
+    exec { 'clean_up_backup_config':
+        command   => '/bin/rm -vf /backups/bin/*_backup_to_*.sh',
+        logoutput => true,
+    }
     create_resources('backups::server', hiera_hash('backup_servers'))
 
 }

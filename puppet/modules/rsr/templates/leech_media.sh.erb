@@ -1,0 +1,8 @@
+#!/bin/bash
+
+SSH_COMMAND='ssh -i <%= @approot %>/.ssh/rsrleech'
+SOURCE_DIR='<%= @media_root %>/db'
+DEST_DIR='<%= @media_root %>'
+HOST='<%= @data_source_host %>'
+
+rsync --verbose --archive --rsh "${SSH_COMMAND}" rsrleech@${HOST}:${SOURCE_DIR} ${DEST_DIR}

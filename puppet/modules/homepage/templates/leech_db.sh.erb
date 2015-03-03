@@ -1,0 +1,36 @@
+#!/bin/bash
+
+# params
+HOST=homepageleech@<%= @data_source_host %>
+TIMESTAMP=$(date +'%Y-%m-%d-%H-%M-%S')
+FILENAME="homepage-db-dump-${TIMESTAMP}.sql.gz"
+KEY=<%= @appdir %>/.ssh/homepageleech
+
+DBUSER=homepage
+DBHOST=<%= @mysql_name %>
+DBPASS=<%= @db_password %>
+DBNAME=homepage
+
+
+
+echo 'step 1: create the dump'
+ssh -i $KEY $HOST ./dumpdb.sh $FILENAME
+
+echo 'step 2: copy the dump'
+scp -i $KEY $HOST:$FILENAME /tmp/
+
+echo 'step 3: remove dump on data source'
+ssh -i $KEY $HOST rm -v $FILENAME
+
+echo 'step 4: load the dump'
+zcat /tmp/$FILENAME | mysql -u $DBUSER -h $DBHOST --password=$DBPASS -D $DBNAME
+
+echo 'step 5: clean up leech'
+rm -v /tmp/$FILENAME
+
+echo 'step 6: hack wordpress config values'
+
+CMD="update wi1_options set option_value = '<%= @homepage_url %>' where option_name = 'home' or option_name = 'siteurl'"
+echo $CMD | mysql -u $DBUSER -h $DBHOST --password=$DBPASS -D $DBNAME
+
+echo 'done!'

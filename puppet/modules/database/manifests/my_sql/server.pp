@@ -1,5 +1,9 @@
 class database::my_sql::server {
 
+    $mysql_name = hiera('mysql_name')
+    $base_domain = hiera('base_domain')
+    $mysql_host = "${mysql_name}.${base_domain}"
+
     class { 'mysql::server':
         root_password    => hiera('mysql_root_password'),
         override_options => {
@@ -22,15 +26,15 @@ class database::my_sql::server {
     }
 
     # let everyone know where we are
-    named::service_location { 'mysql':
+    named::service_location { $mysql_name:
         ip => hiera('internal_ip')
     }
 
     # collect any databases that services want
-    Database::My_sql::Db_exported <<| tag == $::environment |>>
+    Database::My_sql::Db_exported <<| tag == "mysql-db-${mysql_host}" |>>
 
     # and allow access to clients
-    Database::My_sql::Client <<| tag == $::environment |>>
+    Database::My_sql::Client <<| tag == "mysql-client-${mysql_host}" |>>
 
     # we want to keep our data!
     include database::my_sql::backup_support

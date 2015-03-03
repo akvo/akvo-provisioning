@@ -36,10 +36,27 @@ echo >> $LOGFILE
 # Exec
 # ====
 
+EXIT_CODE=0
+
 <% @backup_servers.each_pair do |dest_name, details| %>
 BACKUP_TO_DEST=${BASE_SCRIPT_DIR}/${SCRIPT_PREFIX}_backup_to_<%= "#{dest_name}" %>.sh
 echo "Backup script: ${BACKUP_TO_DEST}" >> $LOGFILE
 echo >> $LOGFILE
 
 $BACKUP_TO_DEST $SCRIPT_ARGS >> $LOGFILE 2>&1
+CUR_EXIT_CODE=$?
+EXIT_CODE=$((EXIT_CODE + CUR_EXIT_CODE))
 <% end %>
+
+HOST=$(hostname -f)
+LINE_COUNT=$(wc -l $LOGFILE)
+
+if [ $EXIT_CODE -eq 0 ]
+then
+    STATUS='SUCCESS'
+else
+    STATUS='FAILURE'
+fi
+
+SUBJ="[${STATUS}] [<%= @environment %>] [backup] [<%= @hostname %>] Backup of ${SOURCE} complete : lc ${LINE_COUNT}"
+cat $LOGFILE | mail -s "${SUBJ}" -t devops@akvo.org

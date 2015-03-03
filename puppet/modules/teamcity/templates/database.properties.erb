@@ -6,7 +6,7 @@
 
 # Database: MySQL
 
-connectionUrl=jdbc:mysql://mysql:3306/teamcity
+connectionUrl=jdbc:mysql://<%= @teamcity_database_host %>:3306/teamcity
 connectionProperties.user=teamcity
 connectionProperties.password=<%= @teamcity_database_password %>
 

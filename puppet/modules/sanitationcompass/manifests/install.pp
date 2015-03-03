@@ -15,12 +15,18 @@ class sanitationcompass::install {
     include pythonsupport::mysql
     include pythonsupport::pil
 
-    file { "${approot}/versions":
+    file { ["${approot}/versions", "${approot}/db"]:
         ensure  => directory,
         owner   => $username,
         group   => $username,
         mode    => '0755',
         require => [ User[$username], Group[$username], File[$approot] ],
+    }
+
+
+    # make sure that we back up the DB
+    backups::dir { 'sanitationcompass_db':
+        path => "${approot}/db"
     }
 
     # include the script for downloading and creating an app

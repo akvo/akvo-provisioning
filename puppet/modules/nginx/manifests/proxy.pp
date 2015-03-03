@@ -17,20 +17,21 @@ define nginx::proxy( $server_name = undef,
   } else {
       $server_name_val = $server_name
   }
+  
+  $filename = regsubst($server_name_val, '\*', '__star__')
 
   if ( !$access_log ) {
-      $access_log_val = "/var/log/nginx/access-${server_name_val}.log"
+      $access_log_val = "/var/log/nginx/access-${filename}.log"
   } else {
       $access_log_val = $access_log
   }
 
   if ( !$error_log ) {
-      $error_log_val = "/var/log/nginx/error-${server_name_val}.log"
+      $error_log_val = "/var/log/nginx/error-${filename}.log"
   } else {
       $error_log_val = $error_log
   }
 
-  $filename = regsubst($server_name_val, '\*', '__star__')
 
   $htpasswd_file = "/etc/nginx/passwd/${filename}.htpasswd"
   $ssl_key = "/etc/nginx/certs/${filename}.key"

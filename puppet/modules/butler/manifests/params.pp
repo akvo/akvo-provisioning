@@ -9,7 +9,8 @@ class butler::params {
     $base_domain = hiera('base_domain')
     $puppetdb_server = hiera('puppetdb_server')
     $puppetdb_url = "https://${puppetdb_server}"
-    $database_host = "mysql.${base_domain}"
+    $mysql_name = hiera('butler_mysql_name', 'mysql')
+    $database_host = "${mysql_name}.${base_domain}"
     $database_url = "mysql://${username}:${database_password}@${database_host}/${dbname}"
     $media_root = "${approot}/mediaroot/"
     $logdir = "${approot}/logs/"

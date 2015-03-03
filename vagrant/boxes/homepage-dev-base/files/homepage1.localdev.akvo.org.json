@@ -2,8 +2,7 @@
     "roles": [
         "puppetdb",
         "management",
-
-        "database",
-        "homepage"
+        "homepage",
+        "database"
     ]
 }

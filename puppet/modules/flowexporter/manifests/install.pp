@@ -12,6 +12,18 @@ class flowexporter::install {
         ensure => 'installed'
     }
 
+    # include the script for cleaning up old versions
+    $approot = $flowexporter::params::approot
+    $jardir = $flowexporter::params::jardir
+    file { "${approot}/cleanup_old.sh":
+        ensure  => present,
+        content => template('flowexporter/cleanup_old.sh.erb'),
+        owner   => 'flowexporter',
+        group   => 'flowexporter',
+        mode    => '0744',
+        require => File[$approot]
+    }
+
     # ensure the file structure is created
     file { [$flowexporter::workdir, $flowexporter::jardir, $flowexporter::gitconfdir]:
         ensure  => directory,

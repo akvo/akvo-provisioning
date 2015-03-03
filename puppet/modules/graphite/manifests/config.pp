@@ -11,6 +11,15 @@ class graphite::config {
         mode    => '0444',
     }
 
+
+    file { '/opt/graphite/conf/storage-aggregation.conf':
+        ensure  => present,
+        source  => 'puppet:///modules/graphite/storage-aggregation.conf',
+        owner   => 'graphite',
+        group   => 'graphite',
+        mode    => '0444',
+    }
+
     file { '/opt/graphite/conf/carbon.conf':
         ensure  => present,
         source  => 'puppet:///modules/graphite/carbon.conf',
@@ -20,13 +29,16 @@ class graphite::config {
     }
 
     $secret_key = hiera('graphite_secret_key')
-    $database_host = hiera('graphite_database_host')
+    $mysql_name = hiera('graphite_mysql_name', 'mysql')
+    $base_domain = hiera('base_domain')
+    $database_host = "${mysql_name}.${base_domain}"
     $database_name = hiera('graphite_database_name')
     $database_user = hiera('graphite_database_user')
     $database_password = hiera('graphite_database_password')
 
     database::my_sql::db { $database_user:
-        password => $database_password
+        mysql_name => $mysql_name,
+        password   => $database_password
     }
 
     file { '/opt/graphite/webapp/graphite/local_settings.py':
@@ -42,9 +54,9 @@ class graphite::config {
         ip => hiera('external_ip')
     }
 
-    $base_domain = hiera('base_domain')
-    nginx::proxy { "graphite.${base_domain}":
-        proxy_url          => 'http://localhost:5115',
+    $proxy_url = 'http://localhost:5115'
+    nginx::configfile { 'graphite-nginx':
+        content => template('graphite/graphite-nginx.conf.erb')
     }
 
     Graphite::Client<<||>>
