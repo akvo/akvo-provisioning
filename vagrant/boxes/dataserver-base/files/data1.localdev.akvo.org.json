@@ -1,0 +1,8 @@
+{
+    "roles": [
+        "puppetdb",
+        "management",
+        "dataserver",
+        "psqldb"
+    ]
+}
