@@ -2,7 +2,7 @@
     "roles": [
         "puppetdb",
         "management",
-        "rsr",
+        "dataserver",
         "psqldb"
     ]
 }
