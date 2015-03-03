@@ -15,7 +15,8 @@ class users {
     users::basic { 'oriol':
         roles    => ['ops', 'www-edit', 'reporting'],
         allow    => ['munin'],
-        ssh_key  => 'AAAAB3NzaC1kc3MAAACBAM5O34uN5rzwJFdpktPtbMbfXOSXGB4x6aU1Zt0zq7cmlJ6YqmGe37OEZnG4IoMrUDPN1k6iP053Digms0QWtrJUVArxPQvQd/nM3FiB2g1n94wJt1I2r4Fe+9cboaQcUVXWMuJAlfewglFKq4B769qTzyOA3QS/30foKtGKe5EbAAAAFQCPGLIH728Hssbfu/sPLMCxXPu8WQAAAIEAtXvS0oKgl5s33svdeFf6uZsv6ApD4zZZ4gtu5XmJDKTjsXIAEUIGe12yZKDzIF/TnjKu92B6+GioIAKUPzJ7LLCzo9pcxjDgnqJfwhqsJIshBGOa8LA/BjSoJ3rJT1Oq5HaL0L42+hUh+bXs8wqy/TZ+lJLaMfvFuItPmtDLiKQAAACBAKWMyEuYAsO2mVcgNdaGmcodn2ePR0cJlIiuIxIC4uwDYjuDcuwqZb+ZeU9AQDn4wiE82i8MDvSLRTOUZTylxBJXq9lBDXzVH/avPoSUa0QXRlplz1zoz9UazuqJ61pDMiqN2GKkL/LJrUxHCDmN6Ugfyh7cMlE2TDnGktAKj78f'
+        ssh_key  => 'AAAAB3NzaC1kc3MAAACBAM5O34uN5rzwJFdpktPtbMbfXOSXGB4x6aU1Zt0zq7cmlJ6YqmGe37OEZnG4IoMrUDPN1k6iP053Digms0QWtrJUVArxPQvQd/nM3FiB2g1n94wJt1I2r4Fe+9cboaQcUVXWMuJAlfewglFKq4B769qTzyOA3QS/30foKtGKe5EbAAAAFQCPGLIH728Hssbfu/sPLMCxXPu8WQAAAIEAtXvS0oKgl5s33svdeFf6uZsv6ApD4zZZ4gtu5XmJDKTjsXIAEUIGe12yZKDzIF/TnjKu92B6+GioIAKUPzJ7LLCzo9pcxjDgnqJfwhqsJIshBGOa8LA/BjSoJ3rJT1Oq5HaL0L42+hUh+bXs8wqy/TZ+lJLaMfvFuItPmtDLiKQAAACBAKWMyEuYAsO2mVcgNdaGmcodn2ePR0cJlIiuIxIC4uwDYjuDcuwqZb+ZeU9AQDn4wiE82i8MDvSLRTOUZTylxBJXq9lBDXzVH/avPoSUa0QXRlplz1zoz9UazuqJ61pDMiqN2GKkL/LJrUxHCDmN6Ugfyh7cMlE2TDnGktAKj78f',
+        ssh_type => 'ssh-dss'
     }
 
     users::basic { 'emmanuel':
