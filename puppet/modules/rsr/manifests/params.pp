@@ -1,6 +1,8 @@
 
 class rsr::params {
 
+    $develop_mode = str2bool(hiera('rsr_development'))
+
     # some shared config
     $username = 'rsr'
     $approot = '/var/akvo/rsr'
