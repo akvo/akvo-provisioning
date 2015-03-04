@@ -20,7 +20,7 @@ class reporter::config {
         require => File[$approot]
     }
 
-    database::psql::db { $db_username:
+    database::psql::db { $db_name:
         psql_name => $reporter::psql_name,
         password  => $db_password
     }

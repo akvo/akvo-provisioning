@@ -5,7 +5,7 @@ class reporter::params {
 
     $db_host = "${psql_name}.${base_domain}"
     $db_username = 'foo'
-    $db_name = 'reportserver22'
+    $db_name = 'reportserver'
     $db_password = hiera('reporter_database_password')
 
     $approot = '/var/lib/tomcat7/webapps/reportserver'
