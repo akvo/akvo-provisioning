@@ -10,4 +10,5 @@ class reporter::params {
 
     $approot = '/var/lib/tomcat7/webapps/reportserver'
 
+    $port = '8080'
 }
