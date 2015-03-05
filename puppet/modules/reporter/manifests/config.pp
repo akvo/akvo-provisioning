@@ -15,7 +15,7 @@ class reporter::config {
         ensure  => present,
         owner   => 'tomcat7',
         group   => 'tomcat7',
-        mode    => '0700',
+        mode    => '0755',
         source  => 'puppet:///modules/reporter/create_psql_db.sh',
         require => File[$approot]
     }
