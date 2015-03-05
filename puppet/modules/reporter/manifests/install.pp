@@ -75,6 +75,15 @@ class reporter::install {
         require => File[$approot]
     }
 
+    file { "${approot}/rssaiku.jar.patch3":
+        ensure  => present,
+        owner   => 'tomcat7',
+        group   => 'tomcat7',
+        mode    => '0644',
+        source  => 'puppet:///modules/reporter/rssaiku.jar.patch3',
+        require => File[$approot]
+    }
+
     exec { "${approot}/install_reportserver.sh":
         user    => 'root',
         cwd     => "${approot}",
