@@ -1,16 +1,14 @@
 
 class nginx {
 
-    package { 'nginx':
-        ensure => installed,
-    }
+    ensure_resource('package', 'nginx', { ensure => present })
 
-    service { 'nginx':
+    ensure_resource('service', 'nginx', {
         require    => Package['nginx'],
         ensure     => running,
         enable     => true,
         hasrestart => true,
-    }
+    })
 
     common::collectd_plugin { 'nginx':
         args => {
