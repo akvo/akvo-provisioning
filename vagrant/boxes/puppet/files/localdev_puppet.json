@@ -1,6 +1,9 @@
 {
     "name": "localdev",
 
+    "machine_type": "vagrant",
+    "base_domain": "localdev.akvo.org",
+
     "bootstrap_username": "vagrant",
     "bootstrap_password": "vagrant",
 
@@ -8,6 +11,10 @@
 
     "nodes": {
         "192.168.50.101": {
+            "nodename": "puppet1"
+        },
+        "192.168.50.102": {
+            "nodename": "puppet2"
         }
     }
 

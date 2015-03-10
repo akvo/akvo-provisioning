@@ -1,8 +1,8 @@
 {
     "roles": [
-        "puppetdb",
-        "management",
         "dataserver",
         "psqldb"
-    ]
+    ],
+    
+    "psql_name": "psql-dataserver",
 }
