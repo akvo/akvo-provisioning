@@ -52,7 +52,7 @@ class reporter::install {
 #        require => File[$approot]
 #    }
 
-    file { "${approot}/persistence.xml":
+    file { "${approot}/META-INF/persistence.xml":
         ensure  => present,
         owner   => 'tomcat7',
         group   => 'tomcat7',
