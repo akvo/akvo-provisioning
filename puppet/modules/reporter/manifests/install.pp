@@ -93,7 +93,7 @@ class reporter::install {
         cwd     => "${approot}",
         creates => "${approot}/.installed",
         require => [File["${approot}/install_reportserver.sh"],
-                    File["${approot}/persistence.xml"],
+                    File["${approot}/META-INF/persistence.xml"],
                     File["${approot}/rsbirt.jar.patch2"],
                     File["${approot}/rsbase.jar.patch2"],
                     Package['unzip']]
