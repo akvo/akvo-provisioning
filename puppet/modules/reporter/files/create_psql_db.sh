@@ -9,6 +9,9 @@
 #EOF
 
 #Connect to new db, using IP socket so password auth is allowed:
- psql --dbname=postgresql://reportserver:bar@opstest1.opstest.akvo-ops.org/reportserver --file=ddl/reportserver-RS2.2.1-5602-schema-PostgreSQL_CREATE.sql
-#if we make it this far, we succeeded, so prevent another run
+# This works on 9.4 but not on 9.1:
+# psql --dbname=postgresql://reportserver:bar@psql/reportserver --file=ddl/reportserver-RS2.2.1-5602-schema-PostgreSQL_CREATE.sql
+export PGPASSWORD=bar
+psql --hostname=psql --username=reportserver --file=ddl/reportserver-RS2.2.1-5602-schema-PostgreSQL_CREATE.sql reportserver 
+#if we make it this far, we succeeded, so prevent another run. Need to be tomcat7.
 touch .db_created

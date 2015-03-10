@@ -7,12 +7,16 @@ class reporter::install {
         ensure   => 'installed'
     }
 
+    package { 'openjdk-7-jre':
+        ensure   => 'installed'
+    }
+
     package { 'unzip':
         ensure   => 'installed'
     }
 
     file { '/usr/share/tomcat7/bin/setenv.sh':
-        require => Package['tomcat7'],
+        require => [Package['tomcat7'],Package['openjdk-7-jre']],
         ensure  => present,
         owner   => 'root',
         group   => 'root',
