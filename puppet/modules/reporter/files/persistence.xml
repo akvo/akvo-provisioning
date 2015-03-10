@@ -181,7 +181,7 @@
 			<!-- Connection properties -->        
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
             <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>
-            <property name="hibernate.connection.url" value="jdbc:postgresql://opstest1.opstest.akvo-ops.org/reportserver"/>
+            <property name="hibernate.connection.url" value="jdbc:postgresql://psql/reportserver"/>
             <property name="hibernate.connection.username" value="reportserver"/>
             <property name="hibernate.connection.password" value="bar"/>
 

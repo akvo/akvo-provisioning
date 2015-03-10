@@ -52,7 +52,7 @@ class reporter::install {
 #        require => File[$approot]
 #    }
 
-    file { "${approot}/META-INF/persistence.xml":
+    file { "${approot}/WEB-INF/classes/META-INF/persistence.xml":
         ensure  => present,
         owner   => 'tomcat7',
         group   => 'tomcat7',
@@ -93,7 +93,7 @@ class reporter::install {
         cwd     => "${approot}",
         creates => "${approot}/.installed",
         require => [File["${approot}/install_reportserver.sh"],
-                    File["${approot}/META-INF/persistence.xml"],
+                    File["${approot}/WEB-INF/classes/META-INF/persistence.xml"],
                     File["${approot}/rsbirt.jar.patch2"],
                     File["${approot}/rsbase.jar.patch2"],
                     Package['unzip']]
