@@ -4,5 +4,5 @@
         "psqldb"
     ],
     
-    "psql_name": "psql-dataserver",
+    "psql_name": "psql-dataserver"
 }
