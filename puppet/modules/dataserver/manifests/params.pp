@@ -1,2 +1,0 @@
-class dataserver::params {
-}
