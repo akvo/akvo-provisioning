@@ -1,10 +1,10 @@
 
 class reporter::config {
 
-    $port = $reporter::port
-    $db_name = $reporter::db_name
-    $db_username = $reporter::db_username
-    $db_password = $reporter::db_password
+    $qport = $reporter::port
+    $db_qname = $reporter::db_name
+    $db_qusername = $reporter::db_username
+    $db_qpassword = $reporter::db_password
 
     $base_domain = hiera('base_domain')
     $url_prefix = "http://reporter.${base_domain}"
@@ -20,9 +20,9 @@ class reporter::config {
         require => File[$approot]
     }
 
-    database::psql::db { $db_name:
+    database::psql::db { $db_qname:
         psql_name => $reporter::psql_name,
-        password  => $db_password
+        password  => $db_qpassword
     }
 
 
@@ -41,7 +41,7 @@ class reporter::config {
 #    }
 
     nginx::proxy { "reporting.${base_domain}":
-        proxy_url => "http://localhost:${port}",
+        proxy_url => "http://localhost:${qport}",
         htpasswd => false
     }
 
