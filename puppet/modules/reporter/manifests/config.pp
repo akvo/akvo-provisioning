@@ -2,9 +2,8 @@
 class reporter::config {
 
     $qport = $reporter::port
-    $db_qname = $reporter::db_name
-    $db_qusername = $reporter::db_username
-    $db_qpassword = $reporter::db_password
+#    $db_qname = $reporter::db_name
+#    $db_qusername = $reporter::db_username
 
     $base_domain = hiera('base_domain')
     $url_prefix = "http://reporter.${base_domain}"
@@ -18,11 +17,6 @@ class reporter::config {
         mode    => '0755',
         source  => 'puppet:///modules/reporter/create_psql_db.sh',
         require => File[$approot]
-    }
-
-    database::psql::db { $db_qname:
-        psql_name => $reporter::psql_name,
-        password  => $db_qpassword
     }
 
 
