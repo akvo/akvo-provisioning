@@ -25,3 +25,12 @@
 [submodule "puppet/ext/nodejs"]
 	path = puppet/ext/nodejs
 	url = https://github.com/puppetlabs/puppetlabs-nodejs.git
+[submodule "puppet/ext/wget"]
+	path = puppet/ext/wget
+	url = https://github.com/maestrodev/puppet-wget.git
+[submodule "puppet/ext/check_run"]
+	path = puppet/ext/check_run
+	url = https://bitbucket.org/landcareresearch/puppet-checkrun.git
+[submodule "puppet/ext/ckan"]
+	path = puppet/ext/ckan
+	url = https://github.com/orifito/ckan-puppet.git

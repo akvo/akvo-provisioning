@@ -24,10 +24,7 @@ class common {
         'zip',
         'zsh'
     ]
-
-    package { $useful_packages:
-        ensure => 'latest',
-    }
+    ensure_resource('package', $useful_packages, {'ensure' => 'latest' })
 
     # make sure pip is installed before anything tries to use it as a package provider
     package { 'python-pip':

@@ -1,0 +1,8 @@
+{
+    "roles": [
+        "dataserver",
+        "psqldb"
+    ],
+    
+    "psql_name": "psql-dataserver"
+}

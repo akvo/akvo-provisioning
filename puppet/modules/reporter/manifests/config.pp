@@ -32,8 +32,7 @@ class reporter::config {
         user    => 'root',
         cwd     => "${approot}",
         creates => "${approot}/.db_created",
-        require => [File["${approot}/create_psql_db.sh"],
-                    Class ["database::psql::db"]]
+        require => File["${approot}/create_psql_db.sh"],
     }
 
 
