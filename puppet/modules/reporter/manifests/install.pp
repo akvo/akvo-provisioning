@@ -16,7 +16,7 @@ class reporter::install {
     }
 
     file { '/usr/share/tomcat7/bin/setenv.sh':
-        require => [Package['tomcat7'],Package['openjdk-7-jre']],
+        require => [Package['tomcat7'],Package['openjdk-7-jdk']],
         ensure  => present,
         owner   => 'root',
         group   => 'root',
@@ -96,6 +96,7 @@ class reporter::install {
                     File["${approot}/WEB-INF/classes/META-INF/persistence.xml"],
                     File["${approot}/rsbirt.jar.patch2"],
                     File["${approot}/rsbase.jar.patch2"],
+                    File["${approot}/rssaiku.jar.patch3"],
                     Package['unzip']]
     }
 
