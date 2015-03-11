@@ -7,7 +7,7 @@ class reporter::install {
         ensure   => 'installed'
     }
 
-    package { 'openjdk-7-jre':
+    package { 'openjdk-7-jdk':
         ensure   => 'installed'
     }
 
