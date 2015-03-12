@@ -67,8 +67,8 @@
     "tessera_database_password": "password",
     "tessera_secret_key": "password",
 
-    "ckan_beaker_secret": "Rdm2iuDUNN/dAERtVyL6o9On0"
-    "ckan_app_instance_id": "{8777055b-3d42-4f0e-8700-81dbbde89289}"
+    "ckan_beaker_secret": "Rdm2iuDUNN/dAERtVyL6o9On0",
+    "ckan_app_instance_id": "{8777055b-3d42-4f0e-8700-81dbbde89289}",
 
     "puppet_public_key": "AAAAB3NzaC1yc2EAAAADAQABAAABAQC5LbFC9XPDJbYHTcvhFlSXrH7Jew1X7yUHTOQnBVB5eFuImAm+awXQxE8yIyJ8xpTURU64BVi9nAknIwLevlog+bsY+yEcmGkvNTYa1sHKMK/aKY4nDp2lNed5n4aKbr9WzyRPSofci2zIbHqwgP/V5Nntd9R6wsOSsA2RcviI0c/ETXC0iHW+6uy1InF8TJSuKzOOwTz8NUuOOGWL7Es6KUInJp2fr6iLSWYM5X4qSvXu2cbQyCikK6H1ofunyjOgxdLKWO6DuUcMLwTSMeTND6s4lgbaLX0IQq/U6tUdaaxFqygLshqgTMaDXFU6zZ8bvQvFettjJt5kV5cJHH/b",
 
