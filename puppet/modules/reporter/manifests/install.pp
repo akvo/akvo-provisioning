@@ -105,7 +105,7 @@ class reporter::install {
     }
 
     database::psql::db { db_name:
-        psql_name => psql_name,
+        psql_name => $reporter::psql_name,
         password  => db_password
     }
 
