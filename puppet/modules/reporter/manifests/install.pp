@@ -46,25 +46,6 @@ class reporter::install {
         require => File[$approot]
     }
 
-#Now template
-#    file { "${approot}/WEB-INF/classes/META-INF/persistence.xml":
-#        ensure  => present,
-#        owner   => 'tomcat7',
-#        group   => 'tomcat7',
-#        mode    => '0600',
-#        source  => 'puppet:///modules/reporter/persistence.xml',
-#        require => File[$approot]
-#    }
-
-    file { "${approot}/WEB-INF/classes/META-INF/persistence.xml":
-        ensure  => present,
-        owner   => 'tomcat7',
-        group   => 'tomcat7',
-        mode    => '0600',
-        content  => template('reporter/persistence.xml.erb'),
-        require => File[$approot]
-    }
-
     file { "${approot}/rsbirt.jar.patch2":
         ensure  => present,
         owner   => 'tomcat7',
@@ -97,11 +78,29 @@ class reporter::install {
         cwd     => "${approot}",
         creates => "${approot}/.installed",
         require => [File["${approot}/install_reportserver.sh"],
-                    File["${approot}/WEB-INF/classes/META-INF/persistence.xml"],
                     File["${approot}/rsbirt.jar.patch2"],
                     File["${approot}/rsbase.jar.patch2"],
                     File["${approot}/rssaiku.jar.patch3"],
                     Package['unzip']]
+    }
+
+#Now template
+#    file { "${approot}/WEB-INF/classes/META-INF/persistence.xml":
+#        ensure  => present,
+#        owner   => 'tomcat7',
+#        group   => 'tomcat7',
+#        mode    => '0600',
+#        source  => 'puppet:///modules/reporter/persistence.xml',
+#        require => File[$approot]
+#    }
+
+    file { "${approot}/WEB-INF/classes/META-INF/persistence.xml":
+        ensure  => present,
+        owner   => 'tomcat7',
+        group   => 'tomcat7',
+        mode    => '0600',
+        content  => template('reporter/persistence.xml.erb'),
+        require => [File[$approot], File["${approot}/.installed"]]
     }
 
     database::psql::db { $db_name:
