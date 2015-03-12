@@ -104,9 +104,9 @@ class reporter::install {
                     Package['unzip']]
     }
 
-    database::psql::db { db_name:
+    database::psql::db { $db_name:
         psql_name => $reporter::psql_name,
-        password  => db_password
+        password  => $db_password
     }
 
 
