@@ -85,7 +85,7 @@ class reporter::install {
     }
 
 #Now template
-#    file { "${approot}/WEB-INF/classes/META-INF/persistence.xml":
+#    file { "${approot}/persistence.xml":
 #        ensure  => present,
 #        owner   => 'tomcat7',
 #        group   => 'tomcat7',
@@ -100,7 +100,7 @@ class reporter::install {
         group   => 'tomcat7',
         mode    => '0600',
         content  => template('reporter/persistence.xml.erb'),
-        require => [File[$approot], File["${approot}/.installed"]]
+        require => [File[$approot], Exec["${approot}/install_reportserver.sh"]]
     }
 
     database::psql::db { $db_name:
