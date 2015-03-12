@@ -2,6 +2,10 @@
 class reporter::install {
 
     $approot = $reporter::approot
+    $db_name = $reporter::db_name
+    $db_host = $reporter::db_host
+    $db_username = $reporter::db_username
+    $db_password = $reporter::db_password
 
     package { 'tomcat7':
         ensure   => 'installed'
@@ -42,13 +46,13 @@ class reporter::install {
         require => File[$approot]
     }
 
-#Too big for Github...
-#    file { "${approot}/RS2.2.1-5602-reportserver.zip":
+#Now template
+#    file { "${approot}/WEB-INF/classes/META-INF/persistence.xml":
 #        ensure  => present,
 #        owner   => 'tomcat7',
 #        group   => 'tomcat7',
 #        mode    => '0600',
-#        source  => 'puppet:///modules/reporter/RS2.2.1-5602-reportserver.zip',
+#        source  => 'puppet:///modules/reporter/persistence.xml',
 #        require => File[$approot]
 #    }
 
@@ -57,7 +61,7 @@ class reporter::install {
         owner   => 'tomcat7',
         group   => 'tomcat7',
         mode    => '0600',
-        source  => 'puppet:///modules/reporter/persistence.xml',
+        content  => template('reporter/persistence.xml.erb'),
         require => File[$approot]
     }
 
@@ -100,9 +104,9 @@ class reporter::install {
                     Package['unzip']]
     }
 
-    database::psql::db { $reporter::db_name:
-        psql_name => $reporter::psql_name,
-        password  => $reporter::db_password
+    database::psql::db { db_name:
+        psql_name => psql_name,
+        password  => db_password
     }
 
 
