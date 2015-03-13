@@ -20,13 +20,20 @@ class role::dataserver {
        ckan_package_filename => 'python-ckan_2.3_amd64.deb',
        setup_postgres_server => false,
        postgres_host         => hiera('external_ip'),
-       storage_path          => '/var/lib/ckan'
+       storage_path          => '/var/lib/ckan',
+       backup_dir            => '/backups/data/psql/daily'
     }
 
     firewall { '200 allow httpd access':
         port   => [80, 443],
         proto  => tcp,
         action => accept,
+    }
+
+    # we want the 'backup' user to be able to execute 'ckan' in order to perform backups
+    sudo::allow_command { "dataserver-backup-ckan":
+        user    => 'backup',
+        command => '/usr/bin/ckan'
     }
 
 }
