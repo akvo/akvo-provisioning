@@ -9,6 +9,8 @@ define database::psql::db_exported( $password, $backup = true ) {
     }
 
     if ($backup) {
-        database::psql::backup_db { $name: }
+        database::psql::backup_db { $name:
+            require => Postgresql::Server::Db[$name]
+        }
     }
 }

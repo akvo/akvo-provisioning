@@ -35,7 +35,7 @@ define nginx::fcgi( $server_name,
     if $ssl {
         file { $ssl_key:
             ensure  => present,
-            source  => $ssl_key_source,
+            content => $ssl_key_source,
             owner   => 'root',
             group   => 'root',
             mode    => '0444',
@@ -45,7 +45,7 @@ define nginx::fcgi( $server_name,
 
         file { $ssl_crt:
             ensure  => present,
-            source  => $ssl_cert_source,
+            content => $ssl_cert_source,
             owner   => 'root',
             group   => 'root',
             mode    => '0444',
