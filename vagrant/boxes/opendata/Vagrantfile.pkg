@@ -1,0 +1,3 @@
+Vagrant::Config.run do |config|
+    config.vm.hostname = "homepage1.localdev.akvo.org"
+end
