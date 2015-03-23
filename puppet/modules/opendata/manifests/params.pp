@@ -1,6 +1,6 @@
 class opendata::params {
 
-    $hostname       = hiera('opendata_hostname')
+    $hostnames      = hiera_array('opendata_hostnames')
 
     $ckan_version   = '2.3'
     $wsgi_host      = '127.0.0.1'
