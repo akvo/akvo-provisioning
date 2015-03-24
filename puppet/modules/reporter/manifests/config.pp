@@ -2,31 +2,32 @@
 class reporter::config {
 
     $qport = $reporter::port
-#    $db_qname = $reporter::db_name
-#    $db_qusername = $reporter::db_username
+    $db_name = $reporter::db_name
+    $db_host = $reporter::db_host
+    $db_username = $reporter::db_username
+    $db_password = $reporter::db_password
 
     $base_domain = hiera('base_domain')
     $url_prefix = "http://reporter.${base_domain}"
 
     $approot = $reporter::approot
 
-    file { "${approot}/create_psql_db.sh":
+    file { "${approot}/populate_psql_db.sh":
         ensure  => present,
         owner   => 'tomcat7',
         group   => 'tomcat7',
         mode    => '0755',
-        source  => 'puppet:///modules/reporter/create_psql_db.sh',
+        content  => template('reporter/populate_psql_db.sh.erb'),
         require => File[$approot]
     }
 
 
-#this will su to user postgres for role and db creation
-#and then populate the db
-    exec { "${approot}/create_psql_db.sh":
+#this will populate the db
+    exec { "${approot}/populate_psql_db.sh":
         user    => 'root',
         cwd     => "${approot}",
         creates => "${approot}/.db_created",
-        require => File["${approot}/create_psql_db.sh"],
+        require => File["${approot}/populate_psql_db.sh"]
     }
 
 
