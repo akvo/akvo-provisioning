@@ -117,6 +117,15 @@ class puppetcontrol {
     # connect it to the puppetdb server
     # note it is imperative that the puppetdb server is already configured and running!
     $puppetdb_server = hiera('puppetdb_server')
+
+    # temporary hack - apply new puppetdb port only at vagrant boxes
+    if ( hiera('machine_type') == 'vagrant' ) {
+        $puppetdb_port = '8443'
+    }
+    else {
+        $puppetdb_port = '443'
+    }
+
     file { '/etc/puppet/puppetdb.conf':
         ensure  => present,
         owner   => 'root',

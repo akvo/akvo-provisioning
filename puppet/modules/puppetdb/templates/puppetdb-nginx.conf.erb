@@ -3,7 +3,7 @@ server {
 
     server_name <%= @server_name %>;
 
-    listen 443;
+    listen <%= @puppetdb_port %>;
     ssl on;
 
     ssl_certificate            <%= @certfilename %>;

@@ -56,6 +56,15 @@ class puppetdb::server {
     }
 
     include nginx
+
+    # temporary hack - apply new puppetdb port only at vagrant boxes
+    if ( hiera('machine_type') == 'vagrant' ) {
+        $puppetdb_port = '8443'
+    }
+    else {
+        $puppetdb_port = '443'
+    }
+
     nginx::configfile { 'puppetdb':
         content => template('puppetdb/puppetdb-nginx.conf.erb')
     }
