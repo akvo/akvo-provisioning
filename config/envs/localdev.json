@@ -67,7 +67,7 @@
     "tessera_database_password": "password",
     "tessera_secret_key": "password",
 
-    "opendata_hostnames": ["data.localdev.akvo.org"],
+    "opendata_hostnames": ["opendata.localdev.akvo.org"],
     "ckan_beaker_secret": "Rdm2iuDUNN/dAERtVyL6o9On0",
     "ckan_app_instance_id": "{8777055b-3d42-4f0e-8700-81dbbde89289}",
 
