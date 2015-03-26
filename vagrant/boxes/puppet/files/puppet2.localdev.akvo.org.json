@@ -1,8 +1,6 @@
 {
     "roles": [
-        "opendata",
-        "psqldb"
-    ],
+        "peak"
+    ]
     
-    "psql_name": "psql-opendata"
 }
