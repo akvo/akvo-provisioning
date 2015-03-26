@@ -60,6 +60,12 @@ class puppetdb::server {
     # temporary hack - apply new puppetdb port only at vagrant boxes
     if ( hiera('machine_type') == 'vagrant' ) {
         $puppetdb_port = '8443'
+
+        firewall { '200 allow puppetdb access':
+            port   => $puppetdb_port,
+            proto  => 'tcp',
+            action => accept
+        }
     }
     else {
         $puppetdb_port = '443'
