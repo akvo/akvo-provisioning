@@ -1,8 +1,9 @@
 
 class reporter::config {
 
-    $port = $reporter::port
+    $qport = $reporter::port
     $db_name = $reporter::db_name
+    $db_host = $reporter::db_host
     $db_username = $reporter::db_username
     $db_password = $reporter::db_password
 
@@ -11,28 +12,22 @@ class reporter::config {
 
     $approot = $reporter::approot
 
-    file { "${approot}/create_psql_db.sh":
+    file { "${approot}/populate_psql_db.sh":
         ensure  => present,
         owner   => 'tomcat7',
         group   => 'tomcat7',
-        mode    => '0700',
-        source  => 'puppet:///modules/reporter/create_psql_db.sh',
+        mode    => '0755',
+        content  => template('reporter/populate_psql_db.sh.erb'),
         require => File[$approot]
     }
 
-    database::psql::db { $db_username:
-        psql_name => $reporter::psql_name,
-        password  => $db_password
-    }
 
-
-#this will su to user postgres for role and db creation
-#and then populate the db
-    exec { "${approot}/create_psql_db.sh":
+#this will populate the db
+    exec { "${approot}/populate_psql_db.sh":
         user    => 'root',
         cwd     => "${approot}",
         creates => "${approot}/.db_created",
-        require => File["${approot}/create_psql_db.sh"],
+        require => File["${approot}/populate_psql_db.sh"]
     }
 
 
@@ -41,7 +36,7 @@ class reporter::config {
 #    }
 
     nginx::proxy { "reporting.${base_domain}":
-        proxy_url => "http://localhost:${port}",
+        proxy_url => "http://localhost:${qport}",
         htpasswd => false
     }
 

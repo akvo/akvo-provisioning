@@ -2,8 +2,16 @@
 class reporter::install {
 
     $approot = $reporter::approot
+    $db_name = $reporter::db_name
+    $db_host = $reporter::db_host
+    $db_username = $reporter::db_username
+    $db_password = $reporter::db_password
 
     package { 'tomcat7':
+        ensure   => 'installed'
+    }
+
+    package { 'openjdk-7-jdk':
         ensure   => 'installed'
     }
 
@@ -12,7 +20,7 @@ class reporter::install {
     }
 
     file { '/usr/share/tomcat7/bin/setenv.sh':
-        require => Package['tomcat7'],
+        require => [Package['tomcat7'],Package['openjdk-7-jdk']],
         ensure  => present,
         owner   => 'root',
         group   => 'root',
@@ -38,25 +46,6 @@ class reporter::install {
         require => File[$approot]
     }
 
-#Too big for Github...
-#    file { "${approot}/RS2.2.1-5602-reportserver.zip":
-#        ensure  => present,
-#        owner   => 'tomcat7',
-#        group   => 'tomcat7',
-#        mode    => '0600',
-#        source  => 'puppet:///modules/reporter/RS2.2.1-5602-reportserver.zip',
-#        require => File[$approot]
-#    }
-
-    file { "${approot}/persistence.xml":
-        ensure  => present,
-        owner   => 'tomcat7',
-        group   => 'tomcat7',
-        mode    => '0600',
-        source  => 'puppet:///modules/reporter/persistence.xml',
-        require => File[$approot]
-    }
-
     file { "${approot}/rsbirt.jar.patch2":
         ensure  => present,
         owner   => 'tomcat7',
@@ -75,17 +64,49 @@ class reporter::install {
         require => File[$approot]
     }
 
+    file { "${approot}/rssaiku.jar.patch3":
+        ensure  => present,
+        owner   => 'tomcat7',
+        group   => 'tomcat7',
+        mode    => '0644',
+        source  => 'puppet:///modules/reporter/rssaiku.jar.patch3',
+        require => File[$approot]
+    }
+
     exec { "${approot}/install_reportserver.sh":
         user    => 'root',
         cwd     => "${approot}",
         creates => "${approot}/.installed",
         require => [File["${approot}/install_reportserver.sh"],
-                    File["${approot}/persistence.xml"],
                     File["${approot}/rsbirt.jar.patch2"],
                     File["${approot}/rsbase.jar.patch2"],
+                    File["${approot}/rssaiku.jar.patch3"],
                     Package['unzip']]
     }
 
+#Now template
+#    file { "${approot}/persistence.xml":
+#        ensure  => present,
+#        owner   => 'tomcat7',
+#        group   => 'tomcat7',
+#        mode    => '0600',
+#        source  => 'puppet:///modules/reporter/persistence.xml',
+#        require => File[$approot]
+#    }
+
+    file { "${approot}/WEB-INF/classes/META-INF/persistence.xml":
+        ensure  => present,
+        owner   => 'tomcat7',
+        group   => 'tomcat7',
+        mode    => '0600',
+        content  => template('reporter/persistence.xml.erb'),
+        require => [File[$approot], Exec["${approot}/install_reportserver.sh"]]
+    }
+
+    database::psql::db { $db_name:
+        psql_name => $reporter::psql_name,
+        password  => $db_password
+    }
 
 
 }

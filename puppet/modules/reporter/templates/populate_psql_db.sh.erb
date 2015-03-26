@@ -1,0 +1,11 @@
+#!/bin/bash
+#exit if anything fails
+set -e
+#Connect to new db, using IP socket so password auth is allowed:
+# This works on 9.4 but not on 9.1:
+# psql --dbname=postgresql://reportserver:bar@psql/reportserver --file=ddl/reportserver-RS2.2.1-5602-schema-PostgreSQL_CREATE.sql
+# password MUST NOT contain the single-quote character
+export PGPASSWORD='<%= @db_password %>'
+psql --host=<%= @db_host %> --username=<%= @db_username %> --file=ddl/reportserver-RS2.2.1-5602-schema-PostgreSQL_CREATE.sql <%= @db_name %>
+#if we make it this far, we succeeded, so prevent another run. Need to be tomcat7 to have permission for this.
+touch .db_created
