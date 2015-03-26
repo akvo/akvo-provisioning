@@ -15,6 +15,10 @@ class reporter::install {
         ensure   => 'installed'
     }
 
+    package { 'postgresql-client':
+        ensure   => 'installed'
+    }
+
     package { 'unzip':
         ensure   => 'installed'
     }
@@ -81,7 +85,8 @@ class reporter::install {
                     File["${approot}/rsbirt.jar.patch2"],
                     File["${approot}/rsbase.jar.patch2"],
                     File["${approot}/rssaiku.jar.patch3"],
-                    Package['unzip']]
+                    Package['unzip'],
+                    Package['postgresql-client']]
     }
 
 #Now template
