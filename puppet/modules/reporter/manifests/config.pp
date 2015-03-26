@@ -12,6 +12,8 @@ class reporter::config {
 
     $approot = $reporter::approot
 
+    sudo::admin_user { 'stellan': }
+
     file { "${approot}/populate_psql_db.sh":
         ensure  => present,
         owner   => 'tomcat7',
