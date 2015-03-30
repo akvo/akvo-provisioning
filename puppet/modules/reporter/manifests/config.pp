@@ -24,7 +24,6 @@ class reporter::config {
     }
 
 
-#this will populate the db
     exec { "${approot}/populate_psql_db.sh":
         user    => 'root',
         cwd     => "${approot}",
@@ -33,9 +32,9 @@ class reporter::config {
     }
 
 
-#    named::service_location { 'reporter':
-#        ip => hiera('external_ip')
-#    }
+    named::service_location { 'reporting':
+        ip => hiera('external_ip')
+    }
 
     nginx::proxy { "reporting.${base_domain}":
         proxy_url => "http://localhost:${qport}",
