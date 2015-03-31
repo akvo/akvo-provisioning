@@ -52,6 +52,20 @@ class reporter::install {
         require => Package['tomcat7']
     }
 
+    file { "${approot}/../ROOT/index.jsp":
+        ensure  => present,
+        owner   => 'tomcat7',
+        group   => 'tomcat7',
+        mode    => '0700',
+        content => '<% response.sendRedirect("/reportserver/ReportServer.html"); %>',
+        require => Package['tomcat7']
+    }
+
+    file { "${approot}/../ROOT/index.html":
+        ensure  => absent,
+        require => Package['tomcat7']
+    }
+
     file { "${approot}/install_reportserver.sh":
         ensure  => present,
         owner   => 'tomcat7',
