@@ -41,6 +41,16 @@ class reporter::install {
         require => Package['tomcat7']
     }
 
+#tomcat needs to be restricted from serving around the proxy
+    file { "${approot}/conf/server.xml":
+        ensure  => present,
+        owner   => 'tomcat7',
+        group   => 'tomcat7',
+        mode    => '0700',
+        source  => 'puppet:///modules/reporter/server.xml',
+        require => File[$approot]
+    }
+
     file { "${approot}/install_reportserver.sh":
         ensure  => present,
         owner   => 'tomcat7',
