@@ -2,6 +2,7 @@
 class reporter::install {
 
     $approot = $reporter::approot
+    $tomcatconf = $reporter::tomcatconf
     $db_name = $reporter::db_name
     $db_host = $reporter::db_host
     $db_username = $reporter::db_username
@@ -42,13 +43,13 @@ class reporter::install {
     }
 
 #tomcat needs to be restricted from serving around the proxy
-    file { "${approot}/conf/server.xml":
+    file { "${tomcatconf}":
         ensure  => present,
         owner   => 'tomcat7',
         group   => 'tomcat7',
         mode    => '0700',
         source  => 'puppet:///modules/reporter/server.xml',
-        require => File[$approot]
+        require => Package['tomcat7']
     }
 
     file { "${approot}/install_reportserver.sh":

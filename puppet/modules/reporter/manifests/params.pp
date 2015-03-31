@@ -9,6 +9,7 @@ class reporter::params {
     $db_password = hiera('reporter_database_password')
 
     $approot = '/var/lib/tomcat7/webapps/reportserver'
+    $tomcatconf = '/var/lib/tomcat7/conf/server.xml'
 
     $port = '8080'
 }
