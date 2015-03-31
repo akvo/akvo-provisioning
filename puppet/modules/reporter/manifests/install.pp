@@ -89,15 +89,6 @@ class reporter::install {
                     Package['postgresql-client']]
     }
 
-#Now template
-#    file { "${approot}/persistence.xml":
-#        ensure  => present,
-#        owner   => 'tomcat7',
-#        group   => 'tomcat7',
-#        mode    => '0600',
-#        source  => 'puppet:///modules/reporter/persistence.xml',
-#        require => File[$approot]
-#    }
 
     file { "${approot}/WEB-INF/classes/META-INF/persistence.xml":
         ensure  => present,
