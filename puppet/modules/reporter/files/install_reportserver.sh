@@ -5,7 +5,7 @@ set -e
 #RELEASE="RS2.2.1-5602-reportserver.zip"
 RELEASE=RS2.2.0-5654-2015-04-01-11-00-17-reportserver.zip
 #next version: RELEASE="RS2.2.2-5639-reportserver.zip"
-wget http://files.support.akvo-ops.org/reportserver/$RELEASE
+wget --no-clobber http://files.support.akvo-ops.org/reportserver/$RELEASE
 
 #unpack release zipfile, creating the app tree
 unzip $RELEASE
