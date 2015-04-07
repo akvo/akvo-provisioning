@@ -6,4 +6,10 @@ class peak {
         path => "/var/akvo/peak"
     }
 
+    firewall { '200 allow httpd access':
+        port   => [80, 443],
+        proto  => tcp,
+        action => accept,
+    }
+
 }
