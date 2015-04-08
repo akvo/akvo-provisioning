@@ -137,13 +137,23 @@ def create_client_cert():
     """
     Generates a certificate and a private key to be used by the puppet client
     """
-    run('mkdir -p /var/lib/puppet/ssl/{private_keys,certs}')
-    run('chown -R puppet.puppet /var/lib/puppet/ssl')
+    # special case for vagrant VMs: need to run as sudo
+    if env.environment == 'localdev':
+        sudo('mkdir -p /var/lib/puppet/ssl/{private_keys,certs}')
+        sudo('chown -R puppet.puppet /var/lib/puppet/ssl')
+    else:
+        run('mkdir -p /var/lib/puppet/ssl/{private_keys,certs}')
+        run('chown -R puppet.puppet /var/lib/puppet/ssl')
 
     cacrt = _get_config_file_path('puppetdb_ca_cert') or _get_key_file_path('puppetdb-ca.crt')
     cakey = _get_config_file_path('puppetdb_ca_key') or _get_key_file_path('puppetdb-ca.key')
 
-    put(cacrt, '/var/lib/puppet/ssl/certs/ca.pem')
+    # special case for vagrant VMs: need to run as sudo
+    if env.environment == 'localdev':
+        put(cacrt, '/var/lib/puppet/ssl/certs/ca.pem', use_sudo=True)
+    else:
+        put(cacrt, '/var/lib/puppet/ssl/certs/ca.pem')
+
     hostname = run('hostname -f').strip()
 
     with tempfile.NamedTemporaryFile() as keyfile:
@@ -155,8 +165,13 @@ def create_client_cert():
                 local('openssl x509 -req -days 3650 -in %s '
                       '-CA %s -CAkey %s -set_serial 01 -out %s' % (csrfile.name, cacrt, cakey, crtfile.name))
 
-                put(keyfile.name, '/var/lib/puppet/ssl/private_keys/%s.pem' % hostname)
-                put(crtfile.name, '/var/lib/puppet/ssl/certs/%s.pem' % hostname)
+                # special case for vagrant VMs: need to run as sudo
+                if env.environment == 'localdev':
+                    put(keyfile.name, '/var/lib/puppet/ssl/private_keys/%s.pem' % hostname, use_sudo=True)
+                    put(crtfile.name, '/var/lib/puppet/ssl/certs/%s.pem' % hostname, use_sudo=True)
+                else:
+                    put(keyfile.name, '/var/lib/puppet/ssl/private_keys/%s.pem' % hostname)
+                    put(crtfile.name, '/var/lib/puppet/ssl/certs/%s.pem' % hostname)
 
 
 def set_facts():
