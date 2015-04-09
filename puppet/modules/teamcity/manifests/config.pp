@@ -1,5 +1,5 @@
 
-class teamcity::configure {
+class teamcity::config {
 
     $listen_address = '127.0.0.1'
     file { '/opt/teamcity/TeamCity/conf/server.xml':
