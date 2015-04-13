@@ -1,13 +1,15 @@
 
 class javasupport::leiningen {
 
-    file { '/opt/leiningen':
+    $bindir = '/opt/leiningen'
+
+    file { $bindir:
         ensure => directory,
         owner  => root,
         mode   => '0755'
     }
 
-    file { '/opt/leiningen/lein':
+    file { "${bindir}/lein":
         ensure  => file,
         owner   => root,
         mode    => '0755',
