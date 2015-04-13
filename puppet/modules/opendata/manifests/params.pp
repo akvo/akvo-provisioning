@@ -8,6 +8,6 @@ class opendata::params {
 
     $setup_postgres = false
     $storage_path   = '/var/lib/ckan'
-    $backup_dir     = '/backups/data/psql/daily'
+    $backup_dir     = '/backups/data/psql'
 
 }
