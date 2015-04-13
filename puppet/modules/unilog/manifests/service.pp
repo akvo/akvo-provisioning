@@ -1,0 +1,3 @@
+class unilog::service {
+
+}

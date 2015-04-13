@@ -39,7 +39,7 @@ The FQDN should be `puppetdb.<environment>.akvo-ops.org`.
 
 Now create a certificate using the certificate authority created above:
 
-    openssl x509 -req -days 365 -in server.csr -CA ca.crt -CAKey ca.key \
+    openssl x509 -req -days 365 -in server.csr -CA ca.crt -CAkey ca.key \
     	-set_serial 01 -out server.crt 
     
 You can now delete the CSR.

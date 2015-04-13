@@ -5,7 +5,7 @@ class teamcity {
     class { 'teamcity::user': } ->
     class { 'teamcity::install': } ->
     class { 'teamcity::database': } ->
-    class { 'teamcity::configure': } ~>
+    class { 'teamcity::config': } ~>
     class { 'teamcity::reload': } ~>
     class { 'teamcity::service': }
 
