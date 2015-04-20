@@ -22,4 +22,6 @@ class opendata::config {
         command => '/usr/bin/ckan'
     }
 
+    sudo::admin_user { 'lynn': }
+
 }
