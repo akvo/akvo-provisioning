@@ -129,5 +129,10 @@ class reporter::install {
         password  => $db_password
     }
 
+    database::psql::db { 'flowreports':
+        psql_name => $reporter::psql_name,
+        password  => 'MaskintelegraF'
+    }
+
 
 }
