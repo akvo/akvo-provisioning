@@ -7,6 +7,9 @@ class reporter::install {
     $db_host = $reporter::db_host
     $db_username = $reporter::db_username
     $db_password = $reporter::db_password
+    $rs_crypto_pbe_salt = $reporter::rs_crypto_pbe_salt
+    $rs_crypto_pbe_passphrase = $reporter::rs_crypto_pbe_passphrase
+    $rs_crypto_hmac_passphrase = $reporter::rs_crypto_hmac_passphrase
 
     package { 'tomcat7':
         ensure   => 'installed'
@@ -75,41 +78,41 @@ class reporter::install {
         require => File[$approot]
     }
 
-    file { "${approot}/rsbirt.jar.patch2":
-        ensure  => present,
-        owner   => 'tomcat7',
-        group   => 'tomcat7',
-        mode    => '0644',
-        source  => 'puppet:///modules/reporter/rsbirt.jar.patch2',
-        require => File[$approot]
-    }
+#    file { "${approot}/rsbirt.jar.patch2":
+#        ensure  => present,
+#        owner   => 'tomcat7',
+#        group   => 'tomcat7',
+#        mode    => '0644',
+#        source  => 'puppet:///modules/reporter/rsbirt.jar.patch2',
+#        require => File[$approot]
+#    }
 
-    file { "${approot}/rsbase.jar.patch2":
-        ensure  => present,
-        owner   => 'tomcat7',
-        group   => 'tomcat7',
-        mode    => '0644',
-        source  => 'puppet:///modules/reporter/rsbase.jar.patch2',
-        require => File[$approot]
-    }
+#    file { "${approot}/rsbase.jar.patch2":
+#        ensure  => present,
+#        owner   => 'tomcat7',
+#        group   => 'tomcat7',
+#        mode    => '0644',
+#        source  => 'puppet:///modules/reporter/rsbase.jar.patch2',
+#        require => File[$approot]
+#    }
 
-    file { "${approot}/rssaiku.jar.patch3":
-        ensure  => present,
-        owner   => 'tomcat7',
-        group   => 'tomcat7',
-        mode    => '0644',
-        source  => 'puppet:///modules/reporter/rssaiku.jar.patch3',
-        require => File[$approot]
-    }
+#    file { "${approot}/rssaiku.jar.patch3":
+#        ensure  => present,
+#        owner   => 'tomcat7',
+#        group   => 'tomcat7',
+#        mode    => '0644',
+#        source  => 'puppet:///modules/reporter/rssaiku.jar.patch3',
+#        require => File[$approot]
+#    }
 
     exec { "${approot}/install_reportserver.sh":
         user    => 'root',
         cwd     => "${approot}",
         creates => "${approot}/.installed",
         require => [File["${approot}/install_reportserver.sh"],
-                    File["${approot}/rsbirt.jar.patch2"],
-                    File["${approot}/rsbase.jar.patch2"],
-                    File["${approot}/rssaiku.jar.patch3"],
+#                    File["${approot}/rsbirt.jar.patch2"],
+#                    File["${approot}/rsbase.jar.patch2"],
+#                    File["${approot}/rssaiku.jar.patch3"],
                     Package['unzip'],
                     Package['postgresql-client']]
     }
@@ -121,6 +124,15 @@ class reporter::install {
         group   => 'tomcat7',
         mode    => '0600',
         content  => template('reporter/persistence.xml.erb'),
+        require => [File[$approot], Exec["${approot}/install_reportserver.sh"]]
+    }
+
+    file { "${approot}/WEB-INF/classes/reportserver.properties":
+        ensure  => present,
+        owner   => 'tomcat7',
+        group   => 'tomcat7',
+        mode    => '0600',
+        content  => template('reporter/reportserver.properties.erb'),
         require => [File[$approot], Exec["${approot}/install_reportserver.sh"]]
     }
 
