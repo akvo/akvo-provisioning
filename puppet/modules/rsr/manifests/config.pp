@@ -8,12 +8,6 @@ class rsr::config {
         psql_name  => $rsr::params::postgres_name,
         password   => $rsr::params::database_password,
         reportable => true
-    }->
-    # temporary limit on db query time during web requests
-    file_line { 'psql_queries_timeout':
-        path   => '/etc/postgresql/9.1/main/postgresql.conf',
-        line   => 'statement_timeout = 1400',
-        notify => Class['postgresql::server::reload']
     }
 
     # we want a service address
