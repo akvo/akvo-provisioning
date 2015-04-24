@@ -5,7 +5,6 @@ class teamcity::packages {
         ensure => latest
     }
 
-    include javasupport::leiningen
     include javasupport::gae
 
 }

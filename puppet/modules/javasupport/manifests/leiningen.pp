@@ -1,5 +1,5 @@
 
-class javasupport::leiningen {
+class javasupport::leiningen ($user, $install_path) {
 
     $bindir = '/opt/leiningen'
 
@@ -15,6 +15,14 @@ class javasupport::leiningen {
         mode    => '0755',
         source  => 'puppet:///modules/javasupport/lein',
         require => File['/opt/leiningen']
+    } ->
+
+    exec { "lein/run":
+        command => "${bindir}/lein",
+        user    => $user,
+        cwd     => $install_path,
+        environment => ["HOME=${install_path}"],
+        creates => "${install_path}/.lein"
     }
 
 }
