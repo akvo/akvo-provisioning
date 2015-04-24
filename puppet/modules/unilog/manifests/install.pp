@@ -26,4 +26,23 @@ class unilog::install inherits unilog::params {
         deploy_key => hiera('unilog-deploy_public_key')
     }
 
+    file { [ "${approot}/versions", "${approot}/config" ]:
+        ensure  => directory,
+        owner   => $username,
+        group   => $username,
+        mode    => '0755',
+        require => [ User[$username], Group[$username], File[$approot] ],
+    }
+
+    # config file
+    file { "${approot}/config/config.edn":
+        ensure   => present,
+        owner    => $username,
+        group    => $username,
+        mode     => '0440',
+        content  => template('unilog/config.edn.erb'),
+        require  => File["${approot}/config"],
+        notify   => Class['supervisord::update']
+    }
+
 }
