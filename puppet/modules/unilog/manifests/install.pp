@@ -1,23 +1,18 @@
-class unilog::install {
+class unilog::install inherits unilog::params {
 
-    # installs OpenJDK Java runtime
+    # install OpenJDK Java runtime
     include javasupport
 
-    # lein installed at /opt/leiningen - binary file static to v2.5.1
-    include javasupport::leiningen
+    # install lein at '/opt/leiningen' and its self-install package at $approot
+    class { 'javasupport::leiningen':
+        user         => $username,
+        install_path => $approot,
+        require      => Class["javasupport"]
+    }
 
-    #    $user        = 'vagrant'
-    #    $bindir      = "/usr/local/bin"
-    #    $package_uri = 'https://raw.github.com/technomancy/leiningen/stable/bin/lein'
-    #    $binary_name = 'lein'
-    #
-    #    exec { 'leiningen/install':
-    #        #user    => $user,
-    #        #group   => $user,
-    #        path    => ["/bin", "/usr/bin", "/usr/local/bin"],
-    #        cwd     => $bindir,
-    #        command => "wget ${package_uri} && chmod 755 ${binary_name}",
-    #        creates => "${bindir}/${binary_name}"
-    #    }
+    # create app's basic structure
+    akvoapp { $username:
+        deploy_key => hiera('unilog-deploy_public_key')
+    }
 
 }
