@@ -7,6 +7,8 @@ define nginx::proxy( $server_name = undef,
                      $ssl_cert_source = undef,
                      $static_dirs = undef,
                      $extra_nginx_config = undef,
+                     $extra_nginx_server_config = undef,
+                     $extra_nginx_proxy_config = undef,
                      $access_log = undef,
                      $error_log = undef ) {
 

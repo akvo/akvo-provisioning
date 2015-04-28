@@ -1,0 +1,6 @@
+        proxy_cache nginx-opendata-cache;
+        proxy_cache_bypass $cookie_auth_tkt;
+        proxy_no_cache $cookie_auth_tkt;
+        proxy_cache_valid 30m;
+        proxy_cache_key $host$scheme$proxy_host$request_uri;
+        proxy_set_header X-Forwarded-Proto $scheme;
