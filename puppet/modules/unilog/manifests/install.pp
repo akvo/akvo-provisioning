@@ -1,23 +1,48 @@
-class unilog::install {
+class unilog::install inherits unilog::params {
 
-    # installs OpenJDK Java runtime
+    # install OpenJDK Java runtime
     include javasupport
 
-    # lein installed at /opt/leiningen - binary file static to v2.5.1
-    include javasupport::leiningen
+    # install lein at '/opt/leiningen' and its self-install package at $approot
+    class { 'javasupport::leiningen':
+        user         => $username,
+        install_path => $approot,
+        require      => Class["javasupport"]
+    }
 
-    #    $user        = 'vagrant'
-    #    $bindir      = "/usr/local/bin"
-    #    $package_uri = 'https://raw.github.com/technomancy/leiningen/stable/bin/lein'
-    #    $binary_name = 'lein'
-    #
-    #    exec { 'leiningen/install':
-    #        #user    => $user,
-    #        #group   => $user,
-    #        path    => ["/bin", "/usr/bin", "/usr/local/bin"],
-    #        cwd     => $bindir,
-    #        command => "wget ${package_uri} && chmod 755 ${binary_name}",
-    #        creates => "${bindir}/${binary_name}"
-    #    }
+    # add APT repository of PostgreSQL packages - we need postgresql >= 9.4
+    apt::source { 'apt.postgresql.org':
+        location   => 'http://apt.postgresql.org/pub/repos/apt/',
+        release    => "${::lsbdistcodename}-pgdg",
+        repos      => 'main',
+        key        => 'ACCC4CF8',
+        key_source => 'http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc',
+        before     => Class['Postgresql::Server::Install'] # ensure the repository is added before package installation made by external module
+    }
+    Apt::Source['apt.postgresql.org'] -> Package<|tag == 'postgresql'|>
+
+    # create app's basic structure
+    akvoapp { $username:
+        deploy_key => hiera('unilog-deploy_public_key')
+    }
+
+    file { [ "${approot}/versions", "${approot}/config" ]:
+        ensure  => directory,
+        owner   => $username,
+        group   => $username,
+        mode    => '0755',
+        require => [ User[$username], Group[$username], File[$approot] ],
+    }
+
+    # config file
+    file { "${approot}/config/config.edn":
+        ensure   => present,
+        owner    => $username,
+        group    => $username,
+        mode     => '0440',
+        content  => template('unilog/config.edn.erb'),
+        require  => File["${approot}/config"],
+        notify   => Class['supervisord::update']
+    }
 
 }

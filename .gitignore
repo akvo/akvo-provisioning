@@ -1,5 +1,6 @@
 .vagrant
 *.pyc
+*.box
 
 #PyCharm
 .idea
