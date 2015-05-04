@@ -1,4 +1,4 @@
-class opendata inherits opendata::params {
+class opendata {
 
     class { 'opendata::install': } ->
     class { 'opendata::config': } ~>

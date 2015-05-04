@@ -7,7 +7,7 @@ FILENAME="rsr-db-dump-${TIMESTAMP}.sql.gz"
 KEY=<%= @approot %>/.ssh/rsrleech
 
 DBUSER=<%= @username %>
-DBHOST=<%= @database_host %>
+DBHOST=<%= @postgres_database_host %>
 DBPASS=<%= @database_password %>
 DBNAME=<%= @username %>
 
@@ -23,7 +23,7 @@ echo 'step 3: remove dump on data source'
 ssh -i $KEY $HOST rm -v $FILENAME
 
 echo 'step 4: load the dump'
-PGPASSWORD=${DBPASS} zcat /tmp/$FILENAME | psql --username=${DBUSER} --host=${DBHOST} $DBNAME
+zcat /tmp/$FILENAME | PGPASSWORD=${DBPASS} psql --username=${DBUSER} --host=${DBHOST} $DBNAME
 
 echo 'step 5: clean up leech'
 rm -v /tmp/$FILENAME

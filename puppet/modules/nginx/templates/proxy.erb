@@ -1,3 +1,4 @@
+<%= @extra_nginx_config-%>
 <% if @ssl %>
 server {
     server_tokens off;
@@ -39,6 +40,8 @@ server {
         proxy_set_header   X-Real-IP        $remote_addr;
         proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
 
+<%= @extra_nginx_proxy_config -%>
+
         gzip_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript;
 
         <%- if @password_protected -%>
@@ -50,7 +53,7 @@ server {
         <%- end -%>
     }
 
-<%= @extra_nginx_config %>
+<%= @extra_nginx_server_config -%>
 
 <%- if @static_dirs -%>
     <%- @static_dirs.each_pair do |location, alias_val| -%>

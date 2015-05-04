@@ -26,7 +26,8 @@ class puppetcontrol {
     }
 
     package { 'puppetdb-terminus':
-        ensure => 'latest' #'1.6.3-1puppetlabs1'
+        # 'puppet' & 'puppet-common' packages are dependencies, so implicitly fixed to version '3.7.5-1puppetlabs1'
+        ensure => '2.3.3-1puppetlabs1'
     }
 
     # insert the ssh info

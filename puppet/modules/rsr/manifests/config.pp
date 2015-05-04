@@ -18,15 +18,14 @@ class rsr::config {
     # nginx sits in front of RSR
     $base_domain = hiera('base_domain')
     nginx::proxy { [$rsr::params::rsr_hostnames, "*.${base_domain}", "*.${rsr::params::partner_site_domain}", "_"]:
-        proxy_url          => "http://localhost:${rsr::params::port}",
-        static_dirs        => {
-            # "/media/admin/" => "${approot}/venv/lib/python2.7/site-packages/django/contrib/admin/static/admin/",
-            "/media/"       => $rsr::params::media_root,
-            "/static/"      => $rsr::params::static_root
+        proxy_url                 => "http://localhost:${rsr::params::port}",
+        static_dirs               => {
+            "/media/"  => $rsr::params::media_root,
+            "/static/" => $rsr::params::static_root
         },
-        extra_nginx_config  => template('rsr/nginx-extra.conf.erb'),
-        access_log          => "${approot}/logs/rsr-nginx-access.log",
-        error_log           => "${approot}/logs/rsr-nginx-error.log",
+        extra_nginx_server_config => template('rsr/nginx-extra-server.conf.erb'),
+        access_log                => "${approot}/logs/rsr-nginx-access.log",
+        error_log                 => "${approot}/logs/rsr-nginx-error.log",
     }
 
 
