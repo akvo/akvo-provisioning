@@ -1,12 +1,5 @@
 class unilog::config inherits unilog::params {
 
-    # set postgresql global parameters
-    class {'postgresql::globals':
-        version             => '9.4',
-        manage_package_repo => false,
-        encoding            => 'UTF8',
-        locale              => 'C'
-    }->
     database::psql::db { $appname:
         psql_name  => $postgres_name,
         password   => $database_password
