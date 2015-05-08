@@ -1,8 +1,6 @@
 
 class users {
     include users::groups
-
-    include users::carl
     include users::root
 
     users::basic { 'oliver':
@@ -68,12 +66,6 @@ class users {
         htpasswd => '$apr1$T.jIlS/U$3QmwUREyPTBJXfC9f6U8S.'
     }
 
-    users::basic { 'adrian':
-        roles    => ['reporting'],
-        allow    => ['munin'],
-        ssh_key  => 'AAAAB3NzaC1yc2EAAAADAQABAAABAQDJFUnZjY1PxF5mWYMjBO+y+Imk9fPxSHk1p03YT6L8NDb3XVs7rfPkvjXLZjH5ajT1Kv3YYtduHOmqdz73pxkJkrUyKzxPdzaLZxS/ZENZPagiBS70tHyxdqpsupibWP885WSEJ/DjWykeV5ebylwYL8IjctXZtbicOf5MpE+l4pyoUgi/KBs6J+CCS9/FZiPVSDQFEjcEY5We/7Rcu19k8PxWtuZIk4/E7yilzEazeegUj//35r+us08vhkrywLey4Wcz6/OH+JYvF63b4pNQ/B9isypgFHXA2DA8Wbmr6kkwocuiUUlNqVy0HiBUHtvbhTEYWsjYALFcVLAyMocl',
-    }
-
     users::basic { 'annamarthe':
         roles    => ['test'],
         ssh_key  => 'AAAAB3NzaC1yc2EAAAADAQABAAABAQDVD9dXh/nxoZw4iUx1UAb1NxwILJ4zUjJs4vDEX+1v98a7mJZtt120s5f1FDqdlQQajZLfhl/eyQTvBmg8ho3BCiIcdZKxB1E9IICRULiDgzAMQVbi9DoDA+pp5KLS9t8OF66x7GwXxZkbqE8KYz1DtctlhXyeYM2J7whkEj8qixcqpsWOdKqRpGQtd6vPAt5+vgHTiCqAYhl41kgGeCl/9fjPYP98WxvqfXwec8WqVPAMGPKbMJ8irMLOGlfavBNrXg66tP4lrQGMTi+7FsOGuZZ+UgjWVmzDmb5BbHzfPgcrMWbB5/05+2PRX4ZO9cgbW5w3lp434w5aRp+8JiEl',
@@ -99,6 +91,8 @@ class users {
     users::remove_user { ['neha']: }
     users::remove_user { ['lauri']: }
     users::remove_user { ['dan']: }
+    users::remove_user { ['carl']: }
+    users::remove_user { ['adrian']: }
 
     Class['Users::Groups'] -> Users::Basic<||>
 }
