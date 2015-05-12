@@ -8,7 +8,7 @@ class opendata::config {
 
     # SSL configuration
     $base_domain = hiera('base_domain')
-    nginx::proxy { $opendata::params::hostnames:
+    nginx::proxy { $opendata::params::hostname:
         proxy_url                 => "http://${opendata::params::wsgi_host}:${opendata::params::wsgi_port}",
         htpasswd                  => false,
         ssl                       => true,

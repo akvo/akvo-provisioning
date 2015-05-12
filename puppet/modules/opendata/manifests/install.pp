@@ -4,7 +4,7 @@ class opendata::install inherits opendata::params {
     include pythonsupport::psql
 
     class { '::ckan':
-        site_url              => "http://${wsgi_host}:${wsgi_port}",
+        site_url              => "http://${hostname}:${wsgi_port}",
         site_title            => 'Akvo Public Data',
         site_description      => 'A shared environment for managing Data.',
         site_intro            => 'Sharing data in an open format benefits the development sector and the general public at large. It encourages active use of valuable data, enables more connections and collaboration between practitioners and supports better decision-making by all.',
