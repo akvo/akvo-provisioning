@@ -9,8 +9,7 @@ class opendata::install inherits opendata::params {
         site_description      => 'A shared environment for managing Data.',
         site_intro            => 'Sharing data in an open format benefits the development sector and the general public at large. It encourages active use of valuable data, enables more connections and collaboration between practitioners and supports better decision-making by all.',
         site_about            => 'Currently there are over 600,000 data points in Akvo FLOW that are marked as public (i.e. they do not contain sensitive individual or household information) and this number is growing rapidly. To make such data easily accessible, searchable and downloadable we have set up this data portal to house such data.',
-        # temporary disabled
-        #site_logo            => "puppet:///modules/opendata/logo.png",
+        site_logo             => '/images/logo.png',
         plugins               => 'datastore stats text_preview recline_preview datapusher',
         app_instance_id       => hiera('ckan_app_instance_id'),
         beaker_secret         => hiera('ckan_beaker_secret'),
