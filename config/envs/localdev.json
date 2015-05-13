@@ -71,7 +71,6 @@
     "ckan_beaker_secret": "Rdm2iuDUNN/dAERtVyL6o9On0",
     "ckan_app_instance_id": "{8777055b-3d42-4f0e-8700-81dbbde89289}",
 
-    "unilog_psql_name": "psql-localdev",
     "unilog_database_password": "password",
     "unilog_remote_api_password": "password",
     "unilog_use_sentry": "false",
