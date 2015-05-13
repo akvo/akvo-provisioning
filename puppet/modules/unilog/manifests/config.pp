@@ -18,4 +18,15 @@ class unilog::config inherits unilog::params {
         error_log  => "${logdir}/unilog-nginx-error.log",
     }
 
+    # let the build server know how to log in to us
+    @@teamcity::deploykey { "unilog-${::environment}":
+        service     => 'unilog',
+        environment => $::environment,
+        key         => hiera('unilog-deploy_private_key'),
+    }
+
+    $use_sentry = hiera('unilog_use_sentry', false)
+    if $use_sentry {
+        $sentry_dsn = hiera('unilog_sentry_dsn')
+    }
 }
