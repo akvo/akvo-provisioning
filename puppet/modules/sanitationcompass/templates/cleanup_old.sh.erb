@@ -2,6 +2,7 @@
 
 VERSIONS_DIR=<%= @approot %>/versions/
 
+# by default we want to keep four old versions
 if [[ -z "$1" ]]
 then
     REMOVE_COUNT=4
@@ -9,7 +10,7 @@ else
     REMOVE_COUNT=$1
 fi
 
-for x in `ls -t ${VERSIONS_DIR} | tail -n +${REMOVE_COUNT}`
+for x in `ls -t ${VERSIONS_DIR} | awk 'NR>'$REMOVE_COUNT`
 do
     echo "Removing old version: $x"
     rm -r $VERSIONS_DIR/$x
