@@ -26,6 +26,16 @@ class homepage::install inherits homepage::params {
         require => File[$appdir]
     }
 
+    # include the script for cleaning up old versions
+    file { "${appdir}/cleanup_old.sh":
+        ensure  => present,
+        owner   => $username,
+        group   => $username,
+        mode    => '0744',
+        content => template('homepage/cleanup_old.sh.erb'),
+        require => File[$appdir]
+    }
+
     if hiera('homepage_leech') {
         class { 'homepage::leech': }
     }
