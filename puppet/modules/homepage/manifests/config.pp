@@ -3,8 +3,8 @@ class homepage::config inherits homepage::params {
 
     file { "${appdir}/wp-config.php":
         ensure  => present,
-        owner   => 'homepage',
-        group   => 'homepage',
+        owner   => $username,
+        group   => $username,
         mode    => '0444',
         content => template('homepage/wp-config.php.erb'),
         require => File[$appdir]
