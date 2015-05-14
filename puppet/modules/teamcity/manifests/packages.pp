@@ -6,5 +6,9 @@ class teamcity::packages {
     }
 
     include javasupport::gae
+    class { 'javasupport::leiningen':
+        user         => 'teamcity',
+        install_path => '/opt/teamcity/'
+    }
 
 }

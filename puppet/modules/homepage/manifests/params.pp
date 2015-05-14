@@ -1,6 +1,7 @@
 
 class homepage::params {
 
+    $username = 'homepage'
     $appdir = '/var/akvo/homepage'
 
     $mysql_name = hiera('homepage_wordpress_database_mysql_name', 'mysql')

@@ -1,12 +1,5 @@
 class unilog::config inherits unilog::params {
 
-    # set postgresql global parameters
-    class {'postgresql::globals':
-        version             => '9.4',
-        manage_package_repo => false,
-        encoding            => 'UTF8',
-        locale              => 'C'
-    }->
     database::psql::db { $appname:
         psql_name  => $postgres_name,
         password   => $database_password
@@ -25,4 +18,15 @@ class unilog::config inherits unilog::params {
         error_log  => "${logdir}/unilog-nginx-error.log",
     }
 
+    # let the build server know how to log in to us
+    @@teamcity::deploykey { "unilog-${::environment}":
+        service     => 'unilog',
+        environment => $::environment,
+        key         => hiera('unilog-deploy_private_key'),
+    }
+
+    $use_sentry = hiera('unilog_use_sentry', false)
+    if $use_sentry {
+        $sentry_dsn = hiera('unilog_sentry_dsn')
+    }
 }

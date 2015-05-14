@@ -4,5 +4,7 @@
         "management",
         "unilog",
         "psqldb"
-    ]
+    ],
+
+    "psql_version": "9.4"
 }

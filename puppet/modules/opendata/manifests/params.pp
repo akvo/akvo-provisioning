@@ -1,6 +1,6 @@
 class opendata::params {
 
-    $hostnames      = hiera_array('opendata_hostnames')
+    $hostname       = hiera('opendata_hostname')
 
     $ckan_root_path = '/usr/lib/ckan/default/src/ckan'
     $ckan_version   = '2.3'

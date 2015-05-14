@@ -10,6 +10,18 @@ There is one single PuppetDB instance for every environment - this allows enviro
 
 Each vagrant development box has its own PuppetDB install, in order to make the vagrant box a completely independent environment.
 
+## Database Backend
+
+We use embedded HSQLDB as the database backend. Note that it works with no additional daemons or setup beyond installation, but is only suitable for up to about 100 puppet nodes. Performance can be increased by setting up the PostgreSQL backend, but it's not needed right now.
+
+To clear all data from the PuppetDB take the following steps:
+```
+$ service puppetdb stop
+$ cd /var/lib/puppetdb
+$ mv db db.old
+$ service puppetdb start
+```
+
 ## SSL Configuration
 
 Puppet refuses to connect to PuppetDB except via SSL. Therefore we use [nginx to proxy](../../puppet/modules/puppetdb/templates/puppetdb-nginx.conf.erb) PuppetDB and serve it using an SSL certificate we create ourselves. There is an 'akvo-ops' certificate authority created for this purpose which is used for self-signing the server certificate.

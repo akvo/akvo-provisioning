@@ -11,18 +11,28 @@ class homepage::install inherits homepage::params {
 
     file { ["${appdir}/versions", "${appdir}/conf", "${appdir}/uploads", "${appdir}/data"]:
         ensure  => directory,
-        owner   => 'homepage',
-        group   => 'homepage',
+        owner   => $username,
+        group   => $username,
         mode    => '0775',
         require => File[$appdir]
     }
 
     file { "${appdir}/make_version.sh":
         ensure  => present,
-        owner   => 'homepage',
-        group   => 'homepage',
-        mode    => '0544',
+        owner   => $username,
+        group   => $username,
+        mode    => '0744',
         content => template('homepage/make_version.sh.erb'),
+        require => File[$appdir]
+    }
+
+    # include the script for cleaning up old versions
+    file { "${appdir}/cleanup_old.sh":
+        ensure  => present,
+        owner   => $username,
+        group   => $username,
+        mode    => '0744',
+        content => template('homepage/cleanup_old.sh.erb'),
         require => File[$appdir]
     }
 
