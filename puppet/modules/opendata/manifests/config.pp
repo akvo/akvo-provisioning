@@ -1,4 +1,4 @@
-class opendata::config {
+class opendata::config inherits opendata::params {
 
     # remove default ckan vhost
     file { 'ckan-nginx-disable':
@@ -8,8 +8,8 @@ class opendata::config {
 
     # SSL configuration
     $base_domain = hiera('base_domain')
-    nginx::proxy { $opendata::params::hostname:
-        proxy_url                 => "http://${opendata::params::wsgi_host}:${opendata::params::wsgi_port}",
+    nginx::proxy { $hostname:
+        proxy_url                 => "http://${wsgi_host}:${wsgi_port}",
         htpasswd                  => false,
         ssl                       => true,
         ssl_key_source            => hiera('akvo_wildcard_key'),
@@ -19,6 +19,13 @@ class opendata::config {
         extra_nginx_proxy_config  => template('opendata/nginx-extra-proxy.conf.erb')
     }
 
+    # let the build server know how to log in to us
+    @@teamcity::deploykey { "${username}-${::environment}":
+        service     => 'opendata',
+        environment => $::environment,
+        key         => hiera('opendata-deploy_private_key'),
+    }
+
     # we want the 'backup' user to be able to execute 'ckan' in order to perform backups
     sudo::allow_command { "opendata-backup-ckan":
         user    => 'backup',
@@ -26,5 +33,10 @@ class opendata::config {
     }
 
     sudo::admin_user { 'lynn': }
+
+    # no password - we need that setting for the deployment scripts
+    sudo::admin_user { $username:
+        nopassword => true
+    }
 
 }
