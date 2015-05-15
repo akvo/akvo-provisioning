@@ -1,0 +1,24 @@
+#!/bin/bash
+# This script should be run by root or with sudo
+
+if [ -d <%= @themedir %> ]; then
+    echo " * Pulling down updates on our CKAN theme..."
+    cd <%= @themedir %>
+    git pull origin master
+else
+    echo " * Cloning our CKAN theme repository..."
+    mkdir -p <%= @themedir %>
+    git clone https://github.com/akvo/akvo-opendata.git <%= @themedir %>
+fi
+
+echo " * Installing the 'ckanext-akvo' extension..."
+. /usr/lib/ckan/default/bin/activate
+cd <%= @themedir %>/ckanext-akvo
+python setup.py install
+
+echo " * Adding 'akvo' plugin into CKAN configuration file..."
+if ! grep ckan.plugins /etc/ckan/default/production.ini | grep akvo > /dev/null; then
+    sed -i -e '/^ckan.plugins/ s/$/ akvo/' /etc/ckan/default/production.ini
+fi
+
+service apache2 reload

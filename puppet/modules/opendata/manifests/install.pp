@@ -27,4 +27,18 @@ class opendata::install inherits opendata::params {
         smtp_server           => 'mail.akvo.org'
     }
 
+    # create app's basic structure - needed for deployment scripts
+    akvoapp { $username:
+        deploy_key => hiera('opendata-deploy_public_key')
+    }
+
+    # script for deploying our custom styling
+    file { "/var/akvo/${username}/make_app.sh":
+        ensure  => present,
+        owner   => $username,
+        group   => $username,
+        mode    => '0744',
+        content => template('opendata/make_app.sh.erb'),
+    }
+
 }

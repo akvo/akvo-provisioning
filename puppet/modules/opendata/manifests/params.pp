@@ -1,8 +1,9 @@
 class opendata::params {
 
     $hostname       = hiera('opendata_hostname')
+    $username       = 'opendata'
+    $themedir       = '/usr/lib/ckan/default/src/akvo-opendata'
 
-    $ckan_root_path = '/usr/lib/ckan/default/src/ckan'
     $ckan_version   = '2.3'
     $wsgi_host      = '127.0.0.1'
     $wsgi_port      = '8080'
