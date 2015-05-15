@@ -1,6 +1,10 @@
 
 class homepage::install inherits homepage::params {
 
+    package { 'php5-curl':
+        ensure => installed
+    }
+
     php::app { 'homepage':
         app_hostnames        => $homepage_hostnames,
         group                => 'www-edit',
