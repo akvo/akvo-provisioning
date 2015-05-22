@@ -13,9 +13,13 @@ class unilog::config inherits unilog::params {
     # nginx sits in front of unilog
     $base_domain = hiera('base_domain')
     nginx::proxy { "unilog.${base_domain}":
-        proxy_url  => "http://localhost:${port}",
-        access_log => "${logdir}/unilog-nginx-access.log",
-        error_log  => "${logdir}/unilog-nginx-error.log",
+        proxy_url       => "http://localhost:${port}",
+        htpasswd        => false,
+        ssl             => true,
+        ssl_key_source  => hiera('akvo_wildcard_key'),
+        ssl_cert_source => hiera('akvo_wildcard_cert'),
+        access_log      => "${logdir}/unilog-nginx-access.log",
+        error_log       => "${logdir}/unilog-nginx-error.log",
     }
 
     # let the build server know how to log in to us
