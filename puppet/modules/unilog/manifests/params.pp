@@ -16,6 +16,7 @@ class unilog::params {
     $flow_server_config  = "${approot}/akvo-flow-server-config"
     $flow_data_schema    = "${approot}/akvo-core-services/flow-data-schema/schema/event.json"
 
+    $main_domain         = hiera('unilog_main_domain', "unilog.${base_domain}")
     $postgres_name       = hiera('psql_name')
     $database_password   = hiera('unilog_database_password')
 
