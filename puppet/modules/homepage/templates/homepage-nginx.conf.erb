@@ -27,7 +27,7 @@ server {
     server_tokens off;
     include /var/akvo/homepage/conf/*.conf; # W3TC rewrites are stored here
 
-    include /var/akvo/homepage/conf/*.conf;
+    add_header Strict-Transport-Security "max-age=31536000"; # enabling STS
 
     # Legacy redirects, see https://github.com/akvo/akvo-provisioning/issues/37
     # TODO: move these into the akvo-web repository
