@@ -6,6 +6,7 @@ server {
     <% end %>;
 
     server_tokens off;
+    include /var/akvo/homepage/conf/*.conf; # W3TC rewrites are stored here
 
     include /var/akvo/homepage/conf/*.conf;
 

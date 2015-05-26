@@ -40,6 +40,17 @@ class homepage::install inherits homepage::params {
         require => File[$appdir]
     }
 
+    # include additional configuration / rewrites for W3 Total Cache plugin
+    file { "${appdir}/conf/nginx-w3tc.conf":
+        ensure  => present,
+        owner   => $username,
+        group   => $username,
+        mode    => '0744',
+        source  => 'puppet:///modules/homepage/nginx-w3tc.conf',
+        require => File[$appdir]
+    }
+
+
     if hiera('homepage_leech') {
         class { 'homepage::leech': }
     }
