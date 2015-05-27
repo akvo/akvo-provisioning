@@ -1,6 +1,7 @@
 define database::psql::db ($psql_name, $password,
                            $include_fw_rule = true,
-                           $reportable = false ) {
+                           $reportable = false,
+                           $allow_createdb = false ) {
 
     $base_domain = hiera('base_domain')
     $psql_host = "${psql_name}.${base_domain}"
@@ -8,8 +9,9 @@ define database::psql::db ($psql_name, $password,
     notice("postgresql database ${name} at ${psql_name}")
 
     @@database::psql::db_exported { $name:
-        password => $password,
-        tag      => "psql-db-${psql_host}"
+        password       => $password,
+        allow_createdb => $allow_createdb,
+        tag            => "psql-db-${psql_host}"
     }
 
     if ($include_fw_rule) {

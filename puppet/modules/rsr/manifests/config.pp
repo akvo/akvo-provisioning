@@ -2,18 +2,10 @@ class rsr::config inherits rsr::params {
 
     # create an RSR database on the database server
     database::psql::db { $database_name:
-        psql_name  => $postgres_name,
-        password   => $database_password,
-        reportable => true
-    }
-
-    # allow RSR user to create databases on staging envs
-    if $allow_createdb {
-        postgresql_psql {"ALTER ROLE \"${username}\" CREATEDB":
-            db      => $database_name,
-            unless  => "SELECT rolname FROM pg_roles WHERE rolname='\"${username}\"' and rolcreatedb=true",
-            require => Database::Psql::Db[$database_name]
-        }
+        psql_name      => $postgres_name,
+        password       => $database_password,
+        reportable     => true,
+        allow_createdb => $allow_createdb
     }
 
     # we want a service address
