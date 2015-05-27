@@ -7,6 +7,7 @@
 
     "rsr_psql_name": "psql-localdev",
     "rsr_database_password": "password",
+    "rsr_allow_createdb": true,
     "rsr_secret_key": "secretkey",
     "rsr_development": true,
     "rsr_debug": true,

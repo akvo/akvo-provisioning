@@ -10,6 +10,15 @@ class rsr::config {
         reportable => true
     }
 
+    # allow RSR user to create databases on staging envs
+    if $allow_createdb {
+        postgresql_psql {"ALTER ROLE \"${username}\" CREATEDB":
+            db      => $database_name,
+            unless  => "SELECT rolname FROM pg_roles WHERE rolname='\"${username}\"' and rolcreatedb=true",
+            require => Database::Psql::Db[$database_name]
+        }
+    }
+
     # we want a service address
     named::service_location { ["rsr", "*"]:
         ip => hiera('external_ip')
