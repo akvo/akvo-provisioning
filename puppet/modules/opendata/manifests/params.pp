@@ -9,7 +9,7 @@ class opendata::params {
     $wsgi_port      = '8080'
 
     $setup_postgres = false
-    $storage_path   = '/var/lib/ckan'
+    $storage_path   = '/var/lib/ckan/default'
     $backup_dir     = '/backups/data/psql/ckan'
 
 }

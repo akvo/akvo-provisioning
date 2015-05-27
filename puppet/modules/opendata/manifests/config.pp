@@ -6,6 +6,11 @@ class opendata::config inherits opendata::params {
         ensure => absent
     }
 
+    # we want a service address
+    named::service_location { "opendata":
+        ip => hiera('external_ip')
+    }
+
     # SSL configuration
     $base_domain = hiera('base_domain')
     nginx::proxy { $hostname:
