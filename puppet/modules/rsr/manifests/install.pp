@@ -1,13 +1,4 @@
-
-class rsr::install {
-
-    # we need the config
-    include rsr::params
-
-    $approot = $rsr::params::approot
-    $username = $rsr::params::username
-    $media_root = $rsr::params::media_root
-    $static_root = $rsr::params::static_root
+class rsr::install inherits rsr::params {
 
     # make sure we also include the Akvoapp stuff, and that it is loaded
     # before this module

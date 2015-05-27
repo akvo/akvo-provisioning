@@ -1,9 +1,5 @@
+class rsr::service inherits rsr::params {
 
-class rsr::service {
-
-    include rsr::params
-
-    $approot = $rsr::params::approot
     $base_domain = hiera('base_domain')
 
     # add custom configuration
@@ -17,16 +13,16 @@ class rsr::service {
 
     # configure a service so we can start and restart RSR
     supervisord::service { "rsr":
-        user      => $rsr::params::username,
-        command   => "${approot}/venv/bin/gunicorn akvo.wsgi --max-requests 200 --workers 5 --timeout 300 --pid ${approot}/rsr.pid --bind 127.0.0.1:${rsr::params::port}",
-        directory => $rsr::params::approot,
+        user      => $username,
+        command   => "${approot}/venv/bin/gunicorn akvo.wsgi --max-requests 200 --workers 5 --timeout 300 --pid ${approot}/rsr.pid --bind 127.0.0.1:${port}",
+        directory => $approot,
         env_vars  => {
             'PYTHONPATH' => "${approot}/code/"
         }
     }
     # we want the rsr user to be able to restart the process
     sudo::service_control { "rsr":
-        user         => $rsr::params::username,
+        user         => $username,
     }
 
 }
