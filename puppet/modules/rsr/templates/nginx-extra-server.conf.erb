@@ -4,7 +4,7 @@
     # see https://github.com/akvo/akvo-provisioning/issues/137
     # rewrite ^/(en|de|nl|es|fr|ru)/(.*)$ /$2 redirect;
     # see https://github.com/akvo/akvo-provisioning/issues/171
-    rewrite ^/(nl|ru)/(.*)$ /$2 redirect;
+    rewrite ^/(de|nl|ru)/(.*)$ /$2 redirect;
     rewrite ^/projects/all/(.*)$ /projects/$1 permanent;
     # https://github.com/akvo/akvo-rsr/issues/1308
     rewrite ^/project/(.*)/update/$ /project/$1/add_update/ permanent;
