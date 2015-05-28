@@ -20,8 +20,10 @@ define named::service_location(
     }
 
     # Export hostkeys from these hostnames.
-    if '*' != $subdomainval {
-        $base_domain = hiera('base_domain')
+    # avoid to export hostkey if the hostname is the fqdn or '*',
+    # it's already done in 'puppet/modules/sshd/manifests/init.pp'
+    $base_domain = hiera('base_domain')
+    if ('*' != $subdomainval) and ($::fqdn != "${subdomainval}.${base_domain}") {
         @@sshkey { "${subdomainval}.${base_domain}":
             ensure       => present,
             host_aliases => [$subdomainval],

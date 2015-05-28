@@ -7,7 +7,7 @@ class opendata::config inherits opendata::params {
     }
 
     # we want a service address
-    named::service_location { "opendata":
+    named::service_location { 'opendata':
         ip => hiera('external_ip')
     }
 
