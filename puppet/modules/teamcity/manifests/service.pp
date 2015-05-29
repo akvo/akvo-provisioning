@@ -18,6 +18,8 @@ class teamcity::service {
     $base_domain = hiera('base_domain')
     nginx::proxy { "ci.${base_domain}":
         proxy_url          => "http://localhost:8111",
+        extra_nginx_config        => template('teamcity/nginx-extra.conf.erb'),
+        extra_nginx_proxy_config  => template('teamcity/nginx-extra-proxy.conf.erb')
     }
 
 }
