@@ -34,4 +34,34 @@ class unilog::install inherits unilog::params {
         notify   => Class['supervisord::update']
     }
 
+    # include the script for installing app dependencies
+    file { "${approot}/install_flow_config.sh":
+        ensure  => present,
+        content => template('unilog/install_flow_config.sh.erb'),
+        owner   => $username,
+        group   => $username,
+        mode    => '0744',
+        require => [ User[$username], Group[$username], File[$approot] ]
+    }
+
+    # include the script for downloading and creating an app
+    file { "${approot}/make_app.sh":
+        ensure  => present,
+        content => template('unilog/make_app.sh.erb'),
+        owner   => $username,
+        group   => $username,
+        mode    => '0744',
+        require => [ User[$username], Group[$username], File[$approot] ]
+    }
+
+    # include the script for switching the app
+    file { "${approot}/make_current.sh":
+        ensure  => present,
+        content => template('unilog/make_current.sh.erb'),
+        owner   => $username,
+        group   => $username,
+        mode    => '0744',
+        require => [ User[$username], Group[$username], File[$approot] ]
+    }
+
 }

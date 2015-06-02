@@ -1,0 +1,10 @@
+#!/bin/bash
+
+NAME=$1
+BRANCH=$2
+NEW_VERSION=<%= @approot %>/versions/$NAME
+
+mkdir -p $NEW_VERSION
+git clone https://github.com/akvo/akvo-unified-log.git $NEW_VERSION/code
+cd $NEW_VERSION/code
+git checkout $BRANCH

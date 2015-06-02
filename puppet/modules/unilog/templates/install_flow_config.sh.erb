@@ -1,0 +1,21 @@
+#!/bin/bash
+
+BRANCH=$1
+
+if [ -e <%= @approot %>/akvo-flow-server-config ]; then
+    cd <%= @approot %>/akvo-flow-server-config
+    git checkout $BRANCH
+    git pull origin $BRANCH
+else
+    git clone https://github.com/akvo/akvo-flow-server-config.git <%= @approot %>/akvo-flow-server-config
+    git checkout $BRANCH
+fi
+
+if [ -e <%= @approot %>/akvo-core-services ]; then
+    cd <%= @approot %>/akvo-core-services
+    git checkout $BRANCH
+    git pull origin $BRANCH
+else
+    git clone https://github.com/akvo/akvo-core-services.git <%= @approot %>/akvo-core-services
+    git checkout $BRANCH
+fi

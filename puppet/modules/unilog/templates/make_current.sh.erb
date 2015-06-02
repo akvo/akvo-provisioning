@@ -1,0 +1,10 @@
+#!/bin/bash
+
+NEW_VERSION=<%= @approot %>/versions/$1
+
+sudo supervisorctl stop unilog
+
+rm -vf <%= @approot %>/code
+ln -vs $NEW_VERSION/code <%= @approot %>/code
+
+sudo supervisorctl start unilog
