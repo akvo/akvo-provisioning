@@ -13,7 +13,7 @@ class puppetdb::server {
         ensure => 'latest'
     } ->
     package { 'puppetdb':
-        ensure => '2.3.3-1puppetlabs1'
+        ensure => '2.3.4-1puppetlabs1'
     }
 
     service { 'puppetdb':
