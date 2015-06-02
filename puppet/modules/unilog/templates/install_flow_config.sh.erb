@@ -7,7 +7,7 @@ if [ -e <%= @approot %>/akvo-flow-server-config ]; then
     git checkout $BRANCH
     git pull origin $BRANCH
 else
-    git clone https://github.com/akvo/akvo-flow-server-config.git <%= @approot %>/akvo-flow-server-config
+    git clone git@github.com:akvo/akvo-flow-server-config.git <%= @approot %>/akvo-flow-server-config
     git checkout $BRANCH
 fi
 
