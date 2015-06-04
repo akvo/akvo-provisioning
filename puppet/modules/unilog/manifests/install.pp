@@ -28,7 +28,7 @@ class unilog::install inherits unilog::params {
         ensure   => present,
         owner    => $username,
         group    => $username,
-        mode     => '0440',
+        mode     => '0444',
         content  => template('unilog/config.edn.erb'),
         require  => File["${approot}/config"],
         notify   => Class['supervisord::update']
