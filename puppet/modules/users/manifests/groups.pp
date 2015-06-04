@@ -11,4 +11,9 @@ class users::groups {
         as_user => 'rsr'
     }
 
+    sudo::allow_as_user { 'devs_can_unilog':
+        group => 'developer',
+        as_user => 'unilog'
+    }
+
 }
