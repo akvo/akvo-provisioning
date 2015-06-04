@@ -13,7 +13,7 @@ class unilog::config inherits unilog::params {
     # nginx sits in front of unilog
     $base_domain = hiera('base_domain')
     nginx::proxy { $main_domain:
-        proxy_url       => "http://localhost:${port}",
+        proxy_url       => "http://localhost:${appport}",
         htpasswd        => false,
         ssl             => true,
         ssl_key_source  => hiera('akvo_wildcard_key'),

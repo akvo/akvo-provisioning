@@ -4,9 +4,11 @@
     :event-schema-file "<%= @flow_data_schema %>"
 
     ;; port to run the service
-    :port <%= @port %>
+    :port <%= @appport %>
 
     ;; postgreSQL username and password
+    :database-host "<%= @postgres_host %>"
+    :database-port "<%= @postgres_port %>"
     :database-user "<%= @username %>"
     :database-password "<%= @database_password %>"
 
