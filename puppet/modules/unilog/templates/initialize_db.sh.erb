@@ -23,6 +23,8 @@ EOF
               id BIGSERIAL PRIMARY KEY,
               payload JSONB
             );
+            ALTER TABLE event_log OWNER TO unilog;
+
             CREATE OR REPLACE FUNCTION notify_on_event_log_insert()
               RETURNS trigger AS \$\$
               DECLARE BEGIN
