@@ -33,4 +33,9 @@ class unilog::config inherits unilog::params {
     if $use_sentry {
         $sentry_dsn = hiera('unilog_sentry_dsn')
     }
+
+    # no password - we need that setting for the deployment scripts
+    sudo::admin_user { $username:
+        nopassword => true
+    }
 }
