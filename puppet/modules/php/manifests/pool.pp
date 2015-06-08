@@ -1,5 +1,5 @@
 
-define php::pool( $poolname, $pooluser, $poolgroup, $poolport, $rootdir ) {
+define php::pool( $poolname, $pooluser, $poolgroup, $poolport, $poolprocs, $rootdir ) {
 
     file { "/etc/php5/fpm/pool.d/${poolname}.conf":
         ensure  => present,

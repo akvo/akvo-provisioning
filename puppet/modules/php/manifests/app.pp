@@ -2,6 +2,7 @@
 define php::app (
   $app_hostnames,
   $pool_port,
+  $pool_processes = 10,
   $username = undef,
   $group = undef,
   $config_file_contents = undef,
@@ -35,6 +36,7 @@ define php::app (
         pooluser  => $app_user,
         poolgroup => $app_group,
         poolport  => $pool_port,
+        poolprocs => $pool_processes,
         rootdir   => $app_path,
         notify    => Service['php5-fpm']
     }
