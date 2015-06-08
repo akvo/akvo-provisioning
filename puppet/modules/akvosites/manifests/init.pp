@@ -23,6 +23,7 @@ class akvosites {
         app_hostnames        => $all_hostnames,
         group                => 'www-edit',
         pool_port            => $pool_port,
+        pool_processes       => 16,
         config_file_contents => template('akvosites/akvosites-nginx.conf.erb')
     }
 
