@@ -43,7 +43,7 @@ class users {
     users::basic { 'stellan':
         roles    => ['developer'],
         allow    => ['munin'],
-        ssh_key  => 'AAAAB3NzaC1yc2EAAAADAQABAAAAgQD3+y/TMl24bz82lv25fpthS0afiFYqysYc8PqsYoTWLtkQn7WTfyRkSClMNKbaM6KkwP9OOnnzduJyF03sWGnZSHIV8zUEfPnuPKxqJrwltiXhcIwo4Ongh78L8h18fKRJUAQQe+uc3LAoh6khboVpdHtErQ60GbjMkWlQcKJ3Kw==',
+        ssh_key  => 'AAAAB3NzaC1yc2EAAAADAQABAAABAQCrA0k73U1FL1YO1Q03eIN6ZBpOxJt+nkOyoQFDsvyVX2ETUIrQozVxKtFhvK/p5d3EgwJvdbSmMNCa85UP0xZRqC4YD/nDg0ZiakscXAmA5i8fHDDROl+XAVUA9Bz4lTDNZ6Iz4dH/s3+DNikOi12CpvDPSIlr78+UHaBEpmsIGFkVPXQc38PF4QUKoPQqnom86OrJxv2Bo79RWge4hquuBEQ/iOCJTIXwRm4AZkrgyVgTRJJ1gCIQrLsFKaT9aFOZiC8KrM6hf2KW4X9gzDip9TmaHuGxPypRZe7agN5DsITU0jx4E3itn/Z8ZXP3Jg+Daruvbaotqgpc0U+sbXIr',
     }
 
     users::basic { 'loic':
