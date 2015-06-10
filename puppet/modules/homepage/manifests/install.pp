@@ -5,32 +5,6 @@ class homepage::install inherits homepage::params {
         ensure => installed
     }
 
-    # configuring SSL server certificate & key
-    $ssl_key = "/etc/nginx/certs/akvo.org.key"
-    $ssl_key_source = hiera('akvo_wildcard_key')
-    $ssl_crt = "/etc/nginx/certs/akvo.org.crt"
-    $ssl_cert_source = hiera('akvo_wildcard_cert')
-
-    file { $ssl_key:
-        ensure  => present,
-        content => $ssl_key_source,
-        owner   => 'root',
-        group   => 'root',
-        mode    => '0444',
-        require => Package['nginx'],
-        notify  => Service['nginx']
-    }
-
-    file { $ssl_crt:
-        ensure  => present,
-        content => $ssl_cert_source,
-        owner   => 'root',
-        group   => 'root',
-        mode    => '0444',
-        require => Package['nginx'],
-        notify  => Service['nginx']
-    }
-
     php::app { 'homepage':
         app_hostnames        => $homepage_hostnames,
         group                => 'www-edit',
