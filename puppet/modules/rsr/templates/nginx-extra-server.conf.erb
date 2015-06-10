@@ -7,4 +7,6 @@
     rewrite ^/(de|nl|ru)/(.*)$ /$2 redirect;
     rewrite ^/projects/all/(.*)$ /projects/$1 permanent;
     # https://github.com/akvo/akvo-rsr/issues/1308
-    rewrite ^/project/(.*)/update/$ /project/$1/add_update/ permanent;
+    rewrite ^/project/(.*)/update/?$ /project/$1/add_update/ permanent;
+    # https://github.com/akvo/akvo-provisioning/issues/174
+    rewrite ^/(en|fr|es)/project/(.*)/update/?$ /$1/project/$2/add_update/ permanent;
