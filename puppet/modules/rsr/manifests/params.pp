@@ -6,7 +6,9 @@ class rsr::params {
     # some shared config
     $username = 'rsr'
     $approot = '/var/akvo/rsr'
+    $database_name = 'rsr'
     $database_password = hiera('rsr_database_password')
+    $allow_createdb = hiera('rsr_allow_createdb', false)
     $base_domain = hiera('base_domain')
     $media_root = "${approot}/mediaroot/"
     $static_root = "${approot}/staticroot/"

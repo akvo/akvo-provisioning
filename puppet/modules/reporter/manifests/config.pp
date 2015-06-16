@@ -37,11 +37,12 @@ class reporter::config {
     }
 
     nginx::proxy { "reporting.${base_domain}":
-        proxy_url => "http://localhost:${qport}",
-        ssl             => true,
-        ssl_key_source  => hiera('akvo_wildcard_key'),
-        ssl_cert_source => hiera('akvo_wildcard_cert'),
-        htpasswd => false
+        proxy_url                 => "http://localhost:${qport}",
+        extra_nginx_proxy_config  => template('reporter/nginx-extra-proxy.conf.erb'),
+        ssl                       => true,
+        ssl_key_source            => hiera('akvo_wildcard_key'),
+        ssl_cert_source           => hiera('akvo_wildcard_cert'),
+        htpasswd                  => false
     }
 
 }

@@ -1,13 +1,11 @@
-class rsr::config {
-
-    include rsr::params
-    $approot = $rsr::params::approot
+class rsr::config inherits rsr::params {
 
     # create an RSR database on the database server
-    database::psql::db { 'rsr':
-        psql_name  => $rsr::params::postgres_name,
-        password   => $rsr::params::database_password,
-        reportable => true
+    database::psql::db { $database_name:
+        psql_name      => $postgres_name,
+        password       => $database_password,
+        reportable     => true,
+        allow_createdb => $allow_createdb
     }
 
     # we want a service address
@@ -17,11 +15,11 @@ class rsr::config {
 
     # nginx sits in front of RSR
     $base_domain = hiera('base_domain')
-    nginx::proxy { [$rsr::params::rsr_hostnames, "*.${base_domain}", "*.${rsr::params::partner_site_domain}", "_"]:
-        proxy_url                 => "http://localhost:${rsr::params::port}",
+    nginx::proxy { [$rsr_hostnames, "*.${base_domain}", "*.${partner_site_domain}", "_"]:
+        proxy_url                 => "http://localhost:${port}",
         static_dirs               => {
-            "/media/"  => $rsr::params::media_root,
-            "/static/" => $rsr::params::static_root
+            "/media/"  => $media_root,
+            "/static/" => $static_root
         },
         extra_nginx_server_config => template('rsr/nginx-extra-server.conf.erb'),
         access_log                => "${approot}/logs/rsr-nginx-access.log",
@@ -50,15 +48,10 @@ class rsr::config {
         $sentry_dsn = hiera('rsr_sentry_dsn')
     }
 
-    $smtp_user = $rsr::params::smtp_user
-    $smtp_password = $rsr::params::smtp_password
-
-    $main_domain = $rsr::params::main_domain
-    $partner_site_domain = $rsr::params::partner_site_domain
-    file { "${rsr::params::approot}/local_settings.conf":
+    file { "${approot}/local_settings.conf":
         ensure   => present,
-        owner    => $rsr::params::username,
-        group    => $rsr::params::username,
+        owner    => $username,
+        group    => $username,
         mode     => '0444',
         content  => template('rsr/local.conf.erb'),
         notify   => Class['supervisord::update']

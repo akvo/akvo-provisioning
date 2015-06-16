@@ -3,6 +3,11 @@ class opendata::install inherits opendata::params {
     include pythonsupport::standard
     include pythonsupport::psql
 
+    # do not install 'akvo' plugin into vagrant VMs,
+    # it's done by teamcity deployment scripts
+    if $::environment == "localdev" { $plugins = "datastore stats text_preview recline_preview datapusher" }
+    else { $plugins = "datastore stats text_preview recline_preview datapusher akvo" }
+
     class { '::ckan':
         site_url              => "http://${hostname}:${wsgi_port}",
         site_title            => 'Akvo Public Data',
@@ -11,7 +16,7 @@ class opendata::install inherits opendata::params {
         site_about            => 'Currently there are over 600,000 data points in Akvo FLOW that are marked as public (i.e. they do not contain sensitive individual or household information) and this number is growing rapidly. To make such data easily accessible, searchable and downloadable we have set up this data portal to house such data.',
         extra_public_paths    => '/usr/lib/ckan/default/src/akvo-opendata/ckanext-akvo/ckanext/akvo/public',
         site_logo             => '/images/logo.png',
-        plugins               => 'datastore stats text_preview recline_preview datapusher akvo',
+        plugins               => $plugins,
         app_instance_id       => hiera('ckan_app_instance_id'),
         beaker_secret         => hiera('ckan_beaker_secret'),
         is_ckan_from_repo     => 'false',

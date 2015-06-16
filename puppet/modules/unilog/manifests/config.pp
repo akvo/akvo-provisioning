@@ -12,10 +12,14 @@ class unilog::config inherits unilog::params {
 
     # nginx sits in front of unilog
     $base_domain = hiera('base_domain')
-    nginx::proxy { "unilog.${base_domain}":
-        proxy_url  => "http://localhost:${port}",
-        access_log => "${logdir}/unilog-nginx-access.log",
-        error_log  => "${logdir}/unilog-nginx-error.log",
+    nginx::proxy { $main_domain:
+        proxy_url       => "http://localhost:${appport}",
+        htpasswd        => false,
+        ssl             => true,
+        ssl_key_source  => hiera('akvo_wildcard_key'),
+        ssl_cert_source => hiera('akvo_wildcard_cert'),
+        access_log      => "${logdir}/unilog-nginx-access.log",
+        error_log       => "${logdir}/unilog-nginx-error.log",
     }
 
     # let the build server know how to log in to us
@@ -28,5 +32,10 @@ class unilog::config inherits unilog::params {
     $use_sentry = hiera('unilog_use_sentry', false)
     if $use_sentry {
         $sentry_dsn = hiera('unilog_sentry_dsn')
+    }
+
+    # no password - we need that setting for the deployment scripts
+    sudo::admin_user { $username:
+        nopassword => true
     }
 }

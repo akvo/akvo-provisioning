@@ -5,7 +5,7 @@ class unilog::params {
     $approot             = "/var/akvo/${appname}"
     $workdir             = "${approot}/code"
     $logdir              = "${approot}/logs"
-    $port                = '3030'
+    $appport             = '3030'
     $env_vars            = {
         'HOME' => $approot
     }
@@ -14,9 +14,13 @@ class unilog::params {
     $remote_api_password = hiera('unilog_remote_api_password')
 
     $flow_server_config  = "${approot}/akvo-flow-server-config"
-    $flow_data_schema    = "${approot}/akvo-core-services/flow-data-schema/schema/event.json"
+    $flow_data_schema    = "${approot}/resources/schema/event.json"
 
+    $base_domain         = hiera('base_domain')
+    $main_domain         = hiera('unilog_main_domain', "unilog.${base_domain}")
     $postgres_name       = hiera('psql_name')
+    $postgres_host       = "${postgres_name}.${base_domain}"
+    $postgres_port       = hiera('psql_port', '5432')
     $database_password   = hiera('unilog_database_password')
 
 }
