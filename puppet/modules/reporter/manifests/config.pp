@@ -13,6 +13,7 @@ class reporter::config {
     $approot = $reporter::approot
 
     sudo::admin_user { 'stellan': }
+    sudo::admin_user { 'gabriel': }
 
     file { "${approot}/populate_psql_db.sh":
         ensure  => present,
