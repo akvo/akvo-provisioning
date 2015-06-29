@@ -77,7 +77,7 @@ class puppetcontrol {
         ensure  => present,
         owner   => root,
         group   => root,
-        mode    => 555,
+        mode    => '0555',
         source  => 'puppet:///modules/puppetcontrol/update_system_config',
         require => File["/puppet/bin/apply.sh"],
     }

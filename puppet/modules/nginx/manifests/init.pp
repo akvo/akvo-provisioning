@@ -38,7 +38,7 @@ class nginx {
     file { '/etc/nginx/sites-enabled/server_status':
         ensure  => present,
         owner   => 'www-data',
-        mode    => 444,
+        mode    => '0444',
         source  => 'puppet:///modules/nginx/server_status',
         require => Package['nginx'],
     }
