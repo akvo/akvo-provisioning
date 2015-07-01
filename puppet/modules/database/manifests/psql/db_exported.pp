@@ -1,6 +1,6 @@
 
 define database::psql::db_exported( $password,
-                                    $owner,
+                                    $owner = 'postgres',
                                     $allow_createdb = false,
                                     $backup = true ) {
 
