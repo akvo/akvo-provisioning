@@ -26,14 +26,14 @@ class keycloak::install {
         ensure => present,
     }
 
-    file { '/usr/share/tomcat7/bin/setenv.sh':
-        require => [Package['tomcat7'],Package['openjdk-7-jdk']],
-        ensure  => present,
-        owner   => 'root',
-        group   => 'root',
-        mode    => '0755',
-        source  => 'puppet:///modules/reporter/setenv_tomcat.sh'
-    }
+#    file { '/usr/share/tomcat7/bin/setenv.sh':
+#        require => [Package['tomcat7'],Package['openjdk-7-jdk']],
+#        ensure  => present,
+#        owner   => 'root',
+#        group   => 'root',
+#        mode    => '0755',
+#        source  => 'puppet:///modules/reporter/setenv_tomcat.sh'
+#    }
 
 
 #700?

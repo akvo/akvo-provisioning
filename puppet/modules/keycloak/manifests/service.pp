@@ -1,9 +1,10 @@
 
 class keycloak::service {
 
-    supervisord::service { 'tomcat7':
-        user      => 'root',
-        command   => '/etc/init.d/tomcat7 start',
+    supervisord::service { 'keycloak':
+        user      => 'keycloak',
+        directory   => '/opt/keycloak/keycloak-1.3.1.Final/bin',
+        command   => '/opt/keycloak/keycloak-1.3.1.Final/bin/standalone.sh',
     }
 
 }
