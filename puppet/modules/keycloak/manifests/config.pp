@@ -38,7 +38,7 @@ class keycloak::config {
 
     nginx::proxy { "reporting.${base_domain}":
         proxy_url                 => "http://localhost:${qport}",
-        extra_nginx_proxy_config  => template('keycloak/nginx-extra-proxy.conf.erb'),
+#        extra_nginx_proxy_config  => template('keycloak/nginx-extra-proxy.conf.erb'),
         ssl                       => true,
         ssl_key_source            => hiera('akvo_wildcard_key'),
         ssl_cert_source           => hiera('akvo_wildcard_cert'),
