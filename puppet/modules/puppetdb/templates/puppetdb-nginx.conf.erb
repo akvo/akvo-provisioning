@@ -16,6 +16,8 @@ server {
     ssl_session_timeout        10m;
     ssl_verify_client          on;
 
+    client_max_body_size       2m;
+
     location / {
 
         proxy_pass   http://localhost:8100;
