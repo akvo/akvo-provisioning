@@ -61,7 +61,7 @@ class keycloak::install {
         cwd     => "${approot}",
         creates => "${approot}/.installed",
         require => [File["${approot}/install_keycloak.sh"],
-                    ['postgresql-client']]
+                    Package['postgresql-client']]
     }
 
 
