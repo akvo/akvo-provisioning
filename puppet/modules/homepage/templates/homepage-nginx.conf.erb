@@ -24,6 +24,9 @@ server {
     rewrite ^/help/flow-help$ /help/help-support/flow-help/ redirect;
     rewrite ^/help/akvopedia-help$ /help/help-support/akvopedia-help/ redirect;
 
+    # https://github.com/akvo/akvo-provisioning/issues/192
+    rewrite ^/about-us/foundations /about-us/organisations permanent;
+
     # Logging:
     access_log /var/akvo/homepage/logs/nginx-access.log;
     error_log /var/akvo/homepage/logs/nginx-error.log;
