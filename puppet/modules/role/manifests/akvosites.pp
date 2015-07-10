@@ -7,7 +7,7 @@ class role::akvosites {
     include users::kominski
     user { 'rumesh':
         ensure   => present,
-        group    => 'www-edit',
+        groups   => 'www-edit',
         password => '$1$MEjCXiSx$CCc975HaVX3WDazb8Jd76.'
     }
 }
