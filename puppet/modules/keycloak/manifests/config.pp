@@ -14,14 +14,12 @@ class keycloak::config {
 
     sudo::admin_user { 'stellan': }
 
-    file { "${approot}/keycloak-1.3.1.Final/standalone/config/standalone.xml":
+    file { "${approot}/keycloak-1.3.1.Final/standalone/configuration/standalone.xml":
         ensure  => present,
         owner   => 'keycloak',
         group   => 'keycloak',
         mode    => '0755',
-        source  => 'puppet:///modules/keycloak/standalone.xml',
-#        content  => template('keycloak/standalone.xml'),
-        require => File[$approot]
+        source  => 'puppet:///modules/keycloak/standalone.xml'
     }
 
 
