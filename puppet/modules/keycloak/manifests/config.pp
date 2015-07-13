@@ -14,14 +14,14 @@ class keycloak::config {
 
     sudo::admin_user { 'stellan': }
 
-#    file { "${approot}/populate_psql_db.sh":
-#        ensure  => present,
-#        owner   => 'keycloak',
-#        group   => 'keycloak',
-#        mode    => '0755',
-#        content  => template('keycloak/populate_psql_db.sh.erb'),
-#        require => File[$approot]
-#    }
+    file { "${approot}/keycloak-1.3.1.Final/standalone/config/standalone.xml":
+        ensure  => present,
+        owner   => 'keycloak',
+        group   => 'keycloak',
+        mode    => '0755',
+        content  => template('keycloak/standalone.xml'),
+        require => File[$approot]
+    }
 
 
 #    exec { "${approot}/populate_psql_db.sh":
