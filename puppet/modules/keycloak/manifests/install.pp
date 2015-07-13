@@ -57,7 +57,7 @@ class keycloak::install {
 
 
     exec { "${approot}/install_keycloak.sh":
-        user    => 'root',
+        user    => 'keycloak',
         cwd     => "${approot}",
         creates => "${approot}/.installed",
         require => [File["${approot}/install_keycloak.sh"],
