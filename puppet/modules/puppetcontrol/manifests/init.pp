@@ -130,7 +130,7 @@ class puppetcontrol {
     file { '/etc/puppet/puppetdb.conf':
         ensure  => present,
         owner   => 'root',
-        mode    => '444',
+        mode    => '0444',
         content => template('puppetcontrol/puppetdb.conf.erb'),
     }
 

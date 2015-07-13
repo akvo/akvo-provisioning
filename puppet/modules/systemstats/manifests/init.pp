@@ -14,7 +14,7 @@ class systemstats {
     file { ['/var/stats', '/var/stats/bin/']:
         ensure  => directory,
         owner   => 'stats',
-        mode    => '755',
+        mode    => '0755',
         require => User['stats'],
     }
 

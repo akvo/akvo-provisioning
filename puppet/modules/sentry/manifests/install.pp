@@ -18,14 +18,14 @@ class sentry::install {
         ensure  => directory,
         owner   => 'sentry',
         group   => 'sentry',
-        mode    => 0700,
+        mode    => '0700',
         require => User['sentry']
     }
     
     file { '/opt/sentry/install.sh':
         ensure  => present,
         owner   => 'sentry',
-        mode    => 500,
+        mode    => '0500',
         source  => 'puppet:///modules/sentry/install_sentry.sh',
         require => File['/opt/sentry'],
     }
