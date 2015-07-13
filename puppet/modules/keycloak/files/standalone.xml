@@ -348,7 +348,7 @@
             <server name="default-server">
                 <!-- Use nginx proxy-->      
                 <!-- Make keycloak the root context-->      
-                <http-listener name="default" socket-binding="http" proxy-adddress-forwarding="true" redirect-socket="proxy-https" default-web-module="keycloak-server-1.3.1.Final.war"/>
+                <http-listener name="default" socket-binding="http" proxy-address-forwarding="true" redirect-socket="proxy-https" default-web-module="keycloak-server-1.3.1.Final.war"/>
                 <host name="default-host" alias="localhost">
                     <location name="/" handler="welcome-content"/>
                     <filter-ref name="server-header"/>
