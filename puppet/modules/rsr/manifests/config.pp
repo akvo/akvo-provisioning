@@ -57,4 +57,8 @@ class rsr::config inherits rsr::params {
         notify   => Class['supervisord::update']
     }
 
+    sudo::allow_as_user { 'devs_can_rsr':
+        group => 'developer',
+        as_user => 'rsr'
+    }
 }
