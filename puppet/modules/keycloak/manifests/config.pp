@@ -8,7 +8,7 @@ class keycloak::config {
     $db_password = $keycloak::db_password
 
     $base_domain = hiera('base_domain')
-    $url_prefix = "http://keycloak.${base_domain}"
+#    $url_prefix = "http://keycloak.${base_domain}"
 
     $approot = $keycloak::approot
 
@@ -19,7 +19,8 @@ class keycloak::config {
         owner   => 'keycloak',
         group   => 'keycloak',
         mode    => '0755',
-        content  => template('keycloak/standalone.xml'),
+        source  => 'puppet:///modules/keycloak/standalone.xml',
+#        content  => template('keycloak/standalone.xml'),
         require => File[$approot]
     }
 
