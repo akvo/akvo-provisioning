@@ -19,7 +19,7 @@ class teamcity::install {
         ensure  => present,
         owner   => 'teamcity',
         group   => 'teamcity',
-        mode    => '700',
+        mode    => '0700',
         content => template('teamcity/install.sh.erb'),
         require => File['/opt/teamcity'],
     }
