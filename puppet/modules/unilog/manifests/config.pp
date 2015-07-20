@@ -5,6 +5,17 @@ class unilog::config inherits unilog::params {
         password   => $database_password
     }
 
+    # only allow connections from specified clients
+    # doesn't apply to localdev environments
+    if $::environment != "localdev" {
+        $firewall_defaults = {
+            proto => 'tcp',
+            action => 'accept',
+            port => $postgres_port
+        }
+        create_resources(firewall, $postgres_clients, $firewall_defaults)
+    }
+
     # we want a service address
     named::service_location { $appname:
         ip => hiera('external_ip')
