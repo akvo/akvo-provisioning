@@ -5,7 +5,7 @@ set -e
 RELEASE=keycloak-1.3.1.Final
 RELEASEFILE=${RELEASE}.tar.gz
 
-wget --no-clobber http://files.support.akvo-ops.org/keycloak/$RELEASE
+wget --no-clobber http://files.support.akvo-ops.org/keycloak/$RELEASEFILE
 
 #unpack release zipfile, creating the app tree
 gunzip -c $RELEASEFILE | tar xvf - 
