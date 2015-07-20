@@ -8,12 +8,12 @@ class keycloak::config {
     $db_password = $keycloak::db_password
 
     $base_domain = hiera('base_domain')
-    $approot = $keycloak::approot
+    $appdir = $keycloak::appdir
 
     sudo::admin_user { 'stellan': }
 
     #Drop in a new config file that uses psql db and nginx proxy
-    file { "${approot}/keycloak-1.3.1.Final/standalone/configuration/standalone.xml":
+    file { "${appdir}/standalone/configuration/standalone.xml":
         ensure  => present,
         owner   => 'keycloak',
         group   => 'keycloak',
