@@ -3,7 +3,6 @@ class keycloak::install {
 
     $approot = $keycloak::approot
     $appdir = $keycloak::appdir
-    $tomcatconf = $keycloak::tomcatconf
     $db_name = $keycloak::db_name
     $db_host = $keycloak::db_host
     $db_username = $keycloak::db_username
@@ -57,7 +56,7 @@ class keycloak::install {
     }
 
     #postgres driver module file
-    file { '${appdir}/modules/system/layers/base/org/postgresql/jdbc/main/module.xml':
+    file { "${appdir}/modules/system/layers/base/org/postgresql/jdbc/main/module.xml":
         require => Exec["${approot}/install_keycloak.sh"],
         ensure  => present,
         owner   => 'keycloak',
