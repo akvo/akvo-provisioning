@@ -2,6 +2,7 @@
 class keycloak::install {
 
     $approot = $keycloak::approot
+    $appdir = $keycloak::appdir
     $tomcatconf = $keycloak::tomcatconf
     $db_name = $keycloak::db_name
     $db_host = $keycloak::db_host
@@ -25,15 +26,6 @@ class keycloak::install {
     group { 'keycloak':
         ensure => present,
     }
-
-#    file { '/usr/share/tomcat7/bin/setenv.sh':
-#        require => [Package['tomcat7'],Package['openjdk-7-jdk']],
-#        ensure  => present,
-#        owner   => 'root',
-#        group   => 'root',
-#        mode    => '0755',
-#        source  => 'puppet:///modules/reporter/setenv_tomcat.sh'
-#    }
 
 
 #700?
@@ -64,15 +56,15 @@ class keycloak::install {
                     Package['postgresql-client']]
     }
 
-
-#    file { "${approot}/WEB-INF/classes/persistence.properties":
-#        ensure  => present,
-#        owner   => 'keycloak',
-#        group   => 'keycloak',
-#        mode    => '0600',
-#        content  => template('reporter/persistence.properties.erb'),
-#        require => [File[$approot], Exec["${approot}/install_reportserver.sh"]]
-#    }
+    #postgres driver module file
+    file { '${appdir}/modules/system/layers/base/org/postgresql/jdbc/main/module.xml':
+        require => Exec["${approot}/install_keycloak.sh"],
+        ensure  => present,
+        owner   => 'keycloak',
+        group   => 'keycloak',
+        mode    => '0755',
+        source  => 'puppet:///modules/keycloak/module.xml'
+    }
 
 
     database::psql::db { $db_name:

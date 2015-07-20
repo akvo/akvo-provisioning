@@ -3,14 +3,12 @@ reporter
 
 Sets up a Keycloak server with PostgreSQL database
 
+Note - the configuration is only set up for a single instance. If you want to run a cluster, more work is needed, esp in standalone-ha.xml
+
 
 ## Prerequisites
-The Reportserver distribution archive must be available at http://files.support.akvo-ops.org/keycloak/ 
+The Keycloak 1.3.1.Final distribution archive must be available at http://files.support.akvo-ops.org/keycloak/ 
 
-## Bootstrapping
- Several packages require libssl, which needs a postinstall reboot, so the server will probably need to be rebooted before working properly.
-You will see a *** System restart required *** message when logging into the server. Believe it.
-
-
+##
 
 ## Todo

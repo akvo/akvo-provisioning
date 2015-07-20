@@ -154,6 +154,25 @@
                         <password>sa</password>
                     </security>
                 </datasource>
+		<datasource jndi-name="java:jboss/datasources/KeycloakDS" enabled="true" use-java-context="true" pool-name="KeycloakDS" use-ccm="true">
+		    <connection-url>jdbc:postgresql://<%= @db_host %>/<%= @db_name %></connection-url>
+		    <driver>postgresql</driver>
+		    <security>
+		      <user-name><%= @db_username %></user-name>
+		      <password><%= @db_password %></password>
+		    </security>
+		    <validation>
+			<check-valid-connection-sql>SELECT 1</check-valid-connection-sql>
+			<background-validation>true</background-validation>
+			<background-validation-millis>60000</background-validation-millis>
+		    </validation>
+		    <pool>
+			<flush-strategy>IdleConnections</flush-strategy>
+		    </pool>
+		</datasource>
+                <driver name="postgresql" module="org.postgresql.jdbc">
+                    <xa-datasource-class>org.postgresql.xa.PGXADataSource</xa-datasource-class>
+                </driver>
                 <drivers>
                     <driver name="h2" module="com.h2database.h2">
                         <xa-datasource-class>org.h2.jdbcx.JdbcDataSource</xa-datasource-class>

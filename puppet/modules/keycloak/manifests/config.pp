@@ -8,28 +8,18 @@ class keycloak::config {
     $db_password = $keycloak::db_password
 
     $base_domain = hiera('base_domain')
-#    $url_prefix = "http://keycloak.${base_domain}"
-
     $approot = $keycloak::approot
 
     sudo::admin_user { 'stellan': }
 
+    #Drop in a new config file that uses psql db and nginx proxy
     file { "${approot}/keycloak-1.3.1.Final/standalone/configuration/standalone.xml":
         ensure  => present,
         owner   => 'keycloak',
         group   => 'keycloak',
         mode    => '0755',
-        source  => 'puppet:///modules/keycloak/standalone.xml'
+        content  => template('keycloak/standalone.xml.erb')
     }
-
-
-#    exec { "${approot}/populate_psql_db.sh":
-#        user    => 'root',
-#        cwd     => "${approot}",
-#        creates => "${approot}/.db_created",
-#        require => File["${approot}/populate_psql_db.sh"]
-#    }
-
 
     named::service_location { 'login':
         ip => hiera('external_ip')

@@ -8,7 +8,9 @@ class keycloak::params {
     $db_name = 'keycloak'
     $db_password = hiera('keycloak_database_password')
 
+    $kc_release = 'keycloak-1.3.1.Final'
     $approot = '/opt/keycloak'
+    $appdir = "${approot}/${kc_release}"
 
     $port = '8080'
 }
