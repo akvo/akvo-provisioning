@@ -5,8 +5,8 @@ class keycloak::service {
 
     supervisord::service { 'keycloak':
         user      => 'keycloak',
-        directory   => '${appdir}/bin',
-        command   => '${appdir}/bin/standalone.sh',
+        directory   => "${appdir}/bin",
+        command   => "${appdir}/bin/standalone.sh",
     }
 
 }
