@@ -89,8 +89,8 @@ class akvosites {
         ensure  => present,
         user    => 'akvosites',
         weekday => '*',
-        hour    => '*/3',
-        minute  => '5',
+        hour    => '6',
+        minute  => '0',
         command => "${app_path}/scripts/update_akvo_sites_data.sh",
         require => File["${app_path}/scripts/update_akvo_sites_data.sh"]
     }

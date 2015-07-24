@@ -2,23 +2,35 @@
 
 mkdir -p <%= @app_path %>/logs/cron/
 
-RUN_PROJ_UPDATES_SCRIPT="http://<%= @default_domain %>/wp-content/plugins/akvo-partner-communication/CronController.php?id_organisation"
+RUN_PROJ_UPDATES_SCRIPT="/wp-content/plugins/akvo-temp-display-map/CronController.php?id_organisation"
+RUN_PROJ_UPDATES_SCRIPT_RAIN4FOOD="http://www.rain4food.net/wp-content/plugins/akvo-temp-display-map/CronControllerKeyword.php?keyword=rain4food"
 LOG_TIME_STAMP=`date +%Y%m%d_%H%M%S`
 LOG_FILE_NAME="proj_updates_log_$LOG_TIME_STAMP.html"
 LOG_FILE="<%= @app_path %>/logs/cron/$LOG_FILE_NAME"
 LOG_FILE_URL="http://<%= @default_domain %>/logs/cron/$LOG_FILE_NAME"
+INTERVAL="5m"
 
 EXIT=0
 
-for organisation_id in 272 275 539 815 912 1060 1061 1093 1151 2121 2151
+URLS=([272]=connect4change.nl [275]=www.washalliance.nl [539]=marsfarmersfirst.com [912]=srhralliance.org [1060]=footballforwater.nl [1061]=wash-liberia.org [1151]=www.wandelenvoorwater.nl [2121]=gnwp.nl [2151]=www.walkingforwater.eu)
+
+for organisation_id in 272 275 539 912 1060 1061 1151 2121 2151
 do
     echo "Updating organisation $organisation_id"
     printf "<br />[`date --rfc-3339=seconds`]<br />" >> $LOG_FILE
-    curl $RUN_PROJ_UPDATES_SCRIPT=$organisation_id 2>&1 >> $LOG_FILE
+    curl http://${URLS[$organisation_id]}$RUN_PROJ_UPDATES_SCRIPT=$organisation_id 2>&1 >> $LOG_FILE
     EXIT=$(($EXIT + $?))
 
     printf "<br />" >> $LOG_FILE
+    sleep $INTERVAL
 done
+
+# RAIN4FOOD special case
+echo "Updating organisation rain4food"
+printf "<br />[`date --rfc-3339=seconds`]<br />" >> $LOG_FILE
+curl $RUN_PROJ_UPDATES_SCRIPT_RAIN4FOOD 2>&1 >> $LOG_FILE
+EXIT=$(($EXIT + $?))
+printf "<br />" >> $LOG_FILE
 
 if [ $EXIT -eq 0 ]
 then
