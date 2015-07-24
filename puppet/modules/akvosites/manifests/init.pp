@@ -57,25 +57,6 @@ class akvosites {
         require => File[$app_path]
     }
 
-    file { "${app_path}/scripts/sync_sites_updates.sh":
-        ensure  => present,
-        owner   => 'akvosites',
-        group   => 'akvosites',
-        mode    => '0544',
-        content => template('akvosites/sync_sites_updates.sh.erb'),
-        require => File["${app_path}/scripts"]
-    }
-
-    cron { 'sync_sites_updates':
-        ensure  => present,
-        user    => 'akvosites',
-        weekday => '*',
-        hour    => '*/6',
-        minute  => '15',
-        command => "${app_path}/scripts/sync_sites_updates.sh",
-        require => File["${app_path}/scripts/sync_sites_updates.sh"]
-    }
-
     file { "${app_path}/scripts/update_akvo_sites_data.sh":
         ensure  => present,
         owner   => 'akvosites',
