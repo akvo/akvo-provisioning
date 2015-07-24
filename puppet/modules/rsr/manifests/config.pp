@@ -9,7 +9,7 @@ class rsr::config inherits rsr::params {
     }
 
     # we want a service address
-    named::service_location { ["rsr", "*"]:
+    named::service_location { "rsr":
         ip => hiera('external_ip')
     }
 
