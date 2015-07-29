@@ -23,4 +23,9 @@ class unilog::params {
     $postgres_port       = hiera('psql_port', '5432')
     $database_password   = hiera('unilog_database_password')
 
+    $use_sentry = hiera('unilog_use_sentry', false)
+    if $use_sentry {
+        $sentry_dsn = hiera('unilog_sentry_dsn')
+    }
+
 }

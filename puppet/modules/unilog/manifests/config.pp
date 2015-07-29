@@ -29,11 +29,6 @@ class unilog::config inherits unilog::params {
         key         => hiera('unilog-deploy_private_key'),
     }
 
-    $use_sentry = hiera('unilog_use_sentry', false)
-    if $use_sentry {
-        $sentry_dsn = hiera('unilog_sentry_dsn')
-    }
-
     # no password - we need that setting for the deployment scripts
     sudo::admin_user { $username:
         nopassword => true
