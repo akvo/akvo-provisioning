@@ -14,7 +14,7 @@ class unilog::params {
     $remote_api_password = hiera('unilog_remote_api_password')
 
     $flow_server_config  = "${approot}/akvo-flow-server-config"
-    $flow_data_schema    = "${approot}/resources/schema/event.json"
+    $flow_data_schema    = "${workdir}/resources/schema/event.json"
 
     $base_domain         = hiera('base_domain')
     $main_domain         = hiera('unilog_main_domain', "unilog.${base_domain}")
@@ -23,5 +23,10 @@ class unilog::params {
     $postgres_port       = hiera('psql_port', '5432')
     $postgres_clients    = hiera_hash('unilog_psql_clients')
     $database_password   = hiera('unilog_database_password')
+
+    $use_sentry = hiera('unilog_use_sentry', false)
+    if $use_sentry {
+        $sentry_dsn = hiera('unilog_sentry_dsn')
+    }
 
 }

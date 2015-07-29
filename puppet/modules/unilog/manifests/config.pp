@@ -28,7 +28,7 @@ class unilog::config inherits unilog::params {
         htpasswd        => false,
         ssl             => true,
         ssl_key_source  => hiera('akvo_wildcard_key'),
-        ssl_cert_source => hiera('akvo_wildcard_cert'),
+        ssl_cert_source => hiera('akvo_wildcard_cert_complete'),
         access_log      => "${logdir}/unilog-nginx-access.log",
         error_log       => "${logdir}/unilog-nginx-error.log",
     }
@@ -38,11 +38,6 @@ class unilog::config inherits unilog::params {
         service     => 'unilog',
         environment => $::environment,
         key         => hiera('unilog-deploy_private_key'),
-    }
-
-    $use_sentry = hiera('unilog_use_sentry', false)
-    if $use_sentry {
-        $sentry_dsn = hiera('unilog_sentry_dsn')
     }
 
     # no password - we need that setting for the deployment scripts
