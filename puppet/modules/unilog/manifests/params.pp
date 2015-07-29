@@ -14,7 +14,7 @@ class unilog::params {
     $remote_api_password = hiera('unilog_remote_api_password')
 
     $flow_server_config  = "${approot}/akvo-flow-server-config"
-    $flow_data_schema    = "${approot}/resources/schema/event.json"
+    $flow_data_schema    = "${workdir}/resources/schema/event.json"
 
     $base_domain         = hiera('base_domain')
     $main_domain         = hiera('unilog_main_domain', "unilog.${base_domain}")
