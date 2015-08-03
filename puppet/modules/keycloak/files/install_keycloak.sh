@@ -20,4 +20,4 @@ curl -O http://central.maven.org/maven2/org/postgresql/postgresql/9.3-1102-jdbc3
 
 
 #if we make it this far, we succeeded, so prevent another run
-touch .installed
+touch /opt/keycloak/.installed

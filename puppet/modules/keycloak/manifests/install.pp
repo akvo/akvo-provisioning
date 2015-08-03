@@ -56,14 +56,14 @@ class keycloak::install {
     }
 
     #postgres driver module file
-#    file { "${appdir}/modules/system/layers/base/org/postgresql/jdbc/main/module.xml":
- #       require => Exec["${approot}/install_keycloak.sh"],
- #       ensure  => present,
- #       owner   => 'keycloak',
- #       group   => 'keycloak',
- #       mode    => '0755',
- #       source  => 'puppet:///modules/keycloak/module.xml'
- #   }
+    file { "${appdir}/modules/system/layers/base/org/postgresql/jdbc/main/module.xml":
+        require => Exec["${approot}/install_keycloak.sh"],
+        ensure  => present,
+        owner   => 'keycloak',
+        group   => 'keycloak',
+        mode    => '0755',
+        source  => 'puppet:///modules/keycloak/module.xml'
+    }
 
 
     database::psql::db { $db_name:
