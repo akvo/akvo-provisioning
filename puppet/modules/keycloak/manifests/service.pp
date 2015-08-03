@@ -7,6 +7,7 @@ class keycloak::service {
         user      => 'keycloak',
         directory   => "${appdir}/bin",
         command   => "${appdir}/bin/standalone.sh",
+        stopsignal =>  'KILL'
     }
 
 }
