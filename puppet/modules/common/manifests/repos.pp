@@ -2,7 +2,9 @@
 class common::repos {
 
   # this is required to get other apt resources to function
-  class { 'apt': }
+  if !defined(Class['apt']) {
+    class { 'apt': }
+  }
 
   # add extra repos
   $repos = [
