@@ -124,3 +124,7 @@ if ( !defined('ABSPATH') )
 define( 'SUNRISE', 'on' );
 /** Sets up WordPress vars and included files. */
 require_once(ABSPATH . 'wp-settings.php');
+
+<% if @wp_auto_update_core %>
+define( 'WP_AUTO_UPDATE_CORE', minor );
+<% end %>

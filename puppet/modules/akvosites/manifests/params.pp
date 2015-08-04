@@ -14,4 +14,6 @@ class akvosites::params {
     $db_host = "${mysql_name}.${base_domain}"
     $db_table_prefix = hiera('akvosites_db_table_prefix', 'wi1_')
 
+    $wp_auto_update_core = hiera('wp_auto_update_core', false)
+
 }
