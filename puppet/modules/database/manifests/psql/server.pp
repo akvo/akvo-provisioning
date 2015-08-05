@@ -17,8 +17,10 @@ class database::psql::server {
         location   => 'http://apt.postgresql.org/pub/repos/apt/',
         release    => "${::lsbdistcodename}-pgdg",
         repos      => 'main',
-        key        => 'ACCC4CF8',
-        key_source => 'http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc',
+        key        => {
+            id     => 'B97B0AFCAA1A47F044F244A07FCC7D46ACCC4CF8',
+            source => 'http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc'
+        }
     } ->
     # set PostgreSQL global parameters
     class {'postgresql::globals':
