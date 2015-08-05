@@ -1,0 +1,22 @@
+{
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "jboss/keycloak",
+      "network": "BRIDGE",
+      "portMappings": [
+        {"containerPort": 8081, "hostPort": 0, "servicePort": 9001, "protocol": "tcp"}
+      ]
+    }
+  },
+  "id": "keycloak2",
+  "instances": 1,
+  "cpus": 0.5,
+  "mem": 475,
+  "uris": [],
+  "env": {
+    "SERVICE_NAME":"keycloak2",
+    "SERVICE_TAGS":"test"
+  },
+  "constraints": [["environment", "CLUSTER", "test"]]
+}

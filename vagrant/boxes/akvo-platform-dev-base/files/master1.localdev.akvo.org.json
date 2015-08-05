@@ -1,0 +1,8 @@
+{
+    "roles": [
+        "puppetdb",
+        "management",
+        "akvoplatform"
+    ],
+    "akvoplatform_role": "master"
+}

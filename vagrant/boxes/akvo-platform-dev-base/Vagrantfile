@@ -1,0 +1,38 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# minimum Vagrant version and Vagrant API version
+Vagrant.require_version ">= 1.6.0"
+VAGRANTFILE_API_VERSION = "2"
+
+require 'yaml'
+require './lib/parse_cluster_config'
+
+# read & parse YAML file with cluster details
+base_dir = File.expand_path(File.dirname(__FILE__))
+yaml_conf = YAML.load_file(File.join(base_dir, "cluster.yml"))
+nodes_config = parse_cluster_config(yaml_conf)
+
+# create vagrant boxes based on cluster configuration
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+    config.ssh.forward_agent = true
+
+    config.vm.box = "ubuntu/trusty64"
+    config.vm.synced_folder "../../../control/", "/vagrant/bootstrap/"
+    config.vm.synced_folder "../../../", "/puppet/checkout"
+
+
+    [nodes_config[:master], nodes_config[:slave]].flatten.each_with_index do |node, i|
+        config.vm.define node[:name] do |box|
+            box.vm.network :private_network, :ip => node[:ip]
+            box.vm.hostname = node[:hostname]
+            box.vm.provision :shell do |s|
+                s.path = "../../../control/bootstrap_vagrant.sh"
+                s.args = "/vagrant/files/localdev_akvoplatform.json"
+            end
+            config.vm.provider :virtualbox do |vb|
+                vb.customize ["modifyvm", :id, "--memory", node[:mem], "--cpus", node[:cpus]]
+            end
+        end
+    end
+end
