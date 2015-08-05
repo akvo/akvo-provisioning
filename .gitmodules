@@ -34,3 +34,27 @@
 [submodule "puppet/ext/ckan"]
 	path = puppet/ext/ckan
 	url = https://github.com/orifito/ckan-puppet.git
+[submodule "puppet/ext/docker"]
+	path = puppet/ext/docker
+	url = https://github.com/garethr/garethr-docker
+[submodule "puppet/ext/mesos"]
+	path = puppet/ext/mesos
+	url = https://github.com/deric/puppet-mesos
+[submodule "puppet/ext/consul"]
+	path = puppet/ext/consul
+	url = https://github.com/solarkennedy/puppet-consul
+[submodule "puppet/ext/zookeeper"]
+	path = puppet/ext/zookeeper
+	url = https://github.com/deric/puppet-zookeeper
+[submodule "puppet/ext/staging"]
+	path = puppet/ext/staging
+	url = https://github.com/puppet-community/puppet-staging
+[submodule "puppet/ext/datacat"]
+	path = puppet/ext/datacat
+	url = https://github.com/richardc/puppet-datacat
+[submodule "puppet/ext/marathon"]
+	path = puppet/ext/marathon
+	url = https://github.com/meltwater/puppet-marathon
+[submodule "puppet/ext/consul_template"]
+	path = puppet/ext/consul_template
+	url = https://github.com/gdhbashton/puppet-consul_template
