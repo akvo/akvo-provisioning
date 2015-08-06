@@ -1,23 +1,36 @@
 #!/bin/bash
 set -e
 
-#fetch release archive (too big for GitHub)
-RELEASE=keycloak-1.3.1.Final
-RELEASEFILE=${RELEASE}.tar.gz
+# Variables
+# --------------------------------------------------------------------
 
-wget --no-clobber http://files.support.akvo-ops.org/keycloak/$RELEASEFILE
+KC_DIR="/opt/keycloak"
+KC_RELEASE="1.4.0.Final"
+KC_FILE="keycloak-${KC_RELEASE}.tar.gz"
+KC_FILE_URL="http://downloads.jboss.org/keycloak/${KC_RELEASE}/${KC_FILE}"
 
-#unpack release zipfile, creating the app tree
-gunzip -c $RELEASEFILE | tar xvf - 
-
-#save some disk space
-rm $RELEASEFILE
-
-#get the postgresql driver
-mkdir -p /opt/keycloak/${RELEASE}/modules/system/layers/base/org/postgresql/jdbc/main
-cd /opt/keycloak/${RELEASE}/modules/system/layers/base/org/postgresql/jdbc/main
-curl -O http://central.maven.org/maven2/org/postgresql/postgresql/9.3-1102-jdbc3/postgresql-9.3-1102-jdbc3.jar
+PSQL_DIR="${KC_DIR}/${KC_RELEASE}/modules/system/layers/base/org/postgresql/jdbc/main"
+PSQL_RELEASE="9.3-1103-jdbc3"
+PSQL_FILE_URL="http://central.maven.org/maven2/org/postgresql/postgresql/${PSQL_RELEASE}/${PSQL_RELEASE}.jar"
 
 
-#if we make it this far, we succeeded, so prevent another run
-touch /opt/keycloak/.installed
+# Keycloak
+# --------------------------------------------------------------------
+
+wget "${KC_FILE_URL}"
+gunzip -c "${KC_FILE}" | tar xf -
+rm "${KC_FILE}"
+
+
+# JDBC3 PostgreSQL driver
+# --------------------------------------------------------------------
+
+mkdir -p "${PSQL_DIR}"
+cd "${PSQL_DIR}"
+wget "${PSQL_FILE_URL}"
+
+
+# If we get this far, we have succeeded, so prevent another run
+# --------------------------------------------------------------------
+
+touch "$KC_DIR/.installed"
