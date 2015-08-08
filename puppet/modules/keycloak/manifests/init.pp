@@ -1,4 +1,3 @@
-
 class keycloak inherits keycloak::params {
 
     class { 'keycloak::install': } ->

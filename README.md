@@ -48,7 +48,7 @@ Running a Development Environment
 
 Local development environments, built using [Vagrant](http://vagrantup.com), are stored in this repository also, in `vagrant/localdev/*`. For specific instructions for each environment, see the README either in the subdirectory in this repository, or in the repostiory of the relevant project.
 
-To run the local puppet test environment, simply `cd` into `vagrant/localdev/puppet` and run `vagrant up` and similar.
+To run the local puppet test environment, simply `cd` into `vagrant/boxes/puppet` and run `vagrant up` and similar.
 
 For other test environments, this repository is included as a submodule.
 
@@ -56,13 +56,13 @@ For other test environments, this repository is included as a submodule.
 Manipulating an Environment
 ---
 
-Manipulation of environments - such as updating puppet config, changing roles for machines etc, is done through [fabric](http://fabfile.org). The fabfile is located at `environments/fabfile.py`.
+Manipulation of environments - such as updating puppet config, changing roles for machines etc, is done through [fabric](http://fabfile.org). The fabfile is located at `control/fabfile.py`.
 
 You must first specify an environment before any commands. You can either pass in the name of an environment such as 'opstest', or point it to a custom `JSON` environment configuration file (see below for the definition of these files):
 
 ```
 fab on_environment:opstest bootstrap
-``` 
+
 ```
 fab on_environment:/path/to/my/env.json update_config
 ```
@@ -116,7 +116,7 @@ Example configuration, from `carltest.json`:
 
 ### Required Fields
 
-###### `name`: 
+###### `name`:
 
 The name of the environment. Mostly for monitoring and reporting.
 
@@ -126,7 +126,7 @@ An environment is expected to run entirely as subdomain of some other domain, fo
 
 ###### `nodes`:
 
-A map of hostname to configuration for that node. Currently the only important configuration is the list of roles that the node will have (see above). You can also optionally specify an `order` parameter, to force a specific execution order for fabric to run through each node. Adding a `nodename` value will cause the hostname of the machine to be set to `<nodename>.<base_domain>`. 
+A map of hostname to configuration for that node. Currently the only important configuration is the list of roles that the node will have (see above). You can also optionally specify an `order` parameter, to force a specific execution order for fabric to run through each node. Adding a `nodename` value will cause the hostname of the machine to be set to `<nodename>.<base_domain>`.
 
 ### Optional Fields
 

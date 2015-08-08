@@ -1,4 +1,3 @@
-
 class keycloak::install {
 
     $approot = $keycloak::approot
@@ -70,7 +69,5 @@ class keycloak::install {
         psql_name => $keycloak::psql_name,
         password  => $db_password
     }
-
-
 
 }

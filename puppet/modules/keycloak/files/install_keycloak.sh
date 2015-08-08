@@ -11,7 +11,8 @@ KC_FILE_URL="http://downloads.jboss.org/keycloak/${KC_RELEASE}/${KC_FILE}"
 
 PSQL_DIR="${KC_DIR}/${KC_RELEASE}/modules/system/layers/base/org/postgresql/jdbc/main"
 PSQL_RELEASE="9.3-1103-jdbc3"
-PSQL_FILE_URL="http://central.maven.org/maven2/org/postgresql/postgresql/${PSQL_RELEASE}/${PSQL_RELEASE}.jar"
+PSQL_FILE="{PSQL_RELEASE}.jar"
+PSQL_FILE_URL="http://central.maven.org/maven2/org/postgresql/postgresql/${PSQL_RELEASE}/${PSQL_FILE}"
 
 
 # Keycloak

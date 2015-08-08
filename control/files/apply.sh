@@ -1,5 +1,5 @@
 #!/bin/bash
-if [ `whoami` != "root" ]
+if [ "$(whoami)" != "root" ]
 then
     echo >&2 "This script must be run as root"
     exit 1

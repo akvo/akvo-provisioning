@@ -1,4 +1,3 @@
-
 class keycloak::config {
 
     $qport = $keycloak::port
