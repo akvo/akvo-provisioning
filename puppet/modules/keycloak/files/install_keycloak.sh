@@ -19,7 +19,7 @@ PSQL_FILE_URL="http://central.maven.org/maven2/org/postgresql/postgresql/${PSQL_
 # --------------------------------------------------------------------
 
 wget "${KC_FILE_URL}"
-gunzip -c "${KC_FILE}" | tar xf -
+tar xzf "${KC_FILE}"
 rm "${KC_FILE}"
 
 
