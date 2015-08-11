@@ -2,7 +2,7 @@
 set -e
 
 # Variables
-# --------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 
 KC_DIR="/opt/keycloak"
 KC_RELEASE="1.4.0.Final"
@@ -16,7 +16,7 @@ PSQL_FILE_URL="http://central.maven.org/maven2/org/postgresql/postgresql/${PSQL_
 
 
 # Keycloak
-# --------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 
 wget "${KC_FILE_URL}"
 tar xzf "${KC_FILE}"
@@ -24,14 +24,14 @@ rm "${KC_FILE}"
 
 
 # JDBC3 PostgreSQL driver
-# --------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 
 mkdir -p "${PSQL_DIR}"
 cd "${PSQL_DIR}"
 wget "${PSQL_FILE_URL}"
 
 
-# If we get this far, we have succeeded, so prevent another run
-# --------------------------------------------------------------------
+# If we get this far, we have probably succeeded, so prevent another run
+# -----------------------------------------------------------------------------
 
 touch "$KC_DIR/.installed"

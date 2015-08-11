@@ -95,9 +95,14 @@ class users {
         roles   => ['developer'],
         ssh_key => 'AAAAB3NzaC1yc2EAAAADAQABAAABAQC2X+b3EO7GqnVX4YaqFBDx9s/Axx4KLMffbtkoenB3gh2fZxWQt7RaeRsGTsL92k7UrFPoODBLIjGXAgNp3tCvHqaSHg11PUSPD5IZRIgBPORo8opBl+RALEpi+O4BTDXsVQjrc9tXSbOEHZK3oIbk2u77Q9t1iv6kH1YjJf0CaFaTpkD5dOaRlMTeKmu9yn3SyNQejCiHxrgKz/AmIjfrqEw+0Pj4XALKd7KgGBl7gDS0D0e3SP7b8i5Fy8xIMl4OPz4ZXCGDVVipnniNH1h9WpjK0Uos2aE/EhwARzawwZJ74JlhAT4OeG68E/cbzNzO+c4gp61gQ1auJ2Dgq/hD'
     }
+    
+    users::base { 'paul':
+        roles   => ['ops', 'www-edit', 'reporting'],
+        allow   => ['munin'],
+        ssh_key => 'AAAAB3NzaC1yc2EAAAADAQABAAACAQDK+w4WN5fTuocEPCfl5f3H20KvcyLK/QNhDTsV9f4J3umEgvaYfD34ygIOGY0DCQEBfJ1qwxCWhxEEdqwWRD/onn9rriP3ec7jh/M3rvObfnzTq95hMNz4TC2KZSQ3DKE/MBtFretWTMNhJkOzlekWc1waLXVtSAqz68stqGjMvhLcwOX5pVk6vsTf22EoZkfUXMsNUYxrQfm1ZWeIpRiKlF+FD2gF3u7k6pyXoanhINyYOs62HGgq0uzCS4r1wcGPhKg5soBdATODF19CDcVz912ihsz+f9ozplJuro7l24jKB3lFTwrmDWOX/CH9q9D1vBaLRpgJ/5/1DN6J/Q0JhXVCI6GrTbWKQT8T/mV8TBkaaIrZbDwxErGb1/ZWOEFi4GS0giOfm0B/cg/nbJvUdrBzQx1zqmeO6BDjeHK4NzmnOSCsMopqtg81LRuHaODAVcDpLNQBkmj43NFPifz/yyuqajIyx+6/0d5arJ4cVJKE3+0JxTMfo8+gN5QsQlzYPPkrixun4hdZ79Vrhme4E/n/vZogaTxy0am2qH5kF4pbY7Vb766HLKKCerjR9ib/yyhhVXoC32G6IUjqwAIVN5oDLuj7Orgu9FvHeTjUeIe/MpSz8svfEPh+hbjZ6I7KogfmhrhiCZg2AUw+tTd2UqEsb9RqYjVHCb+S6s1kRQ=='
+    }
 
     # removed users
-    users::remove_user { ['paul']: }
     users::remove_user { ['neha']: }
     users::remove_user { ['lauri']: }
     users::remove_user { ['dan']: }
