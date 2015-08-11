@@ -35,7 +35,7 @@ class database::psql::server {
     }
 
     # let everyone know where we are
-    named::service_location { ["${psql_name}", "*"]:
+    named::service_location { "${psql_name}":
         ip => hiera('external_ip')
     }
 
