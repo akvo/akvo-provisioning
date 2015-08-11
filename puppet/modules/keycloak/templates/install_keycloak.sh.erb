@@ -10,12 +10,12 @@ PSQL_FILE="<%= @psql_release %>.jar"
 PSQL_FILE_URL="http://central.maven.org/maven2/org/postgresql/postgresql/<%= @psql_release %>/${PSQL_FILE}"
 
 wget "${KC_FILE_URL}"
-tar xzf "${KC_FILE}"
+tar xzvf "${KC_FILE}"
 rm "${KC_FILE}"
 
 cd "<%= @appdir %>"
 wget "${KC_THEME_URL}"
-tar xzf "${KC_THEME_FILE}"
+tar xzvf "${KC_THEME_FILE}"
 rm "${KC_THEME_FILE}"
 
 mkdir -p "<%= @psql_dir %>"
