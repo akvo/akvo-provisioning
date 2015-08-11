@@ -21,11 +21,11 @@
   ~ 02110-1301 USA, or see the FSF site: http://www.fsf.org.
   -->
 <module xmlns="urn:jboss:module:1.0" name="org.postgresql.jdbc">
-   <resources>
-      <resource-root path="postgresql-9.3-1103-jdbc3.jar"/>
-   </resources>
-   <dependencies>
-      <module name="javax.api"/>
-      <module name="javax.transaction.api"/>
-   </dependencies>
+    <resources>
+        <resource-root path="<%= @psql_release %>.jar"/>
+    </resources>
+    <dependencies>
+        <module name="javax.api"/>
+        <module name="javax.transaction.api"/>
+    </dependencies>
 </module>

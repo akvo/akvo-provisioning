@@ -2,6 +2,7 @@ define supervisord::service (
    $user, $command,
    $directory = undef,
    $stopsignal = undef,
+   $stopasgroup = undef,
    $env_vars = undef,
    $logdir = undef
 ) {

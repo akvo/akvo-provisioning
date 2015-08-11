@@ -1,0 +1,25 @@
+#!/bin/bash
+set -e
+
+KC_FILE="keycloak-<%= @kc_release %>.tar.gz"
+KC_FILE_URL="http://downloads.jboss.org/keycloak/<%= @kc_release %>/${KC_FILE}"
+KC_THEME_FILE="themes.tar.gz"
+KC_THEME_URL="http://files.support.akvo-ops.org/keycloak/${KC_THEME_FILE}"
+
+PSQL_FILE="<%= @psql_release %>.jar"
+PSQL_FILE_URL="http://central.maven.org/maven2/org/postgresql/postgresql/<%= @psql_release %>/${PSQL_FILE}"
+
+wget "${KC_FILE_URL}"
+tar xzf "${KC_FILE}"
+rm "${KC_FILE}"
+
+cd "<%= @appdir %>"
+wget "${KC_THEME_URL}"
+tar xzf "${KC_THEME_FILE}"
+rm "${KC_THEME_FILE}"
+
+mkdir -p "<%= @psql_dir %>"
+cd "<%= @psql_dir %>"
+wget "${PSQL_FILE_URL}"
+
+touch "<%= @appdir %>/.installed-<%= @kc_release %>"
