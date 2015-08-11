@@ -1,4 +1,4 @@
-from fabric.api import local, run, env, cd, prefix, sudo, settings, put
+from fabric.api import local, run, env, cd, sudo, put
 from fabric.contrib import files
 import time
 import os
