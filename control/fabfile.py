@@ -451,9 +451,13 @@ def is_puppetdb_ready():
 
     puppetdb_server = env.config.get('puppetdb', 'puppetdb')
     if env.environment == 'localdev':
-        cmd = "wget --no-check-certificate %s %s --server-response https://%s:8443 2>&1 | awk '/^  HTTP/{print $2}'" % (key, cert, puppetdb_server)
+        cmd = str("wget --no-check-certificate %s %s "
+                  "--server-response https://%s:8443 2>&1 | "
+                  "awk '/^  HTTP/{print $2}'") % (key, cert, puppetdb_server)
     else:
-        cmd = "wget --no-check-certificate %s %s --server-response https://%s 2>&1 | awk '/^  HTTP/{print $2}'" % (key, cert, puppetdb_server)
+        cmd = str("wget --no-check-certificate %s %s "
+                  "--server-response https://%s 2>&1 | "
+                  "awk '/^  HTTP/{print $2}'") % (key, cert, puppetdb_server)
 
     status = sudo(cmd)
     status = status.split('\n')[-1].strip()
