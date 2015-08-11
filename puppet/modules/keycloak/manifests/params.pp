@@ -10,7 +10,7 @@ class keycloak::params {
 
   $kc_release = '1.4.0.Final'
   $approot = '/opt/keycloak'
-  $appdir = "${approot}/${kc_release}"
+  $appdir = "${approot}/keycloak-${kc_release}"
 
   $psql_release = '9.3-1103-jdbc3'
   $psql_dir = "${appdir}/modules/system/layers/base/org/postgresql/jdbc/main"

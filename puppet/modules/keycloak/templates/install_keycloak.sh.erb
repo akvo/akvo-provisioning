@@ -2,7 +2,7 @@
 set -e
 
 KC_FILE="keycloak-<%= @kc_release %>.tar.gz"
-KC_FILE_URL="http://downloads.jboss.org/keycloak/<%= @kc_release %>/${KC_FILE}"
+KC_FILE_URL="http://files.support.akvo-ops.org/keycloak/${KC_FILE}"
 KC_THEME_FILE="themes.tar.gz"
 KC_THEME_URL="http://files.support.akvo-ops.org/keycloak/${KC_THEME_FILE}"
 
@@ -22,4 +22,4 @@ mkdir -p "<%= @psql_dir %>"
 cd "<%= @psql_dir %>"
 wget "${PSQL_FILE_URL}"
 
-touch "<%= @appdir %>/.installed-<%= @kc_release %>"
+touch "<%= @approot %>/.installed-<%= @kc_release %>"
