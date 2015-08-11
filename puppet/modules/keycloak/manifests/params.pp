@@ -8,7 +8,7 @@ class keycloak::params {
   $db_name = 'keycloak'
   $db_password = hiera('keycloak_database_password')
 
-  $kc_release = 'keycloak-1.4.0.Final'
+  $kc_release = '1.4.0.Final'
   $approot = '/opt/keycloak'
   $appdir = "${approot}/${kc_release}"
 
