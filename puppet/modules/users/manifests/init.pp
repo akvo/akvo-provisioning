@@ -103,7 +103,6 @@ class users {
     }
 
     # removed users
-    users::remove_user { ['paul']: }
     users::remove_user { ['neha']: }
     users::remove_user { ['lauri']: }
     users::remove_user { ['dan']: }
