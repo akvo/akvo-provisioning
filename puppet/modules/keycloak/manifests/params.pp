@@ -12,7 +12,7 @@ class keycloak::params {
   $approot = '/opt/keycloak'
   $appdir = "${approot}/keycloak-${kc_release}"
 
-  $psql_release = '9.4-1201-jdbc41'
+  $psql_release = '9.3-1100-jdbc4'
   $psql_dir = "${appdir}/modules/system/layers/base/org/postgresql/jdbc/main"
 
   $port = '8080'
