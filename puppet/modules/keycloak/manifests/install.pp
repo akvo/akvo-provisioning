@@ -57,7 +57,7 @@ class keycloak::install inherits keycloak::params {
         ensure  => present,
         owner   => 'keycloak',
         group   => 'keycloak',
-        mode    => '0755',
+        mode    => '0644',
         content => template('keycloak/module.xml.erb')
     }
 

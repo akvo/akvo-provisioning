@@ -16,7 +16,7 @@ class keycloak::config {
         ensure  => present,
         owner   => 'keycloak',
         group   => 'keycloak',
-        mode    => '0755',
+        mode    => '0644',
         content  => template('keycloak/standalone.xml.erb')
     }
 

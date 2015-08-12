@@ -5,6 +5,8 @@
 
     "lite": true,
 
+    "keycloak_database_password": "password",
+
     "rsr_psql_name": "psql-localdev",
     "rsr_database_password": "password",
     "rsr_allow_createdb": true,
