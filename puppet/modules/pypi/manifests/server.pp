@@ -1,41 +1,43 @@
+# Configure PyPI service
 class pypi::server {
 
-    package { 'devpi':
-        ensure   => 'installed',
-        provider => 'pip'
-    }
+  $base_domain = hiera('base_domain')
 
-    user { 'devpi':
-        ensure => present,
-        home   => '/srv/devpi',
-        shell  => '/bin/bash',
-    }
+  package { 'devpi':
+    ensure   => 'installed',
+    provider => 'pip'
+  }
 
-    file { '/srv/devpi':
-        ensure  => directory,
-        owner   => 'devpi',
-        mode    => '0744',
-        require => User['devpi']
-    }
+  user { 'devpi':
+    ensure => present,
+    home   => '/srv/devpi',
+    shell  => '/bin/bash',
+  }
 
-    supervisord::service { 'devpi':
-        user    => 'devpi',
-        command => "/usr/local/bin/devpi-server --datadir=/srv/devpi",
-        require => File['/srv/devpi'],
-    }
+  file { '/srv/devpi':
+    ensure  => directory,
+    owner   => 'devpi',
+    mode    => '0744',
+    require => User['devpi']
+  }
 
-    sudo::service_control { 'devpi':
-        user      => 'devpi',
-    }
+  supervisord::service { 'devpi':
+    user    => 'devpi',
+    command => '/usr/local/bin/devpi-server --datadir=/srv/devpi',
+    require => File['/srv/devpi'],
+  }
 
-    $base_domain = hiera('base_domain')
-    nginx::proxy { ["pypi.akvo-ops.org", "pypi.${base_domain}"]:
-        proxy_url        => 'http://localhost:3141',
-        ssl              => false,
-    }
+  sudo::service_control { 'devpi':
+    user => 'devpi',
+  }
 
-    named::service_location { 'pypi':
-        ip => hiera('external_ip')
-    }
+  nginx::proxy { ['pypi.akvo-ops.org', "pypi.${base_domain}"]:
+    proxy_url => 'http://localhost:3141',
+    ssl       => false,
+  }
+
+  named::service_location { 'pypi':
+    ip => hiera('external_ip')
+  }
 
 }
