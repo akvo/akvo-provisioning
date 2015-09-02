@@ -12,25 +12,25 @@ class keycloak::install {
   $psql_name           = $keycloak::psql_name
 
   package { 'openjdk-7-jdk':
-    ensure => installed
+    ensure => 'installed'
   }
 
   package { 'postgresql-client':
-    ensure => installed
+    ensure => 'installed'
   }
 
   user { 'keycloak':
-    ensure => present,
+    ensure => 'present',
     shell  => '/bin/bash',
     home   => $approot
   }
 
   group { 'keycloak':
-    ensure => present,
+    ensure => 'present',
   }
 
   file { "${approot}/":
-    ensure  => directory,
+    ensure  => 'directory',
     owner   => 'keycloak',
     group   => 'keycloak',
     mode    => '0700',
@@ -38,7 +38,7 @@ class keycloak::install {
   }
 
   file { "${approot}/install_keycloak.sh":
-    ensure  => present,
+    ensure  => 'present',
     owner   => 'keycloak',
     group   => 'keycloak',
     mode    => '0700',
@@ -55,7 +55,7 @@ class keycloak::install {
   }
 
   file { "${psql_driver_dir}/module.xml":
-    ensure  => present,
+    ensure  => 'present',
     owner   => 'keycloak',
     group   => 'keycloak',
     mode    => '0644',
