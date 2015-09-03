@@ -4,8 +4,8 @@ class keycloak::params {
   $base_domain         = hiera('base_domain')
   $ip                  = hiera('external_ip')
   $psql_name           = hiera('keycloak_psql_name', 'psql')
-  $ssl_cert_source     = hiera('akvo_wildcard_cert')
-  $ssl_key_source      = hiera('akvo_wildcard_key')
+  $ssl_cert_source     = hiera('akvofoundation_org_cert')
+  $ssl_key_source      = hiera('akvofoundation_org_key')
 
   $port                = '8080'
 
