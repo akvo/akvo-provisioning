@@ -6,8 +6,8 @@ KC_FILE_URL="http://files.support.akvo-ops.org/keycloak/${KC_FILE}"
 KC_THEME_FILE="themes.tar.gz"
 KC_THEME_URL="http://files.support.akvo-ops.org/keycloak/${KC_THEME_FILE}"
 
-PSQL_FILE="postgresql-<%= @psql_driver_release %>.jar"
-PSQL_FILE_URL="http://central.maven.org/maven2/org/postgresql/postgresql/<%= @psql_driver_release %>/${PSQL_FILE}"
+PSQL_DRIVER_FILE="postgresql-<%= @psql_driver_release %>.jar"
+PSQL_DRIVER_FILE_URL="http://central.maven.org/maven2/org/postgresql/postgresql/<%= @psql_driver_release %>/${PSQL_DRIVER_FILE}"
 
 wget "${KC_FILE_URL}"
 tar xzvf "${KC_FILE}"
@@ -20,6 +20,6 @@ rm "${KC_THEME_FILE}"
 
 mkdir -p "<%= @psql_driver_dir %>"
 cd "<%= @psql_driver_dir %>"
-wget "${PSQL_FILE_URL}"
+wget "${PSQL_DRIVER_FILE_URL}"
 
-touch "<%= @approot %>/.installed-<%= @kc_release %>"
+# touch "<%= @approot %>/.installed-<%= @kc_release %>"
