@@ -1,6 +1,7 @@
 define supervisord::service (
    $user, $command,
    $directory = undef,
+   $killasgroup = undef,
    $stopsignal = undef,
    $stopasgroup = undef,
    $env_vars = undef,
