@@ -19,4 +19,9 @@
     ;; sentry dsn
     :sentry-dsn "<%= @sentry_dsn %>"
 <% end %>
+<% if @use_statsd %>
+    ;; statsd config
+    ::statsd-host "<%= @statsd_host %>"
+    ::statsd-port "<%= @statsd_port %>"
+<% end %>
 }
