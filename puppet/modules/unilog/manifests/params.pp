@@ -33,6 +33,7 @@ class unilog::params {
     if $use_statsd {
         $statsd_host = hiera('unilog_statsd_host')
         $statsd_port = hiera('unilog_statsd_port')
+        $statsd_prefix = "unilog.${::environment}."
     }
 
 }
