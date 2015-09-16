@@ -28,4 +28,10 @@ class unilog::params {
         $sentry_dsn = hiera('unilog_sentry_dsn')
     }
 
+    $use_statsd = hiera('unilog_use_statsd', false)
+    if $use_statsd {
+        $statsd_host = hiera('unilog_statsd_host')
+        $statsd_port = hiera('unilog_statsd_port')
+        $statsd_prefix = "unilog.${::environment}."
+    }
 }
