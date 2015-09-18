@@ -9,7 +9,7 @@ class akvosites::params {
     $all_hostnames = concat($akvosites_hostnames, [$default_domain])
     $app_path = '/var/akvo/akvosites'
     $pool_port = 9020
-    $pool_processes = 16
+    $pool_processes = 24
 
     $db_host = "${mysql_name}.${base_domain}"
     $db_table_prefix = hiera('akvosites_db_table_prefix', 'wi1_')
