@@ -72,7 +72,7 @@ class akvosites inherits akvosites::params {
         reportable => true
     }
 
-    named::service_location { 'akvosites':
+    named::service_location { $akvosites_internal_subdomain:
         ip => hiera('external_ip')
     }
 

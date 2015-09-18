@@ -16,4 +16,6 @@ class akvosites::params {
 
     $wp_auto_update_core = hiera('wp_auto_update_core', false)
 
+    $akvosites_internal_subdomain = hiera('akvosites_internal_subdomain','akvosites')
+
 }
