@@ -46,7 +46,7 @@ class akvoplatform::consul inherits akvoplatform::params {
         htpasswd        => false,
         ssl             => true,
         ssl_key_source  => hiera('akvo_wildcard_key'),
-        ssl_cert_source => hiera('akvo_wildcard_cert_complete'),
+        ssl_cert_source => hiera('akvo_wildcard_cert'),
         access_log      => "/var/log/nginx/consul-nginx-access.log",
         error_log       => "/var/log/nginx/consul-nginx-error.log",
     }
