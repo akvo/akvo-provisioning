@@ -17,7 +17,7 @@ class unilog::config inherits unilog::params {
         htpasswd        => false,
         ssl             => true,
         ssl_key_source  => hiera('akvo_wildcard_key'),
-        ssl_cert_source => hiera('akvo_wildcard_cert_complete'),
+        ssl_cert_source => hiera('akvo_wildcard_cert'),
         access_log      => "${logdir}/unilog-nginx-access.log",
         error_log       => "${logdir}/unilog-nginx-error.log",
     }
