@@ -30,4 +30,6 @@ class role::fileserver {
         ip => hiera('external_ip')
     }
 
+    sudo::admin_user { 'stellan': }
+
 }

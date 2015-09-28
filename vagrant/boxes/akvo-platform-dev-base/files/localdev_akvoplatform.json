@@ -1,0 +1,30 @@
+{
+    "name": "localdev",
+
+    "machine_type": "vagrant",
+    "base_domain": "localdev.akvo.org",
+
+    "bootstrap_username": "vagrant",
+    "bootstrap_password": "vagrant",
+
+    "puppet_branch": "prototype/akvo-platform",
+
+    "nodes": {
+        "192.168.50.101": {
+            "nodename": "master1"
+        },
+        "192.168.50.102": {
+            "nodename": "master2"
+        },
+        "192.168.50.103": {
+            "nodename": "master3"
+        },
+        "192.168.50.201": {
+            "nodename": "slave1"
+        },
+        "192.168.50.202": {
+            "nodename": "slave2"
+        }
+    }
+
+}

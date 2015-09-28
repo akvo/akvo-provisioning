@@ -13,7 +13,7 @@ class puppetdb::server {
         ensure => 'latest'
     } ->
     package { 'puppetdb':
-        ensure => '2.3.4-1puppetlabs1'
+        ensure => '2.3.7-1puppetlabs1'
     }
 
     service { 'puppetdb':
@@ -33,7 +33,7 @@ class puppetdb::server {
     file { $certfilename:
         ensure  => present,
         owner   => root,
-        mode    => 0444,
+        mode    => '0444',
         content => hiera('puppetdb_server_cert'),
         require => Package['nginx'],
         notify  => Service['nginx'],
@@ -41,7 +41,7 @@ class puppetdb::server {
     file { $keyfilename:
         ensure  => present,
         owner   => root,
-        mode    => 0444,
+        mode    => '0444',
         content => hiera('puppetdb_server_key'),
         require => Package['nginx'],
         notify  => Service['nginx'],
@@ -49,7 +49,7 @@ class puppetdb::server {
     file { $cacertfilename:
         ensure  => present,
         owner   => root,
-        mode    => 0444,
+        mode    => '0444',
         content => hiera('puppetdb_ca_cert'),
         require => Package['nginx'],
         notify  => Service['nginx'],

@@ -1,19 +1,9 @@
 
-class akvosites {
+class akvosites inherits akvosites::params {
 
-    $mysql_name = hiera('akvosites_database_mysql_name', 'mysql')
-    $db_password = hiera('akvosites_database_password')
+    apt::ppa { 'ppa:ondrej/php5-oldstable': } ->
 
-    $base_domain = hiera('base_domain')
-    $default_domain = hiera('akvosites_default_domain', "akvosites.${base_domain}")
-    $akvosites_hostnames = hiera('akvosites_hostnames')
-    $all_hostnames = concat($akvosites_hostnames, [$default_domain])
-    $app_path = '/var/akvo/akvosites'
-    $pool_port = 9020
-
-    $db_host = "${mysql_name}.${base_domain}"
-
-    package { ['php5-gd', 'php5-curl']:
+    package { ['php5-gd', 'php5-curl', 'php5']:
         ensure  => installed,
         require => Package['php5-fpm'],
         notify  => Service['php5-fpm']
@@ -23,7 +13,7 @@ class akvosites {
         app_hostnames        => $all_hostnames,
         group                => 'www-edit',
         pool_port            => $pool_port,
-        pool_processes       => 16,
+        pool_processes       => $pool_processes,
         config_file_contents => template('akvosites/akvosites-nginx.conf.erb')
     }
 
@@ -82,7 +72,7 @@ class akvosites {
         reportable => true
     }
 
-    named::service_location { 'akvosites':
+    named::service_location { $akvosites_internal_subdomain:
         ip => hiera('external_ip')
     }
 

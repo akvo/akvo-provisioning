@@ -1,2 +1,3 @@
+# Database init
 class database {
 }

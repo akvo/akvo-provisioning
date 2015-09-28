@@ -21,6 +21,7 @@ class unilog::params {
     $postgres_name       = hiera('psql_name')
     $postgres_host       = "${postgres_name}.${base_domain}"
     $postgres_port       = hiera('psql_port', '5432')
+    $postgres_clients    = hiera_hash('unilog_psql_clients')
     $database_password   = hiera('unilog_database_password')
 
     $use_sentry = hiera('unilog_use_sentry', false)
@@ -34,4 +35,5 @@ class unilog::params {
         $statsd_port = hiera('unilog_statsd_port')
         $statsd_prefix = "unilog.${::environment}."
     }
+
 }

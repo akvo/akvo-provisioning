@@ -27,7 +27,7 @@ class puppetcontrol {
 
     package { 'puppetdb-terminus':
         # 'puppet' & 'puppet-common' packages are dependencies, so implicitly fixed to version '3.8.1-1puppetlabs1'
-        ensure => '2.3.4-1puppetlabs1'
+        ensure => '2.3.7-1puppetlabs1'
     }
 
     # insert the ssh info
@@ -77,7 +77,7 @@ class puppetcontrol {
         ensure  => present,
         owner   => root,
         group   => root,
-        mode    => 555,
+        mode    => '0555',
         source  => 'puppet:///modules/puppetcontrol/update_system_config',
         require => File["/puppet/bin/apply.sh"],
     }
@@ -130,7 +130,7 @@ class puppetcontrol {
     file { '/etc/puppet/puppetdb.conf':
         ensure  => present,
         owner   => 'root',
-        mode    => '444',
+        mode    => '0444',
         content => template('puppetcontrol/puppetdb.conf.erb'),
     }
 

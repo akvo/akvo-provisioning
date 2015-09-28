@@ -5,6 +5,8 @@
 
     "lite": true,
 
+    "keycloak_database_password": "password",
+
     "rsr_psql_name": "psql-localdev",
     "rsr_database_password": "password",
     "rsr_allow_createdb": true,
@@ -76,6 +78,9 @@
     "unilog_remote_api_password": "password",
     "unilog_use_sentry": false,
     "unilog_main_domain": "unilog.localdev.akvo.org",
+
+    "mesos_masters": ["192.168.50.101", "192.168.50.102", "192.168.50.103"],
+    "mesos_slaves": ["192.168.50.201", "192.168.50.202"],
 
     "puppet_public_key": "AAAAB3NzaC1yc2EAAAADAQABAAABAQC5LbFC9XPDJbYHTcvhFlSXrH7Jew1X7yUHTOQnBVB5eFuImAm+awXQxE8yIyJ8xpTURU64BVi9nAknIwLevlog+bsY+yEcmGkvNTYa1sHKMK/aKY4nDp2lNed5n4aKbr9WzyRPSofci2zIbHqwgP/V5Nntd9R6wsOSsA2RcviI0c/ETXC0iHW+6uy1InF8TJSuKzOOwTz8NUuOOGWL7Es6KUInJp2fr6iLSWYM5X4qSvXu2cbQyCikK6H1ofunyjOgxdLKWO6DuUcMLwTSMeTND6s4lgbaLX0IQq/U6tUdaaxFqygLshqgTMaDXFU6zZ8bvQvFettjJt5kV5cJHH/b",
 

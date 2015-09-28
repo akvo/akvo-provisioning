@@ -6,8 +6,8 @@
   - envs/%{::environment}/%{::fqdn}
   - envs/%{::environment}
   - nodespecific
-  - %{::fqdn}
-  - %{::environment}
+  - "%{::fqdn}"
+  - "%{::environment}"
   - common
   - nodefacts
 

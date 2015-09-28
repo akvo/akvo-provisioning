@@ -95,7 +95,7 @@ class users {
         roles   => ['developer'],
         ssh_key => 'AAAAB3NzaC1yc2EAAAADAQABAAABAQC2X+b3EO7GqnVX4YaqFBDx9s/Axx4KLMffbtkoenB3gh2fZxWQt7RaeRsGTsL92k7UrFPoODBLIjGXAgNp3tCvHqaSHg11PUSPD5IZRIgBPORo8opBl+RALEpi+O4BTDXsVQjrc9tXSbOEHZK3oIbk2u77Q9t1iv6kH1YjJf0CaFaTpkD5dOaRlMTeKmu9yn3SyNQejCiHxrgKz/AmIjfrqEw+0Pj4XALKd7KgGBl7gDS0D0e3SP7b8i5Fy8xIMl4OPz4ZXCGDVVipnniNH1h9WpjK0Uos2aE/EhwARzawwZJ74JlhAT4OeG68E/cbzNzO+c4gp61gQ1auJ2Dgq/hD'
     }
-
+    
     users::basic { 'paul':
         roles   => ['ops', 'www-edit', 'reporting'],
         allow   => ['munin'],

@@ -1,4 +1,5 @@
 define database::psql::db ($psql_name, $password,
+                           $owner = 'postgres',
                            $include_fw_rule = true,
                            $reportable = false,
                            $allow_createdb = false ) {
@@ -9,6 +10,7 @@ define database::psql::db ($psql_name, $password,
     notice("postgresql database ${name} at ${psql_name}")
 
     @@database::psql::db_exported { $name:
+        owner          => $owner,
         password       => $password,
         allow_createdb => $allow_createdb,
         tag            => "psql-db-${psql_host}"

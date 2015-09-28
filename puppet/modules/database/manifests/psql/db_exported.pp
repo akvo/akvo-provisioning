@@ -1,13 +1,15 @@
 
 define database::psql::db_exported( $password,
+                                    $owner = 'postgres',
                                     $allow_createdb = false,
                                     $backup = true ) {
 
     postgresql::server::db { $name:
-        user          => $name,
-        password      => $password,
-        grant         => 'all',
-        encoding      => 'utf-8',
+        user     => $name,
+        password => $password,
+        owner    => $owner,
+        grant    => 'all',
+        encoding => 'utf-8',
     }
 
     # allow user to create databases

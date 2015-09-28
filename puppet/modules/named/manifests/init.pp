@@ -22,7 +22,7 @@ class named {
         ensure  => present,
         owner   => 'bind',
         group   => 'bind',
-        mode    => 440,
+        mode    => '0440',
         require => Package['bind9'],
         notify  => Service['bind9'],
         source  => 'puppet:///modules/named/named.conf',

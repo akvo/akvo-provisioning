@@ -29,4 +29,4 @@ newer/older versions of Ubuntu or other Debian systems, it's not expected to.
 Usage
 ---
 
-./bootstrap.sh
+./bootstrap_vagrant.sh
