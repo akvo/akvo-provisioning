@@ -66,13 +66,13 @@ class akvosites inherits akvosites::params {
         require => File["${app_path}/scripts/update_akvo_sites_data.sh"]
     }
 
-    database::my_sql::db { 'akvosites':
+    database::my_sql::db { $db_name:
         mysql_name => $mysql_name,
         password   => $db_password,
         reportable => true
     }
 
-    named::service_location { $akvosites_internal_subdomain:
+    named::service_location { $internal_subdomain:
         ip => hiera('external_ip')
     }
 

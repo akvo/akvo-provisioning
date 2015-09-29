@@ -12,10 +12,11 @@ class akvosites::params {
     $pool_processes = 24
 
     $db_host = "${mysql_name}.${base_domain}"
+    $db_name = hiera('akvosites_db_name', 'akvosites')
     $db_table_prefix = hiera('akvosites_db_table_prefix', 'wi1_')
 
     $wp_auto_update_core = hiera('wp_auto_update_core', false)
 
-    $akvosites_internal_subdomain = hiera('akvosites_internal_subdomain','akvosites')
+    $internal_subdomain = hiera('akvosites_internal_subdomain','akvosites')
 
 }
