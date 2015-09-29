@@ -33,10 +33,10 @@ if(!file_exists(realpath(__DIR__).'/wp-content/newlogs/'.date('Y').'/'.date('m')
 
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
-define('DB_NAME', 'akvosites');
+define('DB_NAME', '<%= @db_name %>');
 
 /** MySQL database username */
-define('DB_USER', 'akvosites');
+define('DB_USER', '<%= @db_name %>');
 
 /** MySQL database password */
 define('DB_PASSWORD', '<%= @db_password %>');
@@ -110,7 +110,7 @@ define('WP_DEBUG', false);
 define('WP_ALLOW_MULTISITE', true);
 define('MULTISITE', true);
 define('SUBDOMAIN_INSTALL', true);
-define('DOMAIN_CURRENT_SITE', 'akvofoundation.org');
+define('DOMAIN_CURRENT_SITE', '<%= @default_domain %>');
 define('PATH_CURRENT_SITE', '/');
 define('SITE_ID_CURRENT_SITE', 1);
 define('BLOG_ID_CURRENT_SITE', 1);
