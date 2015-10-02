@@ -9,6 +9,10 @@ class akvosites inherits akvosites::params {
         notify  => Service['php5-fpm']
     }
 
+    package { 'build-essential':
+        ensure => installed
+    }
+
     php::app { 'akvosites':
         app_hostnames        => $all_hostnames,
         group                => 'www-edit',
