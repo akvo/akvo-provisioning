@@ -9,9 +9,8 @@ class akvosites inherits akvosites::params {
         notify  => Service['php5-fpm']
     }
 
-    package { 'build-essential':
-        ensure => installed
-    }
+    $required_packages = ['build-essential']
+    ensure_packages($required_packages)
 
     php::app { 'akvosites':
         app_hostnames        => $all_hostnames,
