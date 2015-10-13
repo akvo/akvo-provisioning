@@ -22,10 +22,14 @@ scp -i $KEY $HOST:$FILENAME /tmp/
 echo 'step 3: remove dump on data source'
 ssh -i $KEY $HOST rm -v $FILENAME
 
-echo 'step 4: load the dump'
+echo 'step 4: emptying database without droping it'
+PGPASSWORD=${DBPASS} psql --username=${DBUSER} --host=${DBHOST} -c 'DROP SCHEMA public CASCADE'
+PGPASSWORD=${DBPASS} psql --username=${DBUSER} --host=${DBHOST} -c 'CREATE SCHEMA public'
+
+echo 'step 5: load the dump'
 zcat /tmp/$FILENAME | PGPASSWORD=${DBPASS} psql --username=${DBUSER} --host=${DBHOST} $DBNAME
 
-echo 'step 5: clean up leech'
+echo 'step 6: clean up leech'
 rm -v /tmp/$FILENAME
 
 echo 'done!'

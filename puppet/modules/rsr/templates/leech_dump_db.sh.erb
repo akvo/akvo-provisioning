@@ -6,4 +6,4 @@ HOST=<%= @postgres_database_host %>
 DATABASE=<%= @username %>
 OUTFILE=$1
 
-PGPASSWORD=${PASS} pg_dump -c --host=${HOST} --username=${USERNAME} $DATABASE | gzip > $OUTFILE
+PGPASSWORD=${PASS} pg_dump --host=${HOST} --username=${USERNAME} $DATABASE | gzip > $OUTFILE
