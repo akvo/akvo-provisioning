@@ -2,6 +2,7 @@
 class homepage::params {
 
     $username = 'homepage'
+    $group = 'www-edit'
     $appdir = '/var/akvo/homepage'
 
     $mysql_name = hiera('homepage_wordpress_database_mysql_name', 'mysql')
@@ -14,6 +15,7 @@ class homepage::params {
     $homepage_url = hiera('homepage_url')
     $rsr_domain = hiera('rsr_main_domain') # for legacy redirects
     $pool_port = 9010
+    $pool_processes = 24
     $piwik_id = hiera('homepage_piwik_id')
     $piwik_domain = hiera('homepage_piwik_domain')
 

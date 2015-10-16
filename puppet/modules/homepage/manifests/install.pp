@@ -7,8 +7,9 @@ class homepage::install inherits homepage::params {
 
     php::app { 'homepage':
         app_hostnames        => $homepage_hostnames,
-        group                => 'www-edit',
+        group                => $group,
         pool_port            => $pool_port,
+        pool_processes       => $pool_processes,
         config_file_contents => template('homepage/homepage-nginx.conf.erb'),
         deploy_key           => hiera('homepage-deploy_public_key')
     }
