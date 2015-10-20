@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ Copyright (C) 2015 Stichting Akvo (Akvo Foundation)
+
+ This file is part of Akvo Login.
+
+ Akvo Login is free software: you can redistribute it and/or modify
+ it under the terms of the GNU Affero General Public licence as
+ published by the Free Software Foundation, either version 3 of the
+ licence.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU Affero General Public licence included below for more details.
+
+ The full licence text is available at <http://www.gnu.org/licenses/agpl.html>.
+-->
+
+<module xmlns="urn:jboss:module:1.0" name="org.postgresql.jdbc">
+  <resources>
+    <resource-root path="${env.PSQL_DRIVER_VERSION}.jar"/>
+  </resources>
+  <dependencies>
+    <module name="javax.api"/>
+    <module name="javax.transaction.api"/>
+  </dependencies>
+</module>
