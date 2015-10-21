@@ -102,6 +102,11 @@ class users {
         ssh_key => 'AAAAB3NzaC1yc2EAAAADAQABAAACAQDK+w4WN5fTuocEPCfl5f3H20KvcyLK/QNhDTsV9f4J3umEgvaYfD34ygIOGY0DCQEBfJ1qwxCWhxEEdqwWRD/onn9rriP3ec7jh/M3rvObfnzTq95hMNz4TC2KZSQ3DKE/MBtFretWTMNhJkOzlekWc1waLXVtSAqz68stqGjMvhLcwOX5pVk6vsTf22EoZkfUXMsNUYxrQfm1ZWeIpRiKlF+FD2gF3u7k6pyXoanhINyYOs62HGgq0uzCS4r1wcGPhKg5soBdATODF19CDcVz912ihsz+f9ozplJuro7l24jKB3lFTwrmDWOX/CH9q9D1vBaLRpgJ/5/1DN6J/Q0JhXVCI6GrTbWKQT8T/mV8TBkaaIrZbDwxErGb1/ZWOEFi4GS0giOfm0B/cg/nbJvUdrBzQx1zqmeO6BDjeHK4NzmnOSCsMopqtg81LRuHaODAVcDpLNQBkmj43NFPifz/yyuqajIyx+6/0d5arJ4cVJKE3+0JxTMfo8+gN5QsQlzYPPkrixun4hdZ79Vrhme4E/n/vZogaTxy0am2qH5kF4pbY7Vb766HLKKCerjR9ib/yyhhVXoC32G6IUjqwAIVN5oDLuj7Orgu9FvHeTjUeIe/MpSz8svfEPh+hbjZ6I7KogfmhrhiCZg2AUw+tTd2UqEsb9RqYjVHCb+S6s1kRQ=='
     }
 
+    users::basic { 'andreas':
+        roles   => ['developer'],
+        ssh_key => 'AAAAB3NzaC1yc2EAAAABIwAAAQEAuWBfUCv72LTLeKjGKzHYjdfir8r8zSmZNuUNjVj4s18WVuFFrsxUM1ffk7MtLhWmC3HVj7u8SP3eXXCdbtRiv8pC1SvMdVAbub7qkqtqPP+hW9UP6mX1KveAAcxITYQQR+5kK1gDlkhk78JsBRbjpzaN1l5FE3Uvt6UVk8WKUElObOrZBT6uUS1USaGfEr0dfk+Lwk83YrqKVWK4imP5XrjIgsN9iq7d+6gT7kQn7MjqPYhA8T5bpqDgo5rdwn/MM2tsIYPsfCd/4qa6uR/mbiswCdESXJ1z6dRvC1ufoyEAxMLbXdcuoDA8cEnYgdnKv24Uey460sWcL76+yvu4fQ=='
+    }
+
     # removed users
     users::remove_user { ['neha']: }
     users::remove_user { ['lauri']: }
