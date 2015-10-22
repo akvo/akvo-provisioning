@@ -16,26 +16,30 @@
 
 FROM jboss/keycloak
 
-MAINTAINER Akvo Foundation
+MAINTAINER Stichting Akvo (Akvo Foundation)
 
-# Environment variables
-ENV AKVO_THEME_FILE      http://files.support.akvo-ops.org/keycloak/themes.tar.gz
+# Environment setup
 ENV KEYCLOAK_DIR         /opt/jboss/keycloak
 ENV KEYCLOAK_CONFIG_FILE $KEYCLOAK_DIR/standalone/configuration/standalone.xml
+ENV KEYCLOAK_THEME_FILE  http://files.support.akvo-ops.org/keycloak/themes.tar.gz
 ENV PSQL_DRIVER_DIR      $KEYCLOAK_DIR/modules/system/layers/base/org/postgresql/jdbc/main
 ENV PSQL_DRIVER_VERSION  9.4-1204-jdbc42
+ENV PSQL_DRIVER_URL      https://search.maven.org/remotecontent?filepath=org/postgresql/postgresql/$PSQL_DRIVER_VERSION/$PSQL_DRIVER_VERSION.jar
+ENV PSQL_DB              keycloak
+ENV PSQL_USERNAME        keycloak
+ENV PSQL_PASSWORD        ????????
 ENV SAXON                java -jar /usr/share/java/saxon.jar
 
 # Install Akvo theme
 RUN cd $KEYCLOAK_DIR
-RUN curl -L $AKVO_THEME_FILE | tar xz
+RUN curl -L $KEYCLOAK_THEME_FILE | tar xz
 
 # Install PostgreSQL JDBC driver
 RUN mkdir -p $PSQL_DRIVER_DIR
 RUN cd $PSQL_DRIVER_DIR
-RUN curl -L https://search.maven.org/remotecontent?filepath=org/postgresql/postgresql/$PSQL_DRIVER_VERSION/$PSQL_DRIVER_VERSION.jar
+RUN curl -LO $POSTGRES_DRIVER_URL
 ADD module.xml $PSQL_DRIVER_DIR
 
-# Post-installation configuration
+# Post-install configuration
 ADD configure.xsl $KEYCLOAK_DIR
 RUN $SAXON -s:$KEYCLOAK_CONFIG_FILE -xsl:$KEYCLOAK_DIR/configure.xsl -o:$KEYCLOAK_CONFIG_FILE
