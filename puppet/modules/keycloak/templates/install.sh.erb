@@ -1,0 +1,24 @@
+#!/bin/bash
+
+set -e
+
+# Environment
+KEYCLOAK="http://files.support.akvo-ops.org/keycloak/\
+  keycloak-<%= @kc_release %>.tar.gz"
+KEYCLOAK_THEME="http://files.support.akvo-ops.org/keycloak/themes.tar.gz"
+POSTGRESQL_DRIVER="http://central.maven.org/maven2/org/postgresql/postgresql/\
+  <%= @psql_driver_release %>/postgresql-<%= @psql_driver_release %>.jar"
+
+# Keycloak 
+wget "${KEYCLOAK}" | tar xz
+
+# Akvo theme
+cd "<%= @appdir %>" && wget "${KEYCLOAK_THEME}" | tar xz
+
+# PostgreSQL driver
+mkdir -p "<%= @psql_driver_dir %>" && cd "<%= @psql_driver_dir %>"
+wget -N "${POSTGRESQL_DRIVER}"
+
+# We're probably done if we get this far!
+touch "<%= @approot %>/.installed-keycloak-\
+  <%= @kc_release %>-postgresql-<%= @psql_driver_release =>"

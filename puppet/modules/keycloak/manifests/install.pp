@@ -37,20 +37,20 @@ class keycloak::install {
     require => User['keycloak']
   }
 
-  file { "${approot}/install_keycloak.sh":
+  file { "${approot}/install.sh":
     ensure  => 'present',
     owner   => 'keycloak',
     group   => 'keycloak',
     mode    => '0700',
-    content => template('keycloak/install_keycloak.sh.erb'),
+    content => template('keycloak/install.sh.erb'),
     require => File[$approot]
   }
 
-  exec { "${approot}/install_keycloak.sh":
+  exec { "${approot}/install.sh":
     user    => 'keycloak',
     cwd     => $approot,
     creates => "${approot}/.installed-${kc_release}",
-    require => [File["${approot}/install_keycloak.sh"],
+    require => [File["${approot}/install.sh"],
                 Package['postgresql-client']]
   }
 
