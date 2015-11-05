@@ -1,3 +1,10 @@
+    # Hide reportserver location and credentials
+    location /reports/ {
+        rewrite ^/reports/(.*)/(.*)$ /reportserver/reportserver/httpauthexport?key=$1&user=user1&password=unicorns&p_TheProjectId=$2 break;
+        proxy_pass   https://reporting.test.akvo-ops.org;
+        proxy_redirect default;
+    }
+
     client_max_body_size 8m;
 
     # redirects following the RSR v3 release:
