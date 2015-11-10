@@ -30,7 +30,7 @@ class users {
     users::basic { 'mark':
         roles    => ['developer'],
         allow    => ['munin'],
-        ssh_key  => 'AAAAB3NzaC1yc2EAAAADAQABAAABAQDezghb+Fmk9rLjr0yr1bym1hCWgzU02pPbvSAX5dPjU2tK5d7vuoimLfLf7VVd7M/Mz0BQwMS75mkc1/lZuPJJnCsLsAxrq1Hj7HZW2p5kgxjY8tYTc/q7bgO88MP1FnOoN/zDy09hcPdPAgooNNrFz3LiE2FPx3UsPjxjO40rLcsb2tKYe5oP5wDU0D4E2/8qhQIOb+qGU08+aMEXnoVuexq6RNFKWNM0kVpLB3kJ2i1AsrrsgdrOFMLSd6zCCFlFP4NYwyO/U3K39VPg0sFC2BtSayqCQbtef9w/E2ziNki7yLkNOHNoiROUcMxJV3Ca19olC5dafIiQWrOf9H5Z'
+        ssh_key  => 'AAAAB3NzaC1yc2EAAAADAQABAAACAQDDhn8XgGBSfF300qbXkadmpN8jpOoYlCuWcsp69hjmRYNdyJE3x1m1ES1zgmHJ7AwRvvExoCYbd/SsGdBMOobb1XBIUm0LBlPiddPNuDoK3TlaSbYhtKB2H2oEpsyRn/zejUmTRSlKdfM2lwPTh8f534S5L8R7hEwtXRCGNcPxODFOjPu6HXI2LSUk8U0CDAx4jFhVbX6IIgvY6XZh0mOWTUxrCasamfqBvnxCCrsuRi8gkizqL1e9YEEWezG/CKwcM3UD8riJ/wVTqav0kzApiEiAu4d1cNl0WuV6HjGCBOxp/lLOr1yHNMSSDqS98XykS+e7nLS/+WyMcFKz9TpenCcsiNP12Uf/lc1+D7dPzRk6QmXzs435LZzYw94mdlaWgi8RMo6St18iJRrhuEDFpNHRjkENYO8/jAvAtU38/iDt6z9cDEE7UV3q4Tyz0Bnp/txpXhz9JbTulJtdrl2aAQpCh+qxFKmN7HNctduxhQRuHMfWYFck+gEdjeKGwX3NiBTMoD0mwgbchJ+2rx0ZcXKsPByX0oHSQtqYPaGN/0F3TwdeeyjFGr4aJxhuZTCyJPGsw9vrT33KdOZr7MF2uqCvtanX2yiwD4k4/5FnZ0JtYbho3eGUQAfVgPJ0UJp0UTZN7tyML0ONbOXV1XaZiZg2pRNLCSVCkoPG08k3dw=='
     }
 
     users::basic { 'gabriel':
@@ -110,6 +110,11 @@ class users {
     users::basic {'geert':
         roles   => ['test'],
         ssh_key => 'AAAAB3NzaC1yc2EAAAADAQABAAACAQCUgHKHILzsIpwZazsYAyJe/vbq4xonKvzIakOr7QpJfV8uaxyMOSZXW21qTv3nQzd4mol0/f4TIX+2APA3cwvxDkCGHoCl+nBiNo9142Nz6xcVLjP20WpsHWLPd8MaaWAp2JoQoAXValojoZWTUAYrd7zhcHmVztd7Bpd7iaJbC/4W1wbZ97IPRsnEfiyfO4BxP9Ul/c1dN35+xQHVFbQTz81AXo65GQL2M6Wyjhd+wpxTaQaJa1DYmeKgZs+HxM6OBoPGDdYku5rkMcv3nwjDr5LQrNjVDSjJ2d3xXK0ZGU6F2WKgYeksKOwSZHvy+qbH8t3SH6KPgDNwIO6Hh2cqfP0nizs/0gbRL5MEkCyO+7QOWtTszs0BksUdrexCR90KT50Bz0bhhzanxDHRcMIdaaRRd9PV+EqjLh4KBhgkqhyYVby2k3WzSPZHimfXV9VihC93deSDQNBL8ADZlFM52jWUSmJENtHEIZXh6pkHjYBfLXeCMFaWwqGaZjjj9mDFfYPldWyovp72Uju0OutdJQ3/aEpksgRi1a00pnHEWt88SF03+RK7i9rk+FK0eAnRI8oVajDfWHVwzcM9KyHs8I07zVJ3z+Yt5gCXcg8cMVNOj1n0cTxYp1jpcAszYroEnhqkjvgbPV3MI3jf1PjFpxPBNHQfLyOwhPFQJgY84Q=='
+    }
+
+    users::basic {'marten':
+        roles   => ['test'],
+        ssh_key => ''
     }
 
     # removed users
