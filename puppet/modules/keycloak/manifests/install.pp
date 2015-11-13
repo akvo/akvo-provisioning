@@ -15,6 +15,10 @@ class keycloak::install {
     ensure => 'installed'
   }
 
+  package { 'libsaxon-java':
+    ensure => 'installed'
+  }
+
   package { 'postgresql-client':
     ensure => 'installed'
   }
