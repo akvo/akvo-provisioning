@@ -62,6 +62,14 @@ class keycloak::install {
     content => template('keycloak/module.xml.erb')
   }
 
+  file { "${appdir}/configure.xsl":
+    ensure  => 'present',
+    owner   => 'keycloak',
+    group   => 'keycloak',
+    mode    => '0644',
+    content => template('keycloak/configure.xsl.erb')
+  }
+
   database::psql::db { $db_name:
     psql_name => $psql_name,
     password  => $db_password

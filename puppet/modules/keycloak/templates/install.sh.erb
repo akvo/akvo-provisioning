@@ -18,6 +18,8 @@ cd "<%= @appdir %>" && wget "${KEYCLOAK_THEME}" | tar xz
 # PostgreSQL driver
 mkdir -p "<%= @psql_driver_dir %>" && cd "<%= @psql_driver_dir %>"
 wget -N "${POSTGRESQL_DRIVER}"
+java -jar /usr/share/java/saxon.jar -s:<%= @appdir =>/standalone/configuration/standalone.xml -xsl:<%= @appdir =>/configure.xsl -o:<%= @appdir =>/standalone/configuration/standalone.xml
+
 
 # We're probably done if we get this far!
 touch "<%= @approot %>/.installed-keycloak-\
