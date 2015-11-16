@@ -3,11 +3,9 @@
 set -e
 
 # Environment
-KEYCLOAK="http://files.support.akvo-ops.org/keycloak/\
-  keycloak-<%= @kc_release %>.tar.gz"
+KEYCLOAK="http://files.support.akvo-ops.org/keycloak/keycloak-<%= @kc_release %>.tar.gz"
 KEYCLOAK_THEME="http://files.support.akvo-ops.org/keycloak/themes.tar.gz"
-POSTGRESQL_DRIVER="http://central.maven.org/maven2/org/postgresql/postgresql/\
-  <%= @psql_driver_release %>/postgresql-<%= @psql_driver_release %>.jar"
+POSTGRESQL_DRIVER="http://central.maven.org/maven2/org/postgresql/postgresql/<%= @psql_driver_release %>/postgresql-<%= @psql_driver_release %>.jar"
 
 # Keycloak
 wget "${KEYCLOAK}" | tar xz
@@ -22,5 +20,4 @@ saxon-xslt -s:"<%= @appdir %>/standalone/configuration/standalone.xml" -xsl:"<%=
 
 
 # We're probably done if we get this far!
-touch "<%= @approot %>/.installed-keycloak-\
-  <%= @kc_release %>-postgresql-<%= @psql_driver_release =>"
+touch "<%= @approot %>/.installed-keycloak-<%= @kc_release %>-postgresql-<%= @psql_driver_release %>"
