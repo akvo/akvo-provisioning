@@ -3,9 +3,10 @@
 set -e
 
 # Environment
-KEYCLOAK="http://files.support.akvo-ops.org/keycloak/keycloak-<%= @kc_release %>.tar.gz"
-KEYCLOAK_THEME="http://files.support.akvo-ops.org/keycloak/themes.tar.gz"
-POSTGRESQL_DRIVER="http://central.maven.org/maven2/org/postgresql/postgresql/<%= @psql_driver_release %>/postgresql-<%= @psql_driver_release %>.jar"
+FILES="http://files.support.akvo-ops.org/keycloak"
+KEYCLOAK="${FILES}/<%= @kc_release %>.tar.gz"
+KEYCLOAK_THEME="${FILES}/themes.tar.gz"
+POSTGRESQL_DRIVER="${FILES}/postgresql-<%= @psql_driver_release %>.jar"
 
 # Keycloak
 wget "${KEYCLOAK}" | tar xz
