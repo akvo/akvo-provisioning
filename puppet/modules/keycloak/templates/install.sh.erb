@@ -9,13 +9,15 @@ KEYCLOAK_THEME="${FILES}/themes.tar.gz"
 POSTGRESQL_DRIVER="${FILES}/postgresql-<%= @psql_driver_release %>.jar"
 
 # Keycloak
-wget "${KEYCLOAK}" | tar xz
+wget -qO- "${KEYCLOAK}" | tar xvz
 
 # Akvo theme
-cd "<%= @appdir %>" && wget "${KEYCLOAK_THEME}" | tar xz
+cd "<%= @appdir %>"
+wget -qO- "${KEYCLOAK_THEME}" | tar xvz
 
 # PostgreSQL driver
-mkdir -p "<%= @psql_driver_dir %>" && cd "<%= @psql_driver_dir %>"
+mkdir -p "<%= @psql_driver_dir %>"
+cd "<%= @psql_driver_dir %>"
 wget -N "${POSTGRESQL_DRIVER}"
 saxon-xslt -s:"<%= @appdir %>/standalone/configuration/standalone.xml" -xsl:"<%= @appdir %>/configure.xsl" -o:"<%= @appdir %>/standalone/configuration/standalone.xml"
 
