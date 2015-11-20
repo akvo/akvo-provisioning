@@ -19,8 +19,7 @@ wget -qO- "${KEYCLOAK_THEME}" | tar xvz
 mkdir -p "<%= @psql_driver_dir %>"
 cd "<%= @psql_driver_dir %>"
 wget -N "${POSTGRESQL_DRIVER}"
-saxon-xslt -s:"<%= @appdir %>/standalone/configuration/standalone.xml" -xsl:"<%= @appdir %>/configure.xsl" -o:"<%= @appdir %>/standalone/configuration/standalone.xml"
-
+saxon-xslt -o "<%= @appdir %>/standalone/configuration/standalone.xml" "<%= @appdir %>/standalone/configuration/standalone.xml" "<%= @appdir %>/configure.xsl"
 
 # We're probably done if we get this far!
 touch "<%= @approot %>/.installed-keycloak-<%= @kc_release %>-postgresql-<%= @psql_driver_release %>"
