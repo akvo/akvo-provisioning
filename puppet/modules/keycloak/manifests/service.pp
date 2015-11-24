@@ -6,11 +6,10 @@ class keycloak::service {
   supervisord::service { 'keycloak':
     user      => 'keycloak',
     directory => "${appdir}/bin",
-    command   => "${appdir}/bin/standalone.sh",
-    stop      => "${appdir}/bin/jboss-cli.sh --connect command=:shutdown"
+    command   => "${appdir}/bin/standalone.sh"
   }
 
-  # The following stops Keycloak:
+  # The following command stops Keycloak:
   # ${appdir}/bin/jboss-cli.sh --connect command=:shutdown
 
 }

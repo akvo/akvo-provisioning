@@ -3,22 +3,23 @@
 set -e
 
 # Environment
-KEYCLOAK="http://files.support.akvo-ops.org/keycloak/\
-  keycloak-<%= @kc_release %>.tar.gz"
-KEYCLOAK_THEME="http://files.support.akvo-ops.org/keycloak/themes.tar.gz"
-POSTGRESQL_DRIVER="http://central.maven.org/maven2/org/postgresql/postgresql/\
-  <%= @psql_driver_release %>/postgresql-<%= @psql_driver_release %>.jar"
+FILES="http://files.support.akvo-ops.org/keycloak"
+KEYCLOAK="${FILES}/<%= @kc_release %>.tar.gz"
+KEYCLOAK_THEME="${FILES}/themes.tar.gz"
+POSTGRESQL_DRIVER="${FILES}/postgresql-<%= @psql_driver_release %>.jar"
 
-# Keycloak 
-wget "${KEYCLOAK}" | tar xz
+# Keycloak
+wget -qO- "${KEYCLOAK}" | tar xvz
 
 # Akvo theme
-cd "<%= @appdir %>" && wget "${KEYCLOAK_THEME}" | tar xz
+cd "<%= @appdir %>"
+wget -qO- "${KEYCLOAK_THEME}" | tar xvz
 
 # PostgreSQL driver
-mkdir -p "<%= @psql_driver_dir %>" && cd "<%= @psql_driver_dir %>"
+mkdir -p "<%= @psql_driver_dir %>"
+cd "<%= @psql_driver_dir %>"
 wget -N "${POSTGRESQL_DRIVER}"
+saxon-xslt -o "<%= @appdir %>/standalone/configuration/standalone.xml" "<%= @appdir %>/standalone/configuration/standalone.xml" "<%= @appdir %>/configure.xsl"
 
 # We're probably done if we get this far!
-touch "<%= @approot %>/.installed-keycloak-\
-  <%= @kc_release %>-postgresql-<%= @psql_driver_release =>"
+touch "<%= @approot %>/.installed-keycloak-<%= @kc_release %>-postgresql-<%= @psql_driver_release %>"

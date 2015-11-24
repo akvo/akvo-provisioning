@@ -15,6 +15,10 @@ class keycloak::install {
     ensure => 'installed'
   }
 
+  package { 'libsaxon-java':
+    ensure => 'installed'
+  }
+
   package { 'postgresql-client':
     ensure => 'installed'
   }
@@ -60,6 +64,14 @@ class keycloak::install {
     group   => 'keycloak',
     mode    => '0644',
     content => template('keycloak/module.xml.erb')
+  }
+
+  file { "${appdir}/configure.xsl":
+    ensure  => 'present',
+    owner   => 'keycloak',
+    group   => 'keycloak',
+    mode    => '0644',
+    content => template('keycloak/configure.xsl.erb')
   }
 
   database::psql::db { $db_name:
