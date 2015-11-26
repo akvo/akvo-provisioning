@@ -21,7 +21,7 @@ EOF
         sudo -u postgres psql $id<<EOF 
             CREATE TABLE IF NOT EXISTS event_log (
               id BIGSERIAL PRIMARY KEY,
-              payload JSONB
+              payload JSONB UNIQUE
             );
             ALTER TABLE event_log OWNER TO unilog;
             CREATE INDEX
