@@ -3,6 +3,7 @@ class keycloak::install {
 
   $appdir              = $keycloak::appdir
   $approot             = $keycloak::approot
+  $config_dir          = $keycloak::config_dir
   $db_name             = $keycloak::db_name
   $db_password         = $keycloak::db_password
   $kc_release          = $keycloak::kc_release
