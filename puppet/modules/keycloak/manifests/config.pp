@@ -10,15 +10,6 @@ class keycloak::config {
   
   sudo::admin_user { 'stellan': }
 
-  # Drop in a new config file that uses psql db and nginx proxy
-  file { "${appdir}/standalone/configuration/standalone.xml":
-    ensure  => present,
-    owner   => 'keycloak',
-    group   => 'keycloak',
-    mode    => '0644',
-    content => template('keycloak/standalone.xml.erb')
-  }
-
   named::service_location { 'login':
     ip => $ip
   }

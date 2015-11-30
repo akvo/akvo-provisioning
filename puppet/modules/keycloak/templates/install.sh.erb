@@ -18,9 +18,9 @@ wget -qO- "${KEYCLOAK}" | tar xvz
 mkdir -p "<%= @psql_driver_dir %>"
 cd "<%= @psql_driver_dir %>"
 wget -N "${POSTGRESQL_DRIVER}"
-saxonb-xslt "-s:<%= @config_file %>" \
-  "-xsl:<%= @appdir/configure.xsl %>" \
-  "-o:<%= @config_file %>"
+saxon-xslt "-o <%= @config_file %>" \
+  "<%= @config_file %>" \
+  "<%= @appdir %>/configure.xsl"
 
 
 ### Akvo theme
