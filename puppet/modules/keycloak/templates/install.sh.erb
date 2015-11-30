@@ -5,19 +5,19 @@ set -e
 
 ### Environment
 FILES="http://files.support.akvo-ops.org/keycloak"
-KEYCLOAK="${FILES}/<%= @kc_release %>.tar.gz"
+KEYCLOAK="${FILES}/keycloak-<%= @kc_release %>.tar.gz"
 KEYCLOAK_THEME="${FILES}/themes.tar.gz"
 POSTGRESQL_DRIVER="${FILES}/postgresql-<%= @psql_driver_release %>.jar"
 
 
 ### Keycloak
-wget -qO- "${KEYCLOAK}" | tar xvz
+curl "${KEYCLOAK}" | tar xvz
 
 
 ### PostgreSQL driver
 mkdir -p "<%= @psql_driver_dir %>"
 cd "<%= @psql_driver_dir %>"
-wget -N "${POSTGRESQL_DRIVER}"
+curl "${POSTGRESQL_DRIVER}"
 saxon-xslt "-o <%= @config_file %>" \
   "<%= @config_file %>" \
   "<%= @appdir %>/configure.xsl"
@@ -25,7 +25,7 @@ saxon-xslt "-o <%= @config_file %>" \
 
 ### Akvo theme
 cd "<%= @appdir %>"
-wget -qO- "${KEYCLOAK_THEME}" | tar xvz
+curl "${KEYCLOAK_THEME}" | tar xvz
 
 
 ### We're probably done if we get this far!
