@@ -17,6 +17,7 @@ class keycloak::params {
   $kc_release          = '1.6.1.Final'
   $approot             = '/opt/keycloak'
   $appdir              = "${approot}/keycloak-${kc_release}"
+  $config_file         = "${appdir}/standalone/configuration/standalone.xml"
 
   $psql_driver_release = '9.4-1205-jdbc42'
   $psql_driver_dir     = "${appdir}/modules/system/layers/base/org/postgresql/jdbc/main"
