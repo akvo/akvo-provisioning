@@ -19,20 +19,21 @@ FROM jboss/keycloak
 MAINTAINER Stichting Akvo (Akvo Foundation)
 
 # Environment setup
-ENV KEYCLOAK_DIR         /opt/jboss/keycloak
-ENV KEYCLOAK_CONFIG_FILE $KEYCLOAK_DIR/standalone/configuration/standalone.xml
-ENV KEYCLOAK_THEME_FILE  http://files.support.akvo-ops.org/keycloak/themes.tar.gz
-ENV PSQL_DRIVER_DIR      $KEYCLOAK_DIR/modules/system/layers/base/org/postgresql/jdbc/main
-ENV PSQL_DRIVER_VERSION  9.4-1204-jdbc42
-ENV PSQL_DRIVER_URL      https://search.maven.org/remotecontent?filepath=org/postgresql/postgresql/$PSQL_DRIVER_VERSION/$PSQL_DRIVER_VERSION.jar
-ENV PSQL_DB              keycloak
-ENV PSQL_USERNAME        keycloak
-ENV PSQL_PASSWORD        ????????
-ENV SAXON                java -jar /usr/share/java/saxon.jar
+ENV AKVO_FILES_BASE_URL        http://files.support.akvo-ops.org/keycloak
+ENV KEYCLOAK_DIR               /opt/jboss/keycloak
+ENV KEYCLOAK_CONFIG_FILE       $KEYCLOAK_DIR/standalone/configuration/standalone.xml
+ENV KEYCLOAK_THEME_FILE        $AKVO_FILES_BASE_URL/themes.tar.gz
+ENV POSTGRESQL_DRIVER_DIR      $KEYCLOAK_DIR/modules/system/layers/base/org/postgresql/jdbc/main
+ENV POSTGRESQL_DRIVER_VERSION  9.4-1205-jdbc42
+ENV POSTGRESQL_DRIVER_URL      $AKVO_FILES_BASE_URL/postgresql-$POSTGRESQL_DRIVER_VERSION.jar
+ENV POSTGRESQL_DB              keycloak
+ENV POSTGRESQL_PORT            5432
+ENV POSTGRESQL_USERNAME        keycloak
+ENV POSTGRESQL_PASSWORD        ????????
 
 # Install Akvo theme
 RUN cd $KEYCLOAK_DIR
-RUN curl -L $KEYCLOAK_THEME_FILE | tar xz
+RUN curl -L $KEYCLOAK_THEME_FILE | tar xvz
 
 # Install PostgreSQL JDBC driver
 RUN mkdir -p $PSQL_DRIVER_DIR
@@ -42,4 +43,4 @@ ADD module.xml $PSQL_DRIVER_DIR
 
 # Post-install configuration
 ADD configure.xsl $KEYCLOAK_DIR
-RUN $SAXON -s:$KEYCLOAK_CONFIG_FILE -xsl:$KEYCLOAK_DIR/configure.xsl -o:$KEYCLOAK_CONFIG_FILE
+RUN saxon-xslt -o $KEYCLOAK_CONFIG_FILE $KEYCLOAK_CONFIG_FILE $KEYCLOAK_DIR/configure.xsl

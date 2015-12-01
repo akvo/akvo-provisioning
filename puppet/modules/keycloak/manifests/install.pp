@@ -4,8 +4,10 @@ class keycloak::install {
   $appdir              = $keycloak::appdir
   $approot             = $keycloak::approot
   $config_dir          = $keycloak::config_dir
+  $db_host             = $keycloak::db_host
   $db_name             = $keycloak::db_name
   $db_password         = $keycloak::db_password
+  $db_username         = $keycloak::db_username
   $kc_release          = $keycloak::kc_release
   $port                = $keycloak::port
   $psql_driver_dir     = $keycloak::psql_driver_dir
@@ -67,7 +69,7 @@ class keycloak::install {
     content => template('keycloak/module.xml.erb')
   }
 
-  file { "${appdir}/configure.xsl":
+  file { "${approot}/configure.xsl":
     ensure  => 'present',
     owner   => 'keycloak',
     group   => 'keycloak',
