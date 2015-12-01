@@ -24,12 +24,12 @@ ENV KEYCLOAK_DIR               /opt/jboss/keycloak
 ENV KEYCLOAK_CONFIG_FILE       $KEYCLOAK_DIR/standalone/configuration/standalone.xml
 ENV KEYCLOAK_THEME_FILE        $AKVO_FILES_BASE_URL/themes.tar.gz
 ENV POSTGRESQL_DRIVER_DIR      $KEYCLOAK_DIR/modules/system/layers/base/org/postgresql/jdbc/main
-ENV POSTGRESQL_DRIVER_VERSION  9.4-1205-jdbc42
+ENV POSTGRESQL_DRIVER_VERSION  9.4-1206-jdbc42
 ENV POSTGRESQL_DRIVER_URL      $AKVO_FILES_BASE_URL/postgresql-$POSTGRESQL_DRIVER_VERSION.jar
 ENV POSTGRESQL_DB              keycloak
 ENV POSTGRESQL_PORT            5432
 ENV POSTGRESQL_USERNAME        keycloak
-ENV POSTGRESQL_PASSWORD        ????????
+ENV POSTGRESQL_PASSWORD        password
 
 # Install Akvo theme
 RUN cd $KEYCLOAK_DIR
