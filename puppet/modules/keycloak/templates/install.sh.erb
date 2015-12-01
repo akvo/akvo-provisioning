@@ -18,9 +18,6 @@ curl "${KEYCLOAK}" | tar xvz
 mkdir -p "<%= @psql_driver_dir %>"
 cd "<%= @psql_driver_dir %>"
 curl "${POSTGRESQL_DRIVER}"
-saxon-xslt "-o <%= @config_file %>" \
-  "<%= @config_file %>" \
-  "<%= @approot %>/configure.xsl"
 
 
 ### Akvo theme

@@ -2,6 +2,7 @@
 class keycloak (
   $appppdir            = $keycloak::params::appdir,
   $approot             = $keycloak::params::approot,
+  $config_file         = $keycloak::params::config_file,
   $db_host             = $keycloak::params::db_host,
   $db_password         = $keycloak::params::db_password,
   $db_name             = $keycloak::params::db_name,
