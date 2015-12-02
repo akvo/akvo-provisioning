@@ -5,7 +5,7 @@ class keycloak::install {
 
   $appdir              = $keycloak::appdir
   $approot             = $keycloak::approot
-  $config_dir          = $keycloak::config_dir
+  $config_file         = $keycloak::config_file
   $db_host             = $keycloak::db_host
   $db_name             = $keycloak::db_name
   $db_password         = $keycloak::db_password
@@ -28,7 +28,7 @@ class keycloak::install {
     ensure => 'installed'
   }
 
-  package { 'json': 
+  package { 'json':
     ensure   => 'installed',
     provider => 'npm'
   }
