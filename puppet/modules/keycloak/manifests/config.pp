@@ -25,11 +25,4 @@ class keycloak::config {
     htpasswd                 => false
   }
 
-  # Configure Keycloak
-  exec { 'saxon-xslt':
-    command => "saxon-xslt -o ${config_file} ${config_file} \
-                ${approot}/configure.xsl",
-    path    => '/usr/bin'
-  }
-
 }

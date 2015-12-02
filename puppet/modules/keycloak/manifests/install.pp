@@ -1,6 +1,8 @@
 # Install Keycloak and its dependencies
 class keycloak::install {
 
+  include nodejs
+
   $appdir              = $keycloak::appdir
   $approot             = $keycloak::approot
   $config_dir          = $keycloak::config_dir
@@ -26,6 +28,11 @@ class keycloak::install {
     ensure => 'installed'
   }
 
+  package { 'json': 
+    ensure   => 'installed',
+    provider => 'npm'
+  }
+    
   user { 'keycloak':
     ensure => 'present',
     shell  => '/bin/bash',
