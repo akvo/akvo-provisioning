@@ -51,12 +51,8 @@ EXIT_CODE=$((EXIT_CODE + CUR_EXIT_CODE))
 HOST=$(hostname -f)
 LINE_COUNT=$(wc -l $LOGFILE)
 
-if [ $EXIT_CODE -eq 0 ]
+if [ $EXIT_CODE -ne 0 ]
 then
-    STATUS='SUCCESS'
-else
-    STATUS='FAILURE'
+    SUBJ="[${STATUS}] [<%= @environment %>] [backup] [<%= @hostname %>] Backup of ${SOURCE} complete : lc ${LINE_COUNT}"
+    cat -v $LOGFILE | mail -s "${SUBJ}" devops@akvo.org
 fi
-
-SUBJ="[${STATUS}] [<%= @environment %>] [backup] [<%= @hostname %>] Backup of ${SOURCE} complete : lc ${LINE_COUNT}"
-cat -v $LOGFILE | mail -s "${SUBJ}" devops@akvo.org
