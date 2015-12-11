@@ -15,7 +15,7 @@ class unilog::install inherits unilog::params {
         deploy_key => hiera('unilog-deploy_public_key')
     }
 
-    file { [ "${approot}/versions", "${approot}/config" ]:
+    file { [ "${approot}/versions", "${approot}/config", "${approot}/tmp" ]:
         ensure  => directory,
         owner   => $username,
         group   => $username,
@@ -23,31 +23,10 @@ class unilog::install inherits unilog::params {
         require => [ User[$username], Group[$username], File[$approot] ],
     }
 
-    # config file
-    file { "${approot}/config/config.edn":
-        ensure   => present,
-        owner    => $username,
-        group    => $username,
-        mode     => '0444',
-        content  => template('unilog/config.edn.erb'),
-        require  => File["${approot}/config"],
-        notify   => Class['supervisord::update']
-    }
-
     # include the script for initializing the database for each FLOW server configuration
     file { "${approot}/initialize_db.sh":
         ensure  => present,
         content => template('unilog/initialize_db.sh.erb'),
-        owner   => $username,
-        group   => $username,
-        mode    => '0744',
-        require => [ User[$username], Group[$username], File[$approot] ]
-    }
-
-    # include the script for installing app dependencies
-    file { "${approot}/install_flow_config.sh":
-        ensure  => present,
-        content => template('unilog/install_flow_config.sh.erb'),
         owner   => $username,
         group   => $username,
         mode    => '0744',
