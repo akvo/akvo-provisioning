@@ -15,6 +15,16 @@ class unilog::install inherits unilog::params {
         deploy_key => hiera('unilog-deploy_public_key')
     }
 
+    # add unilog user private key
+    file { "${approot}/.ssh/id_rsa":
+        ensure  => present,
+        owner   => 'backup',
+        group   => 'backup',
+        mode    => '0600',
+        content => hiera('unilog_private_key'),
+        require => Akvoapp[$username]
+    }
+
     file { [ "${approot}/versions", "${approot}/config", "${approot}/tmp" ]:
         ensure  => directory,
         owner   => $username,
