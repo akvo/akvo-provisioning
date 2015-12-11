@@ -3,7 +3,7 @@ class unilog::service inherits unilog::params {
     # configure a service so we can start, stop and restart unilog
     supervisord::service { $appname:
         user      => $username,
-        command   => "/opt/leiningen/lein trampoline run -m akvo-unified-log.core ${approot}/config/config.edn",
+        command   => "/opt/leiningen/lein trampoline run ${approot}/tmp ${::environment}.edn",
         directory => $workdir,
         logdir    => $logdir,
         env_vars  => $env_vars
