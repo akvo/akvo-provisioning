@@ -3,29 +3,27 @@
 set -e
 
 
-### Environment
-FILES="http://files.support.akvo-ops.org/keycloak"
-KEYCLOAK="${FILES}/keycloak-<%= @kc_release %>.tar.gz"
-KEYCLOAK_THEME="${FILES}/themes.tar.gz"
-POSTGRESQL_DRIVER="${FILES}/postgresql-<%= @psql_driver_release %>.jar"
-
-
 ### Fetch and unpack Keycloak
-curl "${KEYCLOAK}" | tar xz
+KEYCLOAK_URL="http://downloads.jboss.org/keycloak/1.6.1.Final/\
+  keycloak-<%= @kc_release %>"
+curl -L "${KEYCLOAK_URL}" | tar xz &&
 
 
 ### Fetch and configure PostgreSQL JDBC driver
+POSTGRESQL_DRIVER_URL="https://jdbc.postgresql.org/download/\
+  postgresql-<%= @postgresql_driver_release %>.jar"
 mkdir -p "<%= @psql_driver_dir %>"
 cd "<%= @psql_driver_dir %>"
-curl "${POSTGRESQL_DRIVER}"
+curl -LO "${POSTGRESQL_DRIVER_URL}" &&
 saxon-xslt -o "<%= @config_file %>" "<%= @config_file %>" \
   "<%= @approot %>/configure.xsl"
 
 
 ### Fetch and configure custom Akvo theme
+THEME_URL="http://files.support.akvo-ops.org/keycloak/themes.tar.gz"
 cd "<%= @appdir %>"
-curl "${KEYCLOAK_THEME}" | tar xz
+curl "${THEME_URL}" | tar xz &&
 
 
-### We're probably done if we get this far!
+### We are probably done if we get this far!
 touch "<%= @approot %>/.installed-keycloak-<%= @kc_release %>"

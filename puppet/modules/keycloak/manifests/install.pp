@@ -32,7 +32,7 @@ class keycloak::install {
     ensure   => 'installed',
     provider => 'npm'
   }
-    
+
   user { 'keycloak':
     ensure => 'present',
     shell  => '/bin/bash',
