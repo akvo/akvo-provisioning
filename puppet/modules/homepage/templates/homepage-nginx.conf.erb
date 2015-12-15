@@ -25,7 +25,7 @@ server {
     rewrite ^/help/akvopedia-help$ /help/help-support/akvopedia-help/ redirect;
 
     # https://github.com/akvo/akvo-provisioning/issues/231
-    rewrite ^/help/help-support/flow-help(.*)$ http://flowsupport.akvo.org/ redirect;
+    rewrite ^/help/help-support/flow-help(.*)$ http://flowsupport.akvo.org/ permanent;
 
     # https://github.com/akvo/akvo-provisioning/issues/192
     rewrite ^/about-us/foundations /about-us/organisations permanent;
