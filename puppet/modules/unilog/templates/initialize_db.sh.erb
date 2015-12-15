@@ -10,7 +10,7 @@ for server_config in `find <%= @approot %>/akvo-flow-server-config/ -not -path '
         echo "DB for organization '$id' doesn't exist, thus creating and initializing..."
         sudo -u postgres psql<< EOF
             CREATE DATABASE "$id"
-            WITH OWNER "postgres"
+            WITH OWNER "unilog"
             TEMPLATE = template0
             ENCODING 'UTF8'
             LC_COLLATE 'C'
