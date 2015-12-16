@@ -1,0 +1,27 @@
+# Configuration file for a development environment
+
+editor:
+  environment:
+    - VIRTUAL_HOST=cdb.akvotest.org,*.cdb.akvotest.org
+    - RAILS_ENV=development
+    - V=3.10.2
+    - SUBDOMAIN=akvotest
+    - PASSWORD=akvotest
+    - ADMIN_PASSWORD=akvotest
+    - EMAIL=devops@akvo.org
+
+sqlapi:
+  environment:
+    - ENV=development
+    - V=1.24.0
+  command: development
+
+mapsapi:
+  environment:
+    - ENV=development
+    - V=2.19.1
+  command: development
+
+postgres:
+  environment:
+    - V=0.7.3
