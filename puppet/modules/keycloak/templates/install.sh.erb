@@ -4,7 +4,7 @@ set -e
 
 
 ### Fetch and unpack Keycloak
-keycloak_url="http://downloads.jboss.org/keycloak/1.6.1.Final/\
+keycloak_url="http://downloads.jboss.org/keycloak/<%= @kc_release %>/\
   keycloak-<%= @kc_release %>"
 curl -L "${keycloak_url}" | tar xz &&
 
