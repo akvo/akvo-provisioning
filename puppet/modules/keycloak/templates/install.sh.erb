@@ -4,25 +4,25 @@ set -e
 
 
 ### Fetch and unpack Keycloak
-KEYCLOAK_URL="http://downloads.jboss.org/keycloak/1.6.1.Final/\
+keycloak_url="http://downloads.jboss.org/keycloak/1.6.1.Final/\
   keycloak-<%= @kc_release %>"
-curl -L "${KEYCLOAK_URL}" | tar xz &&
+curl -L "${keycloak_url}" | tar xz &&
 
 
 ### Fetch and configure PostgreSQL JDBC driver
-POSTGRESQL_DRIVER_URL="https://jdbc.postgresql.org/download/\
-  postgresql-<%= @postgresql_driver_release %>.jar"
+psql_driver_url="https://jdbc.postgresql.org/download/\
+  postgresql-<%= @psql_driver_release %>.jar"
 mkdir -p "<%= @psql_driver_dir %>"
 cd "<%= @psql_driver_dir %>"
-curl -LO "${POSTGRESQL_DRIVER_URL}" &&
+curl -LO "${psql_driver_url}" &&
 saxon-xslt -o "<%= @config_file %>" "<%= @config_file %>" \
   "<%= @approot %>/configure.xsl"
 
 
 ### Fetch and configure custom Akvo theme
-THEME_URL="http://files.support.akvo-ops.org/keycloak/themes.tar.gz"
+theme_url="http://files.support.akvo-ops.org/keycloak/themes.tar.gz"
 cd "<%= @appdir %>"
-curl "${THEME_URL}" | tar xz &&
+curl "${theme_url}" | tar xz &&
 
 
 ### We are probably done if we get this far!
