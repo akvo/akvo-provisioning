@@ -16,13 +16,13 @@ curl -L "${keycloak}" | tar xz &&
 ### PostgreSQL JDBC driver
 psql_driver="${files}/postgresql-<%= @psql_driver_release %>.jar"
 psql_driver_dir="<%= @appdir %>/modules/system/layers/base/org/postgresql/jdbc/main"
-config_file="<%= @approot %>/standalone/configuration/standalone.xml"
+config_file="<%= @appdir %>/standalone/configuration/standalone.xml"
 
 mkdir -p "${psql_driver_dir}"
 cd "${psql_driver_dir}"
 cp "<%= @approot %>/module.xml" .
 curl -LO "${psql_driver}" &&
-saxon-xslt -o "${config_file}" "${config_file$}" \
+saxon-xslt -o "${config_file}" "${config_file}" \
     "<%= @approot %>/configure.xsl" &&
 
 
