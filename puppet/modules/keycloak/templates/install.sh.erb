@@ -3,18 +3,14 @@
 set -e
 
 
-### Files
-files="http://files.support.akvo-ops.org/keycloak/"
-
-
 ### Keycloak
-keycloak="${files}/keycloak-<%= @kc_release %>.tar.gz"
+keycloak="http://downloads.jboss.org/keycloak/<%= @kc_release %>/keycloak-<%= @kc_release %>.tar.gz"
 
 curl -L "${keycloak}" | tar xz &&
 
 
 ### PostgreSQL JDBC driver
-psql_driver="${files}/postgresql-<%= @psql_driver_release %>.jar"
+psql_driver="https://jdbc.postgresql.org/download/postgresql-<%= @psql_driver_release %>.jar"
 psql_driver_dir="<%= @appdir %>/modules/system/layers/base/org/postgresql/jdbc/main"
 config_file="<%= @appdir %>/standalone/configuration/standalone.xml"
 
@@ -22,12 +18,11 @@ mkdir -p "${psql_driver_dir}"
 cd "${psql_driver_dir}"
 cp "<%= @approot %>/module.xml" .
 curl -LO "${psql_driver}" &&
-saxon-xslt -o "${config_file}" "${config_file}" \
-    "<%= @approot %>/configure.xsl" &&
+saxon-xslt -o "${config_file}" "${config_file}" "<%= @approot %>/configure.xsl" &&
 
 
 ### Akvo theme
-theme="${files}/themes.tar.gz"
+theme="http://files.support.akvo-ops.org/keycloak/themes.tar.gz"
 
 cd "<%= @appdir %>" &&
 curl "${theme}" | tar xz &&
