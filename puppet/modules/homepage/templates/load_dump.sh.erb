@@ -1,0 +1,40 @@
+#!/bin/bash
+set -e
+
+DBUSER=homepage
+DBPASS=<%= @db_password %>
+DBNAME=homepage
+WORKDIR=/tmp/homepage-load
+DUMPDIR=/var/akvo/homepage/dump
+
+# Make sure we have a clean working dir
+sudo rm -rfv $WORKDIR
+mkdir -p $WORKDIR
+
+# Extract to workingdir
+tar -C $WORKDIR -zxvf $DUMPDIR/homepage_dump.tar.gz
+
+# Content
+sudo -u $DBUSER bash <<EOF
+rm -rfv /var/akvo/homepage/uploads
+cp -rv $WORKDIR/uploads /var/akvo/homepage/uploads
+EOF
+
+# MySQL
+echo "Cleaning DB"
+mysql -u $DBUSER -p$DBPASS <<EOF
+DROP DATABASE $DBNAME;
+CREATE DATABASE $DBNAME;
+EOF
+echo "Dumping sql file"
+mysql -u $DBUSER -p$DBPASS -D $DBNAME < $WORKDIR/homepage.sql
+
+# Update site url
+mysql -u $DBUSER -p$DBPASS -D $DBNAME <<EOF
+update wi1_options set option_value = '<%= @homepage_url %>' where option_name = 'home' or option_name = 'siteurl';
+EOF
+
+# Cleanup
+sudo rm -rfv $WORKDIR
+
+echo "Done loading new data!"
