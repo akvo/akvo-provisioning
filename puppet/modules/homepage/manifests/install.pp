@@ -41,6 +41,25 @@ class homepage::install inherits homepage::params {
         require => File[$appdir]
     }
 
+    # include scripts for managing database and uploads dump
+    file { "${appdir}/dump.sh":
+        ensure  => present,
+        owner   => $username,
+        group   => $username,
+        mode    => '0744',
+        content => template('homepage/dump.sh.erb'),
+        require => File[$appdir]
+    }
+
+    file { "${appdir}/load_dump.sh":
+        ensure  => present,
+        owner   => $username,
+        group   => $username,
+        mode    => '0744',
+        content => template('homepage/load_dump.sh.erb'),
+        require => File[$appdir]
+    }
+
     if hiera('homepage_leech') {
         class { 'homepage::leech': }
     }

@@ -137,8 +137,8 @@ def create_client_cert():
     """
     Generates a certificate and a private key to be used by the puppet client
     """
-    # special case for vagrant VMs: need to run as sudo
-    if env.environment == 'localdev':
+    # special case for vagrant and EC2 VMs: need to run as sudo
+    if env.environment in ('localdev', 'ec2'):
         sudo('mkdir -p /var/lib/puppet/ssl/{private_keys,certs}')
         sudo('chown -R puppet.puppet /var/lib/puppet/ssl')
     else:
@@ -148,8 +148,8 @@ def create_client_cert():
     cacrt = _get_config_file_path('puppetdb_ca_cert') or _get_key_file_path('puppetdb-ca.crt')
     cakey = _get_config_file_path('puppetdb_ca_key') or _get_key_file_path('puppetdb-ca.key')
 
-    # special case for vagrant VMs: need to run as sudo
-    if env.environment == 'localdev':
+    # special case for vagrant and EC2 VMs: need to run as sudo
+    if env.environment in ('localdev', 'ec2'):
         put(cacrt, '/var/lib/puppet/ssl/certs/ca.pem', use_sudo=True)
     else:
         put(cacrt, '/var/lib/puppet/ssl/certs/ca.pem')
@@ -165,8 +165,8 @@ def create_client_cert():
                 local('openssl x509 -req -days 3650 -in %s '
                       '-CA %s -CAkey %s -set_serial 01 -out %s' % (csrfile.name, cacrt, cakey, crtfile.name))
 
-                # special case for vagrant VMs: need to run as sudo
-                if env.environment == 'localdev':
+                # special case for vagrant and EC2 VMs: need to run as sudo
+                if env.environment in ('localdev', 'ec2'):
                     put(keyfile.name, '/var/lib/puppet/ssl/private_keys/%s.pem' % hostname, use_sudo=True)
                     put(crtfile.name, '/var/lib/puppet/ssl/certs/%s.pem' % hostname, use_sudo=True)
                 else:

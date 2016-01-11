@@ -1,18 +1,14 @@
 # Install Keycloak and its dependencies
 class keycloak::install {
 
-  include nodejs
-
   $appdir              = $keycloak::appdir
   $approot             = $keycloak::approot
-  $config_file         = $keycloak::config_file
   $db_host             = $keycloak::db_host
   $db_name             = $keycloak::db_name
   $db_password         = $keycloak::db_password
   $db_username         = $keycloak::db_username
   $kc_release          = $keycloak::kc_release
   $port                = $keycloak::port
-  $psql_driver_dir     = $keycloak::psql_driver_dir
   $psql_driver_release = $keycloak::psql_driver_release
   $psql_name           = $keycloak::psql_name
 
@@ -26,11 +22,6 @@ class keycloak::install {
 
   package { 'postgresql-client':
     ensure => 'installed'
-  }
-
-  package { 'json':
-    ensure   => 'installed',
-    provider => 'npm'
   }
 
   user { 'keycloak':
@@ -68,7 +59,7 @@ class keycloak::install {
                 Package['postgresql-client']]
   }
 
-  file { "${psql_driver_dir}/module.xml":
+  file { "${approot}/module.xml":
     ensure  => 'present',
     owner   => 'keycloak',
     group   => 'keycloak',

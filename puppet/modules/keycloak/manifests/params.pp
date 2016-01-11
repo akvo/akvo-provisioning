@@ -14,12 +14,10 @@ class keycloak::params {
   $db_name             = 'keycloak'
   $db_password         = hiera('keycloak_database_password')
 
-  $kc_release          = '1.6.1.Final'
+  $kc_release          = '1.7.0.Final'
   $approot             = '/opt/keycloak'
   $appdir              = "${approot}/keycloak-${kc_release}"
-  $config_file         = "${appdir}/standalone/configuration/standalone.xml"
 
-  $psql_driver_release = '9.4-1206-jdbc42'
-  $psql_driver_dir     = "${appdir}/modules/system/layers/base/org/postgresql/jdbc/main"
+  $psql_driver_release = '9.4-1206-jdbc41'
 
 }

@@ -1,0 +1,26 @@
+#!/bin/bash
+set -e
+
+DBHOST=mysql.live.akvo-ops.org
+DBUSER=<%= @username %>
+DBPASS=<%= @db_password %>
+DBNAME=<%= @username %>
+
+WORDIR=/tmp/homepage-dump
+UPLOADSDIR=/var/akvo/homepage/uploads
+
+# Create a tmp directory
+rm -rfv $WORKDIR
+mkdir -p $WORKDIR
+
+# MySQL
+mysqldump -h $DBHOST -u $DBUSER -p $DBPASS $DBNAME > $WORKDIR/homepage.sql
+cp -R $UPLOADSDIR $WORKDIR/uploads
+
+# Compressing uploads and DB dump
+sudo -u homepage bash <<EOF
+cd $WORKDIR
+tar -zcvf ../homepage_dump.`date +"%Y%m%d_%H%M%S"`.tar.gz .
+EOF
+
+echo "Dump baked in $WORKDIR"
