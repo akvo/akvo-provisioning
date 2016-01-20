@@ -1,4 +1,10 @@
 # Configuration file for a development environment
+#
+# TODO we'll be able to provide "arguments" once docker-compose 1.6.0 is released
+# e.g.
+#  arguments:
+#    - env=whatever
+#    - v=X.Y.Z
 
 editor:
   environment:
@@ -9,19 +15,3 @@ editor:
     - PASSWORD=akvotest
     - ADMIN_PASSWORD=akvotest
     - EMAIL=devops@akvo.org
-
-sqlapi:
-  environment:
-    - ENV=development
-    - V=1.24.0
-  command: development
-
-mapsapi:
-  environment:
-    - ENV=development
-    - V=2.19.1
-  command: development
-
-postgres:
-  environment:
-    - V=0.7.3

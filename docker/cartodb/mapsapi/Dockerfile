@@ -3,7 +3,7 @@ MAINTAINER Akvo Foundation <devops@akvo.org>
 
 # Capture build-time variable
 ARG env=development
-ARG v=2.19.1
+ARG v=2.6.1
 
 # Install build dependencies
 ENV DEBIAN_FRONTEND noninteractive

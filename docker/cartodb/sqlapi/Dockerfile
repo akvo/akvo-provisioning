@@ -4,7 +4,7 @@ MAINTAINER Akvo Foundation <devops@akvo.org>
 
 # Capture build-time variable
 ARG env=development
-ARG v=1.24.0
+ARG v=1.23.0
 
 # Install build dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
