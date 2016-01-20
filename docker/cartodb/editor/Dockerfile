@@ -2,7 +2,7 @@ FROM ubuntu:14.04
 MAINTAINER Akvo Foundation <devops@akvo.org>
 
 # Capture build-time variable
-ARG env=development
+ARG env
 ARG v=3.10.2
 ENV RAILS_ENV ${env:-development}
 
@@ -63,7 +63,7 @@ RUN npm install && \
 # Precompile assets for a given environment
 RUN npm install -g grunt-cli
 ENV PATH ./node_modules/grunt-cli/bin:$PATH
-RUN /bin/bash -l -c 'bundle exec grunt --environment $env'
+RUN /bin/bash -l -c 'bundle exec grunt --environment $RAILS_ENV'
 
 # Copy configuration files
 ADD ./config/app_config.yml /home/cartodb/cartodb/config/app_config.yml
