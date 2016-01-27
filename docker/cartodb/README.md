@@ -4,7 +4,7 @@ Current `development` configuration is aimed to setup a testing environment, whe
 
 ### Automated reverse proxy
 Right now we use the [nginx-proxy](https://github.com/jwilder/nginx-proxy) docker image as an automated reverse proxy. It is based on [docker-gen](https://github.com/jwilder/docker-gen), which generates nginx configuration for containers running with the `VIRTUAL_HOST` environment variable. Note that requests are proxied to exposed port(s).
-TODO: [SSL support](https://github.com/jwilder/nginx-proxy#ssl-support)
+SSL is supported and the default behaviour is to redirect port 80 to 443, so HTTPS is always preferred when available.
 
 ### Orchestration
 Currently this multi-container application is orchestrated with [docker-compose](https://github.com/docker/compose). It is part of docker's own orchestration approach, along with [Swarm](https://docs.docker.com/swarm/) and [Machine](https://docs.docker.com/machine/) tools.
