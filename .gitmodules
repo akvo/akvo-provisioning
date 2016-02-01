@@ -58,3 +58,6 @@
 [submodule "puppet/ext/consul_template"]
 	path = puppet/ext/consul_template
 	url = https://github.com/gdhbashton/puppet-consul_template
+[submodule "redis"]
+	path = puppet/ext/redis
+	url = https://github.com/arioch/puppet-redis
