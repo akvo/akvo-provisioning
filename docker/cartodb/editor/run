@@ -1,0 +1,21 @@
+#!/bin/bash
+# Varnish and resque running into rails app container
+
+PORT=3000
+
+# docker-compose doesn't check dependant containers
+# Wait for the PSQL container to be ready
+sleep 10
+
+echo "----- Starting varnish service"
+service varnish start
+
+echo "----- Creating dev user"
+cd /home/cartodb/cartodb
+bash script/create_dev_user
+
+echo "----- Starting the resque process"
+bundle exec script/resque > log/resque.1.log 2>&1 &
+
+echo "----- Starting the editor server"
+bundle exec rails server -p $PORT
