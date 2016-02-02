@@ -48,3 +48,15 @@ server {
         client_max_body_size 30m;
     }
 }
+
+# permanent redirect - see https://github.com/akvo/akvo-provisioning/issues/252
+server {
+    listen 80;
+    server_name
+        <% @redirected_hostnames_walkingforwater.each do |site_hostname| %>
+        <%= site_hostname %>
+        www.<%= site_hostname %>
+        <%- end %>;
+
+    rewrite ^ http://walkingforwater.eu$request_uri? permanent;
+}
