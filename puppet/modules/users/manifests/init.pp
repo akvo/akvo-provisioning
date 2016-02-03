@@ -64,7 +64,7 @@ class users {
     }
 
     users::basic { 'ivan':
-        roles    => ['developer'],
+        roles    => ['ops','developer'],
         allow    => ['munin'],
         ssh_key  => 'AAAAB3NzaC1yc2EAAAADAQABAAABAQCb4zzpiWZA6Fks06WDYtVGENyJS4HBdoV3X6FjPmUiOG+R7nRo1dD+S5Zapz0itM+f4gal3HDX8w4IRYX5ngRWb/cpx9kjFa6rimZPan8WJ4rlreZqMdoIT0bxWQawbYU7120CshnmRRN07pOFtwfsaNn5+o1dE/P0qGTldBjDqOJLWCeFCBQKTsqQbLBGT4Ands0ilAE21WxCSEXQhS4MzlZbTCSM07MB2goTdGLiku6NLRrPt5FQcb4LvqnYJI3THwAO7vgoKR0xZEpxiOJNgN/fQ+bO13F6ulCTXTPpCncZji5p9nZnfwi4v0LHHmeGkFtrznibJ+ZM5YZQscvX',
         htpasswd => '$apr1$T.jIlS/U$3QmwUREyPTBJXfC9f6U8S.'
