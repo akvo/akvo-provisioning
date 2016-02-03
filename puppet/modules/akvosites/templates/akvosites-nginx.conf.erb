@@ -59,4 +59,20 @@ server {
         <%- end %>;
 
     rewrite ^ http://walkingforwater.eu$request_uri? permanent;
+    }
+
+# permanent redirect for washalliance.nl timeline
+server {
+    listen 80;
+    server_name
+        <% @redirected_hostnames_washalliance.each do |site_hostname| %>
+        <%= site_hostname %>
+        www.<%= site_hostname %>
+        <%- end %>;
+
+    rewrite ^/wash-timeline$ /wash-timeline/ permanent;
+
+    location ~ ^/wash-timeline/(.*)$ {
+        proxy_pass http://www.rainbowcollection.eu;
+    }
 }
