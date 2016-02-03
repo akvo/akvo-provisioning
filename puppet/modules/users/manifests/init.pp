@@ -66,8 +66,7 @@ class users {
     users::basic { 'ivan':
         roles    => ['developer'],
         allow    => ['munin'],
-        ssh_key  => 'AAAAB3NzaC1kc3MAAACBANzuaM/M9Xj2lxx8KvACWhXqfW4a00elyzZTYgMfK9LLmBS6MTkYkm2hP1vuU/o/1ocf52EVQPU27vrcslhlhHvec7y78b6xjl3MN77+tYbjZpQgTQfKfYtZoBcQwDbX6K0s9NfGALOR398Xa2zdDiRNKQ0ERETTY0vvVmd306lXAAAAFQDgqWJbZDp4BYecATtfwRll1hCozQAAAIEA2g00ovVLTFVNghzgiLvMKRdHDaoXVr1dBGGKfWX6KZe9uv6kuK0uQKUIoa1hiMVknFiegCnVIwy4tNdfDHBQibUFedWjRBMo8AbJZI9Ln84sYbE8+E9YgY/V1WudQhIazWjrgR/8Eq7wltxywSSO5BjM7ECwbcdjVU4Vv8/CuZIAAACAdkx8kthySQXoL4ZV3UeX219Aj7C3NRw2Is4WmdESDgfb0+ZFFys6ahowb8DfnUYBiDdFb9SEFH4pbqxo79aP3S6ZazcUSzx3CGv3+g+H/luTH2vGCfT/AAWN4fzmNFx8qVykunCltmGemH15SI8TczOW93ovpXDXf/T6VrmA8Wg=',
-        ssh_type => 'ssh-dss',
+        ssh_key  => 'AAAAB3NzaC1yc2EAAAADAQABAAABAQCb4zzpiWZA6Fks06WDYtVGENyJS4HBdoV3X6FjPmUiOG+R7nRo1dD+S5Zapz0itM+f4gal3HDX8w4IRYX5ngRWb/cpx9kjFa6rimZPan8WJ4rlreZqMdoIT0bxWQawbYU7120CshnmRRN07pOFtwfsaNn5+o1dE/P0qGTldBjDqOJLWCeFCBQKTsqQbLBGT4Ands0ilAE21WxCSEXQhS4MzlZbTCSM07MB2goTdGLiku6NLRrPt5FQcb4LvqnYJI3THwAO7vgoKR0xZEpxiOJNgN/fQ+bO13F6ulCTXTPpCncZji5p9nZnfwi4v0LHHmeGkFtrznibJ+ZM5YZQscvX',
         htpasswd => '$apr1$T.jIlS/U$3QmwUREyPTBJXfC9f6U8S.'
     }
 
