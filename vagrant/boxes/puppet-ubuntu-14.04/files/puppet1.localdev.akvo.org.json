@@ -1,0 +1,9 @@
+{
+    "roles": [
+        "puppetdb",
+        "management",
+        "psqlcartodb",
+        "redis"
+    ],
+    "psql_version": "9.3"
+}
