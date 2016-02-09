@@ -1,12 +1,17 @@
-from fabric.api import local, run, env, cd, sudo, put
-from fabric.contrib import files
-import time
-import os
-import tempfile
-import sys
-import re
 import json
+import os
+import re
+import sys
+import tempfile
+import time
 
+from fabric.api import cd, env, local, put, run, sudo
+from fabric.contrib import files
+
+from awsfabrictasks.decorators import ec2instance
+from awsfabrictasks.ec2.tasks import *
+from awsfabrictasks.regions import *
+from awsfabrictasks.conf import *
 
 # --------------------
 # defaults
