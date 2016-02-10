@@ -4,6 +4,9 @@ class role::redis {
     notice("Including role: redis")
     
     # running standalone mode
-    class { '::redis': } 
+    # listen on every network iface - access limited by firewall
+    class { '::redis':
+        bind => '0.0.0.0'
+    }
 
 }
