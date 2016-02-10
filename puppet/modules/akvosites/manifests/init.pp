@@ -59,14 +59,16 @@ class akvosites inherits akvosites::params {
         require => File["${app_path}/scripts"]
     }
 
-    cron { 'update_akvo_sites_data':
-        ensure  => present,
-        user    => 'akvosites',
-        weekday => '*',
-        hour    => '6',
-        minute  => '0',
-        command => "${app_path}/scripts/update_akvo_sites_data.sh",
-        require => File["${app_path}/scripts/update_akvo_sites_data.sh"]
+    if $install_crons {
+        cron { 'update_akvo_sites_data':
+            ensure  => present,
+            user    => 'akvosites',
+            weekday => '*',
+            hour    => '6',
+            minute  => '0',
+            command => "${app_path}/scripts/update_akvo_sites_data.sh",
+            require => File["${app_path}/scripts/update_akvo_sites_data.sh"]
+        }
     }
 
     database::my_sql::db { $db_name:
