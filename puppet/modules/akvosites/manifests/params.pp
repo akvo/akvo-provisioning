@@ -9,7 +9,7 @@ class akvosites::params {
     $all_hostnames = concat($akvosites_hostnames, [$default_domain])
     $app_path = '/var/akvo/akvosites'
     $pool_port = 9020
-    $pool_processes = 48
+    $pool_processes = 56
 
     $db_host = "${mysql_name}.${base_domain}"
     $db_name = hiera('akvosites_db_name', 'akvosites')
@@ -18,5 +18,6 @@ class akvosites::params {
     $wp_auto_update_core = hiera('wp_auto_update_core', false)
 
     $internal_subdomain = hiera('akvosites_internal_subdomain','akvosites')
+    $install_crons = hiera('akvosites_install_crons', true)
 
 }

@@ -121,6 +121,11 @@ class users {
         ssh_key => 'AAAAB3NzaC1yc2EAAAABIwAAAQEAoxg2EjL8iiEW93EXDVHNsYEefkuHd8v+sU+KiqGES5v1RdPrypWDR4qQqHbTrCfsyDexeq1zL2Pzd5Y35PQoBPPZSu2yq0ElbxOerLMilb++NxolkFBzzTO+WO8aQo4QVzXqcDbo91DWAb/xUkCGgYmVuSULJr1GYs097D4ShMAKNWNGwA+X4YZlUWXExnsJ8DGh8bhpStnNxY2+AwKLUiG0z8UMSxRWipNoN4rbGwhZ6Iozslgd8SHylLZX7NTkxy9Ammvjy4KKnQ8DLaXJxf49/mwOqDMTiYVAUTffdu/JHLD5TFJyPcqgeoQEQCsoXQ1nOdRaqVMu5CIXZlsd1Q=='
     }
 
+    users::basic { 'samuel':
+        roles   => ['developer'],
+        ssh_key => 'AAAAB3NzaC1yc2EAAAADAQABAAACAQDaU4svvbLbk+wXQc2IcbBkpJmwaVBqiXE8DRE4wWp+avIxylOcbULgIV2CyTa2SeMS9UIcXpINKX2t1EMzfWIVqyZwde3rnQ1opyWmDz+Uvs3YEqeSS/3M/Td5Y9YkRLlGelJmgGEF4gOLMV2n0Lo8fi0SOxoyhnx9lP1GgJiqkGRswN4EQuHMVeP27rsq3v34mVgXOXGUqZAOVgDbz127SLuvi4jTqZFHSeAislrqdEkkBoatBcNnjIhPZMY284mzQ5D0z4Kd8numA/h6k+lY3Ebxl+6XJPLpuaKAa+yJhUQ1OGnDqdkv2/t0DnYMWil5ndupUF8/5vZDFXPg8o3KlndYSUPuRb1+PIxdhrQFrCgrLpbe4Qp3wAaKYSoyk0hyYSOwesyAxf0nIZFk1kdSAA8YygP6IK9D3lWa2H3oEc49/jY+ZlMPgukuuYs+N4diuenPu0kxueoEXh1+ZRSZfuYi2dfKAZioIVABuWnWJaUwum7p/m+ZCwWpe1dbPbVCwIvLcapeDWabBmItqw+ZCmWE40PNXUTPGTevZyNoMaTtDD/ol5KpatsC38KU+RKM3atwPRsBu5OHd0irLLRu6U7SrNHKjJcsgjKpPWGV3lkD+y65qX4N38YlGUqNkuE5hqW6B99gsXa+8sylkR2SPxLAvtWjWosGF5wNYrc7Jw=='
+    }
+
     # removed users
     users::remove_user { ['neha']: }
     users::remove_user { ['lauri']: }
