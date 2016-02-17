@@ -4,10 +4,9 @@
 # To use the AWS-specific Fabric tasks, you **must** have an AWS credentials
 # file in your home directory at $HOME/.aws/credentials
 
-_images = {"ubuntu-14.04-lts": "ami-f95ef58a"}
 
 _common_config = {
-    "ami": _images["ubuntu-14.04-lts"],
+    "ami": "ami-f95ef58a",
     "security_groups": ["default"],
     "region": "eu-west-1",
     "availability_zone": "c",
@@ -17,15 +16,22 @@ _common_config = {
 }
 
 _configs = {
-    "t2.micro": {},
-    "t2.small": {},
-    "td.medium": {},
-    "t2.large": {},
-    "m4.large": {},
-    "m4.xlarge": {},
-    "m4.2xlarge": {},
-    "m4.4xlarge": {},
-    "m4.10xlarge": {}
+    "t2.micro": {
+        "description": "Ubuntu 14.04LTS on a t2.micro instance",
+        "instance_type": "t2.micro",
+    },
+    "t2.small": {
+        "description": "Ubuntu 14.04LTS on a t2.small instance",
+        "instance_type": "t2.small",
+    },
+    "t2.medium": {
+        "description": "Ubuntu 14.04LTS on a t2.medium instance",
+        "instance_type": "t2.medium",
+    },
+    "t2.large": {
+        "description": "Ubuntu 14.04LTS on a t2.large instance",
+        "instance_type": "t2.large",
+    }
 }
 
 
