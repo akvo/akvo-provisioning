@@ -9,6 +9,8 @@ awsfab ec2_launch_instance:<instance_name>
 ```
 
 You will be prompted for what instance type you would like to create.
+Additional instance types can be added to `awsfab_settings.py` should they be
+required.
 
 ### List instances
 

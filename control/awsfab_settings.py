@@ -44,6 +44,7 @@ _configs = {
 
 
 def _merge(c):
+    """Non-destructively merge dictionaries `c` and `_common_config`"""
     config = _common_config.copy()
     config.update(c)
     return config
