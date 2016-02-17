@@ -5,15 +5,15 @@
 # file in your home directory at $HOME/.aws/credentials
 
 
-# Common configuration
-# --------------------
+# Common config
+# -------------
 # A dictionary of configuration options common to all instance types
 _common_config = {
     "ami": "ami-f95ef58a",
-    "key_name": "devops",
-    "security_groups": ["default"],
-    "region": "eu-west-1",
     "availability_zone": "c",
+    "key_name": "devops",
+    "region": "eu-west-1",
+    "security_groups": ["default"],
     "tags": {
         "awsfab-ssh-user": "ubuntu"
     }
@@ -21,7 +21,8 @@ _common_config = {
 
 # Instance configs
 # ----------------
-# See https://aws.amazon.com/ec2/instance-types/ for more information
+# See https://aws.amazon.com/ec2/instance-types/ for more information about all
+# the available instance types
 _configs = {
     "t2.micro": {
         "description": "Ubuntu 14.04LTS on a t2.micro instance",

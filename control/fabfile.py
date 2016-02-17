@@ -591,3 +591,11 @@ def up():
     Sets the 'up' environment up
     """
     update_config()
+
+
+# ---------------------------
+# AWS EC2 tasks
+# ---------------------------
+
+def attach_ebs_volume():
+    pass
