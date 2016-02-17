@@ -1,3 +1,6 @@
+from helpers import merge_configs
+
+
 # AWS Fabric settings
 # ===================
 #
@@ -42,12 +45,4 @@ _configs = {
     }
 }
 
-
-def _merge(c):
-    """Non-destructively merge dictionaries `c` and `_common_config`"""
-    config = _common_config.copy()
-    config.update(c)
-    return config
-
-
-EC2_LAUNCH_CONFIGS = {k: _merge(v) for k, v in _configs.iteritems()}
+EC2_LAUNCH_CONFIGS = {k: merge_configs(_common_config, v) for k, v in _configs.iteritems()}
