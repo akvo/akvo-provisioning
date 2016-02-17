@@ -10,6 +10,7 @@
 # A dictionary of configuration options common to all instance types
 _common_config = {
     "ami": "ami-f95ef58a",
+    "key_name": "devops",
     "security_groups": ["default"],
     "region": "eu-west-1",
     "availability_zone": "c",
