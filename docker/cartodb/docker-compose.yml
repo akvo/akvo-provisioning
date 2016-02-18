@@ -19,8 +19,6 @@ editor:
   expose:
     - "3000"
   links:
-    - redis
-    - postgres
     - mapsapi
     - sqlapi
   restart: always
@@ -29,31 +27,10 @@ sqlapi:
   build: ./sqlapi
   expose:
     - "8080"
-  links:
-    - redis
-    - postgres
   restart: always
 
 mapsapi:
   build: ./mapsapi
   expose:
     - "8181"
-  links:
-    - redis
-    - postgres
-  restart: always
-
-# no need to expose port 5432 - done in base image
-postgres:
-  build: ./postgres
-  volumes:
-    - /var/lib/postgresql
-  restart: always
-
-# no need to expose port 6379 - done in base image
-redis:
-  image: redis:3
-  command: redis-server --appendonly yes
-  volumes:
-    - /data
   restart: always
