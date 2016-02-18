@@ -34,8 +34,12 @@ To create a 100Gb encrypted volume:
 awsfab ec2_create_volume:100
 ```
 
+Note that you may need to wait a minute or so before attaching a newly-created
+volume to an instance. You may get an error that the volume is not yet
+available.
+
 To attach a volume to an instance:
 
 ``` shell
-awsfab -E <instance_name> ec2_attach_volume:<volume_id>
+awsfab ec2_attach_volume:<volume_id>,<instance_id>
 ```

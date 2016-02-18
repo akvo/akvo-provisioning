@@ -8,7 +8,6 @@ import time
 from fabric.api import cd, env, local, put, run, sudo
 from fabric.contrib import files
 
-from awsfabrictasks.decorators import ec2instance
 from awsfabrictasks.ec2.tasks import *
 from awsfabrictasks.regions import *
 from awsfabrictasks.conf import *
@@ -598,17 +597,17 @@ def up():
 # ---------------------------
 
 @task
-def ec2_create_volume(size=1, volume_type="gp2"):
+def ec2_create_volume(size, volume_type="gp2"):
     """
-    Creates encrypted EBS volume
+    Creates an encrypted EBS volume of the given size and volume type
     """
     local("""aws ec2 create-volume --encrypted --output json --size %d \
              --availability-zone eu-west-1c --volume-type %s""" % (size, volume_type))
 
 
-@ec2instance
-def ec2_attach_volume(volume_id):
+@task
+def ec2_attach_volume(volume_id, instance_id, device="/dev/sdf"):
     """
-    Attaches volume `volume_id` to instance `instance_id`
+    Attaches the given EBS volume to the given EC2 instance
     """
-    local("""aws ec2 attach-volume --volume-id %s --device /dev/sdf""" % (volume_id))
+    local("""aws ec2 attach-volume --volume-id %s --instance-id %s --device %s""" % (volume_id, instance_id, device))
