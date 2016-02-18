@@ -28,8 +28,14 @@ awsfab -E <instance_name> ec2_login
 
 ### Create and attach an encrypted EBS volume to an instance
 
-To attach a 100Gb encrypted volume to instance `<instance_name>`:
+To create a 100Gb encrypted volume:
 
 ``` shell
-awsfab -E <instance_name> ec2_attach_encrypted_volume 100
+awsfab ec2_create_volume:100
+```
+
+To attach a volume to an instance:
+
+``` shell
+awsfab -E <instance_name> ec2_attach_volume:<volume_id>
 ```

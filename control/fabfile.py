@@ -600,19 +600,15 @@ def up():
 @task
 def ec2_create_volume(size=1, volume_type="gp2"):
     """
-    Creates encrypted EBS volume and returns its `VolumeId`
+    Creates encrypted EBS volume
     """
-    local("""aws ec2 create-volume --encrypted \
-             --output json --size %d \
-             --availability-zone eu-west-1c \
-             --volume-type %s""" % (size, volume_type))
+    local("""aws ec2 create-volume --encrypted --output json --size %d \
+             --availability-zone eu-west-1c --volume-type %s""" % (size, volume_type))
 
 
-@task
-def ec2_attach_volume(volume_id, instance_id):
+@ec2instance
+def ec2_attach_volume(volume_id):
     """
     Attaches volume `volume_id` to instance `instance_id`
     """
-    local("""aws ec2 attach-volume \
-             --volume-id %s --instance-id %s \
-             --device /dev/sdf""" % (volume_id, instance_id))
+    local("""aws ec2 attach-volume --volume-id %s --device /dev/sdf""" % (volume_id))
