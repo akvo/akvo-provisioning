@@ -27,4 +27,5 @@ sudo ldconfig
 psql -U postgres -c \
     "CREATE EXTENSION plpythonu; \
      CREATE EXTENSION schema_triggers; \
+     CREATE EXTENSION postgis; \
      CREATE EXTENSION cartodb;"
