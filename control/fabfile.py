@@ -599,7 +599,7 @@ def up():
 # ---------------------------
 
 @task
-def ec2_create_volume(size, availability_zone="eu-west-1c" volume_type="gp2"):
+def ec2_create_volume(size, availability_zone="eu-west-1c", volume_type="gp2"):
     """
     Creates an encrypted EBS volume of the given size and volume type
     """
