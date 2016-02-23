@@ -9,10 +9,7 @@ import boto3
 
 from fabric.api import cd, env, local, put, run, sudo
 from fabric.contrib import files
-
-from awsfabrictasks.ec2.tasks import *
-from awsfabrictasks.regions import *
-from awsfabrictasks.conf import *
+from fabric.decorators import task
 
 
 # --------------------
@@ -599,19 +596,37 @@ def up():
 # ---------------------------
 
 @task
-def ec2_create_volume(size, availability_zone="eu-west-1c", volume_type="gp2"):
+def ec2_create_volume(size, region="eu-west-1", zone="eu-west-1c", volume_type="gp2"):
     """
     Creates an encrypted EBS volume of the given size and volume type
     """
-    local("""aws ec2 create-volume --encrypted --output json --size %d \
-             --availability-zone %s --volume-type %s""" % (size, availability_zone, volume_type))
+    client = boto3.client("ec2")
+    response = client.create_volume(
+            AvailabilityZone=zone,
+            Encrypted=True,
+            Size=int(size),
+            VolumeType=volume_type
+    )
+    print("Created encrypted %s volume %s of %dGb" % (
+        response["VolumeType"],
+        response["VolumeId"],
+        response["Size"]
+    ))
 
 
 @task
-def ec2_attach_volume(volume_id, instance_id, device="/dev/sdf"):
+def ec2_attach_volume(volume_id, instance_id, device):
     """
-    Attaches the given EBS volume to the given EC2 instance
+    Attaches the given EBS volume (ID) to the given EC2 instance (name tag)
     """
-    ec2 = boto3.resource("ec2")
-    volume = ec2.Volume(volume_id)
-    volume.attach_to_instance(dict(InstanceId=instance_id, Device=device))
+    client = boto3.client("ec2")
+    response = client.attach_volume(
+            Device=device,
+            InstanceId=instance_id,
+            VolumeId=volume_id
+    )
+    print("Attached volume %s to instance %s as device '%s'" % (
+        response["VolumeId"],
+        response["InstanceId"],
+        response["Device"]
+    ))
