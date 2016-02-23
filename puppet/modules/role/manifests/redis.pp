@@ -9,4 +9,10 @@ class role::redis {
         bind => '0.0.0.0'
     }
 
+    firewall { '200 allow redis access':
+        port   => 6379,
+        proto  => tcp,
+        action => accept
+    }
+
 }

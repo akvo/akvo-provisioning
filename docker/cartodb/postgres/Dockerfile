@@ -19,7 +19,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libgeos-c1 libgeos-dev \
     gdal-bin libgdal1-dev \
     libxml2-dev \
-    liblwgeom-2.1.4 postgis postgresql-9.3-postgis-2.1 postgresql-9.3-postgis-2.1-scripts \
+    liblwgeom-2.1.4 postgis postgresql-9.3-postgis-2.2 postgresql-9.3-postgis-scripts \
     libpq5 libpq-dev \
     postgresql-contrib-9.3 postgresql-server-dev-9.3 postgresql-plpython-9.3 \
     sudo \

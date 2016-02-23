@@ -179,7 +179,7 @@ var config = {
         cache_basedir: '/tmp/cdb-tiler-dev/millstone-dev'
     }
     ,redis: {
-        host: 'cartodb_redis_1',
+        host: 'redis',
         port: 6379,
         // Max number of connections in each pool.
         // Users will be put on a queue when the limit is hit.
