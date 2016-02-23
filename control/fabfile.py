@@ -596,22 +596,16 @@ def up():
 # ---------------------------
 
 @task
-def ec2_create_volume(size, region="eu-west-1", zone="eu-west-1c", volume_type="gp2"):
+def ec2_create_volume(size, region="eu-west-1", zone="eu-west-1c",
+                      volume_type="gp2"):
     """
     Creates an encrypted EBS volume of the given size and volume type
     """
     client = boto3.client("ec2")
-    response = client.create_volume(
-            AvailabilityZone=zone,
-            Encrypted=True,
-            Size=int(size),
-            VolumeType=volume_type
-    )
-    print("Created encrypted %s volume %s of %dGb" % (
-        response["VolumeType"],
-        response["VolumeId"],
-        response["Size"]
-    ))
+    response = client.create_volume(AvailabilityZone=zone, Encrypted=True,
+                                    Size=int(size), VolumeType=volume_type)
+    print("Created encrypted %s volume %s of %d gigabytes" % (
+        response["VolumeType"], response["VolumeId"], response["Size"]))
 
 
 @task
@@ -620,13 +614,7 @@ def ec2_attach_volume(volume_id, instance_id, device):
     Attaches the given EBS volume (ID) to the given EC2 instance (name tag)
     """
     client = boto3.client("ec2")
-    response = client.attach_volume(
-            Device=device,
-            InstanceId=instance_id,
-            VolumeId=volume_id
-    )
+    response = client.attach_volume(Device=device, InstanceId=instance_id,
+                                    VolumeId=volume_id)
     print("Attached volume %s to instance %s as device '%s'" % (
-        response["VolumeId"],
-        response["InstanceId"],
-        response["Device"]
-    ))
+        response["VolumeId"], response["InstanceId"], response["Device"]))
