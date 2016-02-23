@@ -5,6 +5,8 @@ import sys
 import tempfile
 import time
 
+import boto3
+
 from fabric.api import cd, env, local, put, run, sudo
 from fabric.contrib import files
 
@@ -597,12 +599,12 @@ def up():
 # ---------------------------
 
 @task
-def ec2_create_volume(size, volume_type="gp2"):
+def ec2_create_volume(size, availability_zone="eu-west-1c" volume_type="gp2"):
     """
     Creates an encrypted EBS volume of the given size and volume type
     """
     local("""aws ec2 create-volume --encrypted --output json --size %d \
-             --availability-zone eu-west-1c --volume-type %s""" % (size, volume_type))
+             --availability-zone %s --volume-type %s""" % (size, availability_zone, volume_type))
 
 
 @task
@@ -610,4 +612,6 @@ def ec2_attach_volume(volume_id, instance_id, device="/dev/sdf"):
     """
     Attaches the given EBS volume to the given EC2 instance
     """
-    local("""aws ec2 attach-volume --volume-id %s --instance-id %s --device %s""" % (volume_id, instance_id, device))
+    ec2 = boto3.resource("ec2")
+    volume = ec2.Volume(volume_id)
+    volume.attach_to_instance(dict(InstanceId=instance_id, Device=device))
