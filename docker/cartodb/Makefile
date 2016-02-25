@@ -1,25 +1,42 @@
 .PHONY: build build-no-cache start stop logs rm reload all
 .DEFAULT_GOAL := all
 
+# by default pointing to docker-compose dev file, fully dockerized
+ENV?=dev
+TYPE?=full
+
+BIN=docker-compose -f docker-compose.yml -f docker-compose.$(ENV).$(TYPE).yml
+
+help:
+	@echo "Usage: make [OPTION] [ENV=dev|test] [TYPE=full|hybrid] [C=\"container\"]"
+	@echo ""
+	@echo "Options"
+	@echo "\thelp      		-- print this help"
+	@echo "\tbuild     		-- build docker environment"
+	@echo "\tbuild-no-cache   	-- build docker environment by invalidating cache"
+	@echo "\tstart        		-- start docker stack"
+	@echo "\tstop      		-- stop docker stack"
+	@echo "\tlogs       		-- get logs from docker stack"
+	@echo "\trm     			-- stop docker stack & clean all artifacts"
+	@echo "\tall  			-- stop & rebuild & start docker stack"
+
 build:
-	docker-compose build $(c)
+	$(BIN) build $(C)
 
 build-no-cache:
-	docker-compose build --no-cache $(c)
+	$(BIN) build --no-cache $(C)
 
 start:
-	docker-compose run -d $(c)
+	$(BIN) run -d $(C)
 
 stop:
-	docker-compose stop $(c)
+	$(BIN) stop $(C)
 
 logs:
-	docker-compose logs $(c)
+	$(BIN) logs $(C)
 
 rm:
-	docker-compose stop $(c) && docker-compose rm -vf $(c)
+	$(BIN) stop $(C) && $(BIN) rm -vf $(C)
 
-reload:
-	docker-compose stop $(c) && docker-compose rm -vf $(c) && docker-compose build $(c) && docker-compose up -d $(c) && docker-compose logs
-
-all: reload
+all:
+	$(BIN) stop $(C) && $(BIN) rm -vf $(C) && $(BIN) build $(C) && $(BIN) up -d $(C) && $(BIN) logs
