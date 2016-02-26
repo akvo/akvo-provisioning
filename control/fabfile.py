@@ -639,11 +639,3 @@ def ec2_attach_volume(volume_id, instance_name, device):
     print("Attached volume %s to instance %s (%s) as device %s""" % (
         response["VolumeId"], response["InstanceId"], instance_name,
         response["Device"]))
-
-
-@task
-def ec2_prep_volume(instance_id, device):
-    """
-    Format given device on given instance and mount at '/puppet'
-    """
-    pass
