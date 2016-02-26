@@ -615,16 +615,19 @@ def ec2_create_instance(name, availability_zone="eu-west-1c",
 
 
 @task
-def ec2_create_volume(size, availability_zone="eu-west-1c", region="eu-west-1",
-                      volume_type="gp2"):
+def ec2_create_volume(name, size, availability_zone="eu-west-1c",
+                      region="eu-west-1", volume_type="gp2"):
     """
     Create an encrypted EBS volume of the given size in GB
     """
-    ec2 = boto3.client("ec2")
+    ec2 = boto3.resource("ec2")
     volume = ec2.create_volume(
         AvailabilityZone=availability_zone, Encrypted=True, Size=int(size),
         VolumeType=volume_type)
-    return volume["VolumeId"]
+    volume_id = volume.volume_id
+    name_tag = {"Key": "Name", "Value": name}
+    ec2.create_tags(Resources=[volume_id], Tags=[name_tag])
+    return volume_id
 
 
 @task
