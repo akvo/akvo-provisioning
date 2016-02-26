@@ -10,7 +10,7 @@ from fabric.api import cd, env, local, put, run, sudo
 from fabric.contrib import files
 from fabric.decorators import task
 
-from ec2_helpers import get_instance_by_name
+from ec2_helpers import get_resource_by_name
 
 
 # --------------------
@@ -605,6 +605,7 @@ def ec2_create_instance(name, availability_zone="eu-west-1c",
     """
     ec2 = boto3.resource("ec2")
     placement = {"AvailabilityZone": availability_zone}
+    # user_data = "/path/to/script"  # TODO: create user data script
     instances = ec2.create_instances(
         ImageId=image_id, InstanceType=instance_type, MinCount=1,
         MaxCount=1, Placement=placement, SecurityGroups=[security_group])
@@ -624,21 +625,18 @@ def ec2_create_volume(name, size, availability_zone="eu-west-1c",
     volume = ec2.create_volume(
         AvailabilityZone=availability_zone, Encrypted=True, Size=int(size),
         VolumeType=volume_type)
-    volume_id = volume.volume_id
     name_tag = {"Key": "Name", "Value": name}
-    ec2.create_tags(Resources=[volume_id], Tags=[name_tag])
-    return volume_id
+    volume.create_tags(Tags=[name_tag])
+    return volume.volume_id
 
 
 @task
-def ec2_attach_volume(volume_id, instance_name, device):
+def ec2_attach_volume(name, device="/dev/xvdf"):
     """
-    Attach an EBS volume to the given EC2 instance at device name
+    Attach an EBS volume to the given EC2 instance
     """
-    ec2 = boto3.client("ec2")
-    instance_id = get_instance_by_name(instance_name)
-    response = ec2.attach_volume(
-        Device=device, InstanceId=instance_id, VolumeId=volume_id)
-    print("Attached volume %s to instance %s (%s) as device %s""" % (
-        response["VolumeId"], response["InstanceId"], instance_name,
-        response["Device"]))
+    ec2 = boto3.resource("ec2")
+    instance_id = get_resource_by_name(name, resource_type="instance")
+    volume_id = get_resource_by_name(name, resource_type="volume")
+    instance = ec2.Instance(instance_id)
+    instance.attach_volume(Device=device, VolumeId=volume_id)
