@@ -19,8 +19,12 @@ fab ec2_create_instance:<name>
 To create a 100Gb encrypted volume:
 
 ``` shell
-fab ec2_create_volume:<name>,100
+fab ec2_create_volume:<name>,<size>
 ```
+
+`<name>` should be a unique name tag, the same name should be used when creating
+instances and volumes that belong together. `<size>` should be an integer value
+representing the desired size of the volume in gigabytes.
 
 Note that you may need to wait a minute or so before attaching a newly-created
 volume to an instance. You may get an error that the volume is not yet
@@ -29,8 +33,9 @@ available.
 To create a new encrypted EBS volume and attach it to an instance:
 
 ``` shell
-fab ec2_attach_volume:<size>,<instance_name>,<device_name>
+fab ec2_attach_volume:<name>
 ```
 
-`<size>` should be an integer value representing the desired size of the volume
-in gigabytes. `<device_name>` should be a Unix device name such as `/dev/sdh`.
+`<name>` is the unique name given to both the instance and the volume when
+you created them. The volume will be attached at `/dev/xvdf`. This is currently
+not configurable.
