@@ -6,10 +6,11 @@ import tempfile
 import time
 
 import boto3
-
 from fabric.api import cd, env, local, put, run, sudo
 from fabric.contrib import files
 from fabric.decorators import task
+
+from ec2_helpers import get_instance_by_name
 
 
 # --------------------
@@ -596,25 +597,53 @@ def up():
 # ---------------------------
 
 @task
-def ec2_create_volume(size, region="eu-west-1", zone="eu-west-1c",
-                      volume_type="gp2"):
+def ec2_create_instance(name, availability_zone="eu-west-1c",
+                        image_id="ami-f95ef58a", instance_type="t2.micro",
+                        security_group="default"):
     """
-    Creates an encrypted EBS volume of the given size and volume type
+    Create an EC2 instance with the given name tag
     """
-    client = boto3.client("ec2")
-    response = client.create_volume(AvailabilityZone=zone, Encrypted=True,
-                                    Size=int(size), VolumeType=volume_type)
-    print("Created encrypted %s volume %s of %d gigabytes" % (
-        response["VolumeType"], response["VolumeId"], response["Size"]))
+    ec2 = boto3.resource("ec2")
+    placement = {"AvailabilityZone": availability_zone}
+    instances = ec2.create_instances(
+        ImageId=image_id, InstanceType=instance_type, MinCount=1,
+        MaxCount=1, Placement=placement, SecurityGroups=[security_group])
+    instance_id = instances[0].instance_id
+    name_tag = {"Key": "Name", "Value": name}
+    ec2.create_tags(Resources=[instance_id], Tags=[name_tag])
+    return instance_id
 
 
 @task
-def ec2_attach_volume(volume_id, instance_id, device):
+def ec2_create_volume(size, availability_zone="eu-west-1c", region="eu-west-1",
+                      volume_type="gp2"):
     """
-    Attaches the given EBS volume (ID) to the given EC2 instance (name tag)
+    Create an encrypted EBS volume of the given size in GB
     """
-    client = boto3.client("ec2")
-    response = client.attach_volume(Device=device, InstanceId=instance_id,
-                                    VolumeId=volume_id)
-    print("Attached volume %s to instance %s as device '%s'" % (
-        response["VolumeId"], response["InstanceId"], response["Device"]))
+    ec2 = boto3.client("ec2")
+    volume = ec2.create_volume(
+        AvailabilityZone=availability_zone, Encrypted=True, Size=int(size),
+        VolumeType=volume_type)
+    return volume["VolumeId"]
+
+
+@task
+def ec2_attach_volume(volume_id, instance_name, device):
+    """
+    Attach an EBS volume to the given EC2 instance at device name
+    """
+    ec2 = boto3.client("ec2")
+    instance_id = get_instance_by_name(instance_name)
+    response = ec2.attach_volume(
+        Device=device, InstanceId=instance_id, VolumeId=volume_id)
+    print("Attached volume %s to instance %s (%s) as device %s""" % (
+        response["VolumeId"], response["InstanceId"], instance_name,
+        response["Device"]))
+
+
+@task
+def ec2_prep_volume(instance_id, device):
+    """
+    Format given device on given instance and mount at '/puppet'
+    """
+    pass

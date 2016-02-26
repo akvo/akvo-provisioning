@@ -1,5 +1,11 @@
 # AWS EC2 Instances
 
+Please make sure you have the Python Boto3 library installed:
+
+```shell
+pip install --upgrade boto3
+```
+
 ## Basic operations
 
 ### Create and attach an encrypted EBS volume to an instance
@@ -14,11 +20,11 @@ Note that you may need to wait a minute or so before attaching a newly-created
 volume to an instance. You may get an error that the volume is not yet
 available.
 
-To attach a volume to an instance:
+To create a new encrypted EBS volume and attach it to an instance:
 
 ``` shell
-fab ec2_attach_volume:<volume_id>,<instance_id>,<device_name>
+fab ec2_attach_volume:<size>,<instance_id>,<device_name>
 ```
 
-The above options should be self-explanatory. `<device_name>` should be
-something such as `/dev/sdh`.
+`<size>` should be an integer value representing the desired size of the volume
+in gigabytes. `<device_name>` should be a Unix device name such as `/dev/sdh`.
