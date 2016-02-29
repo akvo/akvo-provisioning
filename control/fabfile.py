@@ -596,9 +596,9 @@ def up():
 
 @task
 def ec2_create_instance(name, instance_type, size,
-                        availability_zone="eu-west-1c",
-                        device="/dev/xvdf", mount_point="/puppet",
-                        image_id="ami-f95ef58a", security_groups=["default"],
+                        availability_zone="eu-west-1c", device="/dev/xvdf",
+                        image_id="ami-f95ef58a", key_name="devops",
+                        mount_point="/puppet", security_group="default",
                         volume_type="gp2"):
     """
     Create an EC2 instance with the given name tag and attach an encypted EBS
@@ -626,9 +626,9 @@ runcmd:
  - mount %s %s""" % (device, mount_point, device, mount_point)
     instances = ec2.create_instances(
         BlockDeviceMappings=[block_device_mapping],
-        KeyName="devops",
+        KeyName=key_name,
         ImageId=image_id, InstanceType=instance_type, MinCount=1,
-        MaxCount=1, Placement=placement, SecurityGroups=security_groups,
+        MaxCount=1, Placement=placement, SecurityGroups=[security_group],
         UserData=user_data)
     instance_id = instances[0].instance_id
     name_tag = {"Key": "Name", "Value": name}
