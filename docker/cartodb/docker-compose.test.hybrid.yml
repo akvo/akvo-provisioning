@@ -14,17 +14,16 @@ editor:
     - PASSWORD=akvotest
     - ADMIN_PASSWORD=akvotest
     - EMAIL=devops@akvo.org
-# TODO add IPs for psql & redis test installation
-#  extra_hosts:
-#    - redis:192.168.50.101
-#    - postgres:192.168.50.101
-#
-#sqlapi:
-#  extra_hosts:
-#    - redis:192.168.50.101
-#    - postgres:192.168.50.101 
-#
-#mapsapi:
-#  extra_hosts:
-#    - redis:192.168.50.101
-#    - postgres:192.168.50.101 
+  extra_hosts:
+    - redis:127.0.0.1
+    - postgres:127.0.0.1
+
+sqlapi:
+  extra_hosts:
+    - redis:127.0.0.1
+    - postgres:127.0.0.1
+
+mapsapi:
+  extra_hosts:
+    - redis:127.0.0.1
+    - postgres:127.0.0.1
