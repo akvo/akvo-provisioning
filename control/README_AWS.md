@@ -1,41 +1,26 @@
 # AWS EC2 Instances
 
-Please make sure you have the Python Boto3 library installed:
+Please make sure you have the Python Boto3 library installed and that you have
+appropriate AWS credentials configured in `$HOME/.aws/credentials`!
 
 ```shell
 pip install --upgrade boto3
 ```
 
-## Basic operations
+## ec2_create_instance
 
-### Create an EC2 instance
+The syntax for this task is as follows:
 
 ```shell
-fab ec2_create_instance:<name>
+fab ec2_create_instance:<name>,<instance_type>,<volume_size>
 ```
 
-### Create and attach an encrypted EBS volume to an instance
+Here's an actual example:
 
-To create a 100Gb encrypted volume:
-
-``` shell
-fab ec2_create_volume:<name>,<size>
+```shell
+fab ec2_create_instance:cartodb_db,t2.small,100
 ```
 
-`<name>` should be a unique name tag, the same name should be used when creating
-instances and volumes that belong together. `<size>` should be an integer value
-representing the desired size of the volume in gigabytes.
-
-Note that you may need to wait a minute or so before attaching a newly-created
-volume to an instance. You may get an error that the volume is not yet
-available.
-
-To create a new encrypted EBS volume and attach it to an instance:
-
-``` shell
-fab ec2_attach_volume:<name>
-```
-
-`<name>` is the unique name given to both the instance and the volume when
-you created them. The volume will be attached at `/dev/xvdf`. This is currently
-not configurable.
+This command will create a `t2.small` EC2 instance with the name tag
+`cartodb_db` with a 100GB encrypted EBS volume attached to it, mounted at
+`/puppet`.

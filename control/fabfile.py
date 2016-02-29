@@ -10,8 +10,6 @@ from fabric.api import cd, env, local, put, run, sudo
 from fabric.contrib import files
 from fabric.decorators import task
 
-from ec2_helpers import get_resource_by_name
-
 
 # --------------------
 # defaults
@@ -597,46 +595,41 @@ def up():
 # ---------------------------
 
 @task
-def ec2_create_instance(name, availability_zone="eu-west-1c",
-                        image_id="ami-f95ef58a", instance_type="t2.micro",
-                        security_group="default"):
+def ec2_create_instance(name, instance_type, size,
+                        availability_zone="eu-west-1c",
+                        device="/dev/xvdf", mount_point="/puppet",
+                        image_id="ami-f95ef58a", security_groups=["default"],
+                        volume_type="gp2"):
     """
-    Create an EC2 instance with the given name tag
+    Create an EC2 instance with the given name tag and attach an encypted EBS
+    volume of the given size in GB
     """
     ec2 = boto3.resource("ec2")
+    block_device_mapping = {
+        "DeviceName": "/dev/xvdf",
+        "Ebs": {
+            "Encrypted": True,
+            "DeleteOnTermination": True,
+            "VolumeSize": int(size),
+            "VolumeType": volume_type
+        }
+    }
     placement = {"AvailabilityZone": availability_zone}
-    # user_data = "/path/to/script"  # TODO: create user data script
+    user_data = """#cloud-config
+repo-update: true
+repo_upgrade: all
+repo_install: language-pack-en
+
+runcmd:
+ - mkfs -t ext4 %s
+ - mkdir %s
+ - mount %s %s""" % (device, mount_point, device, mount_point)
     instances = ec2.create_instances(
+        BlockDeviceMappings=[block_device_mapping],
+        KeyName="devops",
         ImageId=image_id, InstanceType=instance_type, MinCount=1,
-        MaxCount=1, Placement=placement, SecurityGroups=[security_group])
+        MaxCount=1, Placement=placement, SecurityGroups=security_groups,
+        UserData=user_data)
     instance_id = instances[0].instance_id
     name_tag = {"Key": "Name", "Value": name}
     ec2.create_tags(Resources=[instance_id], Tags=[name_tag])
-    return instance_id
-
-
-@task
-def ec2_create_volume(name, size, availability_zone="eu-west-1c",
-                      region="eu-west-1", volume_type="gp2"):
-    """
-    Create an encrypted EBS volume of the given size in GB
-    """
-    ec2 = boto3.resource("ec2")
-    volume = ec2.create_volume(
-        AvailabilityZone=availability_zone, Encrypted=True, Size=int(size),
-        VolumeType=volume_type)
-    name_tag = {"Key": "Name", "Value": name}
-    volume.create_tags(Tags=[name_tag])
-    return volume.volume_id
-
-
-@task
-def ec2_attach_volume(name, device="/dev/xvdf"):
-    """
-    Attach an EBS volume to the given EC2 instance
-    """
-    ec2 = boto3.resource("ec2")
-    instance_id = get_resource_by_name(name, resource_type="instance")
-    volume_id = get_resource_by_name(name, resource_type="volume")
-    instance = ec2.Instance(instance_id)
-    instance.attach_volume(Device=device, VolumeId=volume_id)
