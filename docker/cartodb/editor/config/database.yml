@@ -25,7 +25,7 @@ development:
   port: 5432
   database: carto_db_development
   username: postgres
-  password:
+  password: password
   conn_validator_timeout: 9000
 
 test:
@@ -35,6 +35,6 @@ test:
   host: postgres
   port: 5432  
   username: postgres
-  password:
+  password: password
   conn_validator_timeout: -1
 

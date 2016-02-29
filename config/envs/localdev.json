@@ -14,7 +14,6 @@
     "rsr_development": true,
     "rsr_debug": true,
     "rsr_additional_rsr_domains": ["localakvo.org"],
-    "rsr_partner_site_domain": "localakvoapp.org",
     "rsr_site_id": "1004",
     "rsr_main_domain": "rsr.localdev.akvo.org",
     "rsr_use_graphite": false,

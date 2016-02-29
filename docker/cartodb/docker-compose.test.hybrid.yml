@@ -1,0 +1,30 @@
+# Configuration file for an hybrid testing environment
+# postgres and redis are running on a local vagrant box, both available at 192.168.50.101
+#
+# TODO we'll be able to provide "arguments" once docker-compose 1.6.0 is released
+# e.g.
+#  arguments:
+#    - env=whatever
+#    - v=X.Y.Z
+
+editor:
+  environment:
+    - VIRTUAL_HOST=cdb.akvotest.org
+    - SUBDOMAIN=akvotest
+    - PASSWORD=akvotest
+    - ADMIN_PASSWORD=akvotest
+    - EMAIL=devops@akvo.org
+# TODO add IPs for psql & redis test installation
+#  extra_hosts:
+#    - redis:192.168.50.101
+#    - postgres:192.168.50.101
+#
+#sqlapi:
+#  extra_hosts:
+#    - redis:192.168.50.101
+#    - postgres:192.168.50.101 
+#
+#mapsapi:
+#  extra_hosts:
+#    - redis:192.168.50.101
+#    - postgres:192.168.50.101 
