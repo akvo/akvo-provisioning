@@ -2,8 +2,7 @@
     "roles": [
         "puppetdb",
         "management",
-        "psqlcartodb",
-        "redis"
+        "ecs"
     ],
     "psql_version": "9.3",
     "psql_data_directory": "/puppet/pg_data"
