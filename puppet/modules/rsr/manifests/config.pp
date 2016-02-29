@@ -15,7 +15,7 @@ class rsr::config inherits rsr::params {
 
     # nginx sits in front of RSR
     $base_domain = hiera('base_domain')
-    nginx::proxy { [$rsr_hostnames, "*.${base_domain}", "*.${partner_site_domain}", "_"]:
+    nginx::proxy { [$rsr_hostnames, "*.${base_domain}"]:
         proxy_url                 => "http://localhost:${port}",
         static_dirs               => {
             "/media/"  => $media_root,

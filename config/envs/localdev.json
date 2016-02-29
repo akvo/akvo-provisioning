@@ -14,7 +14,6 @@
     "rsr_development": true,
     "rsr_debug": true,
     "rsr_additional_rsr_domains": ["localakvo.org"],
-    "rsr_partner_site_domain": "localakvoapp.org",
     "rsr_site_id": "1004",
     "rsr_main_domain": "rsr.localdev.akvo.org",
     "rsr_use_graphite": false,
@@ -83,6 +82,9 @@
     "mesos_slaves": ["192.168.50.201", "192.168.50.202"],
 
     "cartodb_hostnames": ["cdb.akvotest.org"],
+
+    "aws_access_key": "test",
+    "aws_secret_access": "test",
 
     "puppet_public_key": "AAAAB3NzaC1yc2EAAAADAQABAAABAQC5LbFC9XPDJbYHTcvhFlSXrH7Jew1X7yUHTOQnBVB5eFuImAm+awXQxE8yIyJ8xpTURU64BVi9nAknIwLevlog+bsY+yEcmGkvNTYa1sHKMK/aKY4nDp2lNed5n4aKbr9WzyRPSofci2zIbHqwgP/V5Nntd9R6wsOSsA2RcviI0c/ETXC0iHW+6uy1InF8TJSuKzOOwTz8NUuOOGWL7Es6KUInJp2fr6iLSWYM5X4qSvXu2cbQyCikK6H1ofunyjOgxdLKWO6DuUcMLwTSMeTND6s4lgbaLX0IQq/U6tUdaaxFqygLshqgTMaDXFU6zZ8bvQvFettjJt5kV5cJHH/b",
 
