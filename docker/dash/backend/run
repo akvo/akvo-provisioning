@@ -1,0 +1,3 @@
+#!/bin/bash
+
+java -jar /opt/dash/akvo-dash/backend/target/uberjar/org.akvo.dash-0.1.0-SNAPSHOT-standalone.jar
