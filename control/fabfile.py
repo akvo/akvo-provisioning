@@ -8,7 +8,6 @@ import time
 import boto3
 from fabric.api import cd, env, local, put, run, sudo
 from fabric.contrib import files
-from fabric.decorators import task
 
 
 # --------------------
@@ -594,7 +593,6 @@ def up():
 # Akvo AWS EC2 tasks
 # ---------------------------
 
-@task
 def ec2_create_instance(name, instance_type, size,
                         availability_zone="eu-west-1c", device="/dev/xvdf",
                         image_id="ami-f95ef58a", key_name="devops",
@@ -606,7 +604,7 @@ def ec2_create_instance(name, instance_type, size,
     """
     ec2 = boto3.resource("ec2")
     block_device_mapping = {
-        "DeviceName": "/dev/xvdf",
+        "DeviceName": device,
         "Ebs": {
             "Encrypted": True,
             "DeleteOnTermination": True,
@@ -618,7 +616,6 @@ def ec2_create_instance(name, instance_type, size,
     user_data = """#cloud-config
 repo-update: true
 repo_upgrade: all
-repo_install: language-pack-en
 
 runcmd:
  - mkfs -t ext4 %s
