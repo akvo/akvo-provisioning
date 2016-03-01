@@ -594,7 +594,6 @@ def up():
 # Akvo AWS EC2 tasks
 # ---------------------------
 
-@task
 def ec2_create_instance(name, instance_type, size,
                         availability_zone="eu-west-1c", device="/dev/xvdf",
                         image_id="ami-f95ef58a", key_name="devops",
