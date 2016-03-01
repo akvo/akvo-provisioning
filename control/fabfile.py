@@ -1,11 +1,14 @@
-from fabric.api import local, run, env, cd, sudo, put
-from fabric.contrib import files
-import time
-import os
-import tempfile
-import sys
-import re
 import json
+import os
+import re
+import sys
+import tempfile
+import time
+
+import boto3
+from fabric.api import cd, env, local, put, run, sudo
+from fabric.contrib import files
+from fabric.decorators import task
 
 
 # --------------------
@@ -585,3 +588,48 @@ def up():
     Sets the 'up' environment up
     """
     update_config()
+
+
+# ---------------------------
+# Akvo AWS EC2 tasks
+# ---------------------------
+
+@task
+def ec2_create_instance(name, instance_type, size,
+                        availability_zone="eu-west-1c", device="/dev/xvdf",
+                        image_id="ami-f95ef58a", key_name="devops",
+                        mount_point="/puppet", security_group="default",
+                        volume_type="gp2"):
+    """
+    Create an EC2 instance with the given name tag and attach an encypted EBS
+    volume of the given size in GB
+    """
+    ec2 = boto3.resource("ec2")
+    block_device_mapping = {
+        "DeviceName": "/dev/xvdf",
+        "Ebs": {
+            "Encrypted": True,
+            "DeleteOnTermination": True,
+            "VolumeSize": int(size),
+            "VolumeType": volume_type
+        }
+    }
+    placement = {"AvailabilityZone": availability_zone}
+    user_data = """#cloud-config
+repo-update: true
+repo_upgrade: all
+repo_install: language-pack-en
+
+runcmd:
+ - mkfs -t ext4 %s
+ - mkdir %s
+ - mount %s %s""" % (device, mount_point, device, mount_point)
+    instances = ec2.create_instances(
+        BlockDeviceMappings=[block_device_mapping],
+        KeyName=key_name,
+        ImageId=image_id, InstanceType=instance_type, MinCount=1,
+        MaxCount=1, Placement=placement, SecurityGroups=[security_group],
+        UserData=user_data)
+    instance_id = instances[0].instance_id
+    name_tag = {"Key": "Name", "Value": name}
+    ec2.create_tags(Resources=[instance_id], Tags=[name_tag])
