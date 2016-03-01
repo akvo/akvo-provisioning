@@ -8,7 +8,6 @@ class database::psql::cartodb {
     $psql_version = hiera('psql_version', '9.3')
     $psql_password = hiera('psql_password', 'password')
     $data_dir = hiera('psql_data_directory', undef)
-    $postgres_clients = hiera_hash('cartodb_psql_clients')
 
     # grant all permissions needed to 'postgres' user
     postgresql::server::role { 'postgres':
@@ -99,7 +98,7 @@ class database::psql::cartodb {
             action => 'accept',
             port => $postgres_port
         }
-        create_resources(firewall, $postgres_clients, $firewall_defaults)
+        create_resources(firewall, hiera_hash('cartodb_psql_clients'), $firewall_defaults)
     }
     else {
         firewall { "200 postgresql":
