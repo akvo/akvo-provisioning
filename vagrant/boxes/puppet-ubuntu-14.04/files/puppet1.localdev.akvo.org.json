@@ -2,6 +2,8 @@
     "roles": [
         "puppetdb",
         "management",
+        "psqlcartodb",
+        "redis",
         "ecs"
     ],
     "psql_version": "9.3",
