@@ -31,8 +31,6 @@ RUN git clone https://github.com/akvo/akvo-dash.git && \
     lein deps && lein uberjar && \
     rm -rf /opt/dash/.m2
 
-EXPOSE 3000
-
 ADD ./run /opt/run
 
 CMD ["/bin/bash", "/opt/run"]
