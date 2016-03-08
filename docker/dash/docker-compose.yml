@@ -1,0 +1,38 @@
+# Common Docker compose configuration file for DASH
+
+lb:
+  build: ./lb
+  ports:
+    - "80:80"
+    - "443:443"
+  links:
+    - frontend
+    - backend
+  environment:
+    - DEFAULT_HOST=dash.akvotest.org
+  volumes:
+    - /var/run/docker.sock:/tmp/docker.sock:ro
+    - /etc/nginx/certs:/etc/nginx/certs
+  restart: always
+
+frontend:
+  build: ./frontend
+  environment:
+    - VIRTUAL_HOST=dash.akvotest.org
+
+backend:
+  build: ./backend.leinrun
+  expose:
+    - "3000"
+  links:
+    - db
+  environment:
+    - PORT=3000
+    - DATABASE_URL=jdbc:postgresql://db:5432/dash?user=dash&password=dash
+  restart: always
+
+db:
+  image: postgres:9.4
+  environment:
+    - POSTGRES_USER=dash
+    - POSTGRES_PASSWORD=dash
