@@ -21,7 +21,7 @@ frontend:
     - VIRTUAL_HOST=dash.akvotest.org
 
 backend:
-  build: ./backend.leinrun
+  build: ./backend
   expose:
     - "3000"
   links:
