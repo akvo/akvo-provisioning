@@ -1,4 +1,4 @@
-FROM jwilder/nginx-proxy
+FROM nginx
 MAINTAINER Akvo Foundation <devops@akvo.org>
 
 RUN apt-get update && \
@@ -7,9 +7,8 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-WORKDIR /tmp
-
-RUN git clone https://github.com/akvo/akvo-dash.git && \
+RUN cd /tmp && \
+    git clone https://github.com/akvo/akvo-dash.git && \
     cd akvo-dash/client && \
     npm set progress=false && \
     npm install && \
@@ -18,3 +17,7 @@ RUN git clone https://github.com/akvo/akvo-dash.git && \
     mkdir /usr/share/nginx/html/assets && \
     cp dist/* /usr/share/nginx/html/assets && \
     cd /tmp && rm -rf akvo-dash
+
+# there is a need to serve always index.html
+# https://github.com/akvo/akvo-provisioning/issues/271#issuecomment-191324305
+COPY default.conf /etc/nginx/conf.d/default.conf
