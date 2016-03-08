@@ -29,6 +29,9 @@ backend:
   environment:
     - PORT=3000
     - DATABASE_URL=jdbc:postgresql://db:5432/dash?user=dash&password=dash
+  volumes:
+    # Temporary expose of host folder to avoid loosing datasets
+    - /var/tmp/akvo:/tmp/akvo
   restart: always
 
 db:
