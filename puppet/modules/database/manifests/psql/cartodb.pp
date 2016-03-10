@@ -98,7 +98,7 @@ class database::psql::cartodb {
             action => 'accept',
             port => $postgres_port
         }
-        create_resources(firewall, $postgres_clients, $firewall_defaults)
+        create_resources(firewall, hiera_hash('cartodb_psql_clients'), $firewall_defaults)
     }
     else {
         firewall { "200 postgresql":

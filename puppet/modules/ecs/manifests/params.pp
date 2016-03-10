@@ -5,7 +5,7 @@
 #
 class ecs::params {
 
-    ##### DOCKER
+    ##### Docker
     $docker_version = hiera('docker_version', undef)
     $docker_dns = hiera('docker_dns', '8.8.8.8')
     unless is_ip_address("${docker_dns}") { fail ("DNS provided is not a valid IP address.") }
@@ -14,5 +14,9 @@ class ecs::params {
     $aws_region = hiera('aws_region', 'eu-west-1')
     $aws_access_key = hiera('aws_access_key')
     $aws_secret_access = hiera('aws_secret_access')
+
+    #### SSL Certificates
+    $path = hiera('cert_keys_path', '/etc/nginx/certs/')
+    $hostnames = hiera_array('cartodb_hostnames')
 
 }

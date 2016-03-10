@@ -5,7 +5,8 @@
         proxy_redirect default;
     }
 
-    client_max_body_size 8m;
+    client_max_body_size 150m; # temporary fix for https://github.com/akvo/akvo-provisioning/issues/277
+    # client_max_body_size 8m;
 
     # redirects following the RSR v3 release:
     # see https://github.com/akvo/akvo-provisioning/issues/137

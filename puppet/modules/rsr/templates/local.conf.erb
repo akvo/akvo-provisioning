@@ -43,16 +43,13 @@ RSR_SITE_REGEXPS = [
 
 PARTNER_SITE_REGEXPS = [
     '^.*\.<%= @base_domain.gsub('.', '\\.') %>$',
-    '^.*\.<%= @partner_site_domain.gsub('.', '\\.') %>$',
 ]
 
 # Old configuration values, required by RSR <= 2.3.0.1
 DOMAIN_NAME = '<%= @main_domain %>'
-APP_DOMAIN_NAME = '<%= @partner_site_domain %>'
 
 # New configuration values, required by RSR >= 2.3.1
 RSR_DOMAIN = '<%= @main_domain %>'
-AKVOAPP_DOMAIN = '<%= @partner_site_domain %>'
 
 <% if @use_graphite %>
 
