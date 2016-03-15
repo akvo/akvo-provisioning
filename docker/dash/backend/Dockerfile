@@ -7,6 +7,6 @@ RUN git clone https://github.com/akvo/akvo-dash.git && \
     git checkout master && \
     lein deps && \
     mv "$(lein uberjar | sed -n 's/^Created \(.*standalone\.jar\)/\1/p')" ../../app-standalone.jar && \
-    rm -rf /usr/src/app/.m2
+    rm -rf ~/.m2
 
 CMD ["java", "-jar", "app-standalone.jar"]
