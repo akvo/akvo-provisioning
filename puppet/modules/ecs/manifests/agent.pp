@@ -2,7 +2,7 @@
 #
 # This class installs and run the ECS agent
 #
-class ecs::agent {
+class ecs::agent inherits ecs::params {
 
     # create the host volume mount points
     file { [ "/var/log/ecs", "/etc/ecs", "/var/lib/ecs", "/var/lib/ecs/data" ]:
