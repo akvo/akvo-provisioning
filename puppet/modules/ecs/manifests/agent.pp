@@ -34,7 +34,8 @@ class ecs::agent inherits ecs::params {
         #ECS_CLUSTER=cluster_name option is not required if working with the default cluster
         env      => [
             'ECS_LOGFILE=/log/ecs-agent.log',
-            'ECS_DATADIR=/data/',
+            'ECS_LOGLEVEL=info',
+            'ECS_DATADIR=/data',
             "AWS_DEFAULT_REGION=${aws_region}",
             "AWS_ACCESS_KEY_ID=${aws_access_key}",
             "AWS_SECRET_ACCESS_KEY=${aws_secret_access}"
