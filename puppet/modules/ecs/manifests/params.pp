@@ -7,8 +7,6 @@ class ecs::params {
 
     ##### Docker
     $docker_version = hiera('docker_version', undef)
-    $docker_dns = hiera('docker_dns', '8.8.8.8')
-    unless is_ip_address("${docker_dns}") { fail ("DNS provided is not a valid IP address.") }
 
     ##### AWS
     $aws_region = hiera('aws_region', 'eu-west-1')
