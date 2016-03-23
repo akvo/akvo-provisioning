@@ -1,0 +1,7 @@
+<% if @environment != "live" %>
+User-agent: *
+Disallow: /
+<% else %>
+User-agent: *
+Allow: /
+<% end %>

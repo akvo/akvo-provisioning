@@ -99,6 +99,16 @@ class rsr::install inherits rsr::params {
         require => File[$approot]
     }
 
+    # include robots.txt file
+    file { "${approot}/robots.txt":
+        ensure  => present,
+        content => template('rsr/robots.txt.erb'),
+        owner   => $username,
+        group   => $username,
+        mode    => '0744',
+        require => File[$approot]
+    }
+
     cron { 'cleanup_stale_invoices':
       command => "bash -c ${approot}/cleanup_stale_invoices.sh",
       user    => 'rsr',

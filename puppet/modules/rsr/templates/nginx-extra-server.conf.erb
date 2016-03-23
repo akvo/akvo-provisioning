@@ -1,3 +1,8 @@
+    # robots.txt
+    location /robots.txt {
+        alias /var/akvo/rsr/robots.txt
+    }
+
     # Hide reportserver location and credentials
     location /en/reports/ {
         rewrite ^/en/reports/(.*)/(.*)$ /reportserver/reportserver/httpauthexport?key=$1&user=user1&password=unicorns&p_TheProjectId=$2&p_ID=$2 break;
