@@ -60,6 +60,15 @@ class homepage::install inherits homepage::params {
         require => File[$appdir]
     }
 
+    file { "${appdir}/robots.txt":
+        ensure  => present,
+        owner   => $username,
+        group   => $username,
+        mode    => '0744',
+        content => template('homepage/robots.txt.erb'),
+        require => File[$appdir]
+    }
+
     if hiera('homepage_leech') {
         class { 'homepage::leech': }
     }

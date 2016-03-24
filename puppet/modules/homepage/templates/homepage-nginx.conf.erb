@@ -58,6 +58,11 @@ server {
         gzip_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript;
     }
 
+    # robots.txt
+    location /robots.txt {
+        alias /var/akvo/homepage/robots.txt
+    }
+
     location /uploads {
         alias /var/akvo/homepage/uploads;
         if (-f $request_filename) {
