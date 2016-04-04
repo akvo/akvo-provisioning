@@ -618,9 +618,12 @@ repo-update: true
 repo_upgrade: all
 
 runcmd:
- - mkfs -t ext4 %s
- - mkdir %s
- - mount %s %s""" % (device, mount_point, device, mount_point)
+ - mkfs -t ext4 {deivce}
+ - mkdir {mount_point}
+ - mount {device} {mount_point}
+ - cp /etc/fstab /etc/fstab.orig
+ - echo '{device} {mount_point} ext4 defaults,nobootwait,nofail 0 2' >> /etc/fstab
+ """.format(dict(device=device, mount_point=mount_point))
     instances = ec2.create_instances(
         BlockDeviceMappings=[block_device_mapping],
         KeyName=key_name,
