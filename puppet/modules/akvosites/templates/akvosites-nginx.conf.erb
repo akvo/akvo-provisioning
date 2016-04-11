@@ -3,6 +3,7 @@
 server {
     listen 80;
     server_name
+        # Hostname redirects only exist in production!
         <% if @redirected_hostnames_washalliance %>
             <% @redirected_hostnames_washalliance.each do |site_hostname| %>
         <% end %>
@@ -72,6 +73,7 @@ server {
 server {
     listen 80;
     server_name
+        # Hostname redirects only exist in production!
         <% if @redirecited_hostnames_walkingforwater %>
             <% @redirected_hostnames_walkingforwater.each do |site_hostname| %>
         <% end %>
