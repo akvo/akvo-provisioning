@@ -3,7 +3,10 @@
 server {
     listen 80;
     server_name
-        <% @redirected_hostnames_washalliance.each do |site_hostname| %>
+        # Hostname redirects only exist in production!
+        <% if @redirected_hostnames_washalliance %>
+            <% @redirected_hostnames_washalliance.each do |site_hostname| %>
+        <% end %>
         <%= site_hostname %>
         www.<%= site_hostname %>
         <%- end %>;
@@ -70,7 +73,10 @@ server {
 server {
     listen 80;
     server_name
-        <% @redirected_hostnames_walkingforwater.each do |site_hostname| %>
+        # Hostname redirects only exist in production!
+        <% if @redirecited_hostnames_walkingforwater %>
+            <% @redirected_hostnames_walkingforwater.each do |site_hostname| %>
+        <% end %>
         <%= site_hostname %>
         www.<%= site_hostname %>
         <%- end %>;
