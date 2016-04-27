@@ -15,7 +15,7 @@ ENV LANG en_US.UTF-8
 
 # Install build dependencies
 RUN useradd -m -d /home/cartodb -s /bin/bash cartodb && \
-    apt-get install -y -q software-properties-common &&\
+    apt-get update && apt-get install -y -q software-properties-common &&\
     add-apt-repository -y ppa:chris-lea/node.js &&\
     apt-get update && apt-get install -yqq --no-install-recommends \
     build-essential \
