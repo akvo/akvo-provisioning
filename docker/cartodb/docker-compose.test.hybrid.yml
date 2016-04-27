@@ -10,20 +10,21 @@
 editor:
   environment:
     - VIRTUAL_HOST=cdb.akvotest.org
+    - RAILS_ENV=test
     - SUBDOMAIN=akvotest
     - PASSWORD=akvotest
     - ADMIN_PASSWORD=akvotest
     - EMAIL=devops@akvo.org
   extra_hosts:
-    - redis:127.0.0.1
-    - postgres:127.0.0.1
+    - redis:172.31.32.43
+    - postgres:172.31.32.43
 
 sqlapi:
   extra_hosts:
-    - redis:127.0.0.1
-    - postgres:127.0.0.1
+    - redis:172.31.32.43
+    - postgres:172.31.32.43
 
 mapsapi:
   extra_hosts:
-    - redis:127.0.0.1
-    - postgres:127.0.0.1
+    - redis:172.31.32.43
+    - postgres:172.31.32.43

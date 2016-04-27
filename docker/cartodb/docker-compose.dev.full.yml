@@ -6,6 +6,10 @@
 #    - env=whatever
 #    - v=X.Y.Z
 
+lb:
+  environment:
+    - DEFAULT_HOST=cdb.akvotest.org
+
 editor:
   environment:
     - VIRTUAL_HOST=cdb.akvotest.org

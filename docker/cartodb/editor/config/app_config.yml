@@ -2,7 +2,7 @@ defaults: &defaults
   ogr2ogr:
     binary:           'which ogr2ogr'
     csv_guessing:     false
-  debug_assets: true
+  debug_assets:       false
   mandatory_keys:     [layer_opts, sql_api, varnish_management, redis, session_domain]
   session_domain:     'cdb.akvotest.org'
   # If activated, urls will use usernames in format //SESSION_DOMAIN/user/USERNAME and ignore subdomains if present
@@ -17,32 +17,32 @@ defaults: &defaults
     ttl:              60
   tiler:
     internal:
-      protocol:      'http'
+      protocol:      'https'
       domain:        'cdb.akvotest.org'
-      port:          '80'
+      port:          '443'
       host:          'cdb.akvotest.org'
       verifycert:     false
     private:
-      protocol:      'http'
+      protocol:      'https'
       domain:        'cdb.akvotest.org'
-      port:          '80'
+      port:          '443'
       verifycert:     false
     public:
-      protocol:      'http'
+      protocol:      'https'
       domain:        'cdb.akvotest.org'
-      port:          '80'
+      port:          '443'
       verifycert:     false
   sql_api:
     private:
-      protocol:   'http'
+      protocol:   'https'
       domain:     'cdb.akvotest.org'
       endpoint:   '/api/v2/sql'
-      port:       80
+      port:       443
     public:
-      protocol:   'http'
+      protocol:   'https'
       domain:     'cdb.akvotest.org'
       endpoint:   '/api/v2/sql'
-      port:       80
+      port:       443
   api_requests_service_url: ''
   developers_host:    'http://developers.cartodb.localhost:3000'
   google_analytics:
@@ -63,7 +63,7 @@ defaults: &defaults
   common_data:
     protocol: 'https'
     username: 'common-data'
-    host: 'cartodb.com'
+    host: 'cdb.akvotest.org'
     format: 'shp'
     generate_every: 86400
   explore-api:
@@ -404,7 +404,7 @@ defaults: &defaults
 
 development:
   <<: *defaults
-  #http_port: 3000
+  http_port: 80
   varnish_management:
     critical: false
     host: '127.0.0.1'
@@ -417,10 +417,10 @@ development:
 
 test:
   <<: *defaults
-  http_port: 53716
+  #http_port: 53716
   redis:
-    host: '127.0.0.1'
-    port: 6335
+    host: 'redis'
+    port: 6379
   enforce_non_empty_layer_css: false
   api_requests_es_service:
     url: "http://api-calls-service.cartodb.localhost/search"
