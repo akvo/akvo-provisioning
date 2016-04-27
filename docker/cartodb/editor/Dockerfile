@@ -54,6 +54,9 @@ RUN git clone --recursive git://github.com/CartoDB/cartodb.git && \
     git checkout tags/v$v && \
     bundle install
 
+# modify pages with ssl_required, otherwise SSL is not working
+RUN sed -i -e"s/ssl_required.*$/ssl_required :index, :common_data, :public, :datasets/" cartodb/app/controllers/admin/pages_controller.rb
+
 # Install python dependencies
 WORKDIR /home/cartodb/cartodb
 RUN npm install && \
