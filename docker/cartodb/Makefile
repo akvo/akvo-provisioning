@@ -27,7 +27,7 @@ build-no-cache:
 	$(BIN) build --no-cache $(C)
 
 start:
-	$(BIN) run -d $(C)
+	$(BIN) up -d $(C)
 
 stop:
 	$(BIN) stop $(C)
