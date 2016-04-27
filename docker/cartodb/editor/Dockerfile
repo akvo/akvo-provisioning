@@ -59,7 +59,8 @@ RUN sed -i -e"s/ssl_required.*$/ssl_required :index, :common_data, :public, :dat
 
 # Install python dependencies
 WORKDIR /home/cartodb/cartodb
-RUN npm install && \
+RUN npm install phantomjs-prebuilt -g && \
+    npm install && \
     # gdal already installed - package python-gdal
     cat python_requirements.txt | grep -v gdal | pip install -r /dev/stdin
 
