@@ -8,15 +8,15 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 RUN cd /tmp && \
-    git clone https://github.com/akvo/akvo-dash.git && \
-    cd akvo-dash/client && \
+    git clone https://github.com/akvo/akvo-lumen.git && \
+    cd akvo-lumen/client && \
     npm set progress=false && \
     npm install && \
     npm run build && \
     cp index.html /usr/share/nginx/html && \
     mkdir /usr/share/nginx/html/assets && \
     cp dist/* /usr/share/nginx/html/assets && \
-    cd /tmp && rm -rf akvo-dash
+    cd /tmp && rm -rf akvo-lumen
 
 # there is a need to serve always index.html
 # https://github.com/akvo/akvo-provisioning/issues/271#issuecomment-191324305
