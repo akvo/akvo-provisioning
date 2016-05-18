@@ -1,3 +1,7 @@
+# -*- coding: utf-8 -*-
+
+"""Here be Akvo's Fabric tasks."""
+
 import json
 import os
 import re
@@ -8,6 +12,8 @@ import time
 import boto3
 from fabric.api import cd, env, local, put, run, sudo
 from fabric.contrib import files
+
+from ec2_helpers import get_ec2_instance_by_name
 
 
 # --------------------
@@ -633,3 +639,14 @@ runcmd:
     instance_id = instances[0].instance_id
     name_tag = {"Key": "Name", "Value": name}
     ec2.create_tags(Resources=[instance_id], Tags=[name_tag])
+
+
+def ec2_assign_elastic_ip(ip, instance_name, reassign=True):
+    """Re-assign the given Elastic IP address to the given instance."""
+    instance_id = get_ec2_instance_by_name(instance_name)
+    client = boto3.client("ec2")
+    client.associate_address(
+        AllowReassociation=reassign,
+        InstanceId=instance_id,
+        PublicIp=ip
+    )
