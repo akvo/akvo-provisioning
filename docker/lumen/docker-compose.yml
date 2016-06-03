@@ -35,7 +35,7 @@ backend:
   restart: always
 
 db:
-  image: postgres:9.4
+  image: postgres:9.5
   environment:
     - POSTGRES_USER=dash
     - POSTGRES_PASSWORD=dash
