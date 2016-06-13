@@ -10,6 +10,7 @@ RUN apt-get update && \
 RUN cd /tmp && \
     git clone https://github.com/akvo/akvo-lumen.git && \
     cd akvo-lumen/client && \
+    git checkout release/0.1.0 && \
     npm set progress=false && \
     npm install && \
     npm run build && \

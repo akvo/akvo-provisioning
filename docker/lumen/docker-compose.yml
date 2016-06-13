@@ -24,18 +24,9 @@ backend:
   build: ./backend
   expose:
     - "3000"
-  links:
-    - db
   environment:
     - PORT=3000
-    - DATABASE_URL=jdbc:postgresql://db:5432/dash?user=dash&password=dash
-  volumes:
-    # Temporary expose of host folder to avoid loosing datasets
-    - /var/tmp/akvo:/tmp/akvo
+    - DATABASE_URL=${LUMEN_DB_URL}
+    - FILE_UPLOAD_PATH=${LUMEN_FILE_UPLOAD_PATH}
+    - FLOW_REPORT_DATABASE_URL=${LUMEN_FLOW_REPORT_DATABASE_URL}
   restart: always
-
-db:
-  image: postgres:9.4
-  environment:
-    - POSTGRES_USER=dash
-    - POSTGRES_PASSWORD=dash
