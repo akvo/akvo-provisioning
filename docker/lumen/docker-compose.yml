@@ -8,8 +8,8 @@ lb:
   links:
     - frontend
     - backend
-  environment:
-    - DEFAULT_HOST=dash.akvotest.org
+  #environment:
+  #  - DEFAULT_HOST=lumen.akvotest.org
   volumes:
     - /var/run/docker.sock:/tmp/docker.sock:ro
     - /etc/nginx/certs:/etc/nginx/certs
@@ -18,7 +18,7 @@ lb:
 frontend:
   build: ./frontend
   environment:
-    - VIRTUAL_HOST=dash.akvotest.org
+    - VIRTUAL_HOST=lumen.akvotest.org
 
 backend:
   build: ./backend
