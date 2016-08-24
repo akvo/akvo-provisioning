@@ -10,10 +10,10 @@ RUN apt-get update && \
 RUN cd /tmp && \
     git clone https://github.com/akvo/akvo-lumen.git && \
     cd akvo-lumen/client && \
-    git checkout release/0.1.0 && \
+    git checkout develop && \
     npm set progress=false && \
     npm install && \
-    npm run build && \
+    env LUMEN_KEYCLOAK_URL="$LUMEN_KEYCLOAK_URL" npm run build && \
     cp index.html /usr/share/nginx/html && \
     mkdir /usr/share/nginx/html/assets && \
     cp dist/* /usr/share/nginx/html/assets && \
