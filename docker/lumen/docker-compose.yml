@@ -1,6 +1,4 @@
-# Common Docker compose configuration file for DASH
-
-# Common Docker compose configuration file for DASH
+# Common Docker compose configuration file for Lumen
 
 version: '2'
 services:
