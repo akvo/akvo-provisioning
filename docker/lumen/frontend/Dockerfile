@@ -10,7 +10,7 @@ RUN apt-get update && \
 RUN cd /tmp && \
     git clone https://github.com/akvo/akvo-lumen.git && \
     cd akvo-lumen/client && \
-    git checkout develop && \
+    git checkout master && \
     npm set progress=false && \
     npm install && \
     env LUMEN_KEYCLOAK_URL="$LUMEN_KEYCLOAK_URL" npm run build && \
