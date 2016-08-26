@@ -1,32 +1,36 @@
-# Common Docker compose configuration file for DASH
+# Common Docker compose configuration file for Lumen
 
-lb:
-  build: ./lb
-  ports:
-    - "80:80"
-    - "443:443"
-  links:
-    - frontend
-    - backend
-  #environment:
-  #  - DEFAULT_HOST=lumen.akvotest.org
-  volumes:
-    - /var/run/docker.sock:/tmp/docker.sock:ro
-    - /etc/nginx/certs:/etc/nginx/certs
-  restart: always
+version: '2'
+services:
+  lb:
+    build: ./lb
+    ports:
+     - "80:80"
+     - "443:443"
+    links:
+     - frontend
+     - backend
+    volumes:
+     - /var/run/docker.sock:/tmp/docker.sock:ro
+     - /etc/nginx/certs:/etc/nginx/certs
+    restart: always
 
-frontend:
-  build: ./frontend
-  environment:
-    - VIRTUAL_HOST=lumen.akvotest.org
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        - LUMEN_KEYCLOAK_URL
+    environment:
+     - VIRTUAL_HOST=lumen.akvotest.org
 
-backend:
-  build: ./backend
-  expose:
-    - "3000"
-  environment:
-    - PORT=3000
-    - DATABASE_URL=${LUMEN_DB_URL}
-    - FILE_UPLOAD_PATH=${LUMEN_FILE_UPLOAD_PATH}
-    - FLOW_REPORT_DATABASE_URL=${LUMEN_FLOW_REPORT_DATABASE_URL}
-  restart: always
+  backend:
+    build: ./backend
+    expose:
+     - "3000"
+    environment:
+     - PORT=3000
+     - LUMEN_DB_URL
+     - LUMEN_KEYCLOAK_URL
+     - LUMEN_FILE_UPLOAD_PATH
+     - LUMEN_FLOW_REPORT_DATABASE_URL
+    restart: always
