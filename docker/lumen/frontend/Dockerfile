@@ -1,6 +1,8 @@
 FROM nginx
 MAINTAINER Akvo Foundation <devops@akvo.org>
 
+ARG LUMEN_KEYCLOAK_URL
+
 RUN apt-get update && \
     apt-get install -y -q --no-install-recommends git curl xz-utils && \
     curl https://nodejs.org/dist/v5.7.0/node-v5.7.0-linux-x64.tar.xz | tar -xJf - --strip-components=1 -C /usr && \
