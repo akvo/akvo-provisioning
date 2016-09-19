@@ -1,4 +1,5 @@
-# Provide base parameters for Keycloak manifest
+# Base parameters for Keycloak manifest
+
 class keycloak::params {
 
   $base_domain         = hiera('base_domain')
@@ -14,10 +15,10 @@ class keycloak::params {
   $db_name             = 'keycloak'
   $db_password         = hiera('keycloak_database_password')
 
-  $kc_release          = '1.7.0.Final'
+  $kc_release          = '2.2.0.Final'
   $approot             = '/opt/keycloak'
   $appdir              = "${approot}/keycloak-${kc_release}"
 
-  $psql_driver_release = '9.4-1206-jdbc41'
+  $psql_driver_release = '9.4.1210.jre7'
 
 }

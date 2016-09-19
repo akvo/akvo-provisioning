@@ -1,4 +1,4 @@
-# Describe Keycloak supervisord service
+# Keycloak supervisord service
 class keycloak::service {
 
   $appdir = $keycloak::appdir
@@ -9,7 +9,7 @@ class keycloak::service {
     command   => "${appdir}/bin/standalone.sh"
   }
 
-  # The following command stops Keycloak:
+  # NOTE: The following command stops Keycloak:
   # ${appdir}/bin/jboss-cli.sh --connect command=:shutdown
 
 }
