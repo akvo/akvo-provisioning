@@ -16,6 +16,7 @@ class keycloak::install {
     ensure => 'installed'
   }
 
+  # Used to modify Keycloak XML configuration
   package { 'libsaxon-java':
     ensure => 'installed'
   }
