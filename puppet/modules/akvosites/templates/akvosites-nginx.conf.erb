@@ -12,10 +12,12 @@ server {
         <%- end %>;
 
     rewrite ^/wash-timeline$ /wash-timeline/ permanent;
-
     location ~ ^/wash-timeline/(.*)$ {
         proxy_pass http://www.rainbowcollection.eu;
     }
+
+    # permanent redirect - see https://github.com/akvo/akvo-provisioning/issues/327
+    rewrite ^ http://wash-alliance.org$request_uri? permanent;
 }
 
 server {
