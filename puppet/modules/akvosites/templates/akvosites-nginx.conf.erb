@@ -69,6 +69,28 @@ server {
 
         client_max_body_size 30m;
     }
+
+    # blocking access to PHP files
+    location ~* /wp-includes/.*.php$ {
+        deny all;
+        access_log off;
+        log_not_found off;
+    }
+    location ~* /wp-content/.*.php$ {
+       deny all;
+        access_log off;
+        log_not_found off;
+    }
+    location ~* /(?:uploads|files)/.*.php$ {
+       deny all;
+        access_log off;
+        log_not_found off;
+    }
+    location = /xmlrpc.php {
+        deny all;
+        access_log off;
+        log_not_found off;
+    }
 }
 
 # permanent redirect - see https://github.com/akvo/akvo-provisioning/issues/252
