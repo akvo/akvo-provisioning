@@ -12,10 +12,12 @@ server {
         <%- end %>;
 
     rewrite ^/wash-timeline$ /wash-timeline/ permanent;
-
     location ~ ^/wash-timeline/(.*)$ {
         proxy_pass http://www.rainbowcollection.eu;
     }
+
+    # permanent redirect - see https://github.com/akvo/akvo-provisioning/issues/327
+    rewrite ^ http://wash-alliance.org$request_uri? permanent;
 }
 
 server {
@@ -66,6 +68,28 @@ server {
         fastcgi_param   PATH_INFO           $fastcgi_script_name;
 
         client_max_body_size 30m;
+    }
+
+    # blocking access to PHP files
+    location ~* /wp-includes/.*.php$ {
+        deny all;
+        access_log off;
+        log_not_found off;
+    }
+    location ~* /wp-content/.*.php$ {
+       deny all;
+        access_log off;
+        log_not_found off;
+    }
+    location ~* /(?:uploads|files)/.*.php$ {
+       deny all;
+        access_log off;
+        log_not_found off;
+    }
+    location = /xmlrpc.php {
+        deny all;
+        access_log off;
+        log_not_found off;
     }
 }
 

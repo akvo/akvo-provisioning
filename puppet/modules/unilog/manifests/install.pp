@@ -25,6 +25,16 @@ class unilog::install inherits unilog::params {
         require => Akvoapp[$username]
     }
 
+    # add unilog user git config
+    file { "${approot}/.gitconfig":
+        ensure  => present,
+        owner   => $username,
+        group   => $username,
+        mode    => '0664',
+        source  => 'puppet:///modules/unilog/gitconfig',
+        require => Akvoapp[$username]
+    }
+
     file { [ "${approot}/versions", "${approot}/config", "${approot}/tmp" ]:
         ensure  => directory,
         owner   => $username,

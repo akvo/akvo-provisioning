@@ -12,9 +12,7 @@ class keycloak::config {
 
   sudo::admin_user { 'stellan': }
 
-  named::service_location { 'login':
-    ip => $ip
-  }
+  named::service_location { 'login': ip => $ip }
 
   nginx::proxy { "login.${base_domain}":
     proxy_url                => "http://127.0.0.1:${port}",

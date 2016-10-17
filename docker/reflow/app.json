@@ -1,0 +1,5 @@
+{
+  "name": "Akvo Reflow",
+  "description": "Reflow service for Akvo Flow",
+  "image": "heroku/clojure"
+}
