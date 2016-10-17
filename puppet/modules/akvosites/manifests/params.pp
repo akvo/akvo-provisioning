@@ -7,6 +7,7 @@ class akvosites::params {
     $default_domain = hiera('akvosites_default_domain', "akvosites.${base_domain}")
     $akvosites_hostnames = hiera('akvosites_hostnames')
     $redirected_hostnames_walkingforwater = hiera('redirected_hostnames_walkingforwater')
+    $redirected_hostnames_washalliance = hiera('redirected_hostnames_washalliance')
     $all_hostnames = concat($akvosites_hostnames, [$default_domain])
     $app_path = '/var/akvo/akvosites'
     $pool_port = 9020
