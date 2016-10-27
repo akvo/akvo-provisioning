@@ -40,11 +40,6 @@ class users {
         htpasswd => '$apr1$DPt9tUH8$tAcbjLu6KBUw5WshJzHr91'
     }
 
-    users::basic { 'kasper':
-        roles    => ['developer'],
-        ssh_key  => 'AAAAB3NzaC1yc2EAAAADAQABAAABAQC38uhU4OymVsasod6HdXkIzhgAea8qzFMxTP8Gv3NB2oGlUWTTjNqnI9AZ6pa4Vq3whOjFqx+3L7q7OKnEARUgbJFuGYXbtOrAFWKJxvAciu5CoRw/tUTJaagHVRDWUHLkMD55EioQ2XeXPXrPzZGzc2QARCPIs0rp61jg+bLjbpWeYtiFUHc+HxACnEV/NhkZQ1RlRiO+BS2ngLc0xVlYRSfMxiza7GXcxznLIsb6NjM9YeqEzHcbdFXBVS+b0x8BLaeG0HKzpO4M1J+FBS6Jdvtp9AXOGd9LT+v+fDJiP8XVxwWW5Pa8b5QGe7pUaGsiiFC+tliRlOOjfxzdxpJB',
-    }
-
     users::basic { 'stellan':
         roles    => ['developer'],
         allow    => ['munin'],
@@ -73,11 +68,6 @@ class users {
     users::basic { 'annamarthe':
         roles    => ['test'],
         ssh_key  => 'AAAAB3NzaC1yc2EAAAADAQABAAABAQDVD9dXh/nxoZw4iUx1UAb1NxwILJ4zUjJs4vDEX+1v98a7mJZtt120s5f1FDqdlQQajZLfhl/eyQTvBmg8ho3BCiIcdZKxB1E9IICRULiDgzAMQVbi9DoDA+pp5KLS9t8OF66x7GwXxZkbqE8KYz1DtctlhXyeYM2J7whkEj8qixcqpsWOdKqRpGQtd6vPAt5+vgHTiCqAYhl41kgGeCl/9fjPYP98WxvqfXwec8WqVPAMGPKbMJ8irMLOGlfavBNrXg66tP4lrQGMTi+7FsOGuZZ+UgjWVmzDmb5BbHzfPgcrMWbB5/05+2PRX4ZO9cgbW5w3lp434w5aRp+8JiEl',
-    }
-
-    users::basic { 'ruarcc':
-        roles    => ['test'],
-        ssh_key  => 'AAAAB3NzaC1yc2EAAAADAQABAAABAQDtYfOFNyq2iP7cMNYuRt/QUlnX+z9fRlv+CBv0EypwYNpQ1ks8VPAb+dARXY0jwzq/KqU5UszqUKu8xF5w+ECec3uKnrMDgZ1UtIxjW+3KxiEqRTy8VMvfkrLDMMG0G2MZ+MxXKBLJL5OIj2b7xKi1oJcmoZ3QdbAzRU87te1AJ1sMS1fTgbW78jD8QaQ5Xi+bJXo1Jbn2fuOp2v0LdeeZ3EFXkFG8sEFiNTlcKDO8TVu4T9vXPOsrTUEKEicS73lvz6PL6RT3gkVpIEiSr2sQkVAGcfk+tYboEG1vMYv8tSUQGb7yvcCE2QHUhHI4RWxXm85Wv6SyBj0iLZrW/lQX'
     }
 
     users::basic { 'lynn':
@@ -129,6 +119,11 @@ class users {
     users::basic { 'lars':
         roles   => ['developer'],
         ssh_key => 'AAAAB3NzaC1yc2EAAAADAQABAAACAQDe45huTywqUJuFhWBR/Yq+pu88CcB+K59tFyXZxu3KNqpFJeBt59gOf9bLOrS0xFTtYjN23au2/Pd12fcmYY1gVTnCrujGzeyJcGz887GPfxyssnfjSsieS5iF4wbXHgDl8OA1xecqBpS32R1J0Di37ARIGo0HFwWxm8OZMFXXOtDy6UikORxfKnl6NBWAfE3QVWNt80lhdGBajdOGCWwEU/7sDPbwnnrgpHvdTBCEXTPHQxIABTv1dgAJgbS3kw3QOFNnK7/L6qZRjN7A1R9lXqCQ6lrcvtr3Z2UuVpQXfmpkyK/fnmejO2caGfWVZL8CPynMpv1vTjgwpXMp51aep8E59z0nCJf7qDbYsoCBWeleVIGA1urEA2HTlNxBMPnnB0DFBNE1KmBJAUVaGiA+IX4oofkpSPHUco3htIkmYSdaOdkpuiaJ7QA/RIyPupwGp2C1UaMKJJnhk6POEQqKITZ6ci5nNjNtAGbUAFQA+DXYC2boSEuI/Osv9uWux78yUZAdQM3QCfUlRHxjVJH+MPD4hizuaEP5MWkoa7VqQmXd1lBJYfJAPqAvtiGdED2jpTNUi8DnLx/BgMyRzvsI68wKxymO+1WV1CJA36uDAPyDQhT6YlPeILFSxXU+LBMNSUGHQ5eyjeBphRP+Zcb+QVxOIDY3O6jBojNtcbUiwQ=='
+    }
+
+    users::basic { 'puneeth':
+        roles   => ['developer'],
+        ssh_key => 'AAAAB3NzaC1yc2EAAAADAQABAAABAQDdy5qh5OYQA1ZRRXmE9iIiHHlpvUdAoJmflbqiA6qtfwWK+c3TAhfLAXwDygKBMtbRgmyBeFCZrkAr07NGJgmNPuuETDWMdfE/4Y2d+6odWO0yVY7c2GKcMrsn5Ld4m6Im8kamtPjd69yXE5/BVd2fYqi7fpOxq7b7TXnxpiV9bBQ0Sy44H6EDjLJLmSfUh8uaMCxg92w0OnmnL38XyXKdP+Vbl9ecz2+OXWdipECVnKMnMQgSAT4no3rAeonr9avhl0ZnaWxCn9qeTZ+EDqJPaIOOsqJ0BxwoSkTkzsgAxcNhG5Xg1W9C/8pBzeD5RvDuzUeov8lBlZz02m7N8uHl'
     }
 
     # removed users
