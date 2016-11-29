@@ -32,6 +32,14 @@ class backups {
         require => File['/backups/ssh']
     }
 
+    ssh_authorized_key { 'backup-authorized-key':
+        ensure  => present,
+        key     => hiera('backup_public_key'),
+        type    => 'ssh-rsa',
+        user    => 'backup',
+        require => File["/backups/.ssh/authorized_keys"]
+    }
+
     # export the backup key to any backup servers that we control
     @@ssh_authorized_key { "backup_key_${::hostname}":
         ensure  => present,

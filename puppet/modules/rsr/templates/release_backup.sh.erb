@@ -1,0 +1,23 @@
+#!/bin/bash
+
+SSH_USER=backup
+KEY=/backups/ssh/backup_key
+DEST=/backups/data/psql/release
+
+USERNAME=<%= @username %>
+PASS=<%= @database_password %>
+HOST=<%= @postgres_database_host %>
+DATABASE=<%= @username %>
+
+TIMESTAMP=$(date +'%Y-%m-%d-%H-%M-%S')
+FILENAME="rsr-backup-pre-release-${TIMESTAMP}.sql.gz"
+
+echo 'step 1: create the dump'
+PGPASSWORD=${PASS} pg_dump --host=${HOST} --username=${USERNAME} $DATABASE | gzip > $FILENAME
+
+echo 'step 2: copy the dump'
+ssh -i $KEY $SSH_USER@$HOST 'mkdir -p ${DEST}'
+scp -i $KEY $FILENAME $SSH_USER@$HOST:$DEST/$FILENAME
+
+echo 'step 3: remove local dump'
+rm -rf $FILENAME

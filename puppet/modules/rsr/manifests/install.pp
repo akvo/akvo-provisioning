@@ -49,6 +49,16 @@ class rsr::install inherits rsr::params {
         require => File[$approot]
     }
 
+    # include the script for backing up db on every release
+    file { "${approot}/release_backup.sh":
+        ensure  => present,
+        content => template('rsr/release_backup.sh.erb'),
+        owner   => $username,
+        group   => $username,
+        mode    => '0744',
+        require => File[$approot]
+    }
+
     # include the script for switching the app
     file { "${approot}/make_current.sh":
         ensure  => present,
