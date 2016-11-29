@@ -10,6 +10,17 @@ DBNAME='<%= @dbname %>'
 PASS='<%= @backuppassword %>'
 PERIODICITY=$1
 DIR=/backups/data/psql/$PERIODICITY/
+case $PERIODICITY in
+    daily)
+      RETENTION=7
+      ;;
+    weekly)
+      RETENTION=28
+      ;;
+    monthly)
+      RETENTION=365
+      ;;
+esac
 
 ##### STOP CONFIG ####################################################
 PATH=/usr/bin:/usr/sbin:/bin:/sbin
@@ -20,7 +31,12 @@ FILENAME="${DIR}/${DBNAME}-backup-${TIMESTAMP}.sql.gz"
 set -o pipefail
 
 mkdir -p $DIR
-find "${DIR}/" -type f -name "${DBNAME}-backup-*.sql.gz" -mtime +7 -delete
+find "${DIR}/" -type f -name "${DBNAME}-backup-*.sql.gz" -mtime +$RETENTION -delete
+
+# apply to release backups the same retention policy as the monthly ones
+if [ $1 = "monthly" ]; then
+    find /backups/data/psql/release/ -type -f -name "${DBNAME}-backup-*.sql.gz" -mtime +$RETENTION -delete
+fi
 
 PGPASSWORD=${PASS} pg_dump --host=psql --username=${USER} ${DBNAME} | gzip > $FILENAME
 
