@@ -16,7 +16,7 @@ echo 'step 1: create the dump'
 PGPASSWORD=${PASS} pg_dump --host=${HOST} --username=${USERNAME} $DATABASE | gzip > $FILENAME
 
 echo 'step 2: copy the dump'
-ssh -i $KEY $SSH_USER@$HOST 'mkdir -p ${DEST}'
+ssh -i $KEY $SSH_USER@$HOST "mkdir -p ${DEST}"
 scp -i $KEY $FILENAME $SSH_USER@$HOST:$DEST/$FILENAME
 
 echo 'step 3: remove local dump'
