@@ -61,4 +61,12 @@ class rsr::config inherits rsr::params {
         group => 'developer',
         as_user => 'rsr'
     }
+
+    file { "${approot}/backup_key":
+        ensure  => present,
+        owner   => 'rsr',
+        group   => 'rsr',
+        mode    => '0600',
+        content => hiera('backup_private_key')
+    }
 }

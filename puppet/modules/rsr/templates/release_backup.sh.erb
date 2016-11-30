@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SSH_USER=backup
-KEY=/backups/ssh/backup_key
+KEY=/var/akvo/rsr/backup_key
 DEST=/backups/data/psql/release
 
 USERNAME=<%= @username %>
@@ -9,7 +9,7 @@ PASS=<%= @database_password %>
 HOST=<%= @postgres_database_host %>
 DATABASE=<%= @username %>
 
-TIMESTAMP=$(date +'%Y-%m-%d-%H-%M-%S')
+TIMESTAMP=$(date +'%Y%m%d-%H%M%S')
 FILENAME="rsr-backup-pre-release-${TIMESTAMP}.sql.gz"
 
 echo 'step 1: create the dump'
