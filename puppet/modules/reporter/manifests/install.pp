@@ -19,10 +19,10 @@ class reporter::install {
         ensure   => 'installed'
     }
 
-    package { 'postgresql-client':
-        ensure   => 'installed'
-    }
-
+#    package { 'postgresql-client':
+#        ensure   => 'installed'
+#    }
+#
     package { 'unzip':
         ensure   => 'installed'
     }
