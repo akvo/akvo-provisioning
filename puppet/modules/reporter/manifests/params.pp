@@ -3,7 +3,7 @@ class reporter::params {
     $psql_name = hiera('reporter_psql_name', 'psql-reportserver')
     $base_domain = hiera('base_domain')
 
-    $db_host = 'localhost'
+    $db_host = 'reporting'
     $db_username = 'reportserver3'
     $db_name = 'reportserver3'
     $db_password = hiera('reporter_database_password')
