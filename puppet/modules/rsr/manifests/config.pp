@@ -17,6 +17,9 @@ class rsr::config inherits rsr::params {
     $base_domain = hiera('base_domain')
     nginx::proxy { [$rsr_hostnames, "*.${base_domain}"]:
         proxy_url                 => "http://localhost:${port}",
+        ssl                       => true,
+        ssl_key_source            => hiera('akvo_wildcard_key'),
+        ssl_cert_source           => hiera('akvo_wildcard_cert'),
         static_dirs               => {
             "/media/"  => $media_root,
             "/static/" => $static_root
