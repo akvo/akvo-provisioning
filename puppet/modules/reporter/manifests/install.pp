@@ -134,12 +134,12 @@ class reporter::install {
 
     database::psql::db { 'flowreports':
         owner     => 'flowreports',
-        psql_name => $reporter::psql_name,
+        psql_name => 'psql',
         password  => 'MaskintelegraF'
     }
 
     database::psql::db { 'rsrreports':
-        psql_name => $reporter::psql_name,
+        psql_name => 'psql',
         password  => $db_password
     }
 
