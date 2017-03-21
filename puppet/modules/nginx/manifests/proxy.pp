@@ -38,6 +38,7 @@ define nginx::proxy( $server_name = undef,
   $htpasswd_file = "/etc/nginx/passwd/${filename}.htpasswd"
   $ssl_key = "/etc/nginx/certs/${filename}.key"
   $ssl_crt = "/etc/nginx/certs/${filename}.crt"
+  $dh_params = "/etc/nginx/certs/dhparams.pem"
 
 
   file { "/etc/nginx/sites-enabled/${filename}":
@@ -75,6 +76,16 @@ define nginx::proxy( $server_name = undef,
       file { $ssl_crt:
           ensure  => present,
           content => $ssl_cert_source,
+          owner   => 'root',
+          group   => 'root',
+          mode    => '0444',
+          require => Package['nginx'],
+          notify  => Service['nginx'],
+      }
+
+      file { $dh_params:
+          ensure  => present,
+          content => $dh_params_source,
           owner   => 'root',
           group   => 'root',
           mode    => '0444',

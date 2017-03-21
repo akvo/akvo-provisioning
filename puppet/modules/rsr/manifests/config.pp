@@ -21,6 +21,7 @@ class rsr::config inherits rsr::params {
         ssl                       => true,
         ssl_key_source            => hiera('akvo_wildcard_key'),
         ssl_cert_source           => hiera('akvo_wildcard_cert'),
+        dh_params_source          => hiera('dh_params'),
         static_dirs               => {
             "/media/"  => $media_root,
             "/static/" => $static_root
