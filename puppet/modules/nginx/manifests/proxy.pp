@@ -1,10 +1,13 @@
 
 define nginx::proxy( $server_name = undef,
+                     $template = 'proxy',
                      $proxy_url,
                      $htpasswd = undef,
                      $ssl = false,
                      $ssl_key_source = undef,
                      $ssl_cert_source = undef,
+                     $http_locations = undef,
+                     $dh_params_source = undef,
                      $static_dirs = undef,
                      $extra_nginx_config = undef,
                      $extra_nginx_server_config = undef,
@@ -43,7 +46,7 @@ define nginx::proxy( $server_name = undef,
 
   file { "/etc/nginx/sites-enabled/${filename}":
       ensure  => present,
-      content => template('nginx/proxy.erb'),
+      content => template("nginx/${template}.erb"),
       require => Package['nginx'],
       notify  => Service['nginx'],
   }

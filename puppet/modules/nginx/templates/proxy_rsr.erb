@@ -1,0 +1,106 @@
+<%= @extra_nginx_config-%>
+<% if @ssl %>
+server {
+    server_tokens off;
+    listen 80;
+    server_name <%= @server_name_val %>;
+
+    access_log <%= @access_log_val %>;
+    error_log <%= @error_log_val %>;
+
+    location / {
+        rewrite ^(.*) https://<%= @server_name_val %>$1 permanent;
+    }
+
+<%- if @http_locations -%>
+    <%- @http_locations.each do |location| -%>
+    location <%= location %> {
+        proxy_pass   <%= @proxy_url %>;
+        proxy_set_header   Host             $host;
+        proxy_set_header   X-Real-IP        $remote_addr;
+        proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
+
+<%= @extra_nginx_proxy_config -%>
+
+        gzip_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript;
+
+        <%- if @password_protected -%>
+        auth_basic            "Restricted";
+        auth_basic_user_file  <%= @htpasswd_file %>;
+        <%- end -%>
+        <%- if @ssl -%>
+        add_header   Front-End-Https   on;
+        <%- end -%>
+    }
+    <%- end -%>
+<%- end -%>   
+    
+}
+<% end -%>
+
+server {
+
+    server_tokens off;
+
+    <%- if @ssl -%>
+    listen 443 ssl;
+    <%- if @redirect_http == false -%>
+    listen 80;
+    <%- end -%>
+
+    ssl_certificate       <%= @ssl_crt %>;
+    ssl_certificate_key   <%= @ssl_key %>;
+    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+    ssl_ciphers 'ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-DSS-AES128-GCM-SHA256:kEDH+AESGCM:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA:ECDHE-ECDSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-DSS-AES128-SHA256:DHE-RSA-AES256-SHA256:DHE-DSS-AES256-SHA:DHE-RSA-AES256-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-SHA256:AES256-SHA256:AES128-SHA:AES256-SHA:AES:CAMELLIA:DES-CBC3-SHA:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!MD5:!PSK:!aECDH:!EDH-DSS-DES-CBC3-SHA:!EDH-RSA-DES-CBC3-SHA:!KRB5-DES-CBC3-SHA';
+    ssl_dhparam <%= @dh_params %>;
+    ssl_prefer_server_ciphers on;
+    ssl_session_cache    shared:SSL:10m;
+    ssl_session_timeout  10m;
+
+    <%- else -%>
+    listen       80;
+    <%- end -%>
+
+    access_log <%= @access_log_val %>;
+    error_log <%= @error_log_val %>;
+
+    server_name  <%= @server_name_val %>;
+    
+    location / {
+
+        proxy_pass   <%= @proxy_url %>;
+        proxy_set_header   Host             $host;
+        proxy_set_header   X-Real-IP        $remote_addr;
+        proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
+
+<%= @extra_nginx_proxy_config -%>
+
+        gzip_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript;
+
+        <%- if @password_protected -%>
+        auth_basic            "Restricted";
+        auth_basic_user_file  <%= @htpasswd_file %>;
+        <%- end -%>
+        <%- if @ssl -%>
+        add_header   Front-End-Https   on;
+        <%- end -%>
+    }
+
+<%= @extra_nginx_server_config -%>
+
+<%- if @static_dirs -%>
+    <%- @static_dirs.each_pair do |location, alias_val| -%>
+    location <%= location %> {
+        autoindex off;
+        alias <%= alias_val %>;
+
+        <%- if @password_protected -%>
+        auth_basic            "Restricted";
+        auth_basic_user_file  <%= @htpasswd_file %>;
+        <%- end -%>
+    }
+    <%- end -%>
+<%- end -%>
+
+}
+
