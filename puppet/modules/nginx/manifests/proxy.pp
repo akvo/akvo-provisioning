@@ -86,7 +86,7 @@ define nginx::proxy( $server_name = undef,
           notify  => Service['nginx'],
       }
 
-      file { $dh_params:
+      ensure_resource('file', $dh_params, {
           ensure  => present,
           content => $dh_params_source,
           owner   => 'root',
@@ -94,7 +94,7 @@ define nginx::proxy( $server_name = undef,
           mode    => '0444',
           require => Package['nginx'],
           notify  => Service['nginx'],
-      }
+      })
   }
 
 }
