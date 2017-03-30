@@ -22,3 +22,5 @@
     rewrite ^/project/(.*)/update/?$ /project/$1/add_update/ permanent;
     # https://github.com/akvo/akvo-provisioning/issues/174
     rewrite ^/(en|fr|es)/project/(.*)/update/?$ /$1/project/$2/add_update/ permanent;
+
+    gzip_types text/plain text/css application/json application/x-javascript application/javascript text/xml application/xml application/xml+rss text/javascript image/svg+xml;

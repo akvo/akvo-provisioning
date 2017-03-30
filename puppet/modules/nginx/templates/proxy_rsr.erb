@@ -4,7 +4,37 @@ server {
     server_tokens off;
     listen 80;
     server_name <%= @server_name_val %>;
-    rewrite ^(.*) https://<%= @server_name_val %>$1 permanent;
+
+    access_log <%= @access_log_val %>;
+    error_log <%= @error_log_val %>;
+
+    location / {
+        rewrite ^(.*) https://<%= @server_name_val %>$1 permanent;
+    }
+
+<%- if @http_locations -%>
+    <%- @http_locations.each do |location| -%>
+    location <%= location %> {
+        proxy_pass   <%= @proxy_url %>;
+        proxy_set_header   Host             $host;
+        proxy_set_header   X-Real-IP        $remote_addr;
+        proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
+
+<%= @extra_nginx_proxy_config -%>
+
+        gzip_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript;
+
+        <%- if @password_protected -%>
+        auth_basic            "Restricted";
+        auth_basic_user_file  <%= @htpasswd_file %>;
+        <%- end -%>
+        <%- if @ssl -%>
+        add_header   Front-End-Https   on;
+        <%- end -%>
+    }
+    <%- end -%>
+<%- end -%>   
+    
 }
 <% end -%>
 
@@ -13,8 +43,10 @@ server {
     server_tokens off;
 
     <%- if @ssl -%>
-    listen 443;
-    ssl on;
+    listen 443 ssl;
+    <%- if @redirect_http == false -%>
+    listen 80;
+    <%- end -%>
 
     ssl_certificate       <%= @ssl_crt %>;
     ssl_certificate_key   <%= @ssl_key %>;

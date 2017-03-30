@@ -1,10 +1,13 @@
 
 define nginx::proxy( $server_name = undef,
+                     $template = 'proxy',
                      $proxy_url,
                      $htpasswd = undef,
                      $ssl = false,
                      $ssl_key_source = undef,
                      $ssl_cert_source = undef,
+                     $http_locations = undef,
+                     $dh_params_source = undef,
                      $static_dirs = undef,
                      $extra_nginx_config = undef,
                      $extra_nginx_server_config = undef,
@@ -38,11 +41,12 @@ define nginx::proxy( $server_name = undef,
   $htpasswd_file = "/etc/nginx/passwd/${filename}.htpasswd"
   $ssl_key = "/etc/nginx/certs/${filename}.key"
   $ssl_crt = "/etc/nginx/certs/${filename}.crt"
+  $dh_params = "/etc/nginx/certs/dhparams.pem"
 
 
   file { "/etc/nginx/sites-enabled/${filename}":
       ensure  => present,
-      content => template('nginx/proxy.erb'),
+      content => template("nginx/${template}.erb"),
       require => Package['nginx'],
       notify  => Service['nginx'],
   }
@@ -81,6 +85,16 @@ define nginx::proxy( $server_name = undef,
           require => Package['nginx'],
           notify  => Service['nginx'],
       }
+
+      ensure_resource('file', $dh_params, {
+          ensure  => present,
+          content => $dh_params_source,
+          owner   => 'root',
+          group   => 'root',
+          mode    => '0444',
+          require => Package['nginx'],
+          notify  => Service['nginx'],
+      })
   }
 
 }
