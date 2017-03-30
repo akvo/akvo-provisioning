@@ -21,6 +21,10 @@ class rsr::install inherits rsr::params {
         provider => 'npm'
     }
 
+    package { 'libgeos-dev':
+        ensure => installed
+    }
+
     file { "${approot}/versions":
         ensure  => directory,
         owner   => $username,
