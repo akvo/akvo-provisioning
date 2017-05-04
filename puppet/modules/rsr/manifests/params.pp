@@ -16,6 +16,7 @@ class rsr::params {
     $port = 8000
     $site_id = hiera('rsr_site_id')
     $rsr_debug = hiera('rsr_debug', false)
+    $homepage_data_source = hiera('homepage_data_source', false)
     $reportserver_apikey = hiera('rsr_reportserver_apikey')
     $main_domain = hiera('rsr_main_domain', "rsr.${base_domain}")
     $smtp_user = hiera('rsr_smtp_user')
