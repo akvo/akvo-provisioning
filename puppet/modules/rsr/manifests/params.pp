@@ -23,6 +23,9 @@ class rsr::params {
     $smtp_user = hiera('rsr_smtp_user')
     $smtp_password = hiera('rsr_smtp_password')
 
+    $set_limits = hiera('nginx_set_limits', false)
+    $limit_zone_burst = hiera('nginx_limit_zone_burst', false)
+
     $rsr_secret_key = hiera('rsr_secret_key')
     $additional_rsr_domains = hiera_array('rsr_additional_rsr_domains', [])
 

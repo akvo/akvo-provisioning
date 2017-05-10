@@ -24,3 +24,8 @@
     rewrite ^/(en|fr|es)/project/(.*)/update/?$ /$1/project/$2/add_update/ permanent;
 
     gzip_types text/plain text/css application/json application/x-javascript application/javascript text/xml application/xml application/xml+rss text/javascript image/svg+xml;
+
+    <%- if @set_limits -%>
+    # rate limiting
+    limit_req zone=myzone burst=<%= @limit_zone_burst %>;
+    <%- end -%>
