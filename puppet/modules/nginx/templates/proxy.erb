@@ -4,7 +4,7 @@ server {
     server_tokens off;
     listen 80;
     server_name <%= @server_name_val %>;
-    rewrite ^(.*) https://<%= @server_name_val %>$1 permanent;
+    rewrite ^(.*) https://$host$1 permanent;
 }
 <% end -%>
 

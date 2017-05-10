@@ -15,7 +15,7 @@ class rsr::config inherits rsr::params {
 
     # nginx sits in front of RSR
     $base_domain = hiera('base_domain')
-    nginx::proxy { [$rsr_hostnames, "*.${base_domain}"]:
+    nginx::proxy { $rsr_hostnames:
         template                  => 'proxy_rsr',
         proxy_url                 => "http://localhost:${port}",
         extra_nginx_proxy_config  => template('rsr/nginx-extra-proxy.conf.erb'),
