@@ -91,6 +91,10 @@ server {
     location <%= location %> {
         autoindex off;
         alias <%= alias_val %>;
+        <%- if @environment == "uat" or @environment == "live" -%>
+        expires <%= @cache_expiration %>;
+        access_log off;
+        <%- end -%>
 
         <%- if @password_protected -%>
         auth_basic            "Restricted";
@@ -101,4 +105,3 @@ server {
 <%- end -%>
 
 }
-

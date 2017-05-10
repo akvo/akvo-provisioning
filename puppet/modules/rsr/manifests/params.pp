@@ -26,6 +26,8 @@ class rsr::params {
     $set_limits = hiera('nginx_set_limits', false)
     $limit_zone_burst = hiera('nginx_limit_zone_burst', false)
 
+    $cache_expiration = hiera('rsr_nginx_cache_expiration', undef)
+
     $rsr_secret_key = hiera('rsr_secret_key')
     $additional_rsr_domains = hiera_array('rsr_additional_rsr_domains', [])
 
