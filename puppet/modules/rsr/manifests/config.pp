@@ -15,7 +15,7 @@ class rsr::config inherits rsr::params {
 
     # nginx sits in front of RSR
     $base_domain = hiera('base_domain')
-    nginx::proxy { [$rsr_hostnames, "*.${base_domain}"]:
+    nginx::proxy { $rsr_hostnames:
         template                  => 'proxy_rsr',
         proxy_url                 => "http://localhost:${port}",
         extra_nginx_proxy_config  => template('rsr/nginx-extra-proxy.conf.erb'),
@@ -24,6 +24,7 @@ class rsr::config inherits rsr::params {
         ssl_cert_source           => hiera('akvo_wildcard_cert'),
         dh_params_source          => hiera('dh_params'),
         http_locations            => ["/rest"],
+        cache_expiration          => $cache_expiration,
         static_dirs               => {
             "/media/"  => $media_root,
             "/static/" => $static_root

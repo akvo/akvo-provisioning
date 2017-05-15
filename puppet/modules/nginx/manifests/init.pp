@@ -1,6 +1,9 @@
 
 class nginx {
 
+    $set_limits = hiera('nginx_set_limits', false)
+    $limit_req_zone_rate = hiera('nginx_limit_req_zone_rate', false)
+
     ensure_resource('package', 'nginx', { ensure => present })
 
     ensure_resource('service', 'nginx', {
@@ -47,6 +50,16 @@ class nginx {
         port   => [80, 443],
         proto  => tcp,
         action => accept,
+    }
+
+    if $set_limits {
+        file_line { 'nginx_limit':
+            ensure  => present,
+            path    => '/etc/nginx/nginx.conf',
+            line    => "limit_req_zone \$binary_remote_addr zone=myzone:10m rate=${limit_req_zone_rate}r/m;",
+            match   => '# server_tokens off;',
+            require => File['/etc/nginx/sites-enabled/server_status']
+        }
     }
 
 }

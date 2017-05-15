@@ -1,5 +1,4 @@
 <%= @extra_nginx_config-%>
-<% if @ssl %>
 server {
     server_tokens off;
     listen 80;
@@ -9,7 +8,7 @@ server {
     error_log <%= @error_log_val %>;
 
     location / {
-        rewrite ^(.*) https://<%= @server_name_val %>$1 permanent;
+        rewrite ^(.*) https://$host$1 permanent;
     }
 
 <%- if @http_locations -%>
@@ -36,7 +35,6 @@ server {
 <%- end -%>   
     
 }
-<% end -%>
 
 server {
 
@@ -93,6 +91,10 @@ server {
     location <%= location %> {
         autoindex off;
         alias <%= alias_val %>;
+        <%- if @environment == "uat" or @environment == "live" -%>
+        expires <%= @cache_expiration %>;
+        access_log off;
+        <%- end -%>
 
         <%- if @password_protected -%>
         auth_basic            "Restricted";
@@ -103,4 +105,3 @@ server {
 <%- end -%>
 
 }
-

@@ -24,6 +24,12 @@
     "rsr_data_source_host": "localhost",
     "rsr_leech": false,
 
+    "rsr_reportserver_apikey": "IkfIXk6BSX05T41SdhjE",
+    "dh_params": "-----BEGIN DH PARAMETERS-----\nMIIBCwKBgQCVzzD2jb4KraUE0gnwf1yNNAEw+HUSvEN6xgx8lOwhow8kyKvHZufG\nAUzGB9e1vYK1AxCBlqBZ1Phv2VdacpG2LFbNbER4yu3pdvkWdHSUYnqJNx14iBAo\n2+kfIFx7vHR4+4AxTEevjukDL3+PhTIgrwP5jv4gZjCXWInLAwlojwKBgAi8LBza\nNSIhqm+arrsZYrDsN4bZgIkVx+5EcKiuc2J97KPoecfmjDh0QBqoxeE0zpHLVzfL\nG/35qnsjfKI8fTYdJ+4SRWHJAsaTshM+rtXx6Vj30v66wbB9JF4fX1Lv4B48ZKa/\nwJecYjB/8/LC09b0dXtOpHNNNKQ2f1C+udLbAgIAoA==\n-----END DH PARAMETERS-----",
+    "nginx_set_limits": true,
+    "nginx_limit_req_zone_rate": 180,
+    "nginx_limit_zone_burst": 30,
+
     "butler_mysql_name": "mysql-localdev",
     "butler_database_password": "5qLc7JfchEUzGBZpszCsmHDIUij9FUfKXxrkFUsh",
     "butler_secret_key": "uzrPik6gDgruluUWjBSSB5LN9pcnHCuow51oQqM7",

@@ -1,1 +1,6 @@
         proxy_set_header  X-Forwarded-Proto $scheme;
+
+        <%- if @set_limits -%>
+        # rate limiting
+        limit_req zone=myzone burst=<%= @limit_zone_burst %>;
+        <%- end -%>
