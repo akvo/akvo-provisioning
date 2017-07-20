@@ -72,7 +72,7 @@ class users {
 
     users::basic { 'lynn':
         roles    => ['reporting', 'www-edit'],
-        ssh_key  => 'AAAAB3NzaC1yc2EAAAADAQABAAABAQDAoetrIBiu34tw/jD1OWlQ7fRPvMjvgmloE8Y+uaJ57Nf8qf3vgp7P7oiVs6FToApHZlVirs1ZNN8xFal0ZYV+3FyHaeZ8Y8eTnbJp/3sbY3ERNWFmMUqyfm/T/ZQ9NHyBLN3JVKtlUxTMSZ5dvjPRvUDwd/fszD8CjAXN6P8Kr94atcrOwUguXDzGcR+G+wZbAYwpnWbxxYVhmjHXQrgKnETCrxt6DExXqZh+5GTR/mCakB4x4yU4PCiVE/jAMvxBW1e4GXtk1mM3bTBDi3E5/5FX1OA8mVc3CPHV98up0NIGBGMRxXECdzjgILNHlzJBvluVORrgjxX5vK3UeMaP'
+        ssh_key  => 'AAAAB3NzaC1yc2EAAAADAQABAAABAQC0RkOFU+aadsRJJ72+L2pxDEvHyCO2Viy/HMbKIKdbUOfdEIWDUfVfuA+7gvbeUuFanJebYFGrU7FdH3AYsZf8YZQ9QPGd3ue4Pl5dyN62dnLpuTTGPmVP+kwLF8pX3Zcl6dyk7Z6Fem67lZaZxx4VPn6AhRbeNSUNkf70IRJejyuVgJVJmgUhEFGxI3736+mkwutd9twFqYJAFiFpX42XOid7LpJwtGZDIh4udb3pNafczbtK+/BHoSyVOlxceiagtdZxUbZOG1h+T78dTKEiPB3LFby1lv1TOYKj2zucBNpx7cF/ntZjzI7Y6A8+xMSyPagi+TIGZmlqBVCJBKiR',
     }
 
     users::basic { 'daniel':
