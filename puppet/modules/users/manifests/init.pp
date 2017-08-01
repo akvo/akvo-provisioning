@@ -101,6 +101,11 @@ class users {
         ssh_key => 'AAAAB3NzaC1yc2EAAAADAQABAAACAQDL4YcjyKqzokaJN1qmkQWzxHT4tkorzXk7b2nusco8xBKt16+c1d/57nLVKmmdm+FwGXRHKYCubiz646KjunOwDigGSN1K3vbB5pmx2DKsqijmTSf6VYTFR3qLOzaphbWilONw9ziVLrA6L7sbXeRIxUWTRa18y9srv422rqi0mRQst0Z0p8FJxa0vdn0OgiYlS6hv/2Mx+9GszRo3LDCwOQ7u7kYLcLcDZc+0JeT0rMf6KV5ODCjFM0VzArKHuzmVNK++rMaNism1zo1+6aa/gIrZt6M2/uW8mqUQ+aKbUs+jFn+Ik/9tlmMe9AhyklbcIkNs0CMP/97+QgZrvrSe8LbJkyGSSFoCtUA8cXd8iR+G1GsRGN9GtGEEOS9YgsPZA+aNMjh5qPCr/B0INHRKyPE6Gi4LrHIp9XxVbOfgiOeaUTZKTeDjEhTYK4Rw5Ir0KWBu+QIZVfThOz7WG8lKcQ3ekQPHqi0rUfU1JLmy5fBZX88TTldzkjmgEjvIAYB7FKcJ3w29xwtguD29hZ/Oit//10qACEgk9YRatAfYWqM+SgzbX9hZ6ucioDeoXeW6eqppoFug0EKD0jBZNJhVNLAcppI63bNY9a5MVZZ0Mq9xN315tQVjsfJXxbbdvwKpMrhD66lWMR/42z7yRSjR2UZ0iogtbGlYl277QHBvPQ=='
     }
 
+    users::basic {'arun':
+        roles   => ['test'],
+        ssh_key => 'AAAAB3NzaC1yc2EAAAADAQABAAABAQDET+BmAOFHDLh1Lc1WKu+jqbk2EIyFYam3NZuoIe6YkxC7cB21AqSundnDYtw7EQmyjo5uqiBDlliTq2B6SQwQUxKZ/tdIm26KPV+G/9QPLKFOv5PusXkmRe1ulSGChNXRf0a7S254diWdpik6/FoDknHS++Kt4WmyVAQsWncmCgLyH3MgM0oAusZ6M4NFqavHBJumDhHrRSAe0jCP8fNmNIr0dmt3tKANJfOTaLQebrS0NAxianjzhCE6KfSzrFNAjCZTABpQizmdEoEahXuZfZr8rb7lsK0qBgryfXQN2WJpTMMXRA8XWN4VgSY/Ocfs8RrrHjifYJdoQqksNf1p'
+    }
+
     users::basic {'marten':
         roles   => ['test'],
         ssh_key => 'AAAAB3NzaC1yc2EAAAADAQABAAACAQDOmdog3jVC20B6ROJDDxpEW7kNgMEHIHLD0Uz0ZR7/89ztgmSfvmto2Jn3rxZo2whGbWmQlrAe8fvDFoDZTsRcdBoKMdi4CelPD1QVvcs5ALz4tQQimmSQ7z6+wSFcsWKIigRugxB39rHK58+EZiYqQ8hL5y1OASKzqojlbJNJLpuhoUNmu7MuI2Mz/1HdiJCU/Ay8riH2/4z/i72Tr+iKYih8g79NW68sGbZ2XzmgAGLo6DZOFrZA4SrLngfCB574+WeFqpqLQyKBW25pf2fzS7kuCvPzfpRxm2R+4kVUrF3j+1L0SzKC1SLRqHW1AgA2PC9kzsRtgzQ9xYKMZf80W8x5xpoyUGBlJB3lO9fR0YOWaDz/vzKZt3FOUcJFf+TbktjRXwifqcHbic4fDfGmj5MaxcPHqo4qg7xl3UTTJelZgmxYnr9pBheTDxSCec9+EqLg+NmWNgzcUuZfFM9tyUVnvtfk1iB0332kBSYZ4MsCxnMocy+9mz+UDClZ2/iCuoWQZThpP3wlpEX7TsSGdDrXBsy2Hy+icmn66Gzifd+fvmqSbU+CNEjH/H/UlimYwqOa8v7x4kNcq6Cs+7Jiq/mY7ILmm/M3rUBx9RJVTO+jZlcrPow7T2+m7vkLl/c0fegaD+K01Kn8m98Ejgwttg5rf3o/jgitkiM/2G/c8w=='
