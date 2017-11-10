@@ -121,7 +121,7 @@ class users {
 
     users::basic { 'puneeth':
         roles   => ['developer'],
-        ssh_key => 'AAAAB3NzaC1yc2EAAAADAQABAAABAQDdy5qh5OYQA1ZRRXmE9iIiHHlpvUdAoJmflbqiA6qtfwWK+c3TAhfLAXwDygKBMtbRgmyBeFCZrkAr07NGJgmNPuuETDWMdfE/4Y2d+6odWO0yVY7c2GKcMrsn5Ld4m6Im8kamtPjd69yXE5/BVd2fYqi7fpOxq7b7TXnxpiV9bBQ0Sy44H6EDjLJLmSfUh8uaMCxg92w0OnmnL38XyXKdP+Vbl9ecz2+OXWdipECVnKMnMQgSAT4no3rAeonr9avhl0ZnaWxCn9qeTZ+EDqJPaIOOsqJ0BxwoSkTkzsgAxcNhG5Xg1W9C/8pBzeD5RvDuzUeov8lBlZz02m7N8uHl'
+        ssh_key => 'AAAAB3NzaC1yc2EAAAADAQABAAABAQD43Rcoa0zumn5shc+e1onVR6l+SBGhoCjKWAP0le9g1A+KQg+vqRSPEAmgQ681DZA0vkw5P30Pe8s6vQfwKuk6p5YVffSCk/iEu9dxffZ8Nt9THPppz1ED/XD7PMM5ccdK4ytzsiRoNHSEph5+UJXqMZVyZRRveI035sUeX9J/3W/+SWVbdRzd0wvHcCgPCtkSjggdGIH3hcqxqrHfXgv6WofVZa694B5d8Zq8/sgwo0OB+WcCMx6QDoEY0qAwuEPr4K2GivPd5JmBSI+yVLOW/+oLiWouGJLj6BZmwzSKAX+vEE3ggSan/e/ghnQVqFCfXBANn18oFHvsYS3BdM2R'
     }
 
     # removed users
