@@ -22,6 +22,7 @@ class rsr::params {
     $main_domain = hiera('rsr_main_domain', "rsr.${base_domain}")
     $smtp_user = hiera('rsr_smtp_user')
     $smtp_password = hiera('rsr_smtp_password')
+    $pip_version = hiera('rsr_pip_version', '9.0.1')
 
     $set_limits = hiera('nginx_set_limits', false)
     $limit_zone_burst = hiera('nginx_limit_zone_burst', false)
@@ -34,6 +35,10 @@ class rsr::params {
     $rsr_hostnames = concat($additional_rsr_domains, ["${subdomain}.${base_domain}", "*.akvoapp.org"])
 
     $postgres_name = hiera('rsr_psql_name', 'psql')
-    $postgres_database_host = "${postgres_name}.${base_domain}"
-
+    if $::environment == 'live' {
+      $postgres_database_host = "${postgres_name}.live.akvo.org"
+    }
+    else {
+      $postgres_database_host = "${postgres_name}.${base_domain}"
+    }
 }
