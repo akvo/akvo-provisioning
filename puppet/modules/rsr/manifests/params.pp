@@ -35,6 +35,10 @@ class rsr::params {
     $rsr_hostnames = concat($additional_rsr_domains, ["${subdomain}.${base_domain}", "*.akvoapp.org"])
 
     $postgres_name = hiera('rsr_psql_name', 'psql')
-    $postgres_database_host = "${postgres_name}.${base_domain}"
-
+    if $::environment == 'live' {
+      $postgres_database_host = "${postgres_name}.live.akvo.org"
+    }
+    else {
+      $postgres_database_host = "${postgres_name}.${base_domain}"
+    }
 }
