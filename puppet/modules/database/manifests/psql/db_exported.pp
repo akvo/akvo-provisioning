@@ -2,7 +2,8 @@
 define database::psql::db_exported( $password,
                                     $owner = 'postgres',
                                     $allow_createdb = false,
-                                    $backup = true ) {
+                                    $backup = true,
+                                    $add_read_only = false) {
 
     postgresql::server::db { $name:
         user     => $name,
@@ -23,6 +24,12 @@ define database::psql::db_exported( $password,
 
     if ($backup) {
         database::psql::backup_db { $name:
+            require => Postgresql::Server::Db[$name]
+        }
+    }
+
+    if ($add_read_only) {
+        database::psql::read_only_user { $name:
             require => Postgresql::Server::Db[$name]
         }
     }
