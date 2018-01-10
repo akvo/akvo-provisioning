@@ -5,7 +5,8 @@ class rsr::config inherits rsr::params {
         psql_name      => $postgres_name,
         password       => $database_password,
         reportable     => true,
-        allow_createdb => $allow_createdb
+        allow_createdb => $allow_createdb,
+        add_read_only  => true
     }
 
     # we want a service address
