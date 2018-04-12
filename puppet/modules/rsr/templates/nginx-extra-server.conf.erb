@@ -4,6 +4,11 @@
         proxy_pass   https://reporting.<%= @environment %>.akvo-ops.org;
         proxy_redirect default;
     }
+    location /reports/ {
+        rewrite ^/reports/(.*)/(.*)$ /reportserver/reportserver/httpauthexport?key=$1&user=RSR&apikey=<%= @reportserver_apikey %>&p_ID=$2 break;
+        proxy_pass   https://reporting.<%= @environment %>.akvo-ops.org;
+        proxy_redirect default;
+    }
 
     client_max_body_size 150m; # temporary fix for https://github.com/akvo/akvo-provisioning/issues/277
     # client_max_body_size 8m;
