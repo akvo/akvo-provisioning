@@ -67,4 +67,4 @@ on_remote mkdir -p $DEST_DIR
 on_remote rm -f $BASE_DEST_DIR/$PERIOD/current
 on_remote ln -s $DEST_DIR $BASE_DEST_DIR/$PERIOD/current
 
-rsync --verbose --archive --delete ${LINK_DEST} --rsh "${SSH_COMMAND}" $SOURCE_DIR $USER@$HOST:$DEST_DIR/
+rsync --remove-source-files --verbose --archive --delete ${LINK_DEST} --rsh "${SSH_COMMAND}" $SOURCE_DIR $USER@$HOST:$DEST_DIR/

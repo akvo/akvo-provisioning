@@ -43,4 +43,4 @@ function on_remote {
 # Now copy!
 on_remote mkdir -p $DEST_DIR
 
-rsync --verbose --archive --delete --rsh "${SSH_COMMAND}" $SOURCE_DIR $USER@$HOST:$DEST_DIR/
+rsync --remove-source-files --verbose --archive --delete --rsh "${SSH_COMMAND}" $SOURCE_DIR $USER@$HOST:$DEST_DIR/
