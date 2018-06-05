@@ -25,7 +25,7 @@ FILENAME="${DIR}/${DBNAME}-backup-${TIMESTAMP}.sql.gz"
 set -o pipefail
 
 mkdir -p $DIR
-find "${DIR}/" -type f -name "${DBNAME}-backup-*.sql.gz" -mtime +7 -delete
+find "${DIR}/" -type f -name "${DBNAME}-backup-*.sql.gz*" -mtime +7 -delete
 
 mysqldump -u${USER} -p${PASS} --opt --flush-logs --single-transaction ${DBNAME} | gzip > $FILENAME
 

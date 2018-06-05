@@ -31,11 +31,11 @@ FILENAME="${DIR}/${DBNAME}-backup-${TIMESTAMP}.sql.gz"
 set -o pipefail
 
 mkdir -p $DIR
-find "${DIR}/" -type f -name "${DBNAME}-backup-*.sql.gz" -mtime +$RETENTION -delete
+find "${DIR}/" -type f -name "${DBNAME}-backup-*.sql.gz*" -mtime +$RETENTION -delete
 
 # apply to release backups the same retention policy as the monthly ones
 if [ $1 = "monthly" ]; then
-    find /backups/data/psql/release/ -type -f -name "${DBNAME}-backup-*.sql.gz" -mtime +$RETENTION -delete
+    find /backups/data/psql/release/ -type -f -name "${DBNAME}-backup-*.sql.gz*" -mtime +$RETENTION -delete
 fi
 
 PGPASSWORD=${PASS} pg_dump --host=psql --username=${USER} ${DBNAME} | gzip > $FILENAME
