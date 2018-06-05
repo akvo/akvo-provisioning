@@ -23,6 +23,16 @@ class backups {
         require => User['backup'],
     }
 
+    file { '/backups/encrypt_key':
+        path    => hiera('db_crypto_file'),
+        ensure  => present,
+        owner   => 'backup',
+        group   => 'backup',
+        mode    => '0600',
+        content => hiera('db_crypto_password'),
+        require => File['/backups']
+    }
+
     file { '/backups/ssh/backup_key':
         ensure  => present,
         owner   => 'backup',

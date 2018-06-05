@@ -8,6 +8,7 @@
 USER='backup'
 DBNAME='<%= @dbname %>'
 PASS='<%= @backuppassword %>'
+ENC_PASS_FILE=<%= @db_crypto_file %>
 PERIODICITY=$1
 DIR=/backups/data/psql/$PERIODICITY/
 case $PERIODICITY in
@@ -40,3 +41,8 @@ fi
 
 PGPASSWORD=${PASS} pg_dump --host=psql --username=${USER} ${DBNAME} | gzip > $FILENAME
 
+# encrypt
+openssl aes-256-cbc -salt -a -e -in $FILENAME -out $FILENAME.enc -pass file:$ENC_PASS_FILE
+if [ $? -eq 0 ]; then
+  rm $FILENAME
+fi

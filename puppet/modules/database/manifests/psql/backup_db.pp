@@ -6,9 +6,9 @@ define database::psql::backup_db (
 ) {
 
     $dbname = $name
-
     $backupuser = 'backup'
     $backuppassword = hiera('psql_backup_password')
+    $db_crypto_file = hiera('db_crypto_file')
 
     $db_grant = "GRANT CONNECT ON DATABASE \"${dbname}\" TO \"${backupuser}\";"
     $table_grant = "GRANT SELECT ON ALL TABLES IN SCHEMA public TO \"${backupuser}\";"

@@ -5,8 +5,9 @@ define database::my_sql::backup_db (
     $monthly = true
 ) {
     $dbname = $name
-
     $backuppassword = hiera('mysql_backup_password')
+    $db_crypto_file = hiera('db_crypto_file')
+
     backups::script { "mysqlbackup-${dbname}":
         scriptname => "mysqlbackup-${dbname}.sh",
         content    => template('database/mysql/backup.sh.erb'),

@@ -1,0 +1,12 @@
+#!/bin/bash
+
+[ -z $1 ] && echo "First argument missing, please provide backup to decrypt" && exit 1
+
+ENC_PASS_FILE=<%= @db_crypto_file %>
+
+openssl aes-256-cbc -salt -a -d -in $1 -out ${1%.*} -pass file:$ENC_PASS_FILE
+if [ $? -eq 0 ]; then
+  echo "Backup decrypted: ${1%.*}"
+else
+  echo "Error when decrypting backup."
+fi
