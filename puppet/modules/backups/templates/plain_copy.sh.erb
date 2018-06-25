@@ -43,4 +43,8 @@ function on_remote {
 # Now copy!
 on_remote mkdir -p $DEST_DIR
 
+<% if @name == "akvo" %>
 rsync --remove-source-files --verbose --archive --delete --rsh "${SSH_COMMAND}" $SOURCE_DIR $USER@$HOST:$DEST_DIR/
+<% else %>
+rsync --verbose --archive --delete --rsh "${SSH_COMMAND}" $SOURCE_DIR $USER@$HOST:$DEST_DIR/
+<% end %>
