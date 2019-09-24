@@ -1,7 +1,8 @@
 .PHONY: build build-no-cache start stop logs rm reload all
 .DEFAULT_GOAL := all
 
-BIN=docker-compose -f docker-compose.yml
+BIN=env LUMEN_DB_URL="${LUMEN_DB}" LUMEN_FILE_UPLOAD_PATH="/tmp/akvo/lumen" LUMEN_FLOW_REPORT_DATABASE_URL="${LUMEN_FLOW_REPORT_DATABASE}" docker-compose -f docker-compose.yml
+
 
 help:
 	@echo "Usage: make [OPTION] [ENV=dev|test] [C=\"container\"]"

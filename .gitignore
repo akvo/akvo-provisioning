@@ -1,3 +1,5 @@
+docker/lumen/secrets
+
 .vagrant
 *.pyc
 *.box
